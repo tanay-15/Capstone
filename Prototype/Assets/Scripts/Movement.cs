@@ -5,10 +5,12 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
     public float speed = 5;
     private Rigidbody player;
+    private SpriteRenderer sprite;
     bool facingRight;
 	// Use this for initialization
 	void Start () {
         player = GetComponent<Rigidbody>();
+        sprite = GetComponent<SpriteRenderer>();
         facingRight = true;
 	}
 	
@@ -30,15 +32,20 @@ public class Movement : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.Tab))
         {
+           // player.enabled = false;
+            sprite.enabled = false;
+
             if(!facingRight)
             {
                 Vector3 targetPos = transform.position + transform.right * -0.25f;
                 player.transform.position = targetPos;
-            }
+                Invoke("Enabler", 0.5f);
+            }       
             else
             {
                 Vector3 targetPos = transform.position + transform.right * 0.25f;
                 player.transform.position = targetPos;
+                Invoke("Enabler", 0.5f);
             }
         }
 	}
@@ -48,5 +55,10 @@ public class Movement : MonoBehaviour {
         Vector3 theScale = transform.localScale;
         theScale.z *= -1;
         transform.localScale = theScale;
+    }
+    void Enabler()
+    {
+        //player.enabled = true;
+        sprite.enabled = true;
     }
 }
