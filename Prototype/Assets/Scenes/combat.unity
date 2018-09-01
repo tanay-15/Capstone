@@ -656,8 +656,9 @@ GameObject:
   - component: {fileID: 1931636736}
   - component: {fileID: 1931636739}
   - component: {fileID: 1931636740}
+  - component: {fileID: 1931636741}
   m_Layer: 0
-  m_Name: Skeleton Idle_0
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -762,3 +763,21 @@ CapsuleCollider:
   m_Height: 0.29
   m_Direction: 1
   m_Center: {x: -0.03, y: -0.03, z: 0}
+--- !u!95 &1931636741
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1931636735}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 80e3f4b31545cd744bdf4e07bc116229, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

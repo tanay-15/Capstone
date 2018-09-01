@@ -6,11 +6,13 @@ public class Movement : MonoBehaviour {
     public float speed = 5;
     private Rigidbody player;
     private SpriteRenderer sprite;
+    private Animator myAnim;
     bool facingRight;
 	// Use this for initialization
 	void Start () {
         player = GetComponent<Rigidbody>();
         sprite = GetComponent<SpriteRenderer>();
+        myAnim = GetComponent<Animator>();
         facingRight = true;
 	}
 	
@@ -18,6 +20,7 @@ public class Movement : MonoBehaviour {
 	void Update () {
         
         float hAxis = Input.GetAxis("Horizontal");
+        myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
         Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
         player.MovePosition(transform.position + movement);
 
@@ -53,7 +56,7 @@ public class Movement : MonoBehaviour {
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
-        theScale.z *= -1;
+        theScale.x *= -1;
         transform.localScale = theScale;
     }
     void Enabler()
