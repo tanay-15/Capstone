@@ -132,6 +132,7 @@ public class Enemy : MonoBehaviour {
                 this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, movspeed * Time.deltaTime);
                 if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 1f)
                 {
+                    flip();
                     //move to point two
                     movway1 = false;
                     movway2 = true;
@@ -145,6 +146,7 @@ public class Enemy : MonoBehaviour {
                 this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, movspeed * Time.deltaTime);
                 if(Vector2.Distance(waypoint2.transform.position,this.transform.position) <= 1f)
                 {
+                    flip();
                     movway1 = true;
                     movway2 = false;
                 }
@@ -213,5 +215,22 @@ public class Enemy : MonoBehaviour {
         {
             AttackReady = false;
         }
+    }
+
+    void flip()
+    {
+
+        /*Vector3 theScale = transform.localScale;
+         theScale.x *= -1;
+         transform.localScale = theScale;
+
+         Vector3 visScale = vision.transform.localScale;
+         visScale.x *= -1;
+         vision.transform.localScale = visScale;
+        */
+
+        this.transform.RotateAround(transform.position, transform.up, 180f);
+
+        
     }
 }
