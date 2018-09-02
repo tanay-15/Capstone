@@ -17,7 +17,7 @@ public class playerAttack : MonoBehaviour {
         reset = attackTrigger.transform.localEulerAngles;
         oldPos = attackTrigger.transform.position;
         attackTrigger.enabled = false;
-      
+        Debug.Log("oldPos" + oldPos);
 
     }
 	
@@ -36,10 +36,13 @@ public class playerAttack : MonoBehaviour {
             //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
             //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
         }
-        else if(Input.GetMouseButtonUp(0))
+        else 
         {
-            attackTrigger.transform.rotation = Quaternion.FromToRotation(Vector3.right, Vector3.up);
+            
+            //attackTrigger.transform.rotation = Quaternion.FromToRotation(Vector3.right, Vector3.up);
             attackTrigger.transform.position = oldPos;
+           
+            Debug.Log("trigger pos" + attackTrigger.transform.position);
             attackTrigger.enabled = false;
             
         }
