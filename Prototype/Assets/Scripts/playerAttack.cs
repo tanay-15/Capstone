@@ -8,18 +8,25 @@ public class playerAttack : MonoBehaviour {
     //private float attackCd = 0.3f;
     private Animator myAnim;
     public Collider attackTrigger;
+    private Vector3 currentAngle;
+    private Vector3 reset;
 	// Use this for initialization
 	void Start () {
         myAnim = GetComponent<Animator>();
+        reset = attackTrigger.transform.localEulerAngles;
         attackTrigger.enabled = false;
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if(Input.GetMouseButton(0))
         {
+            currentAngle.z = reset.z;
             attacking = true;
             attackTrigger.enabled = true;
+            attackTrigger.transform.localEulerAngles = new Vector3(attackTrigger.transform.localEulerAngles.x, attackTrigger.transform.localEulerAngles.y, currentAngle.z);
+            
         }
         else
         {
