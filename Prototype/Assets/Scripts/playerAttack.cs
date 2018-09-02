@@ -26,7 +26,9 @@ public class playerAttack : MonoBehaviour {
             attacking = true;
             attackTrigger.enabled = true;
             attackTrigger.transform.localEulerAngles = new Vector3(attackTrigger.transform.localEulerAngles.x, attackTrigger.transform.localEulerAngles.y, currentAngle.z);
-            
+            //attackTrigger.transform.RotateAround(Vector3.zero, new Vector3(0,0,1), 45 * Time.deltaTime);
+            //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
+            //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
         }
         else
         {
