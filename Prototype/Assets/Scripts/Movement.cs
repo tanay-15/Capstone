@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
     public float speed = 5;
+    public float jumpVelocity = 5;
     private Rigidbody player;
     private SpriteRenderer sprite;
     private Animator myAnim;
@@ -50,6 +51,10 @@ public class Movement : MonoBehaviour {
                 player.transform.position = targetPos;
                 Invoke("Enabler", 0.5f);
             }
+        }
+        if(Input.GetButtonDown("Jump"))
+        {
+            player.velocity = Vector3.up * jumpVelocity;
         }
 	}
     void flip()
