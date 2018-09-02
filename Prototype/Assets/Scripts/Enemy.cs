@@ -8,10 +8,11 @@ public class Enemy : MonoBehaviour {
 
     //components used
     private Animator anim;
+    private Rigidbody rigi;
 
     [Header("Attributes")]
     public int health;
-    public float rangeofattack;
+    public float rateofattack = 2f;
     public float range;
     public float damage;
     public float movspeed;
@@ -25,6 +26,8 @@ public class Enemy : MonoBehaviour {
     [Header("Brain")]
     public GameObject target;
     private Vector3 targetpos;
+    public bool AttackReady;
+    public bool IsAlive = true;
     
     public enum States
     {
@@ -48,14 +51,34 @@ public class Enemy : MonoBehaviour {
     void Start () {
 		
         anim = this.GetComponent<Animator>();
+        rigi = this.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        DetectingPlayer();
-        Pursuit();
+        if (IsAlive)
+        {
+            DetectingPlayer();
+            Pursuit();
+            Attack();
+        }
+       
+        Death();
 	}
+
+    public void Death()
+    {
+        if (AttackReady)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                currentstate = States.Dead;
+                IsAlive = false;
+                anim.SetTrigger("Death");
+            }
+        }
+    }
 
     public void DetectingPlayer()
     {
@@ -70,7 +93,7 @@ public class Enemy : MonoBehaviour {
             if(vishit.collider.gameObject.tag == "Player")
             {
                 currentstate = States.Alert;
-                anim.SetTrigger("Alert");
+                anim.SetBool("Alert", true);
                 target = vishit.collider.gameObject;
                 targetpos = target.transform.position;
                 Debug.Log("Player spotted");
@@ -83,14 +106,17 @@ public class Enemy : MonoBehaviour {
         {
             target = null;
             currentstate = States.Idle;
+            anim.SetBool("Alert", false);
         }
 
     }
 
     public void Pursuit()
     {
-        if (target)
+        if (target && !AttackReady)
         {
+            currentstate = States.Pursuit;
+            anim.SetBool("ShouldPursuit", true);
             this.transform.position = Vector2.MoveTowards(this.transform.position, targetpos, movspeed * Time.deltaTime);
         }
     }
@@ -98,6 +124,20 @@ public class Enemy : MonoBehaviour {
     public virtual void Attack()
     {
         //Each type of enemy will have its seperate attack
+
+        if (AttackReady)
+        {
+            rateofattack -= Time.deltaTime;
+            if(rateofattack <= 0)
+            {
+                currentstate = States.Attack;
+                anim.SetBool("ShouldPursuit", false);
+                anim.SetTrigger("Attack");
+                Debug.Log("Enemy now attacks the player");
+                rateofattack = 2f;
+            }
+           
+        }
     }
 
 
@@ -111,5 +151,24 @@ public class Enemy : MonoBehaviour {
     {
         health -= damage;
         
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            
+            AttackReady = true;
+           
+            
+        }
+    }
+
+    public void OnCollisionExit(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            AttackReady = false;
+        }
     }
 }
