@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
     public float speed = 5;
-    public float jumpHeight;
-    float groundCheckRadius = 0.2f;
     private Rigidbody player;
     private SpriteRenderer sprite;
     private Animator myAnim;
     bool facingRight;
-    bool grounded = false;
-    public LayerMask groundLayer;
-    public Transform groundCheck;
 	// Use this for initialization
 	void Start () {
         player = GetComponent<Rigidbody>();
@@ -28,8 +23,8 @@ public class Movement : MonoBehaviour {
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
         Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
         player.MovePosition(transform.position + movement);
-        
-        if (hAxis > 0 && !facingRight)
+
+        if(hAxis > 0 && !facingRight)
         {
             flip();
         }
@@ -56,12 +51,6 @@ public class Movement : MonoBehaviour {
                 Invoke("Enabler", 0.5f);
             }
         }
-        if(Input.GetButtonDown("Jump"))
-        {
-          
-            grounded = false;
-            player.velocity = Vector3.up * jumpHeight;
-        }
 	}
     void flip()
     {
@@ -74,10 +63,5 @@ public class Movement : MonoBehaviour {
     {
         //player.enabled = true;
         sprite.enabled = true;
-    }
-    void FixedUpdate()
-    {
-        
-
     }
 }
