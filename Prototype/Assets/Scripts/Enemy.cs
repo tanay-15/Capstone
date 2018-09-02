@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour {
     private Vector3 targetpos;
     public bool AttackReady;
     public bool IsAlive = true;
+    private bool movway1 = true;
+    private bool movway2;
+    public GameObject waypoint1;
+    public GameObject waypoint2;
     
     public enum States
     {
@@ -60,6 +64,7 @@ public class Enemy : MonoBehaviour {
         if (IsAlive)
         {
             DetectingPlayer();
+            Patrol();
             Pursuit();
             Attack();
         }
@@ -109,6 +114,44 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("Alert", false);
         }
 
+    }
+
+    public virtual void Patrol()
+    {
+        if(target == null)
+        {
+            anim.SetTrigger("StartPatrol");
+            currentstate = States.Patrol;
+        }
+
+        
+        if(currentstate == States.Patrol)
+        {
+            if (movway1)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, movspeed * Time.deltaTime);
+                if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 1f)
+                {
+                    //move to point two
+                    movway1 = false;
+                    movway2 = true;
+                }
+            }
+            
+           
+
+            if (movway2)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, movspeed * Time.deltaTime);
+                if(Vector2.Distance(waypoint2.transform.position,this.transform.position) <= 1f)
+                {
+                    movway1 = true;
+                    movway2 = false;
+                }
+            }
+           
+        }
+        
     }
 
     public void Pursuit()
