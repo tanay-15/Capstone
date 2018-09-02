@@ -27,12 +27,31 @@ public class Movement : MonoBehaviour {
 
         if(hAxis > 0 && !facingRight)
         {
+            myAnim.SetBool("isWalking", true);
+            myAnim.SetBool("isIdle", false);
             flip();
         }
         else if (hAxis<0 && facingRight)
         {
+            myAnim.SetBool("isWalking", true);
+            myAnim.SetBool("isIdle", false);
             flip();
         }
+        else if(hAxis == 0)
+        {
+            myAnim.SetBool("isWalking", false);
+            myAnim.SetBool("isIdle", true);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            myAnim.SetBool("isAttacking", true);
+        }
+        else
+        {
+            myAnim.SetBool("isAttacking", false);
+        }
+            
 
         if (Input.GetKey(KeyCode.Tab))
         {

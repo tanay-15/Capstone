@@ -107,4 +107,9 @@ public class Enemy : MonoBehaviour {
         Gizmos.DrawWireSphere(this.transform.position,losrange);
         
     }
+    public void applyDamage(int damage)
+    {
+        health -= damage;
+        
+    }
 }
