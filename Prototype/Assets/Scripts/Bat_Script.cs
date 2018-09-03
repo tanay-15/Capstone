@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bat_Script : MonoBehaviour {
 
     float theta = 0;
-    float radius = 8;
+    float radius = 10;
 
     Vector3 offset;
 

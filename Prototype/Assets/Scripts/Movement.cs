@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour {
     public float jumpVelocity = 5;
     private Rigidbody player;
     private SpriteRenderer sprite;
-    private Animator myAnim;
+    public Animator myAnim;
     bool facingRight;
     public float cooldownTime = 2f;
     private float nextFiretime = 0f;
@@ -19,7 +19,8 @@ public class Movement : MonoBehaviour {
     void Start () {
         player = GetComponent<Rigidbody>();
         sprite = GetComponent<SpriteRenderer>();
-        myAnim = GetComponent<Animator>();
+        myAnim = GameObject.Find("Normal").GetComponent<Animator>();
+        //myAnim = GetComponent<Animator>();
         facingRight = true;
 
 }
@@ -50,7 +51,7 @@ public class Movement : MonoBehaviour {
             myAnim.SetBool("isIdle", true);
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             myAnim.SetBool("isAttacking", true);
         }
@@ -100,7 +101,7 @@ public class Movement : MonoBehaviour {
                 else
                 {
                     var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
-                    knifeInstance.GetComponent<Rigidbody>().velocity = handEnd.right * 2;
+                    knifeInstance.GetComponent<Rigidbody>().velocity = -handEnd.right * 2;
                 }
             }
         }

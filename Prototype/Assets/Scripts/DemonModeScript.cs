@@ -17,7 +17,7 @@ public class DemonModeScript : MonoBehaviour {
         if (Input.GetKeyDown("z"))
         {
             StartCoroutine("Transform");
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 30; i++)
             {
                 var Bat = Instantiate(bat, transform.position + new Vector3(0,-10,0), Quaternion.identity);
                 Bat.GetComponent<Bat_Script>().player = gameObject;
@@ -28,8 +28,10 @@ public class DemonModeScript : MonoBehaviour {
 
     IEnumerator Transform()
     {
-        yield return new WaitForSeconds(3);
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(true);
+        yield return new WaitForSeconds(4);
+
+        transform.GetComponent<Movement>().myAnim = transform.Find("Demon").GetComponent<Animator>();
+        transform.Find("Normal").gameObject.SetActive(false);
+        transform.Find("Demon").gameObject.SetActive(true);
     }
 }

@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4380344905000612}
   - component: {fileID: 212325248299828414}
   - component: {fileID: 114897845191548982}
-  - component: {fileID: 58946485457769524}
   - component: {fileID: 95210671275545768}
+  - component: {fileID: 135622695201767346}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -38,26 +38,11 @@ Transform:
   m_GameObject: {fileID: 1282434428905756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.99, y: 3.626396, z: -2.62}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58946485457769524
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1282434428905756}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.19
 --- !u!95 &95210671275545768
 Animator:
   serializedVersion: 3
@@ -88,6 +73,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+--- !u!135 &135622695201767346
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282434428905756}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212325248299828414
 SpriteRenderer:
   m_ObjectHideFlags: 1
