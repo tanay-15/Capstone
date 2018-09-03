@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class LutemPlayer : MonoBehaviour {
 
     float maxVelocity;
     private Rigidbody2D rB;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.W) && transform.parent.GetComponent<Grounded>().grounded)
         {
             // jumping
-            rB.AddForce(new Vector2(0.0f, 250.0f));
+            rB.AddForce(new Vector2(0.0f, 750.0f));
         }
 
         if(Mathf.Abs(rB.velocity.x) > maxVelocity)
