@@ -6,14 +6,16 @@ public class playerAttack : MonoBehaviour {
     private bool attacking = false;
     //private float attackTimer = 0f;
     //private float attackCd = 0.3f;
-    private Animator myAnim;
+    //private Animator myAnim;
     public Collider attackTrigger;
     private Vector3 currentAngle;
     private Vector3 reset;
     private Vector3 oldPos;
-	// Use this for initialization
-	void Start () {
-        myAnim = GetComponent<Animator>();
+   
+
+    // Use this for initialization
+    void Start () {
+      //  myAnim = GetComponent<Animator>();
         reset = attackTrigger.transform.localEulerAngles;
         oldPos = attackTrigger.transform.position;
         attackTrigger.enabled = false;
@@ -30,7 +32,7 @@ public class playerAttack : MonoBehaviour {
             attackTrigger.enabled = true;
             //attackTrigger.transform.localEulerAngles = new Vector3(attackTrigger.transform.localEulerAngles.x, attackTrigger.transform.localEulerAngles.y, currentAngle.z);
             //attackTrigger.transform.localEulerAngles = new Vector3(0, 90, 0);
-            attackTrigger.transform.rotation = Quaternion.FromToRotation(Vector3.up, Vector3.right);
+            //attackTrigger.transform.rotation = Quaternion.FromToRotation(Vector3.up, Vector3.right);
             //attackTrigger.transform.localPosition = Vector3.Lerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
             //attackTrigger.transform.RotateAround(Vector3.zero, new Vector3(0,0,1), 45 * Time.deltaTime);
             //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
@@ -46,6 +48,7 @@ public class playerAttack : MonoBehaviour {
             attackTrigger.enabled = false;
             
         }
-		
+      
 	}
+   
 }
