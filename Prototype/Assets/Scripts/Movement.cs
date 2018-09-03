@@ -64,12 +64,12 @@ public class Movement : MonoBehaviour {
            // player.enabled = false;
             sprite.enabled = false;
 
-            if(!facingRight)
+            if (!facingRight)
             {
                 Vector3 targetPos = transform.position + transform.right * -0.25f;
                 player.transform.position = targetPos;
                 Invoke("Enabler", 0.5f);
-            }       
+            }
             else
             {
                 Vector3 targetPos = transform.position + transform.right * 0.25f;
@@ -77,7 +77,8 @@ public class Movement : MonoBehaviour {
                 Invoke("Enabler", 0.5f);
             }
         }
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        //if(Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded>().grounded)
         {
             player.velocity = Vector3.up * jumpVelocity;
         }

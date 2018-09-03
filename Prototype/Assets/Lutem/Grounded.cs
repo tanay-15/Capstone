@@ -16,12 +16,32 @@ public class Grounded : MonoBehaviour {
 		
 	}
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*    private void OnTriggerEnter2D(Collider2D collision)
+        {
+            grounded = true;
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            grounded = true;
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            grounded = false;
+        }*/
+
+    private void OnTriggerEnter(Collider collision)
     {
         grounded = true;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
+    {
+        grounded = true;
+    }
+
+    private void OnTriggerExit(Collider collision)
     {
         grounded = false;
     }

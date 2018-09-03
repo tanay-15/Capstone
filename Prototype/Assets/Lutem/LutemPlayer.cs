@@ -5,11 +5,11 @@ using UnityEngine;
 public class LutemPlayer : MonoBehaviour {
 
     float maxVelocity;
-    private Rigidbody2D rB;
+    private Rigidbody rB;
 
 	// Use this for initialization
 	void Start () {
-        rB = GetComponent<Rigidbody2D>();
+        rB = GetComponent<Rigidbody>();
         maxVelocity = 4.0f;
 	}
 	
@@ -17,23 +17,23 @@ public class LutemPlayer : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.A))
         {
-            rB.AddForce(new Vector2(-1200.0f * Time.deltaTime, 0.0f));
+            rB.AddForce(new Vector3(-3600.0f * Time.deltaTime, 0.0f, 0.0f));
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            rB.AddForce(new Vector2(1200.0f * Time.deltaTime, 0.0f));
+            rB.AddForce(new Vector3(3600.0f * Time.deltaTime, 0.0f, 0.0f));
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && transform.parent.GetComponent<Grounded>().grounded)
+        if (Input.GetKeyDown(KeyCode.W) && transform.GetChild(0).GetComponent<Grounded>().grounded)
         {
             // jumping
-            rB.AddForce(new Vector2(0.0f, 750.0f));
+            rB.AddForce(new Vector3(0.0f, 750.0f, 0.0f));
         }
 
         if(Mathf.Abs(rB.velocity.x) > maxVelocity)
         {
-            rB.velocity = rB.velocity.normalized * maxVelocity;
+            rB.velocity = new Vector3(rB.velocity.normalized.x * maxVelocity, rB.velocity.y, 0.0f);
             
         }
     }
