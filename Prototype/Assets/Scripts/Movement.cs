@@ -5,18 +5,12 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
     public float speed = 5;
     public float jumpVelocity = 5;
-    public float cooldownTime =2f;
-    private float nextFiretime = 0f;
     private Rigidbody player;
     private SpriteRenderer sprite;
     private Animator myAnim;
     bool facingRight;
-    public Rigidbody knifePrefab;
-    public Transform handEnd;
-    private bool isGrounded;
-    private Rigidbody knifeInstance;
-    // Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start () {
         player = GetComponent<Rigidbody>();
         sprite = GetComponent<SpriteRenderer>();
         myAnim = GetComponent<Animator>();
@@ -77,33 +71,18 @@ public class Movement : MonoBehaviour {
                 Invoke("Enabler", 0.5f);
             }
         }
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if(Input.GetButtonDown("Jump"))
         {
             player.velocity = Vector3.up * jumpVelocity;
         }
-        if (Time.time > nextFiretime)
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                // Rigidbody knifeInstance;
-                nextFiretime = Time.time + cooldownTime;
-                if (facingRight)
-                {
-                    knifeInstance = Instantiate(knifePrefab, handEnd.position, knifePrefab.rotation) as Rigidbody;
-                    knifeInstance.AddForce(handEnd.right * 1500);
-                }
-                else
-                {
-                    knifeInstance = Instantiate(knifePrefab, handEnd.position, knifePrefab.rotation) as Rigidbody;
-                    knifeInstance.AddForce(handEnd.right * -1500);
-                }
+            //BackGround shift
 
 
-            }
         }
-       
-    }
-  
+	}
     void flip()
     {
         facingRight = !facingRight;
@@ -115,24 +94,5 @@ public class Movement : MonoBehaviour {
     {
         //player.enabled = true;
         sprite.enabled = true;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    { 
-
-        if (collision.gameObject.tag  == "ground")
-        {
-            Debug.Log("colliding");
-            isGrounded = true;
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-
-        if (collision.gameObject.tag == "ground")
-        {
-            
-            isGrounded = false;
-        }
     }
 }
