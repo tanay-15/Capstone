@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour {
         
         if(Physics.Raycast(vision.transform.position,transform.right,out eyehit, range))
         {
-            Debug.Log("Player in range");
+            //Debug.Log("Player in range");
         }
 
         if(Physics.Raycast(vision.transform.position,transform.right,out vishit, losrange))
@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour {
                 anim.SetBool("Alert", true);
                 target = vishit.collider.gameObject;
                 targetpos = target.transform.position;
-                Debug.Log("Player spotted");
+                //Debug.Log("Player spotted");
             }
 
            
@@ -178,7 +178,7 @@ public class Enemy : MonoBehaviour {
                 currentstate = States.Attack;
                 anim.SetBool("ShouldPursuit", false);
                 anim.SetTrigger("Attack");
-                Debug.Log("Enemy now attacks the player");
+                //Debug.Log("Enemy now attacks the player");
                 rateofattack = 2f;
             }
            
