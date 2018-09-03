@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour {
     bool facingRight;
     public Rigidbody knifePrefab;
     public Transform handEnd;
-   
+    private bool isGrounded;
     private Rigidbody knifeInstance;
     // Use this for initialization
     void Start () {
@@ -77,7 +77,7 @@ public class Movement : MonoBehaviour {
                 Invoke("Enabler", 0.5f);
             }
         }
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump") && isGrounded)
         {
             player.velocity = Vector3.up * jumpVelocity;
         }
@@ -115,5 +115,24 @@ public class Movement : MonoBehaviour {
     {
         //player.enabled = true;
         sprite.enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    { 
+
+        if (collision.gameObject.tag  == "ground")
+        {
+            Debug.Log("colliding");
+            isGrounded = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "ground")
+        {
+            
+            isGrounded = false;
+        }
     }
 }
