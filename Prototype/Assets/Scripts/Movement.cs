@@ -9,13 +9,20 @@ public class Movement : MonoBehaviour {
     private SpriteRenderer sprite;
     private Animator myAnim;
     bool facingRight;
-	// Use this for initialization
-	void Start () {
+    public float cooldownTime = 2f;
+    private float nextFiretime = 0f;
+    public Rigidbody knifePrefab;
+    public Transform handEnd;
+
+    //private Rigidbody knifeInstance;
+    // Use this for initialization
+    void Start () {
         player = GetComponent<Rigidbody>();
         sprite = GetComponent<SpriteRenderer>();
         myAnim = GetComponent<Animator>();
         facingRight = true;
-	}
+
+}
 	
 	// Update is called once per frame
 	void Update () {
@@ -77,7 +84,27 @@ public class Movement : MonoBehaviour {
             player.velocity = Vector3.up * jumpVelocity;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Time.time > nextFiretime)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                
+                // Rigidbody knifeInstance;
+                nextFiretime = Time.time + cooldownTime;
+                if (facingRight)
+                {
+                    Debug.Log("right click");
+                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
+                    knifeInstance.GetComponent<Rigidbody>().velocity = handEnd.right * 2;
+                }
+                else
+                {
+                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
+                    knifeInstance.GetComponent<Rigidbody>().velocity = handEnd.right * 2;
+                }
+            }
+        }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             //BackGround shift
 
