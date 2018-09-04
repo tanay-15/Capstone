@@ -15,7 +15,7 @@ public class playerAttack : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-      //  myAnim = GetComponent<Animator>();
+      
         reset = attackTrigger.transform.localEulerAngles;
         oldPos = attackTrigger.transform.position;
         attackTrigger.enabled = false;
@@ -38,6 +38,8 @@ public class playerAttack : MonoBehaviour {
             //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
             //attackTrigger.transform.localPosition = Vector3.Slerp(attackTrigger.transform.localPosition, new Vector3(1, 0, 0), 0.01f);
         }
+
+      
         else 
         {
             
@@ -48,7 +50,9 @@ public class playerAttack : MonoBehaviour {
             attackTrigger.enabled = false;
             
         }
-      
+
+
+    
 	}
    
 }

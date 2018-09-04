@@ -14,6 +14,9 @@ public class Movement : MonoBehaviour {
     public Transform handEnd;
     private SpriteRenderer sprite;
 
+    [Header("ShadowSlash Collider")]
+    public Collider2D sscollider;
+
     //private Rigidbody knifeInstance;
     // Use this for initialization
     void Start () {
@@ -28,7 +31,12 @@ public class Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+
+        if (transform.Find("Demon").gameObject.activeSelf)
+        {
+            sscollider = transform.Find("Demon").gameObject.GetComponent<BoxCollider2D> ();
+        }
+
         float hAxis = Input.GetAxis("Horizontal");
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
         Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
@@ -60,8 +68,8 @@ public class Movement : MonoBehaviour {
         {
             myAnim.SetBool("isAttacking", false);
         }
-            
 
+       
         if (Input.GetKey(KeyCode.Tab))
         {
            // player.enabled = false;
