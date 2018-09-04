@@ -6,22 +6,23 @@ public class Movement : MonoBehaviour {
     public float speed = 5;
     public float jumpVelocity = 5;
     private Rigidbody player;
-    private SpriteRenderer sprite;
     public Animator myAnim;
     bool facingRight;
     public float cooldownTime = 2f;
     private float nextFiretime = 0f;
     public Rigidbody knifePrefab;
     public Transform handEnd;
+    private SpriteRenderer sprite;
 
     //private Rigidbody knifeInstance;
     // Use this for initialization
     void Start () {
         player = GetComponent<Rigidbody>();
-        sprite = GetComponent<SpriteRenderer>();
+        
         myAnim = GameObject.Find("Normal").GetComponent<Animator>();
         //myAnim = GetComponent<Animator>();
         facingRight = true;
+        sprite = GetComponentInChildren<SpriteRenderer>();
 
 }
 	
@@ -64,6 +65,7 @@ public class Movement : MonoBehaviour {
         if (Input.GetKey(KeyCode.Tab))
         {
            // player.enabled = false;
+           // sprite.enabled = false;
             sprite.enabled = false;
 
             if (!facingRight)
