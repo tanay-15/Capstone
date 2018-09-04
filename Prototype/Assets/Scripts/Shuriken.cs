@@ -12,6 +12,15 @@ public class Shuriken : MonoBehaviour {
 		
 	}
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Enemy")
+        {
+            col.gameObject.SendMessage("applyDamage", 10);
+            Death();
+        }
+    }
+
 
 
     // Update is called once per frame

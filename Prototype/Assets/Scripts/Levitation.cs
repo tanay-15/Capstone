@@ -11,6 +11,7 @@ public class Levitation : MonoBehaviour {
     public ParticleSystem particles;
     [System.NonSerialized]
     public GameObject heldObject;
+    public float mouseZPosition = 0f;
 
     float grabRadius = 0.5f;
     Vector3 mousePosition;
@@ -37,14 +38,15 @@ public class Levitation : MonoBehaviour {
 
     void CalculatePosition()
     {
-        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z);
+        //TODO: Make this easier
+        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
         particles.gameObject.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
     }
 
     void UpdateColor()
     {
         collidingObjects = from col in Physics.OverlapSphere(Camera.main.ScreenToWorldPoint(mousePosition), grabRadius).ToList()
-                               where col.gameObject.tag == "Grabbable"
+                               where col.gameObject.tag == "Grabbable" || col.gameObject.tag == "Player Weapon"
                                select col;
 
         ParticleSystem.MainModule main = particles.main;

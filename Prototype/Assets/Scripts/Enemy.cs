@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour {
     // Use this for initialization
 
     //components used
-    private Animator anim;
-    private Rigidbody rigi;
+    protected Animator anim;
+    protected Rigidbody rigi;
 
     [Header("Attributes")]
     public int health;
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour {
 
     [Header("Brain")]
     public GameObject target;
-    private Vector3 targetpos;
+    protected Vector3 targetpos;
     public bool AttackReady;
     public bool IsAlive = true;
     private bool movway1 = true;
@@ -156,7 +156,7 @@ public class Enemy : MonoBehaviour {
         
     }
 
-    public void Pursuit()
+    public virtual void Pursuit()
     {
         if (target && !AttackReady)
         {
@@ -195,11 +195,21 @@ public class Enemy : MonoBehaviour {
     public void applyDamage(int damage)
     {
         health -= damage;
-        
+
+        if (health <= 0)
+        {
+            //temporary
+            Destroy(gameObject);
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
     {
+        //Temporary. Let the Player Weapon GameObjects kill the enemy
+        if (collision.gameObject.tag == "Player Weapon")
+        {
+            Destroy(gameObject);
+        }
         if(collision.gameObject.tag == "Player")
         {
             
