@@ -14,7 +14,8 @@ public class Levitation : MonoBehaviour {
     public float mouseZPosition = 0f;
 
     float grabRadius = 0.5f;
-    Vector3 mousePosition;
+    float maxGrabDistance = 4f;
+    Vector3 grabPosition;
     IEnumerable<Collider> collidingObjects;
 
     static Levitation()
@@ -38,14 +39,25 @@ public class Levitation : MonoBehaviour {
 
     void CalculatePosition()
     {
+        Vector3 playerPos = Movement.sharedInstance.gameObject.transform.position;
         //TODO: Make this easier
-        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
-        particles.gameObject.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+        grabPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
+        //This line may not be necessary
+        grabPosition = Camera.main.ScreenToWorldPoint(grabPosition);
+
+        //Tether the grab area to the player
+        Vector3 distance = grabPosition - playerPos;
+        if (distance.magnitude > maxGrabDistance)
+        {
+            Ray r = new Ray(playerPos, distance);
+            grabPosition = r.GetPoint(maxGrabDistance);
+        }
+        particles.gameObject.transform.position = grabPosition;
     }
 
     void UpdateColor()
     {
-        collidingObjects = from col in Physics.OverlapSphere(Camera.main.ScreenToWorldPoint(mousePosition), grabRadius).ToList()
+        collidingObjects = from col in Physics.OverlapSphere(grabPosition, grabRadius).ToList()
                                where col.gameObject.tag == "Grabbable" || col.gameObject.tag == "Player Weapon"
                                select col;
 
@@ -95,7 +107,7 @@ public class Levitation : MonoBehaviour {
     {
         if (heldObject != null)
         {
-            heldObject.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+            heldObject.transform.position = grabPosition;
         }
     }
 	

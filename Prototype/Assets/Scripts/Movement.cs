@@ -13,13 +13,30 @@ public class Movement : MonoBehaviour {
     public Rigidbody knifePrefab;
     public Transform handEnd;
     private SpriteRenderer sprite;
+    public static Movement sharedInstance;
+
+    float minJumpSpeed = 2.0f;
 
     [Header("ShadowSlash Collider")]
     public Collider2D sscollider;
 
+    static Movement()
+    {
+        sharedInstance = null;
+    }
+
     //private Rigidbody knifeInstance;
     // Use this for initialization
     void Start () {
+        if (sharedInstance == null)
+        {
+            sharedInstance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         player = GetComponent<Rigidbody>();
         
         myAnim = GameObject.Find("Normal").GetComponent<Animator>();
@@ -92,7 +109,12 @@ public class Movement : MonoBehaviour {
         //if(Input.GetButtonDown("Jump") && isGrounded)
         if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded>().grounded)
         {
-            player.velocity = Vector3.up * jumpVelocity;
+            player.velocity = Vector3.up * jumpVelocity * (1f + movement.magnitude * 2f);
+        }
+
+        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded>().grounded && player.velocity.y > minJumpSpeed)
+        {
+            player.velocity = Vector3.up * minJumpSpeed;
         }
 
         if (Time.time > nextFiretime)
