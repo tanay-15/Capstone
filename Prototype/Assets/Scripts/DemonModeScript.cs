@@ -28,7 +28,7 @@ public class DemonModeScript : MonoBehaviour {
 
     IEnumerator Transform()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
 
         transform.GetComponent<Movement>().myAnim = transform.Find("Demon").GetComponent<Animator>();
         transform.Find("Normal").gameObject.SetActive(false);

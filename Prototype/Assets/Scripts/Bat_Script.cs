@@ -16,7 +16,7 @@ public class Bat_Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
+        offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), 0);
 
         int randomInt = (int)Random.Range(0f, 4f);
 
@@ -39,8 +39,8 @@ public class Bat_Script : MonoBehaviour {
 
         if (begin)
         {
-            theta += 2 * Time.deltaTime;
-            radius -= 3 * Time.deltaTime;
+            theta += 4 * Time.deltaTime;
+            radius -= 5 * Time.deltaTime;
 
             if (radius < 0)
             {
@@ -68,7 +68,7 @@ public class Bat_Script : MonoBehaviour {
 
         begin = true;
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
 
         Destroy(gameObject);
     }
