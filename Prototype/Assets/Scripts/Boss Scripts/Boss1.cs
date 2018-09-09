@@ -51,6 +51,8 @@ public class Boss1 : MonoBehaviour {
 
         if (shouldattack2)
         {
+
+            //shield is down, shadow orb attack
             attack2counter = attack2counter - Time.deltaTime;
             if(attack2counter <= 0)
             {
@@ -59,6 +61,12 @@ public class Boss1 : MonoBehaviour {
             }
           
            
+        }
+
+        if (hasBarrier)
+        {
+            //shield is up, dark axe attack
+
         }
 	}
 
