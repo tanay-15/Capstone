@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 114025598347018486}
   - component: {fileID: 114304581374282320}
   - component: {fileID: 114572393372644210}
+  - component: {fileID: 114842929372130446}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -114,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4001164597686840
 Transform:
   m_ObjectHideFlags: 1
@@ -135,7 +136,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915422515657174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.696, y: 1.09, z: 0}
+  m_LocalPosition: {x: 20.45, y: 1.09, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4990740603744274}
@@ -299,10 +300,12 @@ MonoBehaviour:
   speed: 5
   jumpVelocity: 5
   myAnim: {fileID: 0}
+  facingRight: 0
   cooldownTime: 2
   knifePrefab: {fileID: 54810927286325632, guid: 79d1b50df808eec47bc58631189052ba,
     type: 2}
   handEnd: {fileID: 4001164597686840}
+  sscollider: {fileID: 0}
 --- !u!114 &114304581374282320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,6 +341,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2661000029a00f4792b1b74806240c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114842929372130446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1915422515657174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8db2ddcd1302248b1f48f2610c16f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 2
 --- !u!114 &114988353863383278
 MonoBehaviour:
   m_ObjectHideFlags: 1

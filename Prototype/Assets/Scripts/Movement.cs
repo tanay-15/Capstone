@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour {
     public float jumpVelocity = 5;
     private Rigidbody player;
     public Animator myAnim;
-    bool facingRight;
+    public bool facingRight;
     public float cooldownTime = 2f;
     private float nextFiretime = 0f;
     public Rigidbody knifePrefab;
@@ -144,7 +144,7 @@ public class Movement : MonoBehaviour {
 
         }
 	}
-    void flip()
+    public void flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
