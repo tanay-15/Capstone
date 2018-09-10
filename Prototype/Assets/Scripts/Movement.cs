@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
+    bool trackJumpHeight = false;
+
+    float trackedYPosition;
+    float highestJumpHeight;
+
     public float speed = 5;
     public float jumpVelocity = 5;
     private Rigidbody player;
@@ -25,9 +30,19 @@ public class Movement : MonoBehaviour {
         sharedInstance = null;
     }
 
+    void ResetJumpTracking()
+    {
+        Debug.Log("Jump tracking reset.");
+        trackedYPosition = transform.position.y;
+        highestJumpHeight = 0f;
+    }
+
     //private Rigidbody knifeInstance;
     // Use this for initialization
     void Start () {
+        if (trackJumpHeight)
+            ResetJumpTracking();
+
         if (sharedInstance == null)
         {
             sharedInstance = this;
@@ -44,10 +59,31 @@ public class Movement : MonoBehaviour {
         facingRight = true;
         sprite = GetComponentInChildren<SpriteRenderer>();
 
-}
+    }
+
+    void FixedUpdate()
+    {
+        if (trackJumpHeight)
+        {
+            float height = transform.position.y - trackedYPosition;
+            if (height > highestJumpHeight)
+            {
+                highestJumpHeight = height;
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        if (trackJumpHeight)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ResetJumpTracking();
+            }
+            Debug.Log("Highest jump height: " + highestJumpHeight + "\nTracked y position: " + trackedYPosition);
+        }
+
 
         if (transform.Find("Demon").gameObject.activeSelf)
         {
