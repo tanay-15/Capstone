@@ -12,15 +12,7 @@ public class rageBar : MonoBehaviour {
     [SerializeField]
     private Image filler;
 
-    public int MaxValue { get; set; }
-
-    public float Value
-    {
-        set
-        {
-            fillAmount = Mapping(value, 0, MaxValue, 0, 1);
-        }
-    }
+   
                                        // Use this for initialization
     void Start () {
         
