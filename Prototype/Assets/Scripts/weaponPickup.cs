@@ -26,7 +26,7 @@ public class weaponPickup : MonoBehaviour {
         if (other.tag == "Player")
         {
             other.transform.Find("handEnd").GetComponent<weaponManager>().updateWeapon(weaponHere);
-            Destroy(weaponDrop);
+            Destroy (gameObject);
         }
     }
 }
