@@ -25,6 +25,13 @@ public class Boss1 : MonoBehaviour {
     public bool hasBarrier = true;
     public int barrCounter = 3;
     public float barrierback = 10;
+    private int tempvalue;
+    public bool deciderparameter = false;
+
+    [Header("Attack Shield Up")]
+    //Attack 1 is AOE slash
+    public Collider aoecollider;
+    //Attack 2 is Dash
 
     [Header("Attack Shield Down")]
     public GameObject orbprefab;
@@ -35,13 +42,22 @@ public class Boss1 : MonoBehaviour {
     public bool shouldattack2;
     public float attack2counter = 0;
 
+    [Header("Boss movement")]
+    public GameObject waypoint1;
+    public GameObject waypoint2;
+    private bool movetoA = true;
+    private bool movetoB;
+    public bool nearby;
+
     private Quaternion o3rot;
     
 
 	void Start () {
 
         player = GameObject.FindGameObjectWithTag("Player");
-       // o3rot = Quaternion.Euler(0, 0, -23.5);
+
+        aoecollider = this.transform.GetChild(4).GetComponent<Collider>();
+      
 	}
 	
 	// Update is called once per frame
@@ -57,7 +73,7 @@ public class Boss1 : MonoBehaviour {
             if(attack2counter <= 0)
             {
                 ShieldDownAttack();
-                attack2counter = 10;
+                attack2counter = 4;
             }
           
            
@@ -65,10 +81,123 @@ public class Boss1 : MonoBehaviour {
 
         if (hasBarrier)
         {
+            PlayerNearby();
             //shield is up, dark axe attack
+            if (!nearby)
+            {
+                Movement();
+            }
 
+            else
+            {
+                Debug.Log("Player is nearby! check for his moment!");
+
+                Decider();
+
+            }
         }
 	}
+
+    private void Decider()
+    {
+        if (!deciderparameter)
+        {
+            tempvalue = (int)Random.Range(0, 8);
+            
+        }
+            
+
+            if (tempvalue <= 5)
+            {
+                Debug.Log("Dash power");
+                Dash();
+                //deciderparameter = true;
+            }
+
+            if (tempvalue > 5)
+            {
+               
+                Debug.Log("Aoe slash attack");
+                //deciderparameter = true;
+            }
+        
+          
+
+        
+       
+    }
+
+    public void PlayerNearby()
+    {
+        if(Vector2.Distance(player.transform.position,this.transform.position) < 7f)
+        {
+            nearby = true;
+          
+        }
+
+        else
+        {
+            //flip to player's side.
+            //take player position.
+            //attack ready
+            //dash
+            //or aoe slash on both sides
+            nearby = false;
+        }
+    }
+    public void Dash()
+    {
+        if(this.transform.position.x < player.transform.position.x)
+        {
+            Debug.Log("Dash right");
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint2.transform.position, 7 * Time.deltaTime);
+           
+        }
+
+        if(this.transform.position.x > player.transform.position.x)
+        {
+            Debug.Log("Dash left");
+            //dash to wp1
+            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint1.transform.position, 7 * Time.deltaTime);
+          
+        }
+    }
+
+    public void AOESlashing()
+    {
+       
+    }
+
+    public void Movement()
+    {
+       
+
+        if (movetoA)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
+
+            if (Vector3.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
+            {
+                movetoA = false;
+                movetoB = true;
+            }
+        }
+
+        if (movetoB)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
+
+            if (Vector3.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
+            {
+                movetoA = true;
+                movetoB = false;
+            }
+        }
+    }
+        
+    
+
 
     public void ShieldDownAttack()
     {
