@@ -1086,7 +1086,6 @@ GameObject:
   - component: {fileID: 911837694}
   - component: {fileID: 911837697}
   - component: {fileID: 911837696}
-  - component: {fileID: 911837695}
   m_Layer: 5
   m_Name: Rage Bar
   m_TagString: Untagged
@@ -1113,19 +1112,6 @@ RectTransform:
   m_AnchoredPosition: {x: -131, y: -33}
   m_SizeDelta: {x: 257.3, y: 85.79999}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &911837695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911837693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 972d21f270bed834090574d941683284, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fillAmount: 1
-  filler: {fileID: 117878567}
 --- !u!114 &911837696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1333,6 +1319,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1256962731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1915422515657174, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    type: 2}
+  m_PrefabInternal: {fileID: 2005162090}
+--- !u!114 &1256962739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1256962731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972d21f270bed834090574d941683284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillAmount: 1
+  speed: 0.05
+  filler: {fileID: 117878567}
 --- !u!1 &1289405342
 GameObject:
   m_ObjectHideFlags: 0
