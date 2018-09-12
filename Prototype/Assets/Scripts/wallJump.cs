@@ -8,7 +8,10 @@ public class wallJump : MonoBehaviour
     private Movement playerMovement;
     private Grounded ground;
     private Rigidbody player;
-    private bool hitWall;
+    public bool wallSliding;
+    public Transform wallCheckpoint;
+    public bool wallCheck;
+    public LayerMask wallLayerMask;
      
     // Use this for initialization
     void Start()
@@ -16,41 +19,66 @@ public class wallJump : MonoBehaviour
         playerMovement = GetComponent<Movement>();
         ground = GetComponent<Grounded>();
         player = GetComponent<Rigidbody>();
-        hitWall = false;
+        
         
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        
-        
-        
-        if(Input.GetKeyDown(KeyCode.Space) && !transform.GetChild(2).GetComponent<Grounded>().grounded && hitWall)
+        if (!transform.GetChild(2).GetComponent<Grounded>().grounded)
         {
-            Debug.Log("Wall Jump Test");
+            //wallCheck = Physics2D.OverlapCircle(wallCheckpoint.position, 0.5f, wallLayerMask);
+            Collider[] hitColliders = Physics.OverlapSphere(wallCheckpoint.position, 0.005f,wallLayerMask);
+            if (hitColliders.Length != 0)
+            {
+                Debug.Log("Colliding");
+                wallCheck = true;
+                Debug.Log("wallcheck" + wallCheck);
+            }
+            else
+            {
+                wallCheck = false;
+            }
+
+            //if ((playerMovement.facingRight && Input.GetAxis("Horizontal")>0.1f )||(!playerMovement.facingRight && Input.GetAxis("Horizontal") < 0.1f))
+            //{
+                if(wallCheck)
+                {
+                    handleWallSliding();
+                }
+            //}
+        }
+
+        if(wallCheck == false )
+        {
+            wallSliding = false;
+            Debug.Log("wallsliding " + wallSliding);
+        }
+    }
+
+    private void handleWallSliding()
+    {
+        wallSliding = true;
+        Debug.Log("wallsliding set" + wallSliding);
+        player.velocity = new Vector3(player.velocity.x, -0.7f, player.velocity.z);
+        wallSliding = true;
+        if(Input.GetButtonDown("Jump"))
+        {
             if(playerMovement.facingRight)
             {
-                player.AddForce(-2*distance, 3*distance, 0, ForceMode.Impulse);
-                //playerMovement.flip();
-                hitWall = false;
+                playerMovement.flip();
+                player.AddForce(new Vector3(-10, 25, 0)*distance);
             }
-            else if(!playerMovement.facingRight)
+            else
             {
-                player.AddForce(2 * distance, 3* distance, 0, ForceMode.Impulse);
-                //playerMovement.flip();
-                hitWall = false;
+                playerMovement.flip();
+                player.AddForce(new Vector3(10, 25, 0) * distance);
             }
-           
+            
         }
+        wallCheck = false;
+        Debug.Log("wallcheck set" + wallCheck);
     }
-    public void OnCollisionEnter(Collision collision)
-    {
-        
-        if (collision.gameObject.tag == "Wall")
-        {
-            hitWall = true;
-        }
-    }
+
 }

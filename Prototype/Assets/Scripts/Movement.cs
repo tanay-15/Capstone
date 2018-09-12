@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour {
     public Transform handEnd;
     private SpriteRenderer sprite;
     public static Movement sharedInstance;
+    private wallJump wallJumpScript;
 
     float minJumpSpeed = 2.0f;
 
@@ -58,6 +59,7 @@ public class Movement : MonoBehaviour {
         //myAnim = GetComponent<Animator>();
         facingRight = true;
         sprite = GetComponentInChildren<SpriteRenderer>();
+        wallJumpScript = GetComponent<wallJump>();
 
     }
 
@@ -143,12 +145,12 @@ public class Movement : MonoBehaviour {
             }
         }
         //if(Input.GetButtonDown("Jump") && isGrounded)
-        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded>().grounded)
+        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded>().grounded && !wallJumpScript.wallSliding)
         {
             player.velocity = Vector3.up * jumpVelocity * (1f + movement.magnitude * 2f);
         }
 
-        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded>().grounded && player.velocity.y > minJumpSpeed)
+        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded>().grounded && !wallJumpScript.wallSliding && player.velocity.y > minJumpSpeed)
         {
             player.velocity = Vector3.up * minJumpSpeed;
         }
