@@ -16,7 +16,7 @@ public class Movement2D : MonoBehaviour
     public bool facingRight;
     public float cooldownTime = 2f;
     private float nextFiretime = 0f;
-    public Rigidbody knifePrefab;
+    public GameObject knifePrefab;
     public Transform handEnd;
     private SpriteRenderer sprite;
     public static Movement2D sharedInstance;
@@ -146,6 +146,11 @@ public class Movement2D : MonoBehaviour
                 Invoke("Enabler", 0.5f);
             }
         }
+
+
+
+// Jumping
+
         //if(Input.GetButtonDown("Jump") && isGrounded)
         if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded2D>().grounded)
         {
@@ -158,6 +163,14 @@ public class Movement2D : MonoBehaviour
             player.velocity = Vector3.up * minJumpSpeed;
         }
 
+
+
+
+
+
+
+// Ranged Attack
+
         if (Time.time > nextFiretime)
         {
             if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -169,12 +182,12 @@ public class Movement2D : MonoBehaviour
                 {
                     Debug.Log("right click");
                     var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
-                    knifeInstance.GetComponent<Rigidbody>().velocity = handEnd.right * 2;
+                    knifeInstance.GetComponent<Rigidbody2D>().velocity = handEnd.right * 5;
                 }
                 else
                 {
-                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
-                    knifeInstance.GetComponent<Rigidbody>().velocity = -handEnd.right * 2;
+                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, new Quaternion(knifePrefab.transform.rotation.x, knifePrefab.transform.rotation.y, knifePrefab.transform.rotation.z, 1));
+                    knifeInstance.GetComponent<Rigidbody2D>().velocity = -handEnd.right * 5;
                 }
             }
         }
@@ -185,6 +198,10 @@ public class Movement2D : MonoBehaviour
 
         }
     }
+
+
+// Flipping chracter
+
     public void flip()
     {
         facingRight = !facingRight;

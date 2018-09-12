@@ -914,8 +914,9 @@ MonoBehaviour:
   myAnim: {fileID: 0}
   facingRight: 0
   cooldownTime: 2
-  knifePrefab: {fileID: 0}
-  handEnd: {fileID: 0}
+  knifePrefab: {fileID: 1517853802281472, guid: 72642c5fd19a233408ba7f5efdfe4cce,
+    type: 2}
+  handEnd: {fileID: 1503194246}
   sscollider: {fileID: 0}
 --- !u!224 &653488631 stripped
 RectTransform:
@@ -1138,13 +1139,12 @@ BoxCollider2D:
 --- !u!114 &1079196066
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114419287947316442, guid: 4e190663ac050a146aca7b5f99bdd0d0,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1079196063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 014b840573445e140b6001379fe1ef37, type: 3}
+  m_Script: {fileID: 11500000, guid: c760d52820d13544ca9900e677f04664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   grounded: 0
