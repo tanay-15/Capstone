@@ -18,23 +18,35 @@ public class Bat_Script : MonoBehaviour {
 
         offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), 0);
 
-        int randomInt = (int)Random.Range(0f, 7f);
+        int randomInt = (int)Random.Range(0f, 13f);
 
         if (randomInt == 0)
             theta = 0;
         else if(randomInt == 1)
-            theta = 15;
-        else if (randomInt == 2)
             theta = 30;
-        else if (randomInt == 3)
-            theta = 45;
-        else if (randomInt == 4)
+        else if (randomInt == 2)
             theta = 60;
-        else if (randomInt == 5)
-            theta = 75;
-        else if (randomInt == 6)
+        else if (randomInt == 3)
             theta = 90;
-  
+        else if (randomInt == 4)
+            theta = 120;
+        else if (randomInt == 5)
+            theta = 150;
+        else if (randomInt == 6)
+            theta = 180;
+        else if (randomInt == 7)
+            theta = 210;
+        else if (randomInt == 8)
+            theta = 240;
+        else if (randomInt == 9)
+            theta = 270;
+        else if (randomInt == 10)
+            theta = 300;
+        else if (randomInt == 11)
+            theta = 330;
+        else if (randomInt == 12)
+            theta = 360;
+
 
 
         Debug.Log(randomInt);
