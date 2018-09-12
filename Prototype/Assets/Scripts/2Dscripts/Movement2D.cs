@@ -96,7 +96,8 @@ public class Movement2D : MonoBehaviour
         float hAxis = Input.GetAxis("Horizontal");
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
         Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
-        player.MovePosition(transform.position + movement);
+        //player.MovePosition(transform.position + movement);
+        player.position += new Vector2(movement.x,movement.y);
 
         if (hAxis > 0 && !facingRight)
         {
@@ -146,12 +147,13 @@ public class Movement2D : MonoBehaviour
             }
         }
         //if(Input.GetButtonDown("Jump") && isGrounded)
-        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded>().grounded)
+        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded2D>().grounded)
         {
             player.velocity = Vector3.up * jumpVelocity * (1f + movement.magnitude * 2f);
+            Debug.Log(player.velocity);
         }
 
-        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded>().grounded && player.velocity.y > minJumpSpeed)
+        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded2D>().grounded && player.velocity.y > minJumpSpeed)
         {
             player.velocity = Vector3.up * minJumpSpeed;
         }

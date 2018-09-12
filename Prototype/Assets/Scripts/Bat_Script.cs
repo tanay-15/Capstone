@@ -48,9 +48,6 @@ public class Bat_Script : MonoBehaviour {
             theta = 360;
 
 
-
-        Debug.Log(randomInt);
-
         StartCoroutine("DelayBegin");
     }
 	
