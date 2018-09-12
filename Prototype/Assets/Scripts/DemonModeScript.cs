@@ -17,7 +17,7 @@ public class DemonModeScript : MonoBehaviour {
         if (Input.GetKeyDown("z"))
         {
             StartCoroutine("Transform");
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 40; i++)
             {
                 var Bat = Instantiate(bat, transform.position + new Vector3(0,-10,0), Quaternion.identity);
                 Bat.GetComponent<Bat_Script>().player = gameObject;

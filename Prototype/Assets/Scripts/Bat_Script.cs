@@ -18,16 +18,24 @@ public class Bat_Script : MonoBehaviour {
 
         offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), 0);
 
-        int randomInt = (int)Random.Range(0f, 4f);
+        int randomInt = (int)Random.Range(0f, 7f);
 
         if (randomInt == 0)
             theta = 0;
         else if(randomInt == 1)
-            theta = 30;
+            theta = 15;
         else if (randomInt == 2)
-            theta = 60;
+            theta = 30;
         else if (randomInt == 3)
+            theta = 45;
+        else if (randomInt == 4)
+            theta = 60;
+        else if (randomInt == 5)
+            theta = 75;
+        else if (randomInt == 6)
             theta = 90;
+  
+
 
         Debug.Log(randomInt);
 
@@ -39,8 +47,10 @@ public class Bat_Script : MonoBehaviour {
 
         if (begin)
         {
-            theta += 4 * Time.deltaTime;
-            radius -= 5 * Time.deltaTime;
+            GetComponent<TrailRenderer>().enabled = true;
+
+            theta += 3 * Time.deltaTime;
+            radius -= 6 * Time.deltaTime;
 
             if (radius < 0)
             {
@@ -64,7 +74,7 @@ public class Bat_Script : MonoBehaviour {
 
     IEnumerator DelayBegin()
     {
-        yield return new WaitForSeconds(Random.Range(0f,1f));
+        yield return new WaitForSeconds(Random.Range(0f,1.5f));
 
         begin = true;
 
