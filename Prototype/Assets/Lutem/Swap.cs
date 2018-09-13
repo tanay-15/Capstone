@@ -8,9 +8,22 @@ public class Swap : MonoBehaviour {
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    
+    public void toggle()
+    {
+        if(this.gameObject.GetComponent<SpriteRenderer>().color == Color.red)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+        else
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+    }
 }

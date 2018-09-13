@@ -27,7 +27,7 @@ public class Switch : MonoBehaviour {
         {
             if (g.GetComponent<Swap>())
             {
-                //g.GetComponent<Swap>().toggle();
+                g.GetComponent<Swap>().toggle();
             }
             if (g.GetComponent<ChangeDoorStatus>())
             {
