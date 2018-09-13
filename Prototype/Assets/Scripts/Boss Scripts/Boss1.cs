@@ -29,8 +29,7 @@ public class Boss1 : MonoBehaviour {
     public bool deciderparameter = false;
 
     [Header("Attack Shield Up")]
-    //Attack 1 is AOE slash
-    public Collider aoecollider;
+   
     //Attack 2 is Dash
 
     [Header("Attack Shield Down")]
@@ -49,14 +48,15 @@ public class Boss1 : MonoBehaviour {
     private bool movetoB;
     public bool nearby;
 
-    private Quaternion o3rot;
-    
+    [Header("Boss vision")]
+    public GameObject visionpoint;
+    private RaycastHit2D vishit;
 
 	void Start () {
 
         player = GameObject.FindGameObjectWithTag("Player");
 
-        aoecollider = this.transform.GetChild(4).GetComponent<Collider>();
+       
       
 	}
 	
@@ -81,46 +81,38 @@ public class Boss1 : MonoBehaviour {
 
         if (hasBarrier)
         {
-            PlayerNearby();
-            //shield is up, dark axe attack
-            if (!nearby)
-            {
-                Movement();
-            }
+            /* PlayerNearby();
+             //shield is up, dark axe attack
+             if (!nearby)
+             {
+                 Movement();
+             }
 
-            else
-            {
-                Debug.Log("Player is nearby! check for his moment!");
+             else
+             {
+                 Debug.Log("Player is nearby! check for his moment!");
 
-                Decider();
+                 //Decider();
 
-            }
+             }*/
+
+            Movement();
+            DetectPlayer();
         }
 	}
 
+    private void DetectPlayer()
+    {
+        vishit = Physics2D.Raycast(visionpoint.transform.position, -transform.right, 3f);
+        if(vishit.collider.gameObject.tag == "Player")
+        {
+            Debug.Log("Player found");
+        }
+    }
+
     private void Decider()
     {
-        if (!deciderparameter)
-        {
-            tempvalue = (int)Random.Range(0, 8);
-            
-        }
-            
-
-            if (tempvalue <= 5)
-            {
-                Debug.Log("Dash power");
-                Dash();
-                //deciderparameter = true;
-            }
-
-            if (tempvalue > 5)
-            {
-               
-                Debug.Log("Aoe slash attack");
-                //deciderparameter = true;
-            }
-        
+       
           
 
         
@@ -147,11 +139,11 @@ public class Boss1 : MonoBehaviour {
     }
     public void Dash()
     {
-        if(this.transform.position.x < player.transform.position.x)
+       /* if(this.transform.position.x < player.transform.position.x)
         {
             Debug.Log("Dash right");
 
-            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint2.transform.position, 7 * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, 7 * Time.deltaTime);
            
         }
 
@@ -159,15 +151,15 @@ public class Boss1 : MonoBehaviour {
         {
             Debug.Log("Dash left");
             //dash to wp1
-            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint1.transform.position, 7 * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, 7 * Time.deltaTime);
           
-        }
+        }*/
+
+
+        //detect player
     }
 
-    public void AOESlashing()
-    {
-       
-    }
+  
 
     public void Movement()
     {
@@ -175,9 +167,9 @@ public class Boss1 : MonoBehaviour {
 
         if (movetoA)
         {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
 
-            if (Vector3.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
+            if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
             {
                 movetoA = false;
                 movetoB = true;
@@ -186,9 +178,9 @@ public class Boss1 : MonoBehaviour {
 
         if (movetoB)
         {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
 
-            if (Vector3.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
+            if (Vector2.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
             {
                 movetoA = true;
                 movetoB = false;
