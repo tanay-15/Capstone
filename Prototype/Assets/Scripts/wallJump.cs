@@ -29,7 +29,7 @@ public class wallJump : MonoBehaviour
         if (!transform.GetChild(2).GetComponent<Grounded>().grounded)
         {
             //wallCheck = Physics2D.OverlapCircle(wallCheckpoint.position, 0.5f, wallLayerMask);
-            Collider[] hitColliders = Physics.OverlapSphere(wallCheckpoint.position, 0.005f,wallLayerMask);
+            Collider[] hitColliders = Physics.OverlapSphere(wallCheckpoint.position, 0.0025f,wallLayerMask);
             if (hitColliders.Length != 0)
             {
                 Debug.Log("Colliding");
