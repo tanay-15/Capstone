@@ -69,11 +69,13 @@ public class wallJump : MonoBehaviour
             {
                 playerMovement.flip();
                 player.AddForce(new Vector3(-10, 25, 0)*distance);
+                //wallCheck = false;
             }
             else
             {
                 playerMovement.flip();
                 player.AddForce(new Vector3(10, 25, 0) * distance);
+                //wallCheck = false;
             }
             
         }
