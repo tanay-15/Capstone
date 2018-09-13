@@ -20,7 +20,6 @@ public class DestroyCheck : MonoBehaviour {
 		bool die = true;
 		
 		foreach (GameObject g in tiles){
-            Debug.Log(g.gameObject.GetComponent<SpriteRenderer>().color);
 
 			if (g.gameObject.GetComponent<SpriteRenderer>().color != new Color(0,0,1.0f,1.0f)){
 				die = false;

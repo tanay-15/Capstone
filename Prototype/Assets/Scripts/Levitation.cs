@@ -16,7 +16,7 @@ public class Levitation : MonoBehaviour {
     float grabRadius = 0.5f;
     float maxGrabDistance = 4f;
     Vector3 grabPosition;
-    IEnumerable<Collider> collidingObjects;
+    IEnumerable<Collider2D> collidingObjects;
 
     static Levitation()
     {
@@ -39,7 +39,7 @@ public class Levitation : MonoBehaviour {
 
     void CalculatePosition()
     {
-        Vector3 playerPos = Movement.sharedInstance.gameObject.transform.position;
+        Vector3 playerPos = Movement2D.sharedInstance.gameObject.transform.position;
         //TODO: Make this easier
         grabPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
         //This line may not be necessary
@@ -57,7 +57,7 @@ public class Levitation : MonoBehaviour {
 
     void UpdateColor()
     {
-        collidingObjects = from col in Physics.OverlapSphere(grabPosition, grabRadius).ToList()
+        collidingObjects = from col in Physics2D.OverlapCircleAll(grabPosition, grabRadius).ToList()
                                where col.gameObject.tag == "Grabbable" || col.gameObject.tag == "Player Weapon"
                                select col;
 
@@ -75,14 +75,14 @@ public class Levitation : MonoBehaviour {
     void PickUpObject(GameObject obj)
     {
         heldObject = obj;
-        heldObject.GetComponent<Rigidbody>().useGravity = false;
-        heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        heldObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        heldObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
     }
 
     void ReleaseObject()
     {
-        heldObject.GetComponent<Rigidbody>().useGravity = true;
-        heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+        heldObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         heldObject = null;
     }
 
@@ -92,7 +92,7 @@ public class Levitation : MonoBehaviour {
         {
             if (heldObject == null)
             {
-                Collider hoveringObject = collidingObjects.SingleOrDefault();
+                Collider2D hoveringObject = collidingObjects.SingleOrDefault();
                 if (hoveringObject != null)
                     PickUpObject(hoveringObject.gameObject);
             }
