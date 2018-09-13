@@ -62,7 +62,7 @@ public class wallJump : MonoBehaviour
         wallSliding = true;
         Debug.Log("wallsliding set" + wallSliding);
         player.velocity = new Vector3(player.velocity.x, -0.7f, player.velocity.z);
-        wallSliding = true;
+       // wallSliding = true;
         if(Input.GetButtonDown("Jump"))
         {
             if(playerMovement.facingRight)
