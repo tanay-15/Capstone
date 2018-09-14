@@ -23,7 +23,7 @@ public class RagdollEnemy : MonoBehaviour {
         if (isDead == true)
         {
             SetChildrenKinematic(false);
-        }
+        }        
 
 	}
 
@@ -32,7 +32,11 @@ public class RagdollEnemy : MonoBehaviour {
         foreach (Rigidbody2D rb2d in bones)
         {
             if(rb2d.name != "Stickman")
+            {
                 rb2d.isKinematic = kinematic;
+                Debug.Log(rb2d.name);
+            }
+                
         }
     }
 }
