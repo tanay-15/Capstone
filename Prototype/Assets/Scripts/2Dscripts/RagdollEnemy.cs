@@ -31,7 +31,7 @@ public class RagdollEnemy : MonoBehaviour {
     {
         foreach (Rigidbody2D rb2d in bones)
         {
-            if(rb2d.name != "RagdollStickman")
+            if(rb2d.name != gameObject.name)
             {
                 rb2d.isKinematic = kinematic;
                 //Debug.Log(rb2d.name);
