@@ -34,7 +34,7 @@ public class DemonModeScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(3);
 
-        transform.GetComponent<Movement>().myAnim = (toDemon) ? transform.Find("Demon").GetComponent<Animator>() : transform.Find("Normal").GetComponent<Animator>();
+        transform.GetComponent<Movement2D>().myAnim = (toDemon) ? transform.Find("Demon").GetComponent<Animator>() : transform.Find("Normal").GetComponent<Animator>();
         transform.Find("Normal").gameObject.SetActive(!toDemon);
         transform.Find("Demon").gameObject.SetActive(toDemon);
         transitioning = false;

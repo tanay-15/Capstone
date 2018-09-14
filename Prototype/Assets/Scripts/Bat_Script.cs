@@ -13,6 +13,9 @@ public class Bat_Script : MonoBehaviour {
 
     public GameObject player;
 
+
+
+
 	// Use this for initialization
 	void Start () {
 
@@ -51,13 +54,14 @@ public class Bat_Script : MonoBehaviour {
         StartCoroutine("DelayBegin");
     }
 	
-	// Update is called once per frame
+
 	void Update () {
 
         if (begin)
         {
             GetComponent<TrailRenderer>().enabled = true;
 
+            // Decrementing to create spiral path
             theta += 3 * Time.deltaTime;
             radius -= 6 * Time.deltaTime;
 
@@ -83,12 +87,14 @@ public class Bat_Script : MonoBehaviour {
 
     IEnumerator DelayBegin()
     {
-        yield return new WaitForSeconds(Random.Range(0f,1.5f));
+        yield return new WaitForSeconds(Random.Range(0f,1f));
 
         begin = true;
+        // Trail Renderer color change
+        GetComponent<TrailRenderer>().material.color = new Color(Random.Range(0.5f, 1f), 0, Random.Range(0, 0.2f));
+
 
         yield return new WaitForSeconds(3);
-
         Destroy(gameObject);
     }
 }
