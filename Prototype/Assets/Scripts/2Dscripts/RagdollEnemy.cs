@@ -31,12 +31,21 @@ public class RagdollEnemy : MonoBehaviour {
     {
         foreach (Rigidbody2D rb2d in bones)
         {
-            if(rb2d.name != "Stickman")
+            if(rb2d.name != "RagdollStickman")
             {
                 rb2d.isKinematic = kinematic;
-                Debug.Log(rb2d.name);
+                //Debug.Log(rb2d.name);
             }
                 
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "projectile")
+        {
+            isDead = true;
+            Debug.Log("hit");
         }
     }
 }
