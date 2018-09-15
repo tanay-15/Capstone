@@ -15,6 +15,8 @@ public class RagdollEnemy : MonoBehaviour {
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
         SetChildrenKinematic(true);
+
+
     }
 	
 
@@ -27,13 +29,14 @@ public class RagdollEnemy : MonoBehaviour {
 
 	}
 
-    void SetChildrenKinematic(bool kinematic)
+    void SetChildrenKinematic(bool state)
     {
         foreach (Rigidbody2D rb2d in bones)
         {
             if(rb2d.name != gameObject.name)
             {
-                rb2d.isKinematic = kinematic;
+                rb2d.isKinematic = state;
+                rb2d.GetComponent<Collider2D>().enabled = !state;
                 //Debug.Log(rb2d.name);
             }
                 

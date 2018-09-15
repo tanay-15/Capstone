@@ -14,32 +14,36 @@ public class playerKnife2D : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(!hasHit == true)
-            transform.Rotate(new Vector3(0,0,-Time.deltaTime * 250));
+            transform.Rotate(new Vector3(0,0,-Time.deltaTime * 300));
 
 	}
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Destroy(gameObject);
-        if(collision.gameObject.name == "Torso" || collision.gameObject.name == "Leg" || collision.gameObject.name == "Head" || collision.gameObject.name == "LeftLeg")
+        if(collision.gameObject.name == "Torso" || collision.gameObject.name == "Head" || collision.gameObject.name == "thigh" || collision.gameObject.name == "shin")
         {
             hasHit = true;
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
+        else if(collision.gameObject.tag == "Wall")
+            Destroy(gameObject);
+
     }
 
-    /*
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Torso")
+        if (collision.gameObject.name == "Torso" || collision.gameObject.name == "thigh" || collision.gameObject.name == "Head" || collision.gameObject.name == "shin")
         {
             hasHit = true;
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
+        else if (collision.gameObject.tag == "Wall")
+            Destroy(gameObject);
     }
-    */
+    
 }
