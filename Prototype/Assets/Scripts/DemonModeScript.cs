@@ -7,6 +7,7 @@ public class DemonModeScript : MonoBehaviour {
     public GameObject bat;
     public bool DemonModeActive;
     bool transitioning;
+    public Camera MainCam;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +27,17 @@ public class DemonModeScript : MonoBehaviour {
                 var Bat = Instantiate(bat, transform.position + new Vector3(0,-10,0), Quaternion.identity);
                 Bat.GetComponent<Bat_Script>().player = gameObject;
             }
+
+            if (!DemonModeActive)
+                GetComponent<AudioSource>().Play();
+        }
+
+        if (transitioning)
+        {
+            if(!DemonModeActive)
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.002f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b , MainCam.backgroundColor.a);
+            else
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.002f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b , MainCam.backgroundColor.a);
         }
 
 	}
