@@ -13,12 +13,12 @@ public class Boss1 : MonoBehaviour {
     {
         Idle,
         Walk,
-        ReadyToAttack,
+        AttackAlert,
         GetHit,
         Dead,
-        Attack1,
-        Attack2,
-        Reanimate
+        Dash,
+        Stun
+        
     }
     [Header("Boss Details")]
     public State currentState;
@@ -27,10 +27,23 @@ public class Boss1 : MonoBehaviour {
     public float barrierback = 10;
     private int tempvalue;
     public bool deciderparameter = false;
+    private GameObject alertobject;
+    public GameObject stunpref;
+    private GameObject stunobj;
 
-    [Header("Attack Shield Up")]
-   
-    //Attack 2 is Dash
+
+    [Header("Attack Dash")]
+    private float dashattackcounter = 3f;
+    public Vector3 targetposition;
+    public GameObject alertpref;
+    public GameObject alertpos;
+    public bool shoulddash;
+    private float afterattackcounter = 0;
+    private float stuncounter = 5f;
+    public bool isStunned;
+    private bool indash;
+
+ 
 
     [Header("Attack Shield Down")]
     public GameObject orbprefab;
@@ -50,7 +63,8 @@ public class Boss1 : MonoBehaviour {
 
     [Header("Boss vision")]
     public GameObject visionpoint;
-    private RaycastHit2D vishit;
+    public RaycastHit2D vishit;
+    private bool playerdetected;
 
 	void Start () {
 
@@ -63,61 +77,142 @@ public class Boss1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        BarrierLogic();
 
-        if (shouldattack2)
+        if ((!playerdetected) && (!isStunned))
         {
-
-            //shield is down, shadow orb attack
-            attack2counter = attack2counter - Time.deltaTime;
-            if(attack2counter <= 0)
-            {
-                ShieldDownAttack();
-                attack2counter = 4;
-            }
-          
-           
-        }
-
-        if (hasBarrier)
-        {
-            /* PlayerNearby();
-             //shield is up, dark axe attack
-             if (!nearby)
-             {
-                 Movement();
-             }
-
-             else
-             {
-                 Debug.Log("Player is nearby! check for his moment!");
-
-                 //Decider();
-
-             }*/
-
             Movement();
-            DetectPlayer();
         }
+
+
+        if (shoulddash)
+        {
+            Dash();
+        }
+
+        if (isStunned)
+        {
+            Stunned();
+        }
+
+        if(targetposition == Vector3.zero)
+        {
+            if (playerdetected)
+            {
+                targetposition = player.transform.position;
+            }
+        }
+            DetectPlayer();
+        ThrowAttackAlert();
+       
 	}
 
     private void DetectPlayer()
     {
-        vishit = Physics2D.Raycast(visionpoint.transform.position, -transform.right, 3f);
-        if(vishit.collider.gameObject.tag == "Player")
+        vishit = Physics2D.Raycast(visionpoint.transform.position, transform.right, 10f);
+        if(vishit == null)
         {
-            Debug.Log("Player found");
+            playerdetected = false;
+            Debug.Log("Player not in sight");
+        }
+        if(vishit   != null){
+            if (vishit.collider.gameObject.tag == "Player")
+            {
+                Debug.Log("Player in sight");
+                playerdetected = true;
+            }
+            else
+            {
+                playerdetected = false;
+            }
+        }
+      
+    }
+
+    private void Stunned()
+    {
+        if(stunobj == null)
+        {
+            stunobj = Instantiate(stunpref,alertpos.transform.position,alertpos.transform.rotation);
+
+        }
+       
+
+        stuncounter = stuncounter - Time.deltaTime;
+
+        if(stuncounter <= 0)
+        {
+            isStunned = false;
+            Destroy(stunobj);
+            stuncounter = 5f;
         }
     }
 
-    private void Decider()
+    private void ThrowAttackAlert()
     {
-       
-          
+        if (playerdetected)
+        {
+            
+           
+            afterattackcounter = afterattackcounter - Time.deltaTime;
 
-        
-       
+          
+                //Throw attack alert
+                Debug.Log("Dashing!");
+                if(afterattackcounter <= 0)
+                {
+                   alertobject = Instantiate(alertpref, alertpos.transform.position, alertpos.transform.rotation);
+                   
+                    shoulddash = true;
+                  
+                    afterattackcounter = 6f;
+                
+                
+            }
+        }
     }
+
+private void Decider()
+{
+
+
+    //placeholder update method
+
+    BarrierLogic();
+
+    if (shouldattack2)
+    {
+
+        //shield is down, shadow orb attack
+        attack2counter = attack2counter - Time.deltaTime;
+        if (attack2counter <= 0)
+        {
+            ShieldDownAttack();
+            attack2counter = 4;
+        }
+
+
+    }
+
+    if (hasBarrier)
+    {
+        /* PlayerNearby();
+         //shield is up, dark axe attack
+         if (!nearby)
+         {
+             Movement();
+         }
+
+         else
+         {
+             Debug.Log("Player is nearby! check for his moment!");
+
+             //Decider();
+
+         }*/
+
+
+    }
+}
 
     public void PlayerNearby()
     {
@@ -138,25 +233,28 @@ public class Boss1 : MonoBehaviour {
         }
     }
     public void Dash()
-    {
-       /* if(this.transform.position.x < player.transform.position.x)
-        {
-            Debug.Log("Dash right");
-
-            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, 7 * Time.deltaTime);
-           
-        }
-
-        if(this.transform.position.x > player.transform.position.x)
-        {
-            Debug.Log("Dash left");
-            //dash to wp1
-            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, 7 * Time.deltaTime);
-          
-        }*/
-
+    { 
 
         //detect player
+        Destroy(alertobject);
+        dashattackcounter = dashattackcounter - Time.deltaTime;
+        indash = true;
+
+        if(dashattackcounter <= 0)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, 7 * Time.deltaTime);
+
+            if (Vector2.Distance(targetposition, this.transform.position) < 0.3f)
+            {
+                Debug.Log("Reached dash position");
+                shoulddash = false;
+                targetposition = Vector3.zero;
+               
+                
+                dashattackcounter = 6f;
+            }
+        }
+      
     }
 
   
@@ -167,10 +265,12 @@ public class Boss1 : MonoBehaviour {
 
         if (movetoA)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
+          
+            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
 
-            if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
+            if (Vector3.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
             {
+               flip();
                 movetoA = false;
                 movetoB = true;
             }
@@ -178,17 +278,26 @@ public class Boss1 : MonoBehaviour {
 
         if (movetoB)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
+        
+            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
 
-            if (Vector2.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
+            if (Vector3.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
             {
+                flip();
                 movetoA = true;
                 movetoB = false;
             }
         }
     }
         
-    
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "BreakablePlatform")
+        {
+            Debug.Log("Hit breakable platform");
+            isStunned = true;
+        }
+    }
 
 
     public void ShieldDownAttack()
@@ -241,5 +350,10 @@ public class Boss1 : MonoBehaviour {
             hasBarrier = false;
         }
        
+    }
+
+    private void flip()
+    {
+        this.transform.RotateAround(transform.position, transform.up, 180f);
     }
 }
