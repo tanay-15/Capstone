@@ -17,7 +17,7 @@ public class WallJump : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<Movement2D>();
-        ground = GetComponent<Grounded2D>();
+        ground = transform.GetChild(2).GetComponent<Grounded2D>();
         player = GetComponent<Rigidbody2D>();
 
 
@@ -26,7 +26,7 @@ public class WallJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!transform.GetChild(2).GetComponent<Grounded2D>().grounded)
+        if (!ground.grounded)
         {
             //wallCheck = Physics2D.OverlapCircle(wallCheckpoint.position, 0.5f, wallLayerMask);
             Collider2D hitColliders = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);

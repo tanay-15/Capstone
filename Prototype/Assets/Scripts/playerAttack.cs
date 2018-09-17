@@ -7,10 +7,10 @@ public class playerAttack : MonoBehaviour {
     //private float attackTimer = 0f;
     //private float attackCd = 0.3f;
     //private Animator myAnim;
-    public Collider attackTrigger;
-    private Vector3 currentAngle;
-    private Vector3 reset;
-    private Vector3 oldPos;
+    public Collider2D attackTrigger;
+    private Vector2 currentAngle;
+    private Vector2 reset;
+    private Vector2 oldPos;
    
 
     // Use this for initialization
@@ -27,7 +27,7 @@ public class playerAttack : MonoBehaviour {
 	void Update () {
         if(Input.GetMouseButtonDown(0))
         {
-            currentAngle.z = reset.z;
+            //currentAngle.z = reset.z;
             attacking = true;
             attackTrigger.enabled = true;
             //attackTrigger.transform.localEulerAngles = new Vector3(attackTrigger.transform.localEulerAngles.x, attackTrigger.transform.localEulerAngles.y, currentAngle.z);
@@ -44,7 +44,7 @@ public class playerAttack : MonoBehaviour {
         {
             
             //attackTrigger.transform.rotation = Quaternion.FromToRotation(Vector3.right, Vector3.up);
-            attackTrigger.transform.position = oldPos;
+            //attackTrigger.transform.position = oldPos;
            
             //Debug.Log("trigger pos" + attackTrigger.transform.position);
             attackTrigger.enabled = false;
