@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grounded2D : MonoBehaviour {
 
-    public bool grounded= false;
+    public bool grounded;
 
     // Use this for initialization
     void Start()
