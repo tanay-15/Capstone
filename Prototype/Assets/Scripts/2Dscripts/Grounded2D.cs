@@ -15,22 +15,25 @@ public class Grounded2D : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        //Debug.Log("Grounded: " + grounded);
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        grounded = true;
+        if (collision.tag == "ground")
+            grounded = true;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        grounded = true;
+        if (collision.tag == "ground")
+            grounded = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        grounded = false;
+        if (collision.tag == "ground")
+            grounded = false;
     }
 }

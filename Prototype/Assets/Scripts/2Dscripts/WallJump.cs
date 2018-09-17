@@ -26,15 +26,15 @@ public class WallJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(player.velocity);
         if (!ground.grounded)
         {
             //wallCheck = Physics2D.OverlapCircle(wallCheckpoint.position, 0.5f, wallLayerMask);
             Collider2D hitColliders = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
             if (hitColliders)
             {
-                Debug.Log("Colliding");
+                //Debug.Log("wallcheck: " + wallCheck + "\nColliding");
                 wallCheck = true;
-                Debug.Log("wallcheck" + wallCheck);
             }
             else
             {
@@ -45,21 +45,29 @@ public class WallJump : MonoBehaviour
             //{
             if (wallCheck)
             {
-                
+
                 handleWallSliding();
             }
             //}
         }
 
+        //Set these variables back to false if the player is grounded
+        else if (ground.grounded)
+        {
+            wallCheck = false;
+            wallSliding = false;
+        }
+
         if(wallSliding && Input.GetKeyDown("space"))
         {          
-                if ((playerMovement.facingRight && Input.GetAxis("Horizontal") >0.01f) || playerMovement.facingRight)
+            //Use GetAxisRaw to handle if a button is being pressed or not
+                if ((playerMovement.facingRight && Input.GetAxisRaw("Horizontal") >0.01f))// || playerMovement.facingRight)
                 {
                     playerMovement.flip();
                     player.AddForce(new Vector2(-10, 15) * distance);
                     //wallCheck = false;
                 }
-                else if((!playerMovement.facingRight && Input.GetAxis("Horizontal") < 0.01f) || !playerMovement.facingRight)
+                else if((!playerMovement.facingRight && Input.GetAxisRaw("Horizontal") < -0.01f))// || !playerMovement.facingRight)
                 {
                     playerMovement.flip();
                     player.AddForce(new Vector2(10, 15) * distance);
@@ -68,13 +76,13 @@ public class WallJump : MonoBehaviour
 
             
             wallCheck = false;
-            Debug.Log("wallcheck set" + wallCheck);
+            //Debug.Log("wallcheck set" + wallCheck);
         }
 
         if (wallCheck == false)
         {
             wallSliding = false;
-            Debug.Log("wallsliding " + wallSliding);
+            //Debug.Log("wallsliding " + wallSliding);
         }
 
 
