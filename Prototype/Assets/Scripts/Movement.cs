@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour {
     public Transform handEnd;
     private SpriteRenderer sprite;
     public static Movement sharedInstance;
-    private wallJump wallJumpScript;
+    private WallJump wallJumpScript;
 
     float minJumpSpeed = 2.0f;
 
@@ -59,7 +59,7 @@ public class Movement : MonoBehaviour {
         //myAnim = GetComponent<Animator>();
         facingRight = true;
         sprite = GetComponentInChildren<SpriteRenderer>();
-        wallJumpScript = GetComponent<wallJump>();
+        wallJumpScript = GetComponent<WallJump>();
 
     }
 

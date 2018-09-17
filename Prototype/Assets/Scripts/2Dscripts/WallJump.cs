@@ -5,8 +5,8 @@ using UnityEngine;
 public class WallJump : MonoBehaviour
 {
     public float distance = 4f;
-    private Movement playerMovement;
-    private Grounded ground;
+    private Movement2D playerMovement;
+    private Grounded2D ground;
     private Rigidbody2D player;
     public bool wallSliding;
     public Transform wallCheckpoint;
@@ -16,8 +16,8 @@ public class WallJump : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        playerMovement = GetComponent<Movement>();
-        ground = GetComponent<Grounded>();
+        playerMovement = GetComponent<Movement2D>();
+        ground = GetComponent<Grounded2D>();
         player = GetComponent<Rigidbody2D>();
 
 
@@ -26,10 +26,10 @@ public class WallJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!transform.GetChild(2).GetComponent<Grounded>().grounded)
+        if (!transform.GetChild(2).GetComponent<Grounded2D>().grounded)
         {
             //wallCheck = Physics2D.OverlapCircle(wallCheckpoint.position, 0.5f, wallLayerMask);
-            Collider2D hitColliders = Physics2D.OverlapCircle(wallCheckpoint.position, 0.0025f, wallLayerMask);
+            Collider2D hitColliders = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
             if (hitColliders)
             {
                 Debug.Log("Colliding");
@@ -50,37 +50,58 @@ public class WallJump : MonoBehaviour
             //}
         }
 
+        if(wallSliding && Input.GetKeyDown("space"))
+        {          
+                if ((playerMovement.facingRight && Input.GetAxis("Horizontal") >0.01f) || playerMovement.facingRight)
+                {
+                    playerMovement.flip();
+                    player.AddForce(new Vector2(-10, 15) * distance);
+                    //wallCheck = false;
+                }
+                else if((!playerMovement.facingRight && Input.GetAxis("Horizontal") < 0.01f) || !playerMovement.facingRight)
+                {
+                    playerMovement.flip();
+                    player.AddForce(new Vector2(10, 15) * distance);
+                    //wallCheck = false;
+                }
+
+            
+            wallCheck = false;
+            Debug.Log("wallcheck set" + wallCheck);
+        }
+
         if (wallCheck == false)
         {
             wallSliding = false;
             Debug.Log("wallsliding " + wallSliding);
         }
+
+
     }
 
     private void handleWallSliding()
     {
         wallSliding = true;
         Debug.Log("wallsliding set" + wallSliding);
-        player.velocity = new Vector2(player.velocity.x, -0.7f);
-        // wallSliding = true;
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (playerMovement.facingRight)
-            {
-                playerMovement.flip();
-                player.AddForce(new Vector2(-10, 25) * distance);
-                //wallCheck = false;
-            }
-            else
-            {
-                playerMovement.flip();
-                player.AddForce(new Vector2(10, 25) * distance);
-                //wallCheck = false;
-            }
+        player.velocity = new Vector2(player.velocity.x, -0.8f);
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    if (playerMovement.facingRight)
+        //    {
+        //        playerMovement.flip();
+        //        player.AddForce(new Vector2(-10, 25) * distance);
+        //        //wallCheck = false;
+        //    }
+        //    else
+        //    {
+        //        playerMovement.flip();
+        //        player.AddForce(new Vector2(10, 25) * distance);
+        //        //wallCheck = false;
+        //    }
 
-        }
-        wallCheck = false;
-        Debug.Log("wallcheck set" + wallCheck);
+        //}
+        //wallCheck = false;
+        //Debug.Log("wallcheck set" + wallCheck);
     }
 
 }

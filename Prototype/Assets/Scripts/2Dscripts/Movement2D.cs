@@ -20,6 +20,7 @@ public class Movement2D : MonoBehaviour
     public Transform handEnd;
     private SpriteRenderer sprite;
     public static Movement2D sharedInstance;
+    private WallJump wallJumpScript;
 
     float minJumpSpeed = 2.0f;
 
@@ -55,6 +56,7 @@ public class Movement2D : MonoBehaviour
             return;
         }
         player = GetComponent<Rigidbody2D>();
+        wallJumpScript = GetComponent<WallJump>();
 
         myAnim = GameObject.Find("Normal").GetComponent<Animator>();
         //myAnim = GetComponent<Animator>();
@@ -152,13 +154,13 @@ public class Movement2D : MonoBehaviour
 // Jumping
 
         //if(Input.GetButtonDown("Jump") && isGrounded)
-        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded2D>().grounded)
+        if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded2D>().grounded && !wallJumpScript.wallSliding)
         {
             player.velocity = Vector3.up * jumpVelocity * (1f + movement.magnitude * 2f);
             Debug.Log(player.velocity);
         }
 
-        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded2D>().grounded && player.velocity.y > minJumpSpeed)
+        if (Input.GetButtonUp("Jump") && !transform.GetChild(2).GetComponent<Grounded2D>().grounded && !wallJumpScript.wallSliding && player.velocity.y > minJumpSpeed)
         {
             player.velocity = Vector3.up * minJumpSpeed;
         }
