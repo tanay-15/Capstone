@@ -28,7 +28,7 @@ public class WallJump : MonoBehaviour
     {
         if (!ground.grounded)
         {
-            //wallCheck = Physics2D.OverlapCircle(wallCheckpoint.position, 0.5f, wallLayerMask);
+            
             Collider2D hitColliders = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
             if (hitColliders)
             {
@@ -56,39 +56,37 @@ public class WallJump : MonoBehaviour
 
         if (wallSliding)
         {
-            if ((Input.GetKeyDown("space") && Input.GetAxis("Horizontal") > 0.1f && playerMovement.facingRight) || Input.GetKeyDown("space"))
+            if ((Input.GetKeyDown("space") && Input.GetAxisRaw("Horizontal") > 0.1f && playerMovement.facingRight) || Input.GetKeyDown("space"))
             {
                 if (playerMovement.facingRight)
                 {
                     playerMovement.flip();
                     player.AddForce(new Vector2(-10, 15) * distance);
-                    //wallCheck = false;
+                    
                 }
                 else if (!playerMovement.facingRight)
                 {
                     playerMovement.flip();
                     player.AddForce(new Vector2(10, 15) * distance);
-                    //wallCheck = false;
+                   
                 }
-                wallCheck = false;
-                Debug.Log("wallcheck set" + wallCheck);
+                wallSliding = false;
             }
-            else if ((Input.GetKeyDown("space") && Input.GetAxis("Horizontal") < 0.1f && !playerMovement.facingRight) || Input.GetKeyDown("space"))
+            else if ((Input.GetKeyDown("space") && Input.GetAxisRaw("Horizontal") < 0.1f && !playerMovement.facingRight) || Input.GetKeyDown("space"))
             {
                 if (playerMovement.facingRight)
                 {
                     playerMovement.flip();
                     player.AddForce(new Vector2(-10, 15) * distance);
-                    //wallCheck = false;
+                    
                 }
                 else if (!playerMovement.facingRight)
                 {
                     playerMovement.flip();
                     player.AddForce(new Vector2(10, 15) * distance);
-                    //wallCheck = false;
+                    
                 }
-                wallCheck = false;
-                Debug.Log("wallcheck set" + wallCheck);
+                wallSliding = false;
             }
 
         }
