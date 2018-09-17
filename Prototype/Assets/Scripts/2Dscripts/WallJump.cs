@@ -45,6 +45,7 @@ public class WallJump : MonoBehaviour
             //{
             if (wallCheck)
             {
+                
                 handleWallSliding();
             }
             //}
@@ -84,24 +85,6 @@ public class WallJump : MonoBehaviour
         wallSliding = true;
         Debug.Log("wallsliding set" + wallSliding);
         player.velocity = new Vector2(player.velocity.x, -0.8f);
-        //if (Input.GetButtonDown("Jump"))
-        //{
-        //    if (playerMovement.facingRight)
-        //    {
-        //        playerMovement.flip();
-        //        player.AddForce(new Vector2(-10, 25) * distance);
-        //        //wallCheck = false;
-        //    }
-        //    else
-        //    {
-        //        playerMovement.flip();
-        //        player.AddForce(new Vector2(10, 25) * distance);
-        //        //wallCheck = false;
-        //    }
-
-        //}
-        //wallCheck = false;
-        //Debug.Log("wallcheck set" + wallCheck);
     }
 
 }
