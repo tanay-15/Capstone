@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -399,8 +399,8 @@ GameObject:
   m_Component:
   - component: {fileID: 413302293}
   - component: {fileID: 413302292}
-  - component: {fileID: 413302290}
   - component: {fileID: 413302294}
+  - component: {fileID: 413302290}
   - component: {fileID: 413302291}
   - component: {fileID: 413302289}
   m_Layer: 0
@@ -447,28 +447,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  plat1: {fileID: 654000100}
+  plat2: {fileID: 1314973061}
   currentState: 0
+  health: 100
   hasBarrier: 1
   barrCounter: 3
-  barrierback: 30
+  barrierback: 10
   deciderparameter: 0
   stunpref: {fileID: 1459347544840438, guid: a7be7b2cb724e1143a8c7f95f9aa6929, type: 2}
+  moveback: 0
+  lowposition: {x: 0, y: 1}
   targetposition: {x: 0, y: 0, z: 0}
   alertpref: {fileID: 1649151355347046, guid: 9e8f41dc3cc5ee84488624e0bb941729, type: 2}
   alertpos: {fileID: 1233889643}
   shoulddash: 0
+  afterattackcounter: 0
   isStunned: 0
   orbprefab: {fileID: 1129421106994298, guid: 0c437177e1aa59741ba52153db82c88c, type: 2}
   orbloc1: {fileID: 219216248}
   orbloc2: {fileID: 549805655}
   orbloc3: {fileID: 2020222119}
   orbloc4: {fileID: 1218321924}
+  orbloc5: {fileID: 451710652}
+  orbloc6: {fileID: 2015479894}
   shouldattack2: 0
   attack2counter: 0
   waypoint1: {fileID: 1165893796}
   waypoint2: {fileID: 1069525908}
   nearby: 0
   visionpoint: {fileID: 678902294}
+  playerdetected: 0
 --- !u!50 &413302291
 Rigidbody2D:
   serializedVersion: 4
@@ -792,6 +801,11 @@ Prefab:
     - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983765038645822, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+        type: 2}
+      propertyPath: jumpVelocity
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
@@ -1706,7 +1720,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1373285243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.7, y: 1, z: -15}
+  m_LocalPosition: {x: 10.7, y: 1, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
