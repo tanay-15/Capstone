@@ -22,7 +22,7 @@ public class DemonModeScript : MonoBehaviour {
         {
             transitioning = true;
             StartCoroutine("Transform", !DemonModeActive);
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 50; i++)
             {
                 var Bat = Instantiate(bat, transform.position + new Vector3(0,-10,0), Quaternion.identity);
                 Bat.GetComponent<Bat_Script>().player = gameObject;
@@ -35,16 +35,16 @@ public class DemonModeScript : MonoBehaviour {
         if (transitioning)
         {
             if(!DemonModeActive)
-                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.001f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b , MainCam.backgroundColor.a);
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.002f, MainCam.backgroundColor.g - 0.003f, MainCam.backgroundColor.b - 0.003f, MainCam.backgroundColor.a);
             else
-                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.001f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b , MainCam.backgroundColor.a);
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.002f, MainCam.backgroundColor.g + 0.003f, MainCam.backgroundColor.b + 0.003f, MainCam.backgroundColor.a);
         }
 
 	}
 
     IEnumerator Transform(bool toDemon)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2.7f);
 
         transform.GetComponent<Movement2D>().myAnim = (toDemon) ? transform.Find("Demon").GetComponent<Animator>() : transform.Find("Normal").GetComponent<Animator>();
         transform.Find("Normal").gameObject.SetActive(!toDemon);
