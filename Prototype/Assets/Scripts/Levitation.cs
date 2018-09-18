@@ -6,6 +6,7 @@ using UnityEngine;
 public class Levitation : MonoBehaviour {
 
     public static Levitation sharedInstance;
+    public float followSpeed = 6f;
     public Color nonHoverColor;
     public Color hoverColor;
     public ParticleSystem particles;
@@ -13,6 +14,7 @@ public class Levitation : MonoBehaviour {
     public GameObject heldObject;
     public float mouseZPosition = 0f;
 
+    bool heldObjectWasDiscrete;
     float grabRadius = 0.5f;
     float maxGrabDistance = 4f;
     Vector3 grabPosition;
@@ -35,6 +37,7 @@ public class Levitation : MonoBehaviour {
         }
 
         heldObject = null;
+        heldObjectWasDiscrete = true;
 	}
 
     void CalculatePosition()
@@ -62,7 +65,7 @@ public class Levitation : MonoBehaviour {
                                select col;
 
         ParticleSystem.MainModule main = particles.main;
-        if (collidingObjects.Count() > 0)
+        if (collidingObjects.Count() > 0 || heldObject != null)
         {
             main.startColor = hoverColor;
         }
@@ -75,14 +78,21 @@ public class Levitation : MonoBehaviour {
     void PickUpObject(GameObject obj)
     {
         heldObject = obj;
-        heldObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        heldObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.velocity = Vector3.zero;
+
+        //So you cant move the object through walls
+        heldObjectWasDiscrete = rb.collisionDetectionMode == CollisionDetectionMode2D.Discrete;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     void ReleaseObject()
     {
-        heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-        heldObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 1;
+        //rb.velocity = Vector3.zero;
+        rb.collisionDetectionMode = (heldObjectWasDiscrete) ? CollisionDetectionMode2D.Discrete : CollisionDetectionMode2D.Continuous;
         heldObject = null;
     }
 
@@ -105,16 +115,21 @@ public class Levitation : MonoBehaviour {
 
     void MoveHeldObject()
     {
-        if (heldObject != null)
-        {
-            heldObject.transform.position = grabPosition;
-        }
+        if (heldObject == null) return;
+
+        Vector3 distance = grabPosition - heldObject.transform.position;
+        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        rb.velocity = distance * followSpeed;
     }
 	
 	void Update () {
         CalculatePosition();
         UpdateColor();
         CheckForButtonPress();
-        MoveHeldObject();
 	}
+
+    void FixedUpdate()
+    {
+        MoveHeldObject();
+    }
 }
