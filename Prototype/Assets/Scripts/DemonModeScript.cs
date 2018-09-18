@@ -35,9 +35,9 @@ public class DemonModeScript : MonoBehaviour {
         if (transitioning)
         {
             if(!DemonModeActive)
-                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.002f, MainCam.backgroundColor.g - 0.003f, MainCam.backgroundColor.b - 0.003f, MainCam.backgroundColor.a);
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.002f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b - 0.003f, MainCam.backgroundColor.a);
             else
-                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.002f, MainCam.backgroundColor.g + 0.003f, MainCam.backgroundColor.b + 0.003f, MainCam.backgroundColor.a);
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.002f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b + 0.003f, MainCam.backgroundColor.a);
         }
 
 	}
