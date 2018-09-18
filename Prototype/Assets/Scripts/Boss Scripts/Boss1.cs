@@ -9,6 +9,10 @@ public class Boss1 : MonoBehaviour {
     [Header("Player Details")]
     public GameObject player;
 
+    [Header("Level Objects")]
+    public GameObject plat1;
+    public GameObject plat2;
+
     public enum State
     {
         Idle,
@@ -22,6 +26,7 @@ public class Boss1 : MonoBehaviour {
     }
     [Header("Boss Details")]
     public State currentState;
+    public float health;
     public bool hasBarrier = true;
     public int barrCounter = 3;
     public float barrierback = 10;
@@ -30,6 +35,8 @@ public class Boss1 : MonoBehaviour {
     private GameObject alertobject;
     public GameObject stunpref;
     private GameObject stunobj;
+    public bool moveback = false;
+    public Vector2 lowposition = new Vector2(0,1);
 
 
     [Header("Attack Dash")]
@@ -38,19 +45,21 @@ public class Boss1 : MonoBehaviour {
     public GameObject alertpref;
     public GameObject alertpos;
     public bool shoulddash;
-    private float afterattackcounter = 0;
+    public float afterattackcounter = 0;
     private float stuncounter = 5f;
     public bool isStunned;
     private bool indash;
 
  
 
-    [Header("Attack Shield Down")]
+    [Header("Attack Health Down")]
     public GameObject orbprefab;
     public GameObject orbloc1;
     public GameObject orbloc2;
     public GameObject orbloc3;
     public GameObject orbloc4;
+    public GameObject orbloc5;
+    public GameObject orbloc6;
     public bool shouldattack2;
     public float attack2counter = 0;
 
@@ -64,7 +73,7 @@ public class Boss1 : MonoBehaviour {
     [Header("Boss vision")]
     public GameObject visionpoint;
     public RaycastHit2D vishit;
-    private bool playerdetected;
+    public bool playerdetected;
 
 	void Start () {
 
@@ -77,17 +86,42 @@ public class Boss1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-        if ((!playerdetected) && (!isStunned))
+        if(health > 50)
         {
-            Movement();
+            if ((!playerdetected) && (!isStunned))
+            {
+                Movement();
+            }
+
+
+            if (shoulddash)
+            {
+                Dash();
+            }
+        }
+
+        if(health <= 0)
+        {
+            Death();
+        }
+
+        if(health <= 50 && !isStunned && !moveback)
+        {
+            FiftyMovement();
         }
 
 
-        if (shoulddash)
+        if (moveback)
         {
-            Dash();
+            this.transform.position = Vector2.MoveTowards(this.transform.position, lowposition, 4f * Time.deltaTime);
+
+            if (Vector2.Distance(this.transform.position, lowposition) < 0.4f)
+            {
+                moveback = false;
+            }
         }
+
+
 
         if (isStunned)
         {
@@ -103,6 +137,8 @@ public class Boss1 : MonoBehaviour {
         }
             DetectPlayer();
         ThrowAttackAlert();
+
+        BelowFiFty();
        
 	}
 
@@ -119,6 +155,7 @@ public class Boss1 : MonoBehaviour {
             {
                 Debug.Log("Player in sight");
                 playerdetected = true;
+                targetposition = player.transform.position;
             }
             else
             {
@@ -143,7 +180,7 @@ public class Boss1 : MonoBehaviour {
         {
             isStunned = false;
             Destroy(stunobj);
-            stuncounter = 5f;
+            stuncounter = 3.5f;
         }
     }
 
@@ -153,66 +190,30 @@ public class Boss1 : MonoBehaviour {
         {
             
            
-            afterattackcounter = afterattackcounter - Time.deltaTime;
+            if(health > 50)
+            {
 
+           
           
                 //Throw attack alert
                 Debug.Log("Dashing!");
-                if(afterattackcounter <= 0)
-                {
+              
+                
                    alertobject = Instantiate(alertpref, alertpos.transform.position, alertpos.transform.rotation);
                    
                     shoulddash = true;
-                  
-                    afterattackcounter = 6f;
-                
-                
+
             }
+
+
         }
     }
 
-private void Decider()
-{
 
-
-    //placeholder update method
-
-    BarrierLogic();
-
-    if (shouldattack2)
+    public void Death()
     {
-
-        //shield is down, shadow orb attack
-        attack2counter = attack2counter - Time.deltaTime;
-        if (attack2counter <= 0)
-        {
-            ShieldDownAttack();
-            attack2counter = 4;
-        }
-
-
+        Destroy(this.gameObject);
     }
-
-    if (hasBarrier)
-    {
-        /* PlayerNearby();
-         //shield is up, dark axe attack
-         if (!nearby)
-         {
-             Movement();
-         }
-
-         else
-         {
-             Debug.Log("Player is nearby! check for his moment!");
-
-             //Decider();
-
-         }*/
-
-
-    }
-}
 
     public void PlayerNearby()
     {
@@ -251,7 +252,7 @@ private void Decider()
                 targetposition = Vector3.zero;
                
                 
-                dashattackcounter = 6f;
+                dashattackcounter = 1f;
             }
         }
       
@@ -296,9 +297,41 @@ private void Decider()
         {
             Debug.Log("Hit breakable platform");
             isStunned = true;
+            applyDamage(10);
+        }
+
+        if(collision.gameObject.tag == "Grabbable")
+        {
+            isStunned = true;
+            applyDamage(15);
+            Destroy(collision.gameObject);
+        }
+
+        if(collision.gameObject.tag == "Player")
+        {
+            HitBack();
         }
     }
 
+    private void HitBack()
+    {
+        if ((health <= 50) && (moveback == false))
+        {
+
+            if (this.transform.position.x <= player.transform.position.x)
+            {
+                Debug.Log("Hit left");
+                moveback = true;
+                lowposition.x = this.transform.position.x - 7f;
+            }
+            if (this.transform.position.x > player.transform.position.x)
+            {
+                Debug.Log("Hit right");
+                moveback = true;
+                lowposition.x = this.transform.position.x + 7f;
+            }
+        }
+    }
 
     public void ShieldDownAttack()
     {
@@ -308,52 +341,74 @@ private void Decider()
         Instantiate(orbprefab, orbloc2.transform.position, orbloc2.transform.rotation);
         Instantiate(orbprefab, orbloc3.transform.position,orbloc3.transform.rotation);
         Instantiate(orbprefab, orbloc4.transform.position, orbloc4.transform.rotation);
+        Instantiate(orbprefab, orbloc5.transform.position, orbloc5.transform.rotation);
+        Instantiate(orbprefab, orbloc6.transform.position, orbloc6.transform.rotation);
         
     }
 
-
-
-    public void BarrierLogic()
+    //Movement for boss below 50hp
+    private void FiftyMovement()
     {
-
-        //logic for barrier
-        if (!hasBarrier)
+       if(health <= 50)
         {
-            shouldattack2 = true;
-            barrierback = barrierback - Time.deltaTime;
-          
+            Vector2 bigpos = new Vector2(0,1);
+            bigpos.x = player.transform.position.x;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, bigpos, 3f * Time.deltaTime);
 
-            if (barrierback <= 0)
+           
+
+            //attackdashcounter
+            dashattackcounter = dashattackcounter - Time.deltaTime;
+            indash = true;
+
+            if (dashattackcounter <= 0)
             {
-                barrCounter = 2;
-                hasBarrier = true;
-                barrierback = 10;
-                Debug.Log("Barrier is back up!");
-                shouldattack2 = false;
+                this.transform.position = Vector2.MoveTowards(this.transform.position, bigpos, 10 * Time.deltaTime);
+
+                if (Vector2.Distance(bigpos, this.transform.position) < 0.3f)
+                {
+                    Debug.Log("Reached dash position");
+                    shoulddash = false;
+                    targetposition = Vector3.zero;
+
+
+                    dashattackcounter = 3f;
+                }
             }
         }
     }
 
+   
+
     public void applyDamage(int damage)
     {
         Debug.Log("Boss has been attacked!");
-        if (barrCounter >= 0)
-        {
-           
-            Debug.Log("Barrier strength is : " + barrCounter);
-            barrCounter--;
-        }
 
-        if(barrCounter < 0)
-        {
-            Debug.Log("Barrier down!");
-            hasBarrier = false;
-        }
+        health = health - damage;
        
     }
 
     private void flip()
     {
         this.transform.RotateAround(transform.position, transform.up, 180f);
+    }
+
+    private void BelowFiFty()
+    {
+        //break the two platforms
+
+        if(health <= 50)
+        {
+            attack2counter = attack2counter - Time.deltaTime;
+            if(attack2counter <= 0)
+            {
+                ShieldDownAttack();
+                Destroy(plat1);
+                Destroy(plat2);
+                attack2counter = 5f;
+            }
+       
+        }
+
     }
 }
