@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -325,6 +325,9 @@ Animator:
   m_KeepAnimatorControllerStateOnDisable: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 5153148... Level update
 --- !u!1 &451710652
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,16 +357,12 @@ Transform:
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: -11.571}
 --- !u!1001 &472370416
-=======
---- !u!1001 &510533853
->>>>>>> 41eee23a36160da95496edc64c4e0a1309805c8f
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< HEAD
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 23.51
@@ -418,47 +417,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
-=======
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 2.4804437
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114304581374282320, guid: 4e190663ac050a146aca7b5f99bdd0d0,
-        type: 2}
-      propertyPath: MainCam
-      value: 
-      objectReference: {fileID: 1373285245}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
->>>>>>> 41eee23a36160da95496edc64c4e0a1309805c8f
   m_IsPrefabAsset: 0
 =======
 >>>>>>> parent of 9c638d8... Boss Prototype
@@ -705,15 +663,11 @@ Prefab:
 <<<<<<< HEAD
     - target: {fileID: 1165937054858754, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_TagString
-<<<<<<< HEAD
       value: ground
       objectReference: {fileID: 0}
     - target: {fileID: 1165937054858754, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_Layer
       value: 9
-=======
-      value: Wall
->>>>>>> 41eee23a36160da95496edc64c4e0a1309805c8f
       objectReference: {fileID: 0}
 =======
 >>>>>>> parent of 9c638d8... Boss Prototype
@@ -855,8 +809,8 @@ Camera:
   m_GameObject: {fileID: 1373285243}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.74509805, g: 0.6547997, b: 0.18823527, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1021,10 +975,6 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 1165937054858754, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
   m_IsPrefabAsset: 0
@@ -1092,7 +1042,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &2020222119
 GameObject:
@@ -1124,7 +1074,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -23.5}
 <<<<<<< HEAD
 --- !u!1001 &2043940466
-<<<<<<< HEAD
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1234,11 +1183,14 @@ Prefab:
   m_IsPrefabAsset: 0
 <<<<<<< HEAD
 --- !u!1001 &2093203208
+<<<<<<< HEAD
 =======
 >>>>>>> 41eee23a36160da95496edc64c4e0a1309805c8f
 =======
 --- !u!1001 &2043940466
 >>>>>>> parent of 9c638d8... Boss Prototype
+=======
+>>>>>>> parent of 5153148... Level update
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1284,10 +1236,6 @@ Prefab:
     - target: {fileID: 1165937054858754, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_Name
       value: Ground (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1165937054858754, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
-      propertyPath: m_TagString
-      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
