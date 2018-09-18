@@ -27,9 +27,11 @@ public class playerKnife2D : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
-        else if(collision.gameObject.tag == "Wall")
+        else
+        {
+            Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
-
+        }
     }
 
    
@@ -42,8 +44,11 @@ public class playerKnife2D : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
-        else if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "ground")
+        else
+        {
+            Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
+        }
     }
     
 }
