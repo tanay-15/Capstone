@@ -27,7 +27,7 @@ public class playerKnife2D : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
-        else
+        else if(!(collision.gameObject.name == "biceps" || collision.gameObject.name == "forearm"))
         {
             Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
@@ -44,11 +44,7 @@ public class playerKnife2D : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
-        else
-        {
-            Debug.Log(collision.gameObject.name);
-            Destroy(gameObject);
-        }
+
     }
     
 }

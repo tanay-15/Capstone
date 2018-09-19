@@ -24,11 +24,14 @@ public class Bat_Script : MonoBehaviour {
         {
             radius = 0;
             direction = -1;
+            GetComponent<Animator>().SetBool("Explode", true);
+            transform.position = player.transform.position + offset;
         }
         else
         {
             radius = 10;
             direction = 1;
+            GetComponent<Animator>().SetBool("Explode", false);
         }
         
 
@@ -78,14 +81,14 @@ public class Bat_Script : MonoBehaviour {
             theta += 3 * Time.deltaTime * direction;
             radius -= 6 * Time.deltaTime * direction;
 
-            if (radius < 0 || radius > 15)
+            if (radius < 0)
             {
                 GetComponent<Animator>().SetBool("Explode", true);
-                transform.position = player.transform.position  + offset;
-                transform.localScale = new Vector3(2, 2, 1);
+                //transform.position = player.transform.position  + offset;
+                //transform.localScale = new Vector3(2, 2, 1);
 
-                if (direction == -1)
-                    GetComponent<TrailRenderer>().enabled = false;
+                //if (direction == -1)
+                    //GetComponent<TrailRenderer>().enabled = false;
             }
             else
             {
@@ -104,10 +107,17 @@ public class Bat_Script : MonoBehaviour {
 
     IEnumerator DelayBegin()
     {
-        yield return new WaitForSeconds(Random.Range(0f,1f));
+        float x;
+
+        if (player.GetComponent<DemonModeScript>().DemonModeActive)
+            x = Random.Range(2f, 3f);
+        else
+            x = Random.Range(0f, 1f);
+
+        yield return new WaitForSeconds(x);
 
         begin = true;
-        // Trail Renderer color change
+        GetComponent<Animator>().SetBool("Explode", false);
         GetComponent<TrailRenderer>().material.color = new Color(Random.Range(0.5f, 1f), 0, Random.Range(0, 0.2f));
 
 
