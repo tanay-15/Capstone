@@ -88,7 +88,7 @@ public class Bat_Script : MonoBehaviour {
                 //transform.localScale = new Vector3(2, 2, 1);
 
                 //if (direction == -1)
-                    //GetComponent<TrailRenderer>().enabled = false;
+                //GetComponent<TrailRenderer>().enabled = false;
             }
             else
             {

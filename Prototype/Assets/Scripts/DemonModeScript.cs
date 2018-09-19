@@ -24,7 +24,7 @@ public class DemonModeScript : MonoBehaviour {
             StartCoroutine("Transform", !DemonModeActive);
             for (int i = 0; i < 50; i++)
             {
-                var Bat = Instantiate(bat, transform.position + new Vector3(0,-10,0), Quaternion.identity);
+                var Bat = Instantiate(bat, transform.position + new Vector3(0,100,0), Quaternion.identity);
                 Bat.GetComponent<Bat_Script>().player = gameObject;
             }
 
