@@ -5,7 +5,8 @@ using UnityEngine;
 public class Bat_Script : MonoBehaviour {
 
     float theta = 0;
-    float radius = 10;
+    float radius = 0;
+    int direction = 1;
 
     Vector3 offset;
 
@@ -14,12 +15,24 @@ public class Bat_Script : MonoBehaviour {
     public GameObject player;
 
 
-
-
 	// Use this for initialization
 	void Start () {
 
         offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), 0);
+
+        if (player.GetComponent<DemonModeScript>().DemonModeActive)
+        {
+            radius = 0;
+            direction = -1;
+        }
+        else
+        {
+            radius = 10;
+            direction = 1;
+        }
+        
+
+
 
         int randomInt = (int)Random.Range(0f, 13f);
 
@@ -62,13 +75,17 @@ public class Bat_Script : MonoBehaviour {
             GetComponent<TrailRenderer>().enabled = true;
 
             // Decrementing to create spiral path
-            theta += 3 * Time.deltaTime;
-            radius -= 6 * Time.deltaTime;
+            theta += 3 * Time.deltaTime * direction;
+            radius -= 6 * Time.deltaTime * direction;
 
-            if (radius < 0)
+            if (radius < 0 || radius > 15)
             {
                 GetComponent<Animator>().SetBool("Explode", true);
+                transform.position = player.transform.position  + offset;
                 transform.localScale = new Vector3(2, 2, 1);
+
+                if (direction == -1)
+                    GetComponent<TrailRenderer>().enabled = false;
             }
             else
             {
