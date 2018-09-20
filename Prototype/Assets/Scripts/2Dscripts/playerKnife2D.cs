@@ -32,6 +32,12 @@ public class playerKnife2D : MonoBehaviour {
             Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }
+
+     if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.SendMessageUpwards("applyDamage", 5);
+            Destroy(this.gameObject);
+        }
     }
 
    
