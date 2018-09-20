@@ -6,6 +6,7 @@ using UnityEngine;
 public class Levitation : MonoBehaviour {
 
     public static Levitation sharedInstance;
+    public float moveSpeed = 6f;
     public Color nonHoverColor;
     public Color hoverColor;
     public ParticleSystem particles;
@@ -62,7 +63,7 @@ public class Levitation : MonoBehaviour {
                                select col;
 
         ParticleSystem.MainModule main = particles.main;
-        if (collidingObjects.Count() > 0)
+        if (collidingObjects.Count() > 0 || heldObject != null)
         {
             main.startColor = hoverColor;
         }
@@ -75,14 +76,17 @@ public class Levitation : MonoBehaviour {
     void PickUpObject(GameObject obj)
     {
         heldObject = obj;
-        heldObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        heldObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.velocity = Vector3.zero;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     void ReleaseObject()
     {
-        heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-        heldObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 1;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
         heldObject = null;
     }
 
@@ -107,7 +111,9 @@ public class Levitation : MonoBehaviour {
     {
         if (heldObject != null)
         {
-            heldObject.transform.position = grabPosition;
+            Vector3 distance = grabPosition - heldObject.transform.position;
+            //heldObject.transform.position = grabPosition;
+            heldObject.GetComponent<Rigidbody2D>().velocity = distance * moveSpeed;
         }
     }
 	

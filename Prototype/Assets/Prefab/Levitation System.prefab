@@ -82,9 +82,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfbb6f957a9eb34aa384afc04e00048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 8
   nonHoverColor: {r: 1, g: 0, b: 1, a: 1}
   hoverColor: {r: 0.5, g: 0, b: 0.5, a: 1}
   particles: {fileID: 198029099749707632}
+  mouseZPosition: 0
 --- !u!198 &198029099749707632
 ParticleSystem:
   m_ObjectHideFlags: 1
