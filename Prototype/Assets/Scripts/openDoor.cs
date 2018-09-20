@@ -22,6 +22,7 @@ public class openDoor : MonoBehaviour {
             //this.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
             //this.GetComponent<BoxCollider2D>().enabled = false;
             this.gameObject.SetActive(false);
+            collision.gameObject.SetActive(false);
         }
     }
 }
