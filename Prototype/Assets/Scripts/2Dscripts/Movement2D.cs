@@ -119,7 +119,7 @@ public class Movement2D : MonoBehaviour
             myAnim.SetBool("isIdle", true);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             myAnim.SetBool("isAttacking", true);
         }

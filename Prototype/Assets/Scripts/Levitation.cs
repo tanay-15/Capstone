@@ -114,7 +114,7 @@ public class Levitation : MonoBehaviour {
 
     void CheckForButtonPress()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetMouseButtonDown(0))
         {
             if (heldObject == null)
             {
