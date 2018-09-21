@@ -156,7 +156,7 @@ public class Movement2D : MonoBehaviour
         //if(Input.GetButtonDown("Jump") && isGrounded)
         if (Input.GetButtonDown("Jump") && transform.GetChild(2).GetComponent<Grounded2D>().grounded && !wallJumpScript.wallSliding)
         {
-            player.velocity = Vector3.up * jumpVelocity * (1f + movement.magnitude * 2f);
+            player.velocity = Vector3.up * jumpVelocity;// *(1f + movement.magnitude * 2f);
             Debug.Log(player.velocity);
         }
 

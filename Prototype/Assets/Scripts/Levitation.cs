@@ -14,10 +14,18 @@ public class Levitation : MonoBehaviour {
     public GameObject heldObject;
     public float mouseZPosition = 0f;
 
-    float grabRadius = 0.5f;
+    float grabRadius = 0.1f;
     float maxGrabDistance = 4f;
     Vector3 grabPosition;
     IEnumerable<Collider2D> collidingObjects;
+
+    GameObject Player
+    {
+        get
+        {
+            return Movement2D.sharedInstance.gameObject;
+        }
+    }
 
     static Levitation()
     {
@@ -73,6 +81,18 @@ public class Levitation : MonoBehaviour {
         }
     }
 
+    void IgnoreCollisions(GameObject obj, bool ignore)
+    {
+        //Ignore ALL collisions between ALL colliders
+        foreach (Collider2D playerCol in Player.GetComponentsInChildren<Collider2D>())
+        {
+            foreach (Collider2D objCol in obj.GetComponentsInChildren<Collider2D>())
+            {
+                Physics2D.IgnoreCollision(playerCol, objCol, ignore);
+            }
+        }
+    }
+
     void PickUpObject(GameObject obj)
     {
         heldObject = obj;
@@ -80,11 +100,13 @@ public class Levitation : MonoBehaviour {
         rb.gravityScale = 0;
         rb.velocity = Vector3.zero;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        IgnoreCollisions(obj, true);
     }
 
     void ReleaseObject()
     {
         Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        IgnoreCollisions(heldObject, false);
         rb.gravityScale = 1;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
         heldObject = null;
@@ -96,7 +118,7 @@ public class Levitation : MonoBehaviour {
         {
             if (heldObject == null)
             {
-                Collider2D hoveringObject = collidingObjects.SingleOrDefault();
+                Collider2D hoveringObject = collidingObjects.FirstOrDefault();
                 if (hoveringObject != null)
                     PickUpObject(hoveringObject.gameObject);
             }

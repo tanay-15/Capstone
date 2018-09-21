@@ -215,7 +215,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpVelocity: 5
+  jumpVelocity: 7.5
   myAnim: {fileID: 0}
   facingRight: 0
   cooldownTime: 2
@@ -401,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1282434428905756, guid: b785ef736ce3f3641a5321fd91859d7a, type: 2}
   DemonModeActive: 0
+  MainCam: {fileID: 0}
 --- !u!114 &114985184090785748
 MonoBehaviour:
   m_ObjectHideFlags: 1
