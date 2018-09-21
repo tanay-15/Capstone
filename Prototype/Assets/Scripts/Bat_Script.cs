@@ -18,7 +18,7 @@ public class Bat_Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), 0);
+        offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), -1);
 
         if (player.GetComponent<DemonModeScript>().DemonModeActive)
         {
