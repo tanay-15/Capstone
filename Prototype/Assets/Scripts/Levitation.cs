@@ -74,10 +74,12 @@ public class Levitation : MonoBehaviour {
         if (collidingObjects.Count() > 0 || heldObject != null)
         {
             main.startColor = hoverColor;
+            main.startSize = 0.6f;
         }
         else
         {
             main.startColor = nonHoverColor;
+            main.startSize = 0.2f;
         }
     }
 

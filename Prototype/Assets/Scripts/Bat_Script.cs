@@ -72,7 +72,6 @@ public class Bat_Script : MonoBehaviour {
 	
 
 	void Update () {
-
         if (begin)
         {
             GetComponent<TrailRenderer>().enabled = true;

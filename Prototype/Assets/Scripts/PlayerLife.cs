@@ -35,7 +35,8 @@ public class PlayerLife : MonoBehaviour {
 
     void UpdateWidth()
     {
-        barGraphic.transform.localScale = new Vector3(currentLife / maxLife, 1f, 1f);
+        //barGraphic.transform.localScale = new Vector3(currentLife / maxLife, 1f, 1f);
+        barGraphic.fillAmount = currentLife / maxLife;
     }
 
     public void SetLife(int life)

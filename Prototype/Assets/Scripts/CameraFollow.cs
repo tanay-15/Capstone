@@ -26,7 +26,8 @@ public class CameraFollow : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+    // Changed to update to fix camera jitter
+	void Update () {
         Vector3 desiredPosition = Vector3.zero;
         if (lowerLeftBound == null || upperRightBound == null)
         {
@@ -36,7 +37,7 @@ public class CameraFollow : MonoBehaviour {
         {
             desiredPosition = Vector3Clamp(target.position, lowerLeftBound.position, upperRightBound.position) + offset;
         }
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, speed);
+        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, speed * Time.deltaTime / 0.02f);
         transform.position = smoothPosition;		
 	}
 }
