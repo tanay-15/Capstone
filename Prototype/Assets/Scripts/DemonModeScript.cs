@@ -29,7 +29,16 @@ public class DemonModeScript : MonoBehaviour {
             }
 
             if (!DemonModeActive)
+            {
                 GetComponent<AudioSource>().Play();
+                GetComponent<Movement2D>().speed = 7;               
+
+            }
+            else
+            {
+                GetComponent<Movement2D>().speed = 5;              
+            }
+                
         }
 
         if (transitioning)

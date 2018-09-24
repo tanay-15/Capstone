@@ -21,19 +21,19 @@ public class Grounded2D : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "ground" || collision.tag == "Wall" || collision.tag == "Enemy")
+        if (collision.tag == "ground" || collision.tag == "Wall" || collision.tag == "Enemy" || collision.tag == "Grabbable")
             grounded = true;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "ground" || collision.tag == "Wall" || collision.tag == "Enemy")
+        if (collision.tag == "ground" || collision.tag == "Wall" || collision.tag == "Enemy" || collision.tag == "Grabbable")
             grounded = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "ground" || collision.tag == "Wall" || collision.tag == "Enemy")
+        if (collision.tag == "ground" || collision.tag == "Wall" || collision.tag == "Enemy" || collision.tag == "Grabbable")
             grounded = false;
     }
 }
