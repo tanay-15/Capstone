@@ -31,12 +31,6 @@ public class DemonModeScript : MonoBehaviour {
             if (!DemonModeActive)
             {
                 GetComponent<AudioSource>().Play();
-                GetComponent<Movement2D>().speed = 7;               
-
-            }
-            else
-            {
-                GetComponent<Movement2D>().speed = 5;              
             }
                 
         }
@@ -49,7 +43,13 @@ public class DemonModeScript : MonoBehaviour {
                 MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.002f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b + 0.003f, MainCam.backgroundColor.a);
         }
 
-	}
+        if(DemonModeActive)
+            GetComponent<Movement2D>().speed = 7;
+        else
+            GetComponent<Movement2D>().speed = 5;
+       
+
+    }
 
     IEnumerator Transform(bool toDemon)
     {

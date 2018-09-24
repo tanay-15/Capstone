@@ -13,8 +13,8 @@ public class playerKnife2D : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(!hasHit == true)
-            transform.Rotate(new Vector3(0,0,-Time.deltaTime * 300));
+        //if(!hasHit == true)
+            //transform.Rotate(new Vector3(0,0,-Time.deltaTime * 300));
 
 	}
 

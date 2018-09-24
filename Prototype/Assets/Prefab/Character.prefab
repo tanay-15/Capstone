@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 114572393372644210}
   - component: {fileID: 114983765038645822}
   - component: {fileID: 114641980343511220}
+  - component: {fileID: 114914830625676374}
   - component: {fileID: 50886479926175692}
   - component: {fileID: 70945505782471834}
   - component: {fileID: 82136820047750502}
@@ -141,7 +142,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1520957361223310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.34, y: -0.05, z: 0}
+  m_LocalPosition: {x: 0.49, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4144058629130524}
@@ -167,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915422515657174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.133544, y: 2.4804437, z: 0}
+  m_LocalPosition: {x: -6.38, y: 2.1, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4990740603744274}
@@ -186,7 +187,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1540092695381576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.019, y: -0.42, z: -0.04}
+  m_LocalPosition: {x: -0.019, y: -0.4, z: -0.04}
   m_LocalScale: {x: 0.17338748, y: 0.03771, z: 0.50645}
   m_Children: []
   m_Father: {fileID: 4144058629130524}
@@ -245,7 +246,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -526,6 +527,21 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &114914830625676374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1915422515657174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972d21f270bed834090574d941683284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillAmount: 1
+  speedtoDecrease: 0.11
+  speedtoIncrease: 0.01
+  filler: {fileID: 0}
 --- !u!114 &114983765038645822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -538,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpVelocity: 5
+  jumpVelocity: 7.5
   myAnim: {fileID: 0}
   facingRight: 0
   cooldownTime: 2
@@ -592,8 +608,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 67f2db51edabd2841a25cb1f2b2dc514, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 5c0eb17d76906f940836e040ceed5d86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -684,7 +700,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 331ca34cf9f9bce4cb2b87f63aa53a6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

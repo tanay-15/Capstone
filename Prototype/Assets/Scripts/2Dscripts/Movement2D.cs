@@ -97,9 +97,11 @@ public class Movement2D : MonoBehaviour
 
         float hAxis = Input.GetAxis("Horizontal");
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
-        Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
+
+        player.velocity = new Vector3(hAxis * speed, player.velocity.y, 0);
+        //Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
         //player.MovePosition(transform.position + movement);
-        player.position += new Vector2(movement.x,movement.y);
+        //player.position += new Vector2(movement.x,movement.y);
 
         if (hAxis > 0 && !facingRight)
         {
@@ -118,15 +120,7 @@ public class Movement2D : MonoBehaviour
             myAnim.SetBool("isWalking", false);
             myAnim.SetBool("isIdle", true);
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            myAnim.SetBool("isAttacking", true);
-        }
-        else
-        {
-            myAnim.SetBool("isAttacking", false);
-        }
+       
 
 
         if (Input.GetKey(KeyCode.Tab))
@@ -175,24 +169,24 @@ public class Movement2D : MonoBehaviour
 
         if (Time.time > nextFiretime)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetKeyDown(KeyCode.E))
             {
+                myAnim.SetBool("isAttacking", true);
 
                 // Rigidbody knifeInstance;
                 nextFiretime = Time.time + cooldownTime;
-                if (facingRight)
-                {
-                    Debug.Log("right click");
-                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
-                    knifeInstance.GetComponent<Rigidbody2D>().velocity = handEnd.right * 5;
-                }
-                else
-                {
-                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, new Quaternion(knifePrefab.transform.rotation.x, knifePrefab.transform.rotation.y, knifePrefab.transform.rotation.z, 1));
-                    knifeInstance.GetComponent<Rigidbody2D>().velocity = -handEnd.right * 5;
-                }
+
+                StartCoroutine("DelayedAttack");
             }
+            else
+                myAnim.SetBool("isAttacking", false);
         }
+        else if (!Input.GetKeyDown(KeyCode.E))
+        {
+            myAnim.SetBool("isAttacking", false);
+        }
+
+
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             //BackGround shift
@@ -215,5 +209,23 @@ public class Movement2D : MonoBehaviour
     {
         //player.enabled = true;
         sprite.enabled = true;
+    }
+
+
+    IEnumerator DelayedAttack()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+         if (facingRight)
+                {
+                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
+                    knifeInstance.GetComponent<Rigidbody2D>().velocity = handEnd.right * 5;
+                }
+                else
+                {
+                    var knifeInstance = Instantiate(knifePrefab, handEnd.position, new Quaternion(knifePrefab.transform.rotation.x, knifePrefab.transform.rotation.y, knifePrefab.transform.rotation.z, 1));
+                    knifeInstance.GetComponent<SpriteRenderer>().flipX = true;
+                    knifeInstance.GetComponent<Rigidbody2D>().velocity = -handEnd.right * 5;
+                }
     }
 }
