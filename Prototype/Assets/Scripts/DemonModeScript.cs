@@ -6,7 +6,7 @@ public class DemonModeScript : MonoBehaviour {
 
     public GameObject bat;
     public bool DemonModeActive;
-    bool transitioning;
+    public bool transitioning;
     public Camera MainCam;
 
 	// Use this for initialization
@@ -38,9 +38,17 @@ public class DemonModeScript : MonoBehaviour {
         if (transitioning)
         {
             if(!DemonModeActive)
-                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.002f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b - 0.003f, MainCam.backgroundColor.a);
+            { 
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.001f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b - 0.001f, MainCam.backgroundColor.a);
+                Color darkness = GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color;
+                GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g,darkness.b, darkness.a + 0.002f);
+            }
             else
-                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.002f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b + 0.003f, MainCam.backgroundColor.a);
+            {
+                MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.001f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b + 0.001f, MainCam.backgroundColor.a);
+                Color darkness = GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color;
+                GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g, darkness.b, darkness.a - 0.002f);
+            }
         }
 
         if(DemonModeActive)
