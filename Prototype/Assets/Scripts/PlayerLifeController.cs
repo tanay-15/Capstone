@@ -23,7 +23,6 @@ public class PlayerLifeController : MonoBehaviour {
         if (col.gameObject.tag == "Enemy")
         {
             PlayerLife.sharedInstance.AddLife(-10);
-            Debug.Log("Hi");
             if (PlayerLife.sharedInstance.currentLife <= 0)
             {
                 gameObject.SetActive(false);

@@ -27,7 +27,7 @@ public class rageBar : MonoBehaviour {
 	void Update () {
         handleBar();
 
-        if(Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
             if (rageBarActive)
             {
