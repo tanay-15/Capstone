@@ -27,9 +27,9 @@ public class Enemy : MonoBehaviour {
     public GameObject target;
     protected Vector3 targetpos;
     public bool AttackReady;
-    public bool IsAlive = true;
-    private bool movway1 = true;
-    private bool movway2;
+    public bool IsAlive ;
+    public bool movway1 = true;
+    public bool movway2;
     public GameObject waypoint1;
     public GameObject waypoint2;
     
@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour {
 		
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
+        IsAlive = true;
 	}
 	
 	// Update is called once per frame
@@ -120,7 +121,7 @@ public class Enemy : MonoBehaviour {
     {
         if(target == null)
         {
-            anim.SetTrigger("StartPatrol");
+           // anim.SetTrigger("StartPatrol");
             currentstate = States.Patrol;
         }
 
@@ -129,6 +130,7 @@ public class Enemy : MonoBehaviour {
         {
             if (movway1)
             {
+                
                 this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, movspeed * Time.deltaTime);
                 if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 1f)
                 {
@@ -203,7 +205,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         //Temporary. Let the Player Weapon GameObjects kill the enemy
         if (collision.gameObject.tag == "Player Weapon")
@@ -212,17 +214,24 @@ public class Enemy : MonoBehaviour {
         }
         if(collision.gameObject.tag == "Player")
         {
-            
-            AttackReady = true;
-           
-            
+            Debug.Log("Player hit!");
+            AttackReady = true;    
+        }
+
+        if(collision.gameObject.tag == "projectile")
+        {
+            Debug.Log("Hit by weapon!");
+            IsAlive = false;
         }
     }
 
-    public void OnCollisionExit(Collision collision)
+
+
+    public void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
+           
             AttackReady = false;
         }
     }
