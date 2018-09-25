@@ -18,7 +18,7 @@ public class DemonModeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown("z") && !transitioning)
+        if (Input.GetKeyDown("q") && !transitioning)
         {
             transitioning = true;
             StartCoroutine("Transform", !DemonModeActive);
