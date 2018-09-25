@@ -7,7 +7,11 @@ public class RagdollEnemy : MonoBehaviour {
 
     Component[] bones;
 
+    
+
     public bool isDead = false;
+
+   
 
     void Start ()
     {
@@ -25,7 +29,11 @@ public class RagdollEnemy : MonoBehaviour {
         if (isDead == true)
         {
             SetChildrenKinematic(false);
-        }        
+        }
+
+     
+            
+      
 
 	}
 

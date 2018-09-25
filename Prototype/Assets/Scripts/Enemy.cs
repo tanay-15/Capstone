@@ -49,7 +49,10 @@ public class Enemy : MonoBehaviour {
     [Header("Eyesight")]
     public GameObject vision;
     public RaycastHit eyehit;
-    private RaycastHit vishit;
+    private RaycastHit2D vishit;
+
+    Component[] bones;
+
 
 
     void Start () {
@@ -57,10 +60,15 @@ public class Enemy : MonoBehaviour {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
         IsAlive = true;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
+
+        SetChildrenKinematic(true);
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         if (IsAlive)
         {
@@ -69,32 +77,35 @@ public class Enemy : MonoBehaviour {
             Pursuit();
             Attack();
         }
-       
-        Death();
+        else
+        {
+            Death();
+        }
+      
 	}
 
     public void Death()
     {
-        if (AttackReady)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                currentstate = States.Dead;
-                IsAlive = false;
-                anim.SetTrigger("Death");
-            }
-        }
+
+
+        target = null;
+        movway1 = false;
+        movway2 = false;
+             currentstate = States.Dead;
+            anim.SetTrigger("Death");
+            SetChildrenKinematic(false);
+        
+
+      
     }
 
     public void DetectingPlayer()
     {
-        
-        if(Physics.Raycast(vision.transform.position,transform.right,out eyehit, range))
-        {
-            //Debug.Log("Player in range");
-        }
 
-        if(Physics.Raycast(vision.transform.position,transform.right,out vishit, losrange))
+
+        Debug.Log("Is detecting");
+
+        if(vishit = Physics2D.Raycast(vision.transform.position, -transform.right,losrange))
         {
             if(vishit.collider.gameObject.tag == "Player")
             {
@@ -104,9 +115,10 @@ public class Enemy : MonoBehaviour {
                 targetpos = target.transform.position;
                 //Debug.Log("Player spotted");
             }
+            
 
-           
-           
+
+
         }
         else
         {
@@ -115,56 +127,64 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("Alert", false);
         }
 
+
     }
 
     public virtual void Patrol()
     {
-        if(target == null)
+        Debug.Log("Patrolling");
+        if (IsAlive)
         {
-           // anim.SetTrigger("StartPatrol");
-            currentstate = States.Patrol;
-        }
-
-        
-        if(currentstate == States.Patrol)
-        {
-            if (movway1)
+            if (target == null)
             {
-                
-                this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, movspeed * Time.deltaTime);
-                if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 1f)
-                {
-                    flip();
-                    //move to point two
-                    movway1 = false;
-                    movway2 = true;
-                }
+                // anim.SetTrigger("StartPatrol");
+                currentstate = States.Patrol;
             }
-            
-           
 
-            if (movway2)
+
+            if (currentstate == States.Patrol)
             {
-                this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, movspeed * Time.deltaTime);
-                if(Vector2.Distance(waypoint2.transform.position,this.transform.position) <= 1f)
+                if (movway1)
                 {
-                    flip();
-                    movway1 = true;
-                    movway2 = false;
+
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, movspeed * Time.deltaTime);
+                    if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 1f)
+                    {
+                        flip();
+                        //move to point two
+                        movway1 = false;
+                        movway2 = true;
+                    }
                 }
+
+
+
+                if (movway2)
+                {
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, movspeed * Time.deltaTime);
+                    if (Vector2.Distance(waypoint2.transform.position, this.transform.position) <= 1f)
+                    {
+                        flip();
+                        movway1 = true;
+                        movway2 = false;
+                    }
+                }
+
             }
-           
         }
         
     }
 
     public virtual void Pursuit()
     {
-        if (target && !AttackReady)
+        if (IsAlive)
         {
-            currentstate = States.Pursuit;
-            anim.SetBool("ShouldPursuit", true);
-            this.transform.position = Vector2.MoveTowards(this.transform.position, targetpos, movspeed * Time.deltaTime);
+            if (target && !AttackReady)
+            {
+                currentstate = States.Pursuit;
+                anim.SetBool("ShouldPursuit", true);
+                this.transform.position = Vector2.MoveTowards(this.transform.position, targetpos, movspeed * Time.deltaTime);
+            }
         }
     }
 
@@ -218,13 +238,19 @@ public class Enemy : MonoBehaviour {
             AttackReady = true;    
         }
 
-        if(collision.gameObject.tag == "projectile")
-        {
-            Debug.Log("Hit by weapon!");
-            IsAlive = false;
-        }
+     
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "projectile")
+        {
+            IsAlive = false;
+            Debug.Log("Hit by " + collision.gameObject.name);
+            health = 0;
+          
+        }
+    }
 
 
     public void OnCollisionExit2D(Collision2D collision)
@@ -236,19 +262,37 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
+
+    public bool GetAlive()
+    {
+        return IsAlive;
+    }
+
+    void SetChildrenKinematic(bool state)
+    {
+        foreach (Rigidbody2D rb2d in bones)
+        {
+            if (rb2d.name != gameObject.name)
+            {
+                rb2d.isKinematic = state;
+                rb2d.GetComponent<Collider2D>().enabled = !state;
+                //Debug.Log(rb2d.name);
+            }
+
+        }
+    }
+    
     void flip()
     {
 
-        /*Vector3 theScale = transform.localScale;
-         theScale.x *= -1;
-         transform.localScale = theScale;
+        
 
-         Vector3 visScale = vision.transform.localScale;
-         visScale.x *= -1;
-         vision.transform.localScale = visScale;
-        */
-
-        this.transform.RotateAround(transform.position, transform.up, 180f);
+        //this.transform.RotateAround(transform.position, transform.up, 180f);
 
         
     }

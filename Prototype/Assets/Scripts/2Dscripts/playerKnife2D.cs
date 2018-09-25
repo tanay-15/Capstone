@@ -50,7 +50,7 @@ public class playerKnife2D : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
         }
-
+        
     }
     
 }
