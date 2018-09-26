@@ -53,7 +53,7 @@ public class RagdollEnemy : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "projectile")
+        if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
         {
             isDead = true;
             Debug.Log("hit");

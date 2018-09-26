@@ -529,7 +529,7 @@ Transform:
   m_LocalScale: {x: 5, y: 60.969795, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &395938953
 GameObject:
@@ -840,80 +840,23 @@ Prefab:
       propertyPath: MainCam
       value: 
       objectReference: {fileID: 395938955}
-    - target: {fileID: 114959512301007250, guid: 4e190663ac050a146aca7b5f99bdd0d0,
-        type: 2}
-      propertyPath: Projectile
-      value: 
-      objectReference: {fileID: 1770224945}
-    - target: {fileID: 114959512301007250, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    - target: {fileID: 114769860227202694, guid: 4e190663ac050a146aca7b5f99bdd0d0,
         type: 2}
       propertyPath: MainCam
       value: 
       objectReference: {fileID: 395938955}
-    - target: {fileID: 114126404198157392, guid: 4e190663ac050a146aca7b5f99bdd0d0,
-        type: 2}
-      propertyPath: Projectile
-      value: 
-      objectReference: {fileID: 1539597823}
-    - target: {fileID: 114126404198157392, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    - target: {fileID: 114737778890061178, guid: 4e190663ac050a146aca7b5f99bdd0d0,
         type: 2}
       propertyPath: MainCam
       value: 
       objectReference: {fileID: 395938955}
-    - target: {fileID: 114442120980742324, guid: 4e190663ac050a146aca7b5f99bdd0d0,
-        type: 2}
-      propertyPath: Projectile
-      value: 
-      objectReference: {fileID: 1808017290}
-    - target: {fileID: 114442120980742324, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    - target: {fileID: 114961502161296112, guid: 4e190663ac050a146aca7b5f99bdd0d0,
         type: 2}
       propertyPath: MainCam
       value: 
       objectReference: {fileID: 395938955}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
-  m_IsPrefabAsset: 0
---- !u!1001 &940085136
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 8.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 2.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0.084
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571187681193554, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4829096e49b1b224d963b0d8358db6df, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &966422172
 GameObject:
@@ -1011,7 +954,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249380533
 GameObject:
@@ -1326,7 +1269,7 @@ GameObject:
   - component: {fileID: 1539597827}
   m_Layer: 0
   m_Name: Spike ball (2)
-  m_TagString: projectile
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1378,7 +1321,7 @@ Transform:
   m_Children:
   - {fileID: 1377678783}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1539597827
 MonoBehaviour:
@@ -1430,7 +1373,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4907616177244670, guid: e915c7e9a3c633e43b38e8f6b0a86b82, type: 2}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1803602725476226, guid: e915c7e9a3c633e43b38e8f6b0a86b82, type: 2}
       propertyPath: m_Name
@@ -1655,7 +1598,7 @@ GameObject:
   - component: {fileID: 1770224949}
   m_Layer: 0
   m_Name: Spike ball (1)
-  m_TagString: projectile
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1707,7 +1650,7 @@ Transform:
   m_Children:
   - {fileID: 1381035325}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1770224949
 MonoBehaviour:
@@ -1735,7 +1678,7 @@ GameObject:
   - component: {fileID: 1808017294}
   m_Layer: 0
   m_Name: Spike ball
-  m_TagString: projectile
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1787,7 +1730,7 @@ Transform:
   m_Children:
   - {fileID: 1289405343}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1808017294
 MonoBehaviour:
@@ -1901,7 +1844,7 @@ Transform:
   m_LocalScale: {x: 5, y: 60.969795, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2113901913
 GameObject:
@@ -1929,7 +1872,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2146127282
 GameObject:
