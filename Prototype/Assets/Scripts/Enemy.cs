@@ -53,6 +53,8 @@ public class Enemy : MonoBehaviour {
 
     Component[] bones;
 
+   public GameObject[] compobones;
+
 
 
     void Start () {
@@ -63,7 +65,10 @@ public class Enemy : MonoBehaviour {
 
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
+   
+
         SetChildrenKinematic(true);
+
 
     }
 
@@ -105,26 +110,61 @@ public class Enemy : MonoBehaviour {
 
         Debug.Log("Is detecting");
 
-        if(vishit = Physics2D.Raycast(vision.transform.position, -transform.right,losrange))
+        if (movway1)
         {
-            if(vishit.collider.gameObject.tag == "Player")
+
+
+            if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, losrange))
             {
-                currentstate = States.Alert;
-                anim.SetBool("Alert", true);
-                target = vishit.collider.gameObject;
-                targetpos = target.transform.position;
-                //Debug.Log("Player spotted");
+                if (vishit.collider.gameObject.tag == "Player")
+                {
+                    currentstate = States.Alert;
+                    anim.SetBool("Alert", true);
+                    target = vishit.collider.gameObject;
+                    targetpos = target.transform.position;
+                    //Debug.Log("Player spotted");
+                }
+
+
+
+
             }
-            
 
 
+            else
+            {
+                target = null;
+                currentstate = States.Idle;
+                anim.SetBool("Alert", false);
+            }
 
         }
-        else
+
+        if (movway2)
         {
-            target = null;
-            currentstate = States.Idle;
-            anim.SetBool("Alert", false);
+            if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, losrange))
+            {
+                if (vishit.collider.gameObject.tag == "Player")
+                {
+                    currentstate = States.Alert;
+                    anim.SetBool("Alert", true);
+                    target = vishit.collider.gameObject;
+                    targetpos = target.transform.position;
+                    //Debug.Log("Player spotted");
+                }
+
+
+
+
+            }
+
+
+            else
+            {
+                target = null;
+                currentstate = States.Idle;
+                anim.SetBool("Alert", false);
+            }
         }
 
 
@@ -290,10 +330,12 @@ public class Enemy : MonoBehaviour {
     void flip()
     {
 
-        
 
-        //this.transform.RotateAround(transform.position, transform.up, 180f);
 
+        this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
+      
+
+      
         
     }
 }
