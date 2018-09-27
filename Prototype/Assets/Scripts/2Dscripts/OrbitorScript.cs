@@ -19,8 +19,15 @@ public class OrbitorScript : MonoBehaviour {
     //private float startTime = 0;
     //private float journeyLength = 0;
     float fracJourney = 0;
-    
 
+    enum State
+    {
+        NoProjectile ,
+        HasProjectile ,
+        ShootingProjectile 
+    };
+
+    State Status;
 
     void Start () {
 
@@ -31,6 +38,101 @@ public class OrbitorScript : MonoBehaviour {
 
     void Update()
     {
+
+        /*
+         
+      
+
+        switch(Status)
+        {
+            case State.HasProjectile:
+                {
+                    Trail.SetActive(true);
+                    Trail.transform.position = Projectile.transform.position;
+
+                    // Lerping 
+                    if (!shootingProjectile && Vector3.Distance(Player.transform.position, Projectile.transform.position) < 3f)
+                    {
+                        // flags before picking up object
+                        if (!Projectile.GetComponent<OrbitorObjectScript>().isOrbiting)
+                        {
+                            Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = true;
+                            Projectile.GetComponent<OrbitorObjectScript>().hit = false;
+                            Projectile.GetComponent<Collider2D>().enabled = false;
+                            Projectile.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+                        }
+                        else
+                        {
+                            fracJourney += Time.deltaTime;
+
+                            Projectile.transform.position = Vector3.Lerp(Projectile.transform.position, Projectile.transform.parent.position, fracJourney);
+
+
+                        }
+                    }
+
+                    // Throw to mouse click position
+                    if (Input.GetMouseButtonDown(0))
+                    {
+
+                        if (transform.localPosition.x > 1f && !shootingProjectile && transform.localPosition.y > -0.3f)
+                        {
+                            Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                            Vector3 direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - Projectile.transform.position);
+                            Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
+                            Projectile.GetComponent<Collider2D>().enabled = true;
+
+                            //shootingProjectile = true;
+                            Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
+                            Projectile.transform.parent = null;
+                            fracJourney = 0;
+
+                        }
+
+                    }
+
+                    if (Projectile.GetComponent<OrbitorObjectScript>().hit)
+                    {
+                        Status = State.NoProjectile;
+                        //shootingProjectile = false;
+                        //hasProjectile = false;
+                        Trail.SetActive(false);
+                    }
+                    break;
+                }
+        }
+
+          */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Check for Demon Mode
         if (Player.GetComponent<DemonModeScript>().DemonModeActive)
         {
