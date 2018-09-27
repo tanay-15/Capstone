@@ -1,14 +1,12 @@
 fileFormatVersion: 2
-guid: 6129692f46d920848b425e50fb3f76a0
+guid: c7f77dd915d92f44f82d25ff8aa706d9
 TextureImporter:
   fileIDToRecycleName:
-    21300000: bat_chase_0
-    21300002: bat_chase_1
-    21300004: bat_chase_2
-    21300006: bat_chase_3
-    21300008: bat_chase_4
-    21300010: bat_chase_5
-    21300012: bat_chase_6
+    21300000: Castle_0
+    21300002: Castle_1
+    21300004: Castle_2
+    21300006: Castle_3
+    21300008: Castle_4
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -41,20 +39,20 @@ TextureImporter:
     filterMode: 0
     aniso: -1
     mipBias: -100
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 0
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 108
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -70,7 +68,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -81,7 +79,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -91,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bat_chase_0
+      name: Castle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 89
-        width: 80
-        height: 80
+        x: 7
+        y: 10
+        width: 44
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -105,19 +103,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 334b30c5aacedd14dae90a86ef0e1470
+      spriteID: e96bb0508897ed343859eed0ffa63b6f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bat_chase_1
+      name: Castle_1
       rect:
         serializedVersion: 2
-        x: 80
-        y: 89
-        width: 80
-        height: 80
+        x: 68
+        y: 137
+        width: 32
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,19 +123,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfb0ad7fc8ed61f4385f261f389a9279
+      spriteID: 9ce4fd3dc1bf72c4d9814dcf21c1ba2e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bat_chase_2
+      name: Castle_2
       rect:
         serializedVersion: 2
-        x: 160
-        y: 89
-        width: 80
-        height: 80
+        x: 117
+        y: 10
+        width: 52
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,19 +143,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 465eca3125667114e86e96478d08b025
+      spriteID: 456bad9ceda0c0947a17ccc99ff6aefc
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bat_chase_3
+      name: Castle_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 9
-        width: 80
-        height: 80
+        x: 68
+        y: 81
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,19 +163,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0197758fa67272c49b9b8c54419be5c5
+      spriteID: 490c04b7aad74794f9bc68dcf41fa4e5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bat_chase_4
+      name: Castle_4
       rect:
         serializedVersion: 2
-        x: 80
-        y: 9
-        width: 80
-        height: 80
+        x: 67
+        y: 28
+        width: 33
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,47 +183,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93e4a30b646e0514bbeab596c91d0bb7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bat_chase_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 9
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69cfddbf4a515e547adae48d056a8095
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bat_chase_6
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 9
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09e613e6fa9516b4394692dee63e8a88
+      spriteID: 300d6b40884200043947d9218a696e4a
       vertices: []
       indices: 
       edges: []
@@ -233,7 +191,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 45366fc50b104fa4abeecc0413f5cc20
+    spriteID: 7790890d115f21e4a996702b93024f5a
     vertices: []
     indices: 
     edges: []
