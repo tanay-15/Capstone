@@ -17,15 +17,11 @@ public class PlayerLife : MonoBehaviour {
     }
 
 	void Start () {
-        if (sharedInstance == null)
+        if (sharedInstance != null)
         {
-            sharedInstance = this;
+            Destroy(sharedInstance);
         }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        sharedInstance = this;
         currentLife = maxLife;
 	}
 	

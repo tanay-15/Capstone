@@ -46,15 +46,11 @@ public class Movement2D : MonoBehaviour
         if (trackJumpHeight)
             ResetJumpTracking();
 
-        if (sharedInstance == null)
+        if (sharedInstance != null)
         {
-            sharedInstance = this;
+            Destroy(sharedInstance);
         }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        sharedInstance = this;
         player = GetComponent<Rigidbody2D>();
         wallJumpScript = GetComponent<WallJump>();
 
