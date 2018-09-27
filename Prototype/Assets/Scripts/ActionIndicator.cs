@@ -15,7 +15,7 @@ public class ActionIndicator : MonoBehaviour {
     {
         indicator.transform.localScale = Vector3.zero;
         indicator.SetActive(true);
-        UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, false);
+        //UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, false);
     }
 
     IEnumerator Scale(bool show)
@@ -32,7 +32,7 @@ public class ActionIndicator : MonoBehaviour {
 
     public void Show(bool show)
     {
-        UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, show);
+        //UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, show);
 
         if (routine != null)
             StopCoroutine(routine);

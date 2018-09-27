@@ -41,7 +41,7 @@ public class Switch : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             player = true;
-            collision.gameObject.SendMessage("Show", true);
+            //collision.gameObject.SendMessage("Show", true);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -49,7 +49,7 @@ public class Switch : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             player = false;
-            collision.gameObject.SendMessage("Show", false);
+            //collision.gameObject.SendMessage("Show", false);
         }
     }
 }
