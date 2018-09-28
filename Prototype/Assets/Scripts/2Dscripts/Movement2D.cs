@@ -200,6 +200,12 @@ public class Movement2D : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        /*
+        facingRight = !facingRight;
+        transform.Find("Normal").GetComponent<SpriteRenderer>().flipX = !transform.Find("Normal").GetComponent<SpriteRenderer>().flipX;
+        transform.Find("Demon").GetComponent<SpriteRenderer>().flipX = !transform.Find("Demon").GetComponent<SpriteRenderer>().flipX;
+        */
     }
     void Enabler()
     {

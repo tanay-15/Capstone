@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1130271953758786
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1299497731685820
 GameObject:
   m_ObjectHideFlags: 1
@@ -205,7 +205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1727536091940012
 GameObject:
   m_ObjectHideFlags: 1
@@ -325,7 +325,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915422515657174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.38, y: 2.1, z: 0}
+  m_LocalPosition: {x: -8.1, y: 1.2590268, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4990740603744274}
@@ -753,7 +753,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Time: 1
   m_Parameters:
     serializedVersion: 2
@@ -854,7 +854,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Time: 1
   m_Parameters:
     serializedVersion: 2
@@ -955,7 +955,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Time: 1
   m_Parameters:
     serializedVersion: 2
@@ -1118,6 +1118,7 @@ MonoBehaviour:
   theta: 2.09
   hasProjectile: 0
   shootingProjectile: 0
+  Status: 0
 --- !u!114 &114752570767288306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1204,6 +1205,7 @@ MonoBehaviour:
   theta: 4.19
   hasProjectile: 0
   shootingProjectile: 0
+  Status: 0
 --- !u!114 &114914830625676374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1236,6 +1238,7 @@ MonoBehaviour:
   theta: 0
   hasProjectile: 0
   shootingProjectile: 0
+  Status: 0
 --- !u!114 &114983765038645822
 MonoBehaviour:
   m_ObjectHideFlags: 1

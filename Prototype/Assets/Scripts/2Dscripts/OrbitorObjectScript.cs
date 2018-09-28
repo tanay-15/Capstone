@@ -5,7 +5,7 @@ using UnityEngine;
 public class OrbitorObjectScript : MonoBehaviour {
 
     public bool isOrbiting = false;
-    public bool hit = false;
+    public bool hit = true;
 
 	// Use this for initialization
 	void Start () {
