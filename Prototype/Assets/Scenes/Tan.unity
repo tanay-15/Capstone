@@ -345,6 +345,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &293445028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1471792125270284, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 293445029}
+  m_Layer: 0
+  m_Name: wallCheckpoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &293445029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4073061030153632, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 293445028}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.284, y: 0.073000036, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1283182847}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312407228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,6 +1896,7 @@ MonoBehaviour:
   maxDistance: 10
   wallSliding: 0
   wallCheckpoint: {fileID: 110032091}
+  wallCheckpoint1: {fileID: 293445029}
   wallCheck: 0
   wallLayerMask:
     serializedVersion: 2
@@ -1949,6 +1980,7 @@ Transform:
   - {fileID: 906701014}
   - {fileID: 1204956370}
   - {fileID: 110032091}
+  - {fileID: 293445029}
   - {fileID: 1770623081}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2513,7 +2545,7 @@ Transform:
   m_Children:
   - {fileID: 1164337587}
   m_Father: {fileID: 1283182847}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1820255336
 GameObject:
