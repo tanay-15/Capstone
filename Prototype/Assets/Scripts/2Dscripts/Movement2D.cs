@@ -225,13 +225,13 @@ public class Movement2D : MonoBehaviour
          if (facingRight)
                 {
                     var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
-                    knifeInstance.GetComponent<Rigidbody2D>().velocity = handEnd.right * 5;
+                    knifeInstance.GetComponent<Rigidbody2D>().velocity = handEnd.right * 7;
                 }
                 else
                 {
                     var knifeInstance = Instantiate(knifePrefab, handEnd.position, new Quaternion(knifePrefab.transform.rotation.x, knifePrefab.transform.rotation.y, knifePrefab.transform.rotation.z, 1));
                     knifeInstance.GetComponent<SpriteRenderer>().flipX = true;
-                    knifeInstance.GetComponent<Rigidbody2D>().velocity = -handEnd.right * 5;
+                    knifeInstance.GetComponent<Rigidbody2D>().velocity = -handEnd.right * 7;
                 }
     }
 }

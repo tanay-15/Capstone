@@ -27,9 +27,9 @@ public class rageBar : MonoBehaviour {
 	void Update () {
         handleBar();
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        //if(Input.GetKeyDown(KeyCode.Q))
         {
-            if (!rageBarActive)
+            if (GetComponent<DemonModeScript>().DemonModeActive && !GetComponent<DemonModeScript>().transitioning)
             {
                 rageBarActive = true;              
             }
@@ -41,10 +41,11 @@ public class rageBar : MonoBehaviour {
 
         if (rageBarActive)
         {
-            if (RBar.fillAmount > 0)
-                Invoke("rageBarDeplete", 3f);
+            if (RBar.fillAmount >= 0)
+                RBar.fillAmount -= 0.1f * Time.deltaTime;
             else
             {
+                RBar.fillAmount = 0;
                 GetComponent<DemonModeScript>().Transformation();
                 rageBarActive = false;
             }
@@ -52,9 +53,9 @@ public class rageBar : MonoBehaviour {
         }
 
 
-        if (!rageBarActive && RBar.fillAmount < 1)
+        if (!rageBarActive && RBar.fillAmount <= 1)
         {
-            Invoke("rageBarRegen", 2f);
+            RBar.fillAmount += 0.05f * Time.deltaTime;
         }
 
         
