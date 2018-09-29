@@ -33,7 +33,7 @@ public class OrbitorScript : MonoBehaviour {
 
     void Start () {
 
-        Player = transform.parent.gameObject;
+        Player = transform.parent.parent.gameObject;
         Trail = transform.GetChild(0).gameObject;
 
         Status = State.NoProjectile;
@@ -47,13 +47,6 @@ public class OrbitorScript : MonoBehaviour {
         {
 
             // Orbiting path
-
-            if (Player.GetComponent<Movement2D>().facingRight != facingRight)
-            {
-                //flip();
-                rotDirection *= -1;
-                facingRight = Player.GetComponent<Movement2D>().facingRight;
-            }
 
             theta += 2 * Time.deltaTime;
             transform.localPosition = new Vector3(radius * Mathf.Sin(theta) * rotDirection, radius * Mathf.Cos(theta), -1);

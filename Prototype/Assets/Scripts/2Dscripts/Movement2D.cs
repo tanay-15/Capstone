@@ -201,6 +201,10 @@ public class Movement2D : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
 
+        theScale = GameObject.Find("OrbitingSystem").transform.localScale;
+        theScale.x *= -1;
+        GameObject.Find("OrbitingSystem").transform.localScale = theScale;
+
         /*
         facingRight = !facingRight;
         transform.Find("Normal").GetComponent<SpriteRenderer>().flipX = !transform.Find("Normal").GetComponent<SpriteRenderer>().flipX;
