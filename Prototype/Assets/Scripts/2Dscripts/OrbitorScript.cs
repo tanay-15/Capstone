@@ -62,7 +62,8 @@ public class OrbitorScript : MonoBehaviour {
 
                         foreach (Collider2D coll in hitColliders)
                         {
-                            if (coll.gameObject.tag == "Grabbable" && coll.gameObject.GetComponent<OrbitorObjectScript>() && coll.gameObject.GetComponent<OrbitorObjectScript>().hit == true)
+                            if (coll.gameObject.tag == "Grabbable" && coll.gameObject.GetComponent<OrbitorObjectScript>() 
+                                && coll.gameObject.GetComponent<OrbitorObjectScript>().hit == true && transform.childCount<2)
                             {
                                 Projectile = coll.gameObject;
                                 Projectile.transform.parent = transform;
@@ -104,9 +105,11 @@ public class OrbitorScript : MonoBehaviour {
                         // Throw to mouse click position
                         if (Input.GetMouseButtonDown(0))
                         {
-                            if(transform.localPosition.x > 1f && transform.localPosition.y > -0.3f)
+                            if(transform.localPosition.y > -0.3f)
                             { 
-
+                                if((transform.localPosition.x > 1f && Player.GetComponent<Movement2D>().facingRight)
+                                    || (transform.localPosition.x < -1f) && !Player.GetComponent<Movement2D>().facingRight)
+                                { 
                                     Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                                     Vector3 direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - Projectile.transform.position);
@@ -118,7 +121,7 @@ public class OrbitorScript : MonoBehaviour {
                                     fracJourney = 0;
 
                                     Status = State.ShootingProjectile;
-                                
+                                }
                             }
                         }
 
