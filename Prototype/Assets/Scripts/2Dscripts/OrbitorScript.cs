@@ -107,8 +107,8 @@ public class OrbitorScript : MonoBehaviour {
                         {
                             if(transform.localPosition.y > -0.3f)
                             { 
-                                if((transform.localPosition.x > 1f && Player.GetComponent<Movement2D>().facingRight)
-                                    || (transform.localPosition.x < -1f) && !Player.GetComponent<Movement2D>().facingRight)
+                                if((transform.localPosition.x > 0.7f && Player.GetComponent<Movement2D>().facingRight)
+                                    || (transform.localPosition.x < -0.7f) && !Player.GetComponent<Movement2D>().facingRight)
                                 { 
                                     Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
