@@ -2177,7 +2177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &283161273
 Transform:
   m_ObjectHideFlags: 0
@@ -10154,14 +10154,6 @@ Prefab:
       propertyPath: m_Name
       value: Cube (8)
       objectReference: {fileID: 0}
-    - target: {fileID: 4585273780340792, guid: 0ee35610451b9c242ab831d39b534b9f, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4585273780340792, guid: 0ee35610451b9c242ab831d39b534b9f, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ee35610451b9c242ab831d39b534b9f, type: 2}
   m_IsPrefabAsset: 0
@@ -12331,6 +12323,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4585273780340792, guid: 0ee35610451b9c242ab831d39b534b9f, type: 2}
       propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212916866553141846, guid: 0ee35610451b9c242ab831d39b534b9f,
+        type: 2}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

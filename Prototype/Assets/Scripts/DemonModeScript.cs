@@ -20,19 +20,7 @@ public class DemonModeScript : MonoBehaviour {
 
         if (Input.GetKeyDown("q") && !transitioning)
         {
-            transitioning = true;
-            StartCoroutine("Transform", !DemonModeActive);
-            for (int i = 0; i < 50; i++)
-            {
-                var Bat = Instantiate(bat, transform.position + new Vector3(0,100,0), Quaternion.identity);
-                Bat.GetComponent<Bat_Script>().player = gameObject;
-            }
-
-            if (!DemonModeActive)
-            {
-                GetComponent<AudioSource>().Play();
-            }
-                
+            Transformation();
         }
 
         if (transitioning)
@@ -59,7 +47,24 @@ public class DemonModeScript : MonoBehaviour {
 
     }
 
-    IEnumerator Transform(bool toDemon)
+    public void Transformation()
+    {
+        transitioning = true;
+        StartCoroutine("SpriteTransform", !DemonModeActive);
+        for (int i = 0; i < 50; i++)
+        {
+            var Bat = Instantiate(bat, transform.position + new Vector3(0, 100, 0), Quaternion.identity);
+            Bat.GetComponent<Bat_Script>().player = gameObject;
+        }
+
+        if (!DemonModeActive)
+        {
+            GetComponent<AudioSource>().Play();
+        }
+    }
+
+
+    IEnumerator SpriteTransform(bool toDemon)
     {
         yield return new WaitForSeconds(2.7f);
 
@@ -69,4 +74,6 @@ public class DemonModeScript : MonoBehaviour {
         transitioning = false;
         DemonModeActive = toDemon;
     }
+
+   
 }

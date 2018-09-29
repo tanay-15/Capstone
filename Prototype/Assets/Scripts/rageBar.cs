@@ -29,23 +29,32 @@ public class rageBar : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            if (rageBarActive)
+            if (!rageBarActive)
             {
-                rageBarActive = false;
+                rageBarActive = true;              
             }
             else
             {
-                rageBarActive = true;
+                rageBarActive = false;
             }      
         }
 
-        if(rageBarActive)
+        if (rageBarActive)
         {
-            Invoke("rageBarDeplete", 3f);
+            if (RBar.fillAmount > 0)
+                Invoke("rageBarDeplete", 3f);
+            else
+            {
+                GetComponent<DemonModeScript>().Transformation();
+                rageBarActive = false;
+            }
+                
         }
-        else if (!rageBarActive)
+
+
+        if (!rageBarActive && RBar.fillAmount < 1)
         {
-            Invoke("rageBarRegen", 5f);
+            Invoke("rageBarRegen", 2f);
         }
 
         
@@ -66,14 +75,20 @@ public class rageBar : MonoBehaviour {
 
     private void rageBarDeplete()
     {
-        newValue = Mapping(RBar.fillAmount, 0,100,0,1);
-        updatedValue = Mathf.Lerp(RBar.fillAmount, newValue, Time.deltaTime * speedtoDecrease);
-        RBar.fillAmount = updatedValue;
-    }
+        //newValue = Mapping(RBar.fillAmount, 0,100,0,1);
+        //updatedValue = Mathf.Lerp(RBar.fillAmount, newValue, Time.deltaTime * speedtoDecrease);
+        //RBar.fillAmount = updatedValue;
+
+        
+            RBar.fillAmount -= 0.1f* Time.deltaTime;
+     }
 
     private void  rageBarRegen()
     {
-        newValue = Mapping(100, 0, 100, 0, 1);
-        RBar.fillAmount = Mathf.Lerp(RBar.fillAmount, newValue, Time.deltaTime * speedtoIncrease);  
+        //newValue = Mapping(100, 0, 100, 0, 1);
+        //RBar.fillAmount = Mathf.Lerp(RBar.fillAmount, newValue, Time.deltaTime * speedtoIncrease);  
+
+       
+            RBar.fillAmount += 0.05f * Time.deltaTime;
     }
 }

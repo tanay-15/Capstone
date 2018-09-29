@@ -94,6 +94,8 @@ public class Bat_Script : MonoBehaviour {
                 transform.position = player.transform.position + new Vector3(radius * Mathf.Sin(theta), radius * Mathf.Cos(theta)) + offset;
             }
         }
+        else if(player.GetComponent<DemonModeScript>().DemonModeActive)
+            transform.position = player.transform.position + offset;
     }
 
     /*
