@@ -5,7 +5,8 @@ using UnityEngine;
 public class SkeletonBossScript : MonoBehaviour {
 
     public GameObject Boss;
-   
+    public GameObject Eyes;
+
     Transform[] BossBones;
     Transform[] Grunts;
 
@@ -171,6 +172,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     && Grunts[0].GetChild(2).GetComponent<RagdollEnemy>().isDead)
                     {                       
                         StartCoroutine("DelayedAssemble");
+                        Eyes.SetActive(true);
                         Status = State.Assembling;
                     }
                 break;
