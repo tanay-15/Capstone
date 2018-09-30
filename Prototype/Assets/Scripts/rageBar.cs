@@ -42,7 +42,7 @@ public class rageBar : MonoBehaviour {
         if (rageBarActive)
         {
             if (RBar.fillAmount >= 0)
-                RBar.fillAmount -= 0.1f * Time.deltaTime;
+                RBar.fillAmount -= 0.07f * Time.deltaTime;
             else
             {
                 RBar.fillAmount = 0;
@@ -55,7 +55,7 @@ public class rageBar : MonoBehaviour {
 
         if (!rageBarActive && RBar.fillAmount <= 1)
         {
-            RBar.fillAmount += 0.05f * Time.deltaTime;
+            RBar.fillAmount += 0.04f * Time.deltaTime;
         }
 
         

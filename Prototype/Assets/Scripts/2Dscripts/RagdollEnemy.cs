@@ -24,20 +24,11 @@ public class RagdollEnemy : MonoBehaviour {
     }
 	
 
-	void Update () {
-
-        if (isDead == true)
-        {
-            SetChildrenKinematic(false);
-        }
-
-     
-            
-      
+	void Update () {      
 
 	}
 
-    void SetChildrenKinematic(bool state)
+    public void SetChildrenKinematic(bool state)
     {
         foreach (Rigidbody2D rb2d in bones)
         {
@@ -57,6 +48,7 @@ public class RagdollEnemy : MonoBehaviour {
         {
             isDead = true;
             Debug.Log("hit");
+            SetChildrenKinematic(false);
         }
     }
 }
