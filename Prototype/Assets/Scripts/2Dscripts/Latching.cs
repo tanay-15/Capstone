@@ -11,6 +11,7 @@ public class Latching : MonoBehaviour {
     public float speedX = 10;
     public float speedY;
     RaycastHit2D hit;
+    bool walkonWalls;
 
 	// Use this for initialization
 	void Start () {
@@ -51,12 +52,24 @@ public class Latching : MonoBehaviour {
             Debug.Log("Direction :" + dir);
             float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Debug.Log("rotation along z axis " + rot_z);
-            Quaternion rotation = Quaternion.Euler(player.transform.rotation.x, player.transform.rotation.y, rot_z);           
+            //Quaternion rotation = Quaternion.Euler(player.transform.rotation.x, player.transform.rotation.y, rot_z);           
             player.transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
             Debug.Log("hit collider normal : " + hit.normal);
             player.velocity = new Vector2(dir.x , dir.y) * speedX;
             Debug.Log("velocity" + player.velocity);           
         }       
+
+
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if(coll.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
+            Debug.Log("write wall walking script");
+            walkonWalls = true;
+
+        }
     }
 
 }
