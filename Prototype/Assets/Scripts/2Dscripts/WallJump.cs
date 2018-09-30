@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WallJump : MonoBehaviour
 {
-    public float distance = 4f;
+    public float force;
     public float maxDistance = 30f;
     Vector2 Direction;
     float hAxis,vAxis;
@@ -33,7 +33,7 @@ public class WallJump : MonoBehaviour
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
         Direction = new Vector2(hAxis, vAxis);  
-        Direction = transform.TransformDirection(Direction);
+        //Direction = transform.TransformDirection(Direction);
         //float angle = Mathf.Atan2(vAxis, hAxis) * Mathf.Rad2Deg;
 
 
@@ -46,7 +46,10 @@ public class WallJump : MonoBehaviour
         if ((hit && !ground.grounded) || (hitback && !ground.grounded))
         {
           wallCheck = true;
-           
+          if(hit != null)
+          {
+                playerMovement.flip();
+          }
           
           
         }
@@ -66,22 +69,21 @@ public class WallJump : MonoBehaviour
 
         if (wallCheck && wallSliding)
         {
-            RaycastHit2D hitRay = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance, LayerMask.GetMask("Walls"));
-            Debug.DrawRay(wallCheckpoint.position, Direction, Color.red);
-            if(hitRay.collider !=null)
+            if ((hAxis > 0.1 || hAxis < -0.1) && (vAxis > 0.1 || vAxis < -0.1))
             {
-                Debug.Log("not null");
-                if(playerMovement.facingRight && Input.GetButtonDown("Jump") && Input.GetAxisRaw("Horizontal")> 0)
+                //RaycastHit2D hitRay = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance, LayerMask.GetMask("Walls"));
+                //Debug.DrawRay(wallCheckpoint.position, Direction, Color.red);
+                //if (hitRay.collider != null)
+                
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                 {
-                    playerMovement.flip();
-                    player.AddForce(new Vector2(-10, 15) * distance);
+                    Debug.Log("inside walljump");
+                    //Debug.Log("Direction" + Direction);
+                    //player.AddForce(Direction * force);
+                    player.velocity = new Vector2(Direction.x+10,Direction.y) * force;
                 }
-                else if(!playerMovement.facingRight && Input.GetButtonDown("Jump"))
-                {
-                    player.AddForce(new Vector2(10, 15) * distance);
-                }
-                player.AddForce(Direction * distance);
             }
+            
                 
             
         }
@@ -157,15 +159,14 @@ public class WallJump : MonoBehaviour
     {
         //wallSliding = true;
         //Debug.Log("wallsliding set" + wallSliding);
-        if (!playerMovement.facingRight && hAxis > 0)
-        {
-            Debug.Log("will face left");
-            playerMovement.flip();
-        }
-        else if (playerMovement.facingRight && hAxis < 0)
-        {
-            playerMovement.flip();
-        }
+        //if(wallSliding && hAxis >= 0 && playerMovement.facingRight)
+        //{
+        //    playerMovement.flip();
+        //}
+        //else if(wallSliding && !playerMovement.facingRight)
+        //{
+        //    playerMovement.flip();
+        //}
         player.velocity = new Vector2(player.velocity.x, -0.8f);
 
     }
