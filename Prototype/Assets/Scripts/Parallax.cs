@@ -21,7 +21,6 @@ public class ParallaxObject {
         Vector3 dCameraPos = cameraPos - cameraStartPosition;
         Vector3 targetPos = startPosition + (dCameraPos * (1f - followAmount));
         background.transform.position = targetPos;
-        Debug.Log(targetPos + "\n" + background.transform.position);
     }
 }
 
