@@ -29,7 +29,6 @@ public class playerKnife2D : MonoBehaviour {
         }
         else if(!(collision.gameObject.name == "biceps" || collision.gameObject.name == "forearm"))
         {
-            Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }
 

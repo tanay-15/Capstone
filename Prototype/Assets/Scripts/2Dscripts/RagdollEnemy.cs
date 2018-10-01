@@ -49,6 +49,8 @@ public class RagdollEnemy : MonoBehaviour {
             isDead = true;
             Debug.Log("hit");
             SetChildrenKinematic(false);
+            GetComponents<BoxCollider2D>()[0].enabled = false;
+            GetComponents<BoxCollider2D>()[1].enabled = false;
         }
     }
 }

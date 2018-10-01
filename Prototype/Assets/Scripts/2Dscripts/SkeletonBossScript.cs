@@ -6,17 +6,21 @@ public class SkeletonBossScript : MonoBehaviour {
 
     public GameObject Boss;
     public GameObject Eyes;
+    public GameObject GruntProjectile;
+    public GameObject BossProjectile;
+    public GameObject Player;
 
-    Transform[] BossBones;
-    Transform[] Grunts;
+   Transform[] BossBones;
+   Transform[] Grunts;
 
     float fracLerp = -2;
+    float attackTimer = 0;
 
     int Health = 50;
+    int activeHand = 1;
 
     bool isAssembling = false;
 
-    Vector3 init = new Vector3();
 
     public enum State
     {
@@ -31,12 +35,12 @@ public class SkeletonBossScript : MonoBehaviour {
     struct BoneSystem
     {
         public Transform Bone;
-        public Vector3 InitialPosition;
+        public Transform InitialPosition;
         public Transform FinalPosition;
         public bool isTaken;
         public float fracLerp;
 
-        public BoneSystem(Transform B, Vector3 I, Transform F, bool iT)
+        public BoneSystem(Transform B, Transform I, Transform F, bool iT)
         {
             Bone = B; InitialPosition = I;
             FinalPosition = F; isTaken = iT;
@@ -46,36 +50,36 @@ public class SkeletonBossScript : MonoBehaviour {
 
     BoneSystem[] BonesManager = 
         new BoneSystem[] {
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
-            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
+            new BoneSystem(null,null,null,false),
         };
  
 
@@ -88,9 +92,15 @@ public class SkeletonBossScript : MonoBehaviour {
         foreach (Transform t in Grunts)
         {
             if (t.name == "Torso" || t.name == "biceps" || t.name == "forearm" || t.name == "shin" || t.name == "thigh" || t.name == "Head")
-            {
-                
-                BonesManager[i] = new BoneSystem(t, t.position,null, false);
+            {               
+                BonesManager[i] = new BoneSystem(t, null,null, false);
+
+                var init = new GameObject().transform;
+
+                BonesManager[i].InitialPosition = init;
+                BonesManager[i].InitialPosition.position = t.position;
+                BonesManager[i].InitialPosition.rotation = t.rotation;
+                BonesManager[i].InitialPosition.localScale = t.localScale;
 
                 if (t.name == "Head")
                     BonesManager[i].fracLerp = -2;
@@ -115,6 +125,7 @@ public class SkeletonBossScript : MonoBehaviour {
                         {
                             BonesManager[i].FinalPosition = t;
                             BonesManager[i].Bone.parent = transform;
+                            BonesManager[i].InitialPosition.localScale = BonesManager[i].Bone.localScale;
                             //BonesManager[i].Bone.position = t.position;
                             //BonesManager[i].Bone.rotation = t.rotation;
                             //BonesManager[i].Bone.localScale = t.localScale;
@@ -129,6 +140,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     {
                         BonesManager[i].FinalPosition = t;
                         BonesManager[i].Bone.parent = transform;
+                        BonesManager[i].InitialPosition.localScale = BonesManager[i].Bone.localScale;
                         BonesManager[i].isTaken = true;
                         break;
                     }
@@ -140,6 +152,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     {
                         BonesManager[i].FinalPosition = t;
                         BonesManager[i].Bone.parent = transform;
+                        BonesManager[i].InitialPosition.localScale = BonesManager[i].Bone.localScale;
                         BonesManager[i].isTaken = true;
                         break;
                     }
@@ -151,6 +164,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     {
                         BonesManager[i].FinalPosition = t;
                         BonesManager[i].Bone.parent = transform;
+                        BonesManager[i].InitialPosition.localScale = BonesManager[i].Bone.localScale;
                         BonesManager[i].isTaken = true;
                         break;
                     }
@@ -182,29 +196,65 @@ public class SkeletonBossScript : MonoBehaviour {
             case State.Inactive:
             {
                 if (Grunts[0].GetChild(0).GetComponent<RagdollEnemy>().isDead
-                    && Grunts[0].GetChild(1).GetComponent<RagdollEnemy>().isDead
-                    && Grunts[0].GetChild(2).GetComponent<RagdollEnemy>().isDead)
-                    {                       
+                        && Grunts[0].GetChild(1).GetComponent<RagdollEnemy>().isDead
+                        && Grunts[0].GetChild(2).GetComponent<RagdollEnemy>().isDead)
+                    {
                         StartCoroutine("DelayedAssemble");
                         Eyes.SetActive(true);
                         Status = State.Assembling;
                     }
-                break;
+                else
+                { 
+                    attackTimer += Time.deltaTime;
+                    if (attackTimer > 3  &&  Vector3.Distance(Player.transform.position,transform.position) < 8)
+                    {
+                            if (!Grunts[0].GetChild(0).GetComponent<RagdollEnemy>().isDead)
+                            {
+                                var proj = Instantiate(GruntProjectile, Grunts[0].GetChild(0).position, Quaternion.identity);
+                                proj.SetActive(true);
+                                proj.GetComponent<Rigidbody2D>().velocity = 3f * Vector3.Normalize(Player.transform.position - Grunts[0].GetChild(0).position);
+                            }
+
+                            if (!Grunts[0].GetChild(1).GetComponent<RagdollEnemy>().isDead)
+                            {
+                                var proj = Instantiate(GruntProjectile, Grunts[0].GetChild(1).position, Quaternion.identity);
+                                proj.SetActive(true);
+                                proj.GetComponent<Rigidbody2D>().velocity = 3f * Vector3.Normalize(Player.transform.position - Grunts[0].GetChild(1).position);
+                            }
+
+                            if (!Grunts[0].GetChild(2).GetComponent<RagdollEnemy>().isDead)
+                            {
+                                var proj = Instantiate(GruntProjectile, Grunts[0].GetChild(2).position, Quaternion.identity);
+                                proj.SetActive(true);
+                                proj.GetComponent<Rigidbody2D>().velocity = 3f * Vector3.Normalize(Player.transform.position - Grunts[0].GetChild(2).position);
+                            }
+
+
+
+                            attackTimer = 0;
+                    }
+                }
+                    break;
             }
 
 
 
             case State.Assembling:
-            {
+            {               
                 if (isAssembling)
                 {
                     fracLerp +=  Time.deltaTime;
                     for (int i = 0; i < BonesManager.Length; i++)
                     {                        
                         BonesManager[i].fracLerp +=  Time.deltaTime;
-                        BonesManager[i].Bone.position = Vector3.Lerp(BonesManager[i].InitialPosition, BonesManager[i].FinalPosition.position, BonesManager[i].fracLerp);
-                        BonesManager[i].Bone.rotation = Quaternion.Lerp(BonesManager[i].Bone.rotation, BonesManager[i].FinalPosition.rotation, BonesManager[i].fracLerp);
-                        
+                        BonesManager[i].Bone.position = Vector3.Lerp(BonesManager[i].InitialPosition.position, BonesManager[i].FinalPosition.position, BonesManager[i].fracLerp);
+                        BonesManager[i].Bone.rotation = Quaternion.Lerp(BonesManager[i].InitialPosition.rotation, BonesManager[i].FinalPosition.rotation, BonesManager[i].fracLerp);
+
+                        if (BonesManager[i].fracLerp > 0)
+                        {
+                            float temp = Mathf.Lerp(1, 1.25f, BonesManager[i].fracLerp);
+                            BonesManager[i].Bone.localScale = new Vector3(temp * BonesManager[i].InitialPosition.localScale.x, temp * BonesManager[i].InitialPosition.localScale.y, 1);
+                        }
                     }
 
                     if (fracLerp > 1)
@@ -229,7 +279,18 @@ public class SkeletonBossScript : MonoBehaviour {
                     {
                         Status = State.Dead;
                     }
-                    break;
+
+                    attackTimer += Time.deltaTime;
+                    if (attackTimer > 2)
+                    {
+                        activeHand *= -1;
+                        var proj = Instantiate(BossProjectile, transform.position + new Vector3(activeHand,1,-1), Quaternion.identity);
+                        proj.SetActive(true);
+                        proj.GetComponent<Rigidbody2D>().velocity = 4f * Vector3.Normalize(Player.transform.position -  (transform.position + new Vector3(activeHand, 1, -1)));
+                        attackTimer = 0;
+                    }
+
+                        break;
             }
 
             case State.Dead:

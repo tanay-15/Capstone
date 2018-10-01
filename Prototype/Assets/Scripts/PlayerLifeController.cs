@@ -10,8 +10,14 @@ public class PlayerLifeController : MonoBehaviour {
 	}
 	
 	void Update () {
-		
-	}
+
+        if (PlayerLife.sharedInstance.currentLife <= 0)
+        {
+            gameObject.SetActive(false);
+            Invoke("ResetLevel", 1.2f);
+        }
+
+    }
 
     void ResetLevel()
     {
@@ -23,16 +29,13 @@ public class PlayerLifeController : MonoBehaviour {
         if (col.gameObject.tag == "Enemy")
         {
             PlayerLife.sharedInstance.AddLife(-10);
-            if (PlayerLife.sharedInstance.currentLife <= 0)
-            {
-                gameObject.SetActive(false);
-                Invoke("ResetLevel", 1.2f);
-            }
+            
         }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
+
         if (col.gameObject.tag == "Instant Death")
         {
             ResetLevel();
