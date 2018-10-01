@@ -10,7 +10,9 @@ public class SkeletonBossScript : MonoBehaviour {
     Transform[] BossBones;
     Transform[] Grunts;
 
-    float fracLerp = 0;
+    float fracLerp = -2;
+
+    int Health = 50;
 
     bool isAssembling = false;
 
@@ -26,48 +28,54 @@ public class SkeletonBossScript : MonoBehaviour {
 
     public State Status = State.Inactive;
 
-    struct Pair
+    struct BoneSystem
     {
         public Transform Bone;
         public Vector3 InitialPosition;
         public Transform FinalPosition;
         public bool isTaken;
+        public float fracLerp;
 
-        public Pair(Transform B, Vector3 I, Transform F, bool iT){ Bone = B; InitialPosition = I; FinalPosition = F; isTaken = iT; }
+        public BoneSystem(Transform B, Vector3 I, Transform F, bool iT)
+        {
+            Bone = B; InitialPosition = I;
+            FinalPosition = F; isTaken = iT;
+            fracLerp = 0;
+        }
     }
 
-    Pair[] BonesManager = 
-        new Pair[] {
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
-            new Pair(null,new Vector3(),null,false),
+    BoneSystem[] BonesManager = 
+        new BoneSystem[] {
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
+            new BoneSystem(null,new Vector3(),null,false),
         };
  
 
@@ -82,7 +90,13 @@ public class SkeletonBossScript : MonoBehaviour {
             if (t.name == "Torso" || t.name == "biceps" || t.name == "forearm" || t.name == "shin" || t.name == "thigh" || t.name == "Head")
             {
                 
-                BonesManager[i] = new Pair(t, t.position,null, false);
+                BonesManager[i] = new BoneSystem(t, t.position,null, false);
+
+                if (t.name == "Head")
+                    BonesManager[i].fracLerp = -2;
+                else
+                    BonesManager[i].fracLerp = Random.value * -2;
+                
                 i++;
             }
         }
@@ -183,12 +197,13 @@ public class SkeletonBossScript : MonoBehaviour {
             case State.Assembling:
             {
                 if (isAssembling)
-                { 
+                {
+                    fracLerp +=  Time.deltaTime;
                     for (int i = 0; i < BonesManager.Length; i++)
-                    {
-                        fracLerp += 0.02f * Time.deltaTime;
-                        BonesManager[i].Bone.position = Vector3.Lerp(BonesManager[i].InitialPosition, BonesManager[i].FinalPosition.position, fracLerp);
-                        BonesManager[i].Bone.rotation = Quaternion.Lerp(BonesManager[i].Bone.rotation, BonesManager[i].FinalPosition.rotation, fracLerp);
+                    {                        
+                        BonesManager[i].fracLerp +=  Time.deltaTime;
+                        BonesManager[i].Bone.position = Vector3.Lerp(BonesManager[i].InitialPosition, BonesManager[i].FinalPosition.position, BonesManager[i].fracLerp);
+                        BonesManager[i].Bone.rotation = Quaternion.Lerp(BonesManager[i].Bone.rotation, BonesManager[i].FinalPosition.rotation, BonesManager[i].fracLerp);
                         
                     }
 
@@ -203,10 +218,29 @@ public class SkeletonBossScript : MonoBehaviour {
 
             case State.Active:
             {
+                    GetComponent<BoxCollider2D>().enabled = true;
                     for (int i = 0; i < BonesManager.Length; i++)
                     {
                         BonesManager[i].Bone.position = BonesManager[i].FinalPosition.position;
                         BonesManager[i].Bone.rotation = BonesManager[i].FinalPosition.rotation;
+                    }
+
+                    if (Health <= 0)
+                    {
+                        Status = State.Dead;
+                    }
+                    break;
+            }
+
+            case State.Dead:
+            {
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    Eyes.SetActive(false);
+
+                    foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>())
+                    {
+                        rb2d.isKinematic = false;
+                        rb2d.GetComponent<Collider2D>().enabled = true;
                     }
 
                     break;
@@ -237,5 +271,11 @@ public class SkeletonBossScript : MonoBehaviour {
         Assemble();
 
         isAssembling = true;
+    }
+
+
+    public void applyDamage(int damage)
+    {
+        Health -= damage;
     }
 }

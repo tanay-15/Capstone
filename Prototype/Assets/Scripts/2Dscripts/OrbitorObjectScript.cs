@@ -19,9 +19,12 @@ public class OrbitorObjectScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+            
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+        hit = true;
 
-            GetComponent<Rigidbody2D>().gravityScale = 1;
-            hit = true;
-        
+        if(collision.gameObject.tag == "Enemy")
+            collision.gameObject.SendMessage("applyDamage", 10);
+
     }
 }
