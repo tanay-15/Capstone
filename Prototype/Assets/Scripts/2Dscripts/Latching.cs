@@ -18,6 +18,7 @@ public class Latching : MonoBehaviour {
     bool walkonCeilings;
     [SerializeField]
     bool walkonGround;
+    Vector2 dir;
 
     // Use this for initialization
     void Start() {
@@ -55,7 +56,7 @@ public class Latching : MonoBehaviour {
 
             player.gravityScale = 0f;
             Debug.Log("raycast rot " + hit.transform.rotation.y);
-            Vector2 dir = (hit.collider.gameObject.transform.position - checkpoint.position);
+            dir = (hit.collider.gameObject.transform.position - checkpoint.position);
             Debug.Log("Direction :" + dir);
             float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Debug.Log("rotation along z axis " + rot_z);
@@ -76,6 +77,19 @@ public class Latching : MonoBehaviour {
         {
             movement.enabled = true;
             player.gravityScale = 1.5f;
+        }
+        else if (walkonWalls && dir.x < 0)
+        {
+            movement.enabled = true;
+            player.gravityScale = 0;
+            player.AddForce(new Vector2(-1.5f, 0));
+        }
+        else if (walkonWalls && dir.x > 0)
+        {
+            movement.enabled = true;
+            player.gravityScale = 0;
+            player.AddForce(new Vector2(1.5f, 0));
+            
         }
     }
 
