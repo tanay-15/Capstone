@@ -6,27 +6,55 @@ using UnityEngine.UI;
 public class Tutorial : MonoBehaviour {
 
     public static Tutorial sharedInstance;
+    public GameObject arrow;
     public AnimationCurve enterCurve;
-    public GameObject arrowIcon;
     public Text text;
     public string[] messages;
     int phase = -1;
-
     float transitionTextSpeed = 3f;
     float iconEnterSpeed = 1.5f;
+    
+    public GameObject UIArrowIcon;
+    public GameObject UILevitationIcon;
+    public GameObject levitationSystem;
 
     static Tutorial()
     {
         sharedInstance = null;
     }
 
+    void DisableObjects()
+    {
+        UIArrowIcon.transform.localScale = Vector3.zero;
+        UILevitationIcon.transform.localScale = Vector3.zero;
+        levitationSystem.SetActive(false);
+    }
+
 	void Start () {
-        arrowIcon.transform.localScale = Vector3.zero;
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
         SetPhase(0);
+        StartCoroutine(MoveArrow());
+
+        DisableObjects();
 	}
+
+    IEnumerator MoveArrow()
+    {
+        Vector3 startPosition = arrow.transform.position;
+        Vector3 newPos = startPosition;
+        float x;
+        float i = 0f;
+        while (true)
+        {
+            i += Time.deltaTime * 5f;
+            x = -Mathf.Cos(i) * 50f;
+            newPos.x = startPosition.x + x;
+            arrow.transform.position = newPos;
+            yield return 0;
+        }
+    }
 
     IEnumerator MoveInIcon(GameObject icon, Vector3 maxScale)
     {
@@ -69,7 +97,12 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 2:
-                StartCoroutine(MoveInIcon(arrowIcon, Vector3.one * 0.5f));
+                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one * 0.5f));
+                break;
+
+            case 3:
+                levitationSystem.SetActive(true);
+                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one * 0.5f));
                 break;
         }
     }
