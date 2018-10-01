@@ -30,4 +30,12 @@ public class PlayerLifeController : MonoBehaviour {
             }
         }
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Instant Death")
+        {
+            ResetLevel();
+        }
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndPoint : MonoBehaviour {
 
+    public string levelName = "BossStage1";
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,7 @@ public class EndPoint : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene("BossStage1");
+            SceneManager.LoadScene(levelName);
         }
     }
 }
