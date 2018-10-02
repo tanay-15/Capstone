@@ -9,7 +9,7 @@ public class WallJump : MonoBehaviour
     public float maxDistance = 30f;
     Vector2 Direction;
     float hAxis,vAxis;
-    private PlayerMovement playerMovement;
+    private Movement2D playerMovement;
     private Grounded2D ground;
     private Rigidbody2D player;
     public bool wallSliding;
@@ -21,7 +21,7 @@ public class WallJump : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<Movement2D>();
         ground = transform.GetChild(2).GetComponent<Grounded2D>();
         player = GetComponent<Rigidbody2D>();
 
