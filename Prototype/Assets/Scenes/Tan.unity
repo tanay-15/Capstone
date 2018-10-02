@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.3011978, g: 0.28732446, b: 0.23597017, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -151,11 +151,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 10878787}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0016869083, y: 0}
+  m_Offset: {x: -0.00014569238, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -166,7 +166,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16337381, y: 0.16}
+  m_Size: {x: 0.15970862, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &10878790
 SpriteRenderer:
@@ -440,7 +440,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 110032090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.098, y: 0.073, z: 0}
+  m_LocalPosition: {x: 0.1473, y: 0.073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1283182847}
@@ -686,11 +686,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 143680641}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0021054111, y: 0}
+  m_Offset: {x: 0.00095955655, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -701,7 +701,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16421083, y: 0.16}
+  m_Size: {x: 0.16193175, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &143680644
 SpriteRenderer:
@@ -888,11 +888,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 199624265}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0024904683, y: 0}
+  m_Offset: {x: -0.00019297749, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -903,7 +903,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16498093, y: 0.16}
+  m_Size: {x: 0.15961404, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &199624268
 SpriteRenderer:
@@ -1278,7 +1278,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 274201215}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.82, y: 0, z: 0}
+  m_LocalPosition: {x: -1.23, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1557997507}
@@ -1420,7 +1420,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4.5
+      scalar: 3.78
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1525,21 +1525,21 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.34747723, b: 0.13679248, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 0.9811321, g: 0.2150756, b: 0, a: 0}
+        key1: {r: 0.98039216, g: 0.21568628, b: 0, a: 0.90588236}
+        key2: {r: 0, g: 0, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 65535
+        ctime1: 65343
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -1547,16 +1547,16 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
-        atime3: 0
+        atime1: 7687
+        atime2: 56887
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1995,7 +1995,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.2
+      value: 0.1
       mode: 0
       spread: 0
       speed:
@@ -2232,20 +2232,29 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 1
-          inSlope: -1
-          outSlope: -1
+          inSlope: -1.1454114
+          outSlope: -1.1454114
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.28815204
+          value: 0.6699474
+          inSlope: -2.8723416
+          outSlope: -2.8723416
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.68054986
+          outWeight: 0.18886349
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -1
-          outSlope: -1
+          inSlope: -0.9411383
+          outSlope: -0.9411383
           tangentMode: 34
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -2382,10 +2391,10 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -2438,7 +2447,7 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -2491,9 +2500,9 @@ ParticleSystem:
         m_RotationOrder: 4
     curve:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.7853982
-      minScalar: 0.7853982
+      minMaxState: 3
+      scalar: 1.5707963
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2552,11 +2561,11 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.9528302, g: 0.569294, b: 0, a: 0}
-        key1: {r: 0.9764706, g: 0.4045387, b: 0, a: 1}
-        key2: {r: 1, g: 0.6, b: 0, a: 0.99215686}
+        key0: {r: 0.9529412, g: 0.24938428, b: 0, a: 0}
+        key1: {r: 0.9529412, g: 0.2509804, b: 0, a: 1}
+        key2: {r: 0.9529412, g: 0.2509804, b: 0, a: 0.99215686}
         key3: {r: 1, g: 1, b: 1, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0}
+        key4: {r: 1, g: 1, b: 1, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
@@ -2564,7 +2573,7 @@ ParticleSystem:
         ctime1: 28443
         ctime2: 53427
         ctime3: 65535
-        ctime4: 0
+        ctime4: 65535
         ctime5: 0
         ctime6: 0
         ctime7: 0
@@ -3754,11 +3763,11 @@ ParticleSystem:
     inWorldSpace: 1
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0
+    dampen: 1
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 21.2
+      scalar: 24.26
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3813,7 +3822,7 @@ ParticleSystem:
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3919,7 +3928,7 @@ ParticleSystem:
     strengthZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3969,7 +3978,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    separateAxes: 0
+    separateAxes: 1
     frequency: 0.5
     damping: 1
     octaves: 1
@@ -4298,7 +4307,7 @@ ParticleSystem:
     sizeAmount:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.19
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5898,7 +5907,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 293445028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.284, y: 0.073000036, z: 0}
+  m_LocalPosition: {x: -0.262, y: 0.073000036, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1283182847}
@@ -6771,7 +6780,7 @@ Transform:
   m_GameObject: {fileID: 565709451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.019, y: -0.4, z: -0.04}
-  m_LocalScale: {x: 0.17338748, y: 0.03771, z: 0.50645}
+  m_LocalScale: {x: 0.13799216, y: 0.03771, z: 0.50645}
   m_Children: []
   m_Father: {fileID: 1283182847}
   m_RootOrder: 2
@@ -6874,13 +6883,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 572274402}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.13667795, y: -0.3775941, z: 0.22668917, w: 0.88732964}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.092, y: -47.218002, z: 30.451002}
 --- !u!1 &587913785
 GameObject:
   m_ObjectHideFlags: 0
@@ -7613,7 +7622,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 852375253}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -9699,12 +9708,12 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1283182836}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.04}
-  m_Size: {x: 0.25, y: 0.6}
+  m_Offset: {x: -0.020638466, y: -0.040000003}
+  m_Size: {x: 0.3876893, y: 0.6}
   m_Direction: 0
 --- !u!50 &1283182839
 Rigidbody2D:
@@ -9825,8 +9834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9fb381de0fd1d644b9fe68d3bb909a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 50
-  maxDistance: 10
+  forceX: 2
+  forceY: 5
+  maxDistance: 5
   wallSliding: 0
   wallCheckpoint: {fileID: 110032091}
   wallCheckpoint1: {fileID: 293445029}
@@ -9944,7 +9954,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017ffa8ed5a0ae446871ff26edec4a81, type: 3}
   m_Name: 
@@ -10095,7 +10105,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1358159734}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -10398,11 +10408,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1460757472}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0016869083, y: 0}
+  m_Offset: {x: 0.0007286668, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -10413,7 +10423,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16337381, y: 0.16}
+  m_Size: {x: 0.16145733, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &1460757475
 SpriteRenderer:
@@ -10786,7 +10796,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1557997506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.61, y: 1.63, z: 0}
+  m_LocalPosition: {x: 0.63, y: 1.63, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 274201216}
@@ -11273,11 +11283,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1820255336}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0015766397, y: 0}
+  m_Offset: {x: 0.0008491501, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11288,7 +11298,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16315328, y: 0.16}
+  m_Size: {x: 0.1616983, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &1820255339
 SpriteRenderer:
@@ -11569,11 +11579,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1857566877}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0031581111, y: 0}
+  m_Offset: {x: 0.00011084974, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11584,7 +11594,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16631621, y: 0.16}
+  m_Size: {x: 0.16018671, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &1857566880
 SpriteRenderer:
@@ -11872,11 +11882,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1931344821}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0015766397, y: 0}
+  m_Offset: {x: 0.00028648227, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11887,7 +11897,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16315328, y: 0.16}
+  m_Size: {x: 0.16057296, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &1931344824
 SpriteRenderer:

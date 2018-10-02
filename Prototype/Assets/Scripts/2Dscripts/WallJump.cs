@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WallJump : MonoBehaviour
 {
-    public float force;
+    public float forceX;
+    public float forceY;
     public float maxDistance = 30f;
     Vector2 Direction;
     float hAxis,vAxis;
@@ -32,7 +33,7 @@ public class WallJump : MonoBehaviour
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
-        Direction = new Vector2(hAxis, vAxis);  
+        Direction = new Vector2(hAxis, vAxis).normalized;  
         //Direction = transform.TransformDirection(Direction);
         //float angle = Mathf.Atan2(vAxis, hAxis) * Mathf.Rad2Deg;
 
@@ -69,25 +70,40 @@ public class WallJump : MonoBehaviour
 
         if (wallCheck && wallSliding)
         {
+            playerMovement.enabled = false;
+           
             if ((hAxis > 0.1 || hAxis < -0.1) && (vAxis > 0.1 || vAxis < -0.1))
             {
                 //RaycastHit2D hitRay = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance, LayerMask.GetMask("Walls"));
                 //Debug.DrawRay(wallCheckpoint.position, Direction, Color.red);
                 //if (hitRay.collider != null)
-                
+                RaycastHit2D hitTest = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance);
+                Debug.DrawRay(wallCheckpoint.position, Direction, Color.green);
                 if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                 {
                     Debug.Log("inside walljump");
                     //Debug.Log("Direction" + Direction);
                     //player.AddForce(Direction * force);
-                    player.velocity = new Vector2(Direction.x+10,Direction.y) * force;
+                    //player.velocity = new Vector2(Direction.x,Direction.y) * force;
+                    Debug.Log("Direction for jump " + Direction);
+                    player.velocity = new Vector2(0,0);
+                    //player.AddForce(new Vector2(Direction.x * forceX, Direction.y * forceY) * maxDistance);
+                    player.velocity = new Vector2(Direction.x * forceX, Direction.y * forceY) * maxDistance;
                 }
             }
             
                 
             
         }
-            
+        //else
+        //{
+        //    playerMovement.enabled = true;
+        //}
+        if(ground.grounded)
+        {
+            Debug.Log("Testing");
+            playerMovement.enabled = true;
+        }
         
         //if (!ground.grounded)
         //{
