@@ -5,7 +5,7 @@ using UnityEngine;
 public class Latching : MonoBehaviour {
     public Transform checkpoint;
     private Rigidbody2D player;
-    private PlayerMovement movement;
+    private Movement2D movement;
     float maxDistance = Mathf.Infinity;
     [SerializeField]
     bool hitCollider;
@@ -13,17 +13,19 @@ public class Latching : MonoBehaviour {
     public float speedY;
     RaycastHit2D hit;
     [SerializeField]
-    bool walkonWalls;
+    public bool walkonWalls;
     [SerializeField]
-    bool walkonCeilings;
+    public bool walkonCeilings;
     [SerializeField]
-    bool walkonGround;
+    public bool walkonGround;
     Vector2 dir;
+    ConstantForce2D constantForce;
 
     // Use this for initialization
     void Start() {
-        movement = GetComponent<PlayerMovement>();
+        movement = GetComponent<Movement2D>();
         player = GetComponent<Rigidbody2D>();
+        constantForce = GetComponent<ConstantForce2D>();
         Debug.Log("gravity scale :" + player.gravityScale);
     }
 
@@ -61,9 +63,10 @@ public class Latching : MonoBehaviour {
             float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Debug.Log("rotation along z axis " + rot_z);
             //Quaternion rotation = Quaternion.Euler(player.transform.rotation.x, player.transform.rotation.y, rot_z);           
-            player.transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir.normalized);
+            //player.transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir.normalized);
             player.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
             Debug.Log("hit collider normal : " + hit.normal);
+            player.velocity = new Vector2(0, 0);
             player.velocity = new Vector2(dir.x, dir.y) * speedX;
             Debug.Log("velocity" + player.velocity);
         }
@@ -82,14 +85,15 @@ public class Latching : MonoBehaviour {
         {
             movement.enabled = true;
             player.gravityScale = 0;
-            player.AddForce(new Vector2(-1.5f, 0));
+            constantForce.force = new Vector2(-1.5f, 0);
+            
         }
         else if (walkonWalls && dir.x > 0)
         {
             movement.enabled = true;
             player.gravityScale = 0;
-            player.AddForce(new Vector2(1.5f, 0));
-            
+            constantForce.force = new Vector2(1.5f, 0);
+
         }
     }
 

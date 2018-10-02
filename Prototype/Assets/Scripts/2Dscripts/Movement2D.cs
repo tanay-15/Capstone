@@ -21,7 +21,7 @@ public class Movement2D : MonoBehaviour
     private SpriteRenderer sprite;
     public static Movement2D sharedInstance;
     private WallJump wallJumpScript;
-
+    private Latching latchingScript;
     float minJumpSpeed = 2.0f;
 
     [Header("ShadowSlash Collider")]
@@ -58,6 +58,7 @@ public class Movement2D : MonoBehaviour
         //myAnim = GetComponent<Animator>();
         facingRight = true;
         sprite = GetComponentInChildren<SpriteRenderer>();
+        latchingScript = GetComponent<Latching>();
 
     }
 

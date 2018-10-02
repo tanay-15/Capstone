@@ -18855,6 +18855,7 @@ GameObject:
   - component: {fileID: 1283182839}
   - component: {fileID: 1283182838}
   - component: {fileID: 1283182837}
+  - component: {fileID: 1283182851}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -18971,8 +18972,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.020638466, y: -0.040000003}
-  m_Size: {x: 0.3876893, y: 0.6}
+  m_Offset: {x: -0.020638466, y: -0.054434896}
+  m_Size: {x: 0.3876893, y: 0.6288698}
   m_Direction: 0
 --- !u!50 &1283182839
 Rigidbody2D:
@@ -19110,7 +19111,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1b3814e26428c04d990339d68e5da65, type: 3}
   m_Name: 
@@ -19196,7 +19197,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7760313d68711341833862542368067, type: 3}
   m_Name: 
@@ -19215,7 +19216,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017ffa8ed5a0ae446871ff26edec4a81, type: 3}
   m_Name: 
@@ -19240,6 +19241,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleLeft: {fileID: 0}
   particleRight: {fileID: 0}
+--- !u!247 &1283182851
+ConstantForce2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1283182836}
+  m_Enabled: 1
+  m_Force: {x: 0, y: 0}
+  m_RelativeForce: {x: 0, y: 0}
+  m_Torque: 0
 --- !u!1 &1335632081
 GameObject:
   m_ObjectHideFlags: 0
