@@ -18,7 +18,7 @@ public class pSystem : MonoBehaviour
     {
 
     }
-    void OnCollisionEnter2D(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.tag != null)
         {
@@ -26,7 +26,7 @@ public class pSystem : MonoBehaviour
             particleRight.Play();
         }
     }
-    void OnCollisionExit2D(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
         if (col.collider.tag != null)
         {

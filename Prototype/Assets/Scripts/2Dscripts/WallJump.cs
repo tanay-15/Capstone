@@ -105,85 +105,16 @@ public class WallJump : MonoBehaviour
             playerMovement.enabled = true;
         }
         
-        //if (!ground.grounded)
-        //{
-
-        //    Collider2D hitColliders = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
-        //    if (hitColliders)
-        //    {
-        //        Debug.Log("Colliding");
-        //        wallCheck = true;
-        //        Debug.Log("wallcheck" + wallCheck);
-        //    }
-        //    else
-        //    {
-        //        wallCheck = false;
-        //    }
-
-        //    if (wallCheck)
-        //    {
-
-        //        handleWallSliding();
-        //    }
-
-        //}
-        //else
-        //{
-        //    wallCheck = false;
-        //    wallSliding = false;
-        //}
-
-        //if (wallSliding)
-        //{
-        //    if ((Input.GetKeyDown("space") && Input.GetAxisRaw("Horizontal") > 0.1f && playerMovement.facingRight) || Input.GetKeyDown("space"))
-        //    {
-        //        if (playerMovement.facingRight)
-        //        {
-        //            playerMovement.flip();
-        //            player.AddForce(new Vector2(-10, 15) * distance);
-
-        //        }
-        //        else if (!playerMovement.facingRight)
-        //        {
-        //            playerMovement.flip();
-        //            player.AddForce(new Vector2(10, 15) * distance);
-
-        //        }
-        //        wallSliding = false;
-        //    }
-        //    else if ((Input.GetKeyDown("space") && Input.GetAxisRaw("Horizontal") < 0.1f && !playerMovement.facingRight) || Input.GetKeyDown("space"))
-        //    {
-        //        if (playerMovement.facingRight)
-        //        {
-        //            playerMovement.flip();
-        //            player.AddForce(new Vector2(-10, 15) * distance);
-
-        //        }
-        //        else if (!playerMovement.facingRight)
-        //        {
-        //            playerMovement.flip();
-        //            player.AddForce(new Vector2(10, 15) * distance);
-
-        //        }
-        //        wallSliding = false;
-        //    }
-
-        //}
+        
     }
 
     private void handleWallSliding()
     {
-        //wallSliding = true;
-        //Debug.Log("wallsliding set" + wallSliding);
-        //if(wallSliding && hAxis >= 0 && playerMovement.facingRight)
-        //{
-        //    playerMovement.flip();
-        //}
-        //else if(wallSliding && !playerMovement.facingRight)
-        //{
-        //    playerMovement.flip();
-        //}
-        player.velocity = new Vector2(player.velocity.x, -0.8f);
+        if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
+        {
+            player.velocity = new Vector2(player.velocity.x, -0.8f);
+        }
+           
 
     }
   
