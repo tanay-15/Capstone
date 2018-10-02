@@ -3,20 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Phases
+//0 - Jump
+//1 - Long jump
+//2 - Shoot
+//3 - Levitate/Toggle switches
+//4 - Demon mode
+
 public class Tutorial : MonoBehaviour {
 
     public static Tutorial sharedInstance;
     public GameObject arrow;
-    public AnimationCurve enterCurve;
+    public AnimationCurve enterCurve1;
+    public AnimationCurve enterCurve2;
     public Text text;
     public string[] messages;
+    public int startPhase = 0;
     int phase = -1;
+    int textPhase = -1;
     float transitionTextSpeed = 3f;
-    float iconEnterSpeed = 1.5f;
+    float defaultIconEnterSpeed = 1.5f;
     
     public GameObject UIArrowIcon;
     public GameObject UILevitationIcon;
     public GameObject levitationSystem;
+    public GameObject rageBar;
 
     static Tutorial()
     {
@@ -25,19 +36,28 @@ public class Tutorial : MonoBehaviour {
 
     void DisableObjects()
     {
-        UIArrowIcon.transform.localScale = Vector3.zero;
-        UILevitationIcon.transform.localScale = Vector3.zero;
-        levitationSystem.SetActive(false);
+        if (phase < 2)
+            UIArrowIcon.transform.localScale = Vector3.zero;
+        if (phase < 3)
+        {
+            UILevitationIcon.transform.localScale = Vector3.zero;
+            levitationSystem.SetActive(false);
+        }
+        if (phase < 4)
+        {
+            rageBar.transform.localScale = Vector3.zero;
+        }
     }
 
 	void Start () {
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
-        SetPhase(0);
+        DisableObjects();
+        SetPhase(startPhase);
         StartCoroutine(MoveArrow());
 
-        DisableObjects();
+        //DisableObjects();
 	}
 
     IEnumerator MoveArrow()
@@ -56,11 +76,11 @@ public class Tutorial : MonoBehaviour {
         }
     }
 
-    IEnumerator MoveInIcon(GameObject icon, Vector3 maxScale)
+    IEnumerator MoveInIcon(GameObject icon, Vector3 maxScale, AnimationCurve curve, float moveSpeed)
     {
-        for (float i = 0f; i < 1f; i += Time.deltaTime * iconEnterSpeed)
+        for (float i = 0f; i < 1f; i += Time.deltaTime * defaultIconEnterSpeed)
         {
-            icon.transform.localScale = maxScale * enterCurve.Evaluate(i);
+            icon.transform.localScale = maxScale * curve.Evaluate(i);
             yield return 0;
         }
         icon.transform.localScale = maxScale;
@@ -85,7 +105,7 @@ public class Tutorial : MonoBehaviour {
     public void SetPhase(int newPhase)
     {
         phase = newPhase;
-        StartCoroutine(TransitionText(messages[phase].Replace("\\n", "\n")));
+        StartCoroutine(TransitionText(messages[++textPhase].Replace("\\n", "\n")));
 
         //Enable or disable GameObjects...
         switch (phase)
@@ -97,12 +117,16 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 2:
-                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one * 0.5f));
+                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one * 0.5f, enterCurve1, defaultIconEnterSpeed));
                 break;
 
             case 3:
                 levitationSystem.SetActive(true);
-                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one * 0.5f));
+                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one * 0.5f, enterCurve1, defaultIconEnterSpeed));
+                break;
+
+            case 4:
+                StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f));
                 break;
         }
     }
