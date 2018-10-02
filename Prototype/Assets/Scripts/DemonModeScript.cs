@@ -18,7 +18,7 @@ public class DemonModeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown("q") && !transitioning)
+        if (Input.GetKeyDown("q") && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
         {
             Transformation();
         }
