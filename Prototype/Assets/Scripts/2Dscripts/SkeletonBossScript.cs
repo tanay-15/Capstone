@@ -206,7 +206,7 @@ public class SkeletonBossScript : MonoBehaviour {
                 else
                 { 
                     attackTimer += Time.deltaTime;
-                    if (attackTimer > 3  &&  Vector3.Distance(Player.transform.position,transform.position) < 8)
+                    if (attackTimer > 3  &&  Vector3.Distance(Player.transform.position,transform.position) < 7.5f)
                     {
                             if (!Grunts[0].GetChild(0).GetComponent<RagdollEnemy>().isDead)
                             {
@@ -281,7 +281,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     }
 
                     attackTimer += Time.deltaTime;
-                    if (attackTimer > 2)
+                    if (attackTimer > 2 && Vector3.Distance(Player.transform.position, transform.position) < 10)
                     {
                         activeHand *= -1;
                         var proj = Instantiate(BossProjectile, transform.position + new Vector3(activeHand,1,-1), Quaternion.identity);
