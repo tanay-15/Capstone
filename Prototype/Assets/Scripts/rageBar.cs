@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class rageBar : MonoBehaviour {
 
     [SerializeField]
-    private float fillAmount;
+    public float fillAmount;
     private bool rageBarActive;
-    private rageBar RBar;
+    public rageBar RBar;
     private float newValue;
     private float updatedValue;
     public float speedtoDecrease;
@@ -55,7 +55,7 @@ public class rageBar : MonoBehaviour {
 
         if (!rageBarActive && RBar.fillAmount <= 1)
         {
-            RBar.fillAmount += 0.04f * Time.deltaTime;
+            RBar.fillAmount += 0.02f * Time.deltaTime;
         }
 
         
