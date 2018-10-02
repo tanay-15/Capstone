@@ -8,10 +8,11 @@ public class Boss1 : MonoBehaviour {
 
     [Header("Player Details")]
     public GameObject player;
+    public LayerMask playerlayer;
 
-    [Header("Level Objects")]
-    public GameObject plat1;
-    public GameObject plat2;
+    public Camera cam;
+
+ 
 
     public enum State
     {
@@ -50,18 +51,20 @@ public class Boss1 : MonoBehaviour {
     public bool isStunned;
     private bool indash;
 
- 
 
-    [Header("Attack Health Down")]
-    public GameObject orbprefab;
-    public GameObject orbloc1;
-    public GameObject orbloc2;
-    public GameObject orbloc3;
-    public GameObject orbloc4;
-    public GameObject orbloc5;
-    public GameObject orbloc6;
-    public bool shouldattack2;
-    public float attack2counter = 0;
+    [Header("Attack Ground Smash")]
+    public GameObject gsm_prefab;
+    public GameObject gsm_loc;
+    private float gsmattackcounter = 1.5f;
+
+    //Decides which attack to use
+    [Header("Attack Decider")]
+    public int attackdecider;
+    private bool should_attack_dash;
+    private bool should_attack_gsm;
+
+    private float waitforattackdecider = 1.5f;
+   
 
     [Header("Boss movement")]
     public GameObject waypoint1;
@@ -75,9 +78,20 @@ public class Boss1 : MonoBehaviour {
     public RaycastHit2D vishit;
     public bool playerdetected;
 
+
+    [Header("Destroy Platforms")]
+    public GameObject hp_ninety;
+    public GameObject hp_eighty;
+    public GameObject hp_seventy;
+    public GameObject hp_sixty;
+    public GameObject hp_fifty;
+    public GameObject hp_forty;
+
 	void Start () {
 
         player = GameObject.FindGameObjectWithTag("Player");
+
+      
 
        
       
@@ -86,40 +100,85 @@ public class Boss1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(health > 50)
+
+        //if alive do something
+        if (health > 50)
         {
-            if ((!playerdetected) && (!isStunned))
-            {
+            if(!isStunned)
                 Movement();
-            }
+            ThrowAttackAlert();
+
 
 
             if (shoulddash)
             {
-                Dash();
+                Dash(7f);
+            }
+
+        }
+
+
+        if (health < 50)
+        {
+            //start using second attack with first
+
+          
+
+            if (!isStunned)
+            {
+                Movement();
+                //decide what to use
+                AttackDecider();
+                if (shoulddash)
+                {
+                    Dash(12f);
+                }
+
+                if (should_attack_gsm)
+                {
+                    GroundSmash();
+                    cam.GetComponent<Boss1Camera>().SmashCamRotate();
+                }
             }
         }
+
+        //Destroy objects depending upon health
+
+        if (health <= 90)
+        {
+            Destroy(hp_ninety);
+
+        }
+
+        if(health <= 80)
+        {
+            Destroy(hp_eighty);
+        }
+
+        if(health <= 70)
+        {
+            Destroy(hp_seventy);
+        }
+
+        if(health <= 60)
+        {
+            Destroy(hp_sixty);
+        }
+
+        if(health <= 50)
+        {
+            Destroy(hp_fifty);
+        }
+
 
         if(health <= 0)
         {
             Death();
         }
 
-        if(health <= 50 && !isStunned && !moveback)
-        {
-            FiftyMovement();
-        }
 
 
-        if (moveback)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, lowposition, 4f * Time.deltaTime);
-
-            if (Vector2.Distance(this.transform.position, lowposition) < 0.4f)
-            {
-                moveback = false;
-            }
-        }
+   
 
 
 
@@ -136,15 +195,51 @@ public class Boss1 : MonoBehaviour {
             }
         }
             DetectPlayer();
-        ThrowAttackAlert();
+        
 
-        BelowFiFty();
+      
        
 	}
 
+    private void GroundSmash()
+    {
+        Instantiate(gsm_prefab, gsm_loc.transform.position, gsm_loc.transform.rotation);
+        should_attack_gsm = false;
+    }
+
+
+    private void AttackDecider()
+    {
+        waitforattackdecider = waitforattackdecider - Time.deltaTime;
+        
+        if(waitforattackdecider <= 0)
+        {
+            attackdecider = (int)Random.Range(1, 6);
+
+            if (attackdecider <= 2)
+            {
+                //dash attack
+                should_attack_gsm = false;
+                ThrowAttackAlert();
+            }
+
+            if (attackdecider >2)
+            {
+                should_attack_gsm = true;
+                //groundsmash
+            }
+
+            waitforattackdecider = 3f;
+        }
+      
+
+    }
+
     private void DetectPlayer()
     {
-        vishit = Physics2D.Raycast(visionpoint.transform.position, transform.right, 10f);
+        vishit = Physics2D.Raycast(visionpoint.transform.position, -transform.right, 10f,playerlayer);
+
+        
         if(vishit == null)
         {
             playerdetected = false;
@@ -190,8 +285,7 @@ public class Boss1 : MonoBehaviour {
         {
             
            
-            if(health > 50)
-            {
+           
 
            
           
@@ -203,7 +297,7 @@ public class Boss1 : MonoBehaviour {
                    
                     shoulddash = true;
 
-            }
+            
 
 
         }
@@ -233,7 +327,7 @@ public class Boss1 : MonoBehaviour {
             nearby = false;
         }
     }
-    public void Dash()
+    public void Dash(float speed)
     { 
 
         //detect player
@@ -241,9 +335,9 @@ public class Boss1 : MonoBehaviour {
         dashattackcounter = dashattackcounter - Time.deltaTime;
         indash = true;
 
-        if(dashattackcounter <= 0)
+        if(dashattackcounter <= 0 && !isStunned)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, 7 * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, speed * Time.deltaTime);
 
             if (Vector2.Distance(targetposition, this.transform.position) < 0.3f)
             {
@@ -333,50 +427,7 @@ public class Boss1 : MonoBehaviour {
         }
     }
 
-    public void ShieldDownAttack()
-    {
-        //attack when shield is down
-
-        Instantiate(orbprefab, orbloc1.transform.position, orbloc1.transform.rotation);
-        Instantiate(orbprefab, orbloc2.transform.position, orbloc2.transform.rotation);
-        Instantiate(orbprefab, orbloc3.transform.position,orbloc3.transform.rotation);
-        Instantiate(orbprefab, orbloc4.transform.position, orbloc4.transform.rotation);
-        Instantiate(orbprefab, orbloc5.transform.position, orbloc5.transform.rotation);
-        Instantiate(orbprefab, orbloc6.transform.position, orbloc6.transform.rotation);
-        
-    }
-
-    //Movement for boss below 50hp
-    private void FiftyMovement()
-    {
-       if(health <= 50)
-        {
-            Vector2 bigpos = new Vector2(0,1);
-            bigpos.x = player.transform.position.x;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, bigpos, 3f * Time.deltaTime);
-
-           
-
-            //attackdashcounter
-            dashattackcounter = dashattackcounter - Time.deltaTime;
-            indash = true;
-
-            if (dashattackcounter <= 0)
-            {
-                this.transform.position = Vector2.MoveTowards(this.transform.position, bigpos, 10 * Time.deltaTime);
-
-                if (Vector2.Distance(bigpos, this.transform.position) < 0.3f)
-                {
-                    Debug.Log("Reached dash position");
-                    shoulddash = false;
-                    targetposition = Vector3.zero;
-
-
-                    dashattackcounter = 3f;
-                }
-            }
-        }
-    }
+  
 
    
 
@@ -393,22 +444,4 @@ public class Boss1 : MonoBehaviour {
         this.transform.RotateAround(transform.position, transform.up, 180f);
     }
 
-    private void BelowFiFty()
-    {
-        //break the two platforms
-
-        if(health <= 50)
-        {
-            attack2counter = attack2counter - Time.deltaTime;
-            if(attack2counter <= 0)
-            {
-                ShieldDownAttack();
-                Destroy(plat1);
-                Destroy(plat2);
-                attack2counter = 5f;
-            }
-       
-        }
-
-    }
 }
