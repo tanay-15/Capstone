@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkeletonBossScript : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class SkeletonBossScript : MonoBehaviour {
     public GameObject GruntProjectile;
     public GameObject BossProjectile;
     public GameObject DemonicCircle;
+    public GameObject HealthBar;
 
    Transform[] BossBones;
    Transform[] Grunts;
@@ -19,7 +21,8 @@ public class SkeletonBossScript : MonoBehaviour {
     float attackTimer = 0;
     float theta = 0;
 
-    int Health = 50;
+    float Health = 50;
+    float MaxHealth = 50;
     int activeHand = 1;
 
     bool isAssembling = false;
@@ -186,7 +189,7 @@ public class SkeletonBossScript : MonoBehaviour {
 
         BossBones = Boss.GetComponentsInChildren<Transform>();
         Grunts = transform.GetChild(0).GetComponentsInChildren<Transform>();
-
+        MaxHealth = Health;
         //Assemble();
     }
 
@@ -237,8 +240,9 @@ public class SkeletonBossScript : MonoBehaviour {
 
                             attackTimer = 0;
                     }
-                }
-                    break;
+                }               
+
+                break;
             }
 
 
@@ -261,16 +265,20 @@ public class SkeletonBossScript : MonoBehaviour {
                         }
                     }
 
+
+                    // Demon Circle #1
                     theta += Time.deltaTime;
                     DemonicCircle.transform.Rotate(new Vector3(0, 0, 20 * Time.deltaTime));
                     Color originalColor = DemonicCircle.GetComponent<SpriteRenderer>().color;
-                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Abs(Mathf.Cos(theta)));
+                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Cos(theta) * Mathf.Cos(theta));
 
 
                     if (fracLerp > 1)
                     {
                         Status = State.Active;
                         Eyes.SetActive(true);
+                        HealthBar.SetActive(true);
+                        HealthBar.transform.parent = GameObject.Find("Canvas").transform;
                     }
                 }
 
@@ -304,10 +312,17 @@ public class SkeletonBossScript : MonoBehaviour {
                         attackTimer = 0;
                     }
 
+                    
+                    var HealthBarPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0,-2,0));
+                    HealthBar.transform.position = HealthBarPos;
+                    HealthBar.transform.GetChild(0).GetChild(0).GetComponent<Image>().fillAmount = Health / MaxHealth;
+
+
+                    // Demon Circle #2
                     theta += Time.deltaTime;
                     DemonicCircle.transform.Rotate(new Vector3(0,0, 20 * Time.deltaTime));
                     Color originalColor = DemonicCircle.GetComponent<SpriteRenderer>().color;
-                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Abs(Mathf.Cos(theta)));
+                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Cos(theta) * Mathf.Cos(theta));
 
                     break;
             }
@@ -318,6 +333,8 @@ public class SkeletonBossScript : MonoBehaviour {
                     GetComponent<BoxCollider2D>().enabled = false;
                     Eyes.SetActive(false);
                     DemonicCircle.SetActive(false);
+                    HealthBar.transform.parent = transform;
+                    HealthBar.SetActive(false);
 
                     foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>())
                     {
