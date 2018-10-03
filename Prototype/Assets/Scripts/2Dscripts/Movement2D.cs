@@ -14,7 +14,7 @@ public class Movement2D : MonoBehaviour
     private Rigidbody2D player;
     public Animator myAnim;
     public bool facingRight;
-    public float cooldownTime = 2f;
+    public float cooldownTime = 1f;
     private float nextFiretime = 0f;
     public GameObject knifePrefab;
     public Transform handEnd;

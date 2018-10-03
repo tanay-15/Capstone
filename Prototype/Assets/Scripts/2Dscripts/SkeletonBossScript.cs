@@ -9,6 +9,7 @@ public class SkeletonBossScript : MonoBehaviour {
     public GameObject GruntProjectile;
     public GameObject BossProjectile;
     public GameObject Player;
+    public GameObject MainCamera;
 
    Transform[] BossBones;
    Transform[] Grunts;
@@ -277,6 +278,7 @@ public class SkeletonBossScript : MonoBehaviour {
 
                     if (Health <= 0)
                     {
+                        MainCamera.GetComponent<CameraFollow>().CameraPan(5f);
                         Status = State.Dead;
                     }
 
@@ -295,6 +297,7 @@ public class SkeletonBossScript : MonoBehaviour {
 
             case State.Dead:
             {
+                    
                     GetComponent<BoxCollider2D>().enabled = false;
                     Eyes.SetActive(false);
 
@@ -303,6 +306,8 @@ public class SkeletonBossScript : MonoBehaviour {
                         rb2d.isKinematic = false;
                         rb2d.GetComponent<Collider2D>().enabled = true;
                     }
+
+                    
 
                     break;
             }
@@ -323,7 +328,10 @@ public class SkeletonBossScript : MonoBehaviour {
 
     IEnumerator DelayedAssemble()
      {
+       
         yield return new WaitForSeconds(2f);
+
+        MainCamera.GetComponent<CameraFollow>().CameraPan(6.5f);
 
         Grunts[0].GetChild(0).GetComponent<RagdollEnemy>().SetChildrenKinematic(true);
         Grunts[0].GetChild(1).GetComponent<RagdollEnemy>().SetChildrenKinematic(true);

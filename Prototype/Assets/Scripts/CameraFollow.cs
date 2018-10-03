@@ -10,6 +10,10 @@ public class CameraFollow : MonoBehaviour {
     public Transform lowerLeftBound;
     public Transform upperRightBound;
 
+    float panSize = 1;
+    float currentSize = 1;
+    float fracLerp = 0;
+    bool isPanning = false;
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +42,26 @@ public class CameraFollow : MonoBehaviour {
             desiredPosition = Vector3Clamp(target.position, lowerLeftBound.position, upperRightBound.position) + offset;
         }
         Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, speed * Time.deltaTime / 0.02f);
-        transform.position = smoothPosition;		
+        transform.position = smoothPosition;
+
+        if (isPanning)
+        {
+            fracLerp += 0.4f * Time.deltaTime;
+            GetComponent<Camera>().orthographicSize = Mathf.Lerp(currentSize, panSize, fracLerp);
+
+            if (fracLerp >= 1)
+            {
+                isPanning = false;
+                fracLerp = 0;
+            }
+        }
 	}
+
+
+    public void CameraPan(float Size)
+    {
+        currentSize = GetComponent<Camera>().orthographicSize;
+        panSize = Size;
+        isPanning = true;
+    }
 }
