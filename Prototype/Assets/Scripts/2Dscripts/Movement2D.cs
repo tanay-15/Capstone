@@ -95,7 +95,10 @@ public class Movement2D : MonoBehaviour
         float hAxis = Input.GetAxis("Horizontal");
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
 
-        player.velocity = new Vector3(hAxis * speed, player.velocity.y, 0);
+        if(hAxis > 0.5f)
+            player.velocity = new Vector3(Mathf.Sign(hAxis) * speed, player.velocity.y, 0);
+        else
+            player.velocity = new Vector3(hAxis * speed, player.velocity.y, 0);
         //Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
         //player.MovePosition(transform.position + movement);
         //player.position += new Vector2(movement.x,movement.y);
@@ -168,7 +171,7 @@ public class Movement2D : MonoBehaviour
 
         if (Time.time > nextFiretime)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetButtonDown("Fire1"))
             {
                 myAnim.SetBool("isAttacking", true);
 

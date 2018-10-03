@@ -13,6 +13,7 @@ public class CameraFollow : MonoBehaviour {
     float panSize = 1;
     float currentSize = 1;
     float fracLerp = 0;
+    float panSpeed = 1;
     bool isPanning = false;
 
 	// Use this for initialization
@@ -46,7 +47,7 @@ public class CameraFollow : MonoBehaviour {
 
         if (isPanning)
         {
-            fracLerp += 0.4f * Time.deltaTime;
+            fracLerp += panSpeed * Time.deltaTime;
             GetComponent<Camera>().orthographicSize = Mathf.Lerp(currentSize, panSize, fracLerp);
 
             if (fracLerp >= 1)
@@ -58,10 +59,11 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 
-    public void CameraPan(float Size)
+    public void CameraPan(float Size,float PanSpeed)
     {
         currentSize = GetComponent<Camera>().orthographicSize;
         panSize = Size;
+        panSpeed = PanSpeed;
         isPanning = true;
     }
 }

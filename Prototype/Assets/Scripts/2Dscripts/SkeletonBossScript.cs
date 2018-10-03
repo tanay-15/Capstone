@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class SkeletonBossScript : MonoBehaviour {
 
+    public GameObject Player;
+    public GameObject MainCamera;
     public GameObject Boss;
     public GameObject Eyes;
     public GameObject GruntProjectile;
     public GameObject BossProjectile;
-    public GameObject Player;
-    public GameObject MainCamera;
+    public GameObject DemonicCircle;
 
    Transform[] BossBones;
    Transform[] Grunts;
 
     float fracLerp = -2;
     float attackTimer = 0;
+    float theta = 0;
 
     int Health = 50;
     int activeHand = 1;
@@ -201,9 +203,10 @@ public class SkeletonBossScript : MonoBehaviour {
                         && Grunts[0].GetChild(2).GetComponent<RagdollEnemy>().isDead)
                     {
                         StartCoroutine("DelayedAssemble");
-                        Eyes.SetActive(true);
+                        DemonicCircle.SetActive(true);
                         Status = State.Assembling;
                     }
+
                 else
                 { 
                     attackTimer += Time.deltaTime;
@@ -258,9 +261,16 @@ public class SkeletonBossScript : MonoBehaviour {
                         }
                     }
 
+                    theta += Time.deltaTime;
+                    DemonicCircle.transform.Rotate(new Vector3(0, 0, 20 * Time.deltaTime));
+                    Color originalColor = DemonicCircle.GetComponent<SpriteRenderer>().color;
+                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Abs(Mathf.Cos(theta)));
+
+
                     if (fracLerp > 1)
                     {
                         Status = State.Active;
+                        Eyes.SetActive(true);
                     }
                 }
 
@@ -276,9 +286,11 @@ public class SkeletonBossScript : MonoBehaviour {
                         BonesManager[i].Bone.rotation = BonesManager[i].FinalPosition.rotation;
                     }
 
+
+                    // Death Condition
                     if (Health <= 0)
                     {
-                        MainCamera.GetComponent<CameraFollow>().CameraPan(5f);
+                        MainCamera.GetComponent<CameraFollow>().CameraPan(5f,0.5f);
                         Status = State.Dead;
                     }
 
@@ -292,7 +304,12 @@ public class SkeletonBossScript : MonoBehaviour {
                         attackTimer = 0;
                     }
 
-                        break;
+                    theta += Time.deltaTime;
+                    DemonicCircle.transform.Rotate(new Vector3(0,0, 20 * Time.deltaTime));
+                    Color originalColor = DemonicCircle.GetComponent<SpriteRenderer>().color;
+                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Abs(Mathf.Cos(theta)));
+
+                    break;
             }
 
             case State.Dead:
@@ -300,6 +317,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     
                     GetComponent<BoxCollider2D>().enabled = false;
                     Eyes.SetActive(false);
+                    DemonicCircle.SetActive(false);
 
                     foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>())
                     {
@@ -329,9 +347,9 @@ public class SkeletonBossScript : MonoBehaviour {
     IEnumerator DelayedAssemble()
      {
        
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
-        MainCamera.GetComponent<CameraFollow>().CameraPan(6.5f);
+        MainCamera.GetComponent<CameraFollow>().CameraPan(6.5f,0.35f);
 
         Grunts[0].GetChild(0).GetComponent<RagdollEnemy>().SetChildrenKinematic(true);
         Grunts[0].GetChild(1).GetComponent<RagdollEnemy>().SetChildrenKinematic(true);
