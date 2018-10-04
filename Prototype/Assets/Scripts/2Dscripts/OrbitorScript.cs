@@ -41,6 +41,8 @@ public class OrbitorScript : MonoBehaviour {
         Trail = transform.GetChild(0).gameObject;
 
         Status = State.NoProjectile;
+
+        Trail.GetComponent<TrailRenderer>().material = OriginalTrailColor;
     }
 
 
