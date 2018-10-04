@@ -9,8 +9,11 @@ public class OrbitorObjectScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+
+
+        Physics2D.IgnoreLayerCollision(11, 12);
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,7 +27,7 @@ public class OrbitorObjectScript : MonoBehaviour {
         hit = true;
 
         if(collision.gameObject.tag == "Enemy")
-            collision.gameObject.SendMessage("applyDamage", 10);
+            collision.gameObject.SendMessage("applyDamage", 15);
 
     }
 }

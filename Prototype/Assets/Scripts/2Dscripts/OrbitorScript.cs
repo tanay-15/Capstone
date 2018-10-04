@@ -7,7 +7,7 @@ public class OrbitorScript : MonoBehaviour {
     GameObject Player;
     GameObject Trail;
     GameObject Projectile;
-    public Camera MainCam;
+    //public Camera MainCam;
 
     public float speed = 1.0f;
     public float radius = 2.0f;
@@ -103,27 +103,41 @@ public class OrbitorScript : MonoBehaviour {
 
 
                         // Throw to mouse click position
-                        if (Input.GetMouseButtonDown(0))
-                        {
+                       
                             if(transform.localPosition.y > -0.3f)
                             { 
                                 if((transform.localPosition.x > 0.7f && Player.GetComponent<Movement2D>().facingRight)
                                     || (transform.localPosition.x < -0.7f) && !Player.GetComponent<Movement2D>().facingRight)
-                                { 
-                                    Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                {
+                                    if (Input.GetMouseButtonDown(0))
+                                    {
+                                        Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                        Vector3 direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - Projectile.transform.position);
+                                        Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
+                                        Projectile.GetComponent<Collider2D>().enabled = true;
+                                        Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
+                                        Projectile.transform.parent = null;
+                                        fracJourney = 0;
+                                        Status = State.ShootingProjectile;
+                                    }
 
-                                    Vector3 direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - Projectile.transform.position);
-                                    Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
-                                    Projectile.GetComponent<Collider2D>().enabled = true;
+                                    if(Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.8f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.8f)
+                                    {                                       
+                                        Vector3 direction = Vector3.Normalize(new Vector3(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"), 0));
+                                        Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
+                                        Projectile.GetComponent<Collider2D>().enabled = true;
+                                        Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
+                                        Projectile.transform.parent = null;
+                                        fracJourney = 0;
 
-                                    Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
-                                    Projectile.transform.parent = null;
-                                    fracJourney = 0;
+                                        Status = State.ShootingProjectile;
+                                    }
 
-                                    Status = State.ShootingProjectile;
+                                    
+                                    
                                 }
                             }
-                        }
+                        
 
                         break;
                     }
