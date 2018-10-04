@@ -21,8 +21,8 @@ public class SkeletonBossScript : MonoBehaviour {
     float attackTimer = 0;
     float theta = 0;
 
-    float Health = 60;
-    float MaxHealth = 60;
+    float Health = 75;
+    float MaxHealth = 75;
     int activeHand = 1;
 
     bool isAssembling = false;
