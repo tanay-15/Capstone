@@ -13,6 +13,8 @@ public class Levitation : MonoBehaviour {
     [System.NonSerialized]
     public GameObject heldObject;
     public float mouseZPosition = 0f;
+    
+    bool active;
 
     float grabRadius = 0.1f;
     float maxGrabDistance = 4f;
@@ -33,18 +35,25 @@ public class Levitation : MonoBehaviour {
     }
 
 	void Start () {
-        if (sharedInstance == null)
+        if (sharedInstance != null)
         {
-            sharedInstance = this;
+            Destroy(sharedInstance);
         }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        sharedInstance = this;
+        active = true;
 
         heldObject = null;
 	}
+
+    public void SetActive(bool active)
+    {
+        this.active = active;
+        particles.gameObject.SetActive(active);
+        if (!active && heldObject != null)
+        {
+            ReleaseObject();
+        }
+    }
 
     void CalculatePosition()
     {
@@ -116,7 +125,7 @@ public class Levitation : MonoBehaviour {
 
     void CheckForButtonPress()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && active)
         {
             if (heldObject == null)
             {

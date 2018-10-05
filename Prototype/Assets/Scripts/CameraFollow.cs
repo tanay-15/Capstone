@@ -59,10 +59,6 @@ public class CameraFollow : MonoBehaviour {
 	// Update is called once per frame
     // Changed to update to fix camera jitter
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ShakeCamera();
-        }
 
         Vector3 desiredPosition = Vector3.zero;
         if (lowerLeftBound == null || upperRightBound == null)
