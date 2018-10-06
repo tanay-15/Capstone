@@ -20,10 +20,12 @@ public class SkeletonBossProjectile : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            if(transform.name[0] == 'G')
-                PlayerLife.sharedInstance.AddLife(-10);
+            if (transform.name[0] == 'G')
+                //PlayerLife.sharedInstance.AddLife(-10);
+                collision.gameObject.SendMessage("GetHit", -10);
             else if (transform.name[0] == 'B')
-                PlayerLife.sharedInstance.AddLife(-30);
+                //PlayerLife.sharedInstance.AddLife(-30);
+                collision.gameObject.SendMessage("GetHit", -30);
 
             Destroy(gameObject);
         }

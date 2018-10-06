@@ -16,9 +16,15 @@ public class CameraFollow : MonoBehaviour {
     float panSpeed = 1;
     bool isPanning = false;
 
+    Vector3 rawTransformPos;
+    Vector3 shakeOffset;
+    IEnumerator shakeRoutine;
+
 	// Use this for initialization
 	void Start () {
-		
+        shakeOffset = Vector3.zero;
+        rawTransformPos = transform.position;
+        shakeRoutine = null;
 	}
 
     Vector3 Vector3Clamp(Vector3 input, Vector3 min, Vector3 max)
@@ -29,10 +35,31 @@ public class CameraFollow : MonoBehaviour {
 
         return new Vector3(x, y, z);
     }
+
+    IEnumerator ShakeRoutine()
+    {
+        float time = 0.2f;
+        float ampl = 0.15f;
+        for (float i = time; time > 0; time -= Time.deltaTime)
+        {
+            shakeOffset = Random.insideUnitCircle * (time / 0.2f) * ampl;
+            yield return 0;
+        }
+        shakeOffset = Vector3.zero;
+    }
+
+    public void ShakeCamera()
+    {
+        if (shakeRoutine != null)
+            StopCoroutine(shakeRoutine);
+        shakeRoutine = ShakeRoutine();
+        StartCoroutine(shakeRoutine);
+    }
 	
 	// Update is called once per frame
     // Changed to update to fix camera jitter
 	void Update () {
+
         Vector3 desiredPosition = Vector3.zero;
         if (lowerLeftBound == null || upperRightBound == null)
         {
@@ -42,8 +69,9 @@ public class CameraFollow : MonoBehaviour {
         {
             desiredPosition = Vector3Clamp(target.position, lowerLeftBound.position, upperRightBound.position) + offset;
         }
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, speed * Time.deltaTime / 0.02f);
-        transform.position = smoothPosition;
+        Vector3 smoothPosition = Vector3.Lerp(rawTransformPos, desiredPosition, speed * Time.deltaTime / 0.02f);
+        rawTransformPos = smoothPosition;
+        transform.position = rawTransformPos + shakeOffset;
 
         if (isPanning)
         {

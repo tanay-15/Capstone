@@ -14,6 +14,9 @@ public class OrbitorScript : MonoBehaviour {
     public float theta = 0;
     int rotDirection = 1;
 
+    public Material OriginalTrailColor;
+    public Material HighlightTrailColor;
+
     //public bool hasProjectile = false;
     //public bool shootingProjectile = false;
 
@@ -21,6 +24,7 @@ public class OrbitorScript : MonoBehaviour {
     //private float journeyLength = 0;
     float fracJourney = 0;
     bool facingRight = true;
+
 
     public enum State
     {
@@ -37,6 +41,8 @@ public class OrbitorScript : MonoBehaviour {
         Trail = transform.GetChild(0).gameObject;
 
         Status = State.NoProjectile;
+
+        Trail.GetComponent<TrailRenderer>().material = OriginalTrailColor;
     }
 
 
@@ -90,6 +96,7 @@ public class OrbitorScript : MonoBehaviour {
                     {
                         Trail.SetActive(true);
                         Trail.transform.position = Projectile.transform.position;
+                        Trail.GetComponent<TrailRenderer>().material = OriginalTrailColor;
 
                         // Lerping 
                         if (Projectile.GetComponent<OrbitorObjectScript>().isOrbiting)
@@ -109,6 +116,7 @@ public class OrbitorScript : MonoBehaviour {
                                 if((transform.localPosition.x > 0.7f && Player.GetComponent<Movement2D>().facingRight)
                                     || (transform.localPosition.x < -0.7f) && !Player.GetComponent<Movement2D>().facingRight)
                                 {
+
                                     if (Input.GetMouseButtonDown(0))
                                     {
                                         Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -121,7 +129,7 @@ public class OrbitorScript : MonoBehaviour {
                                         Status = State.ShootingProjectile;
                                     }
 
-                                    if(Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.8f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.8f)
+                                    if(Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.7f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.7f)
                                     {                                       
                                         Vector3 direction = Vector3.Normalize(new Vector3(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"), 0));
                                         Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
@@ -133,8 +141,9 @@ public class OrbitorScript : MonoBehaviour {
                                         Status = State.ShootingProjectile;
                                     }
 
-                                    
-                                    
+                                    Trail.GetComponent<TrailRenderer>().material = HighlightTrailColor;
+
+
                                 }
                             }
                         

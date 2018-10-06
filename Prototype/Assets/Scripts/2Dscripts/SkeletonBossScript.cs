@@ -21,8 +21,8 @@ public class SkeletonBossScript : MonoBehaviour {
     float attackTimer = 0;
     float theta = 0;
 
-    float Health = 60;
-    float MaxHealth = 60;
+    float Health = 75;
+    float MaxHealth = 75;
     int activeHand = 1;
 
     bool isAssembling = false;
@@ -271,8 +271,8 @@ public class SkeletonBossScript : MonoBehaviour {
                     theta += Time.deltaTime;
                     DemonicCircle.transform.Rotate(new Vector3(0, 0, 20 * Time.deltaTime));
                     Color originalColor = DemonicCircle.GetComponent<SpriteRenderer>().color;
-                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Cos(theta) * Mathf.Cos(theta));
-                    DemonicCircle.transform.localScale = new Vector3(((Mathf.Cos(theta*2) * 0.1f)/2) + 0.2f, ((Mathf.Cos(theta*2) * 0.1f)/2) + 0.2f, 1);
+                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Cos(theta/2) * Mathf.Cos(theta/2));
+                    DemonicCircle.transform.localScale = new Vector3(((Mathf.Cos(theta) * 0.1f)/2) + 0.2f, ((Mathf.Cos(theta) * 0.1f)/2) + 0.2f, 1);
 
                     if (fracLerp > 1)
                     {
@@ -324,8 +324,8 @@ public class SkeletonBossScript : MonoBehaviour {
                     theta += Time.deltaTime;
                     DemonicCircle.transform.Rotate(new Vector3(0,0, 20 * Time.deltaTime));
                     Color originalColor = DemonicCircle.GetComponent<SpriteRenderer>().color;
-                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Cos(theta) * Mathf.Cos(theta));
-                    DemonicCircle.transform.localScale = new Vector3(((Mathf.Cos(theta * 2) * 0.1f) / 2) + 0.2f, ((Mathf.Cos(theta * 2) * 0.1f) / 2) + 0.2f, 1);
+                    DemonicCircle.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Cos(theta/2) * Mathf.Cos(theta/2));
+                    DemonicCircle.transform.localScale = new Vector3(((Mathf.Cos(theta) * 0.1f) / 2) + 0.2f, ((Mathf.Cos(theta) * 0.1f) / 2) + 0.2f, 1);
 
                     break;
             }
