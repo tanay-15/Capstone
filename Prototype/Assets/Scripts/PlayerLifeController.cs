@@ -26,14 +26,23 @@ public class PlayerLifeController : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void GetHit(int addLife)
+    {
+        PlayerLife.sharedInstance.AddLife(-10);
+        FindObjectOfType<CameraFollow>().ShakeCamera();
+        BlinkRed(true);
+        Invoke("Unblink", 0.1f);
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Enemy")
         {
-            PlayerLife.sharedInstance.AddLife(-10);
-            FindObjectOfType<CameraFollow>().ShakeCamera();
-            BlinkRed(true);
-            Invoke("Unblink", 0.1f);
+            //PlayerLife.sharedInstance.AddLife(-10);
+            //FindObjectOfType<CameraFollow>().ShakeCamera();
+            //BlinkRed(true);
+            //Invoke("Unblink", 0.1f);
+            GetHit(-10);
             
         }
     }

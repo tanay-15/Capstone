@@ -10,6 +10,7 @@ public class RagdollEnemy : MonoBehaviour {
 
     Component[] bones;
 
+    public bool fadeAfterDeath = true;
     
 
     public bool isDead = false;
@@ -81,7 +82,8 @@ public class RagdollEnemy : MonoBehaviour {
     {
         if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
         {
-            StartCoroutine(DieRoutine());
+            if (fadeAfterDeath)
+                StartCoroutine(DieRoutine());
 
             isDead = true;
             Debug.Log("hit");
