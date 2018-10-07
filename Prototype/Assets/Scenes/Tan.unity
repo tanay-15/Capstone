@@ -19090,7 +19090,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9fb381de0fd1d644b9fe68d3bb909a7, type: 3}
   m_Name: 
@@ -19154,6 +19154,7 @@ MonoBehaviour:
   DemonModeActive: 0
   transitioning: 0
   MainCam: {fileID: 0}
+  DemonCircle: {fileID: 0}
 --- !u!114 &1283182846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19217,7 +19218,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017ffa8ed5a0ae446871ff26edec4a81, type: 3}
   m_Name: 
@@ -19229,6 +19230,7 @@ MonoBehaviour:
   walkonWalls: 0
   walkonCeilings: 0
   walkonGround: 0
+  noFlagSet: 0
 --- !u!114 &1283182850
 MonoBehaviour:
   m_ObjectHideFlags: 0

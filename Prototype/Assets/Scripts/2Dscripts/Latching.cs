@@ -97,41 +97,28 @@ public class Latching : MonoBehaviour {
             movement.enabled = true;
             player.gravityScale = 0;
             Force.force = new Vector2(1.5f, 0);
-        }
-
-
-      
-       
+        }     
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
-        {
-           
+        {          
             walkonWalls = true;
             walkonCeilings = false;
-            walkonGround = false;
-            
-
+            walkonGround = false;            
         }
         else if (coll.collider.gameObject.layer == LayerMask.NameToLayer("Ceilings"))
-        {
-            
+        {            
             walkonCeilings = true;
             walkonGround = false;
-            walkonWalls = false;
-           
-
+            walkonWalls = false;          
         }
         else if (coll.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            
+        {           
             walkonGround = true;
             walkonWalls = false;
-            walkonCeilings = false;
-            
-
+            walkonCeilings = false;            
         }
     }
    
