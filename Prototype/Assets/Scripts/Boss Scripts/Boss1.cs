@@ -28,16 +28,13 @@ public class Boss1 : MonoBehaviour {
     [Header("Boss Details")]
     public State currentState;
     public float health;
-    public bool hasBarrier = true;
-    public int barrCounter = 3;
-    public float barrierback = 10;
-    private int tempvalue;
+   
     public bool deciderparameter = false;
     private GameObject alertobject;
     public GameObject stunpref;
     private GameObject stunobj;
     public bool moveback = false;
-    public Vector2 lowposition = new Vector2(0,1);
+    public Vector2 lowposition = new Vector2(0,0.67f);
 
 
     [Header("Attack Dash")]
@@ -63,7 +60,7 @@ public class Boss1 : MonoBehaviour {
     private bool should_attack_dash;
     private bool should_attack_gsm;
 
-    private float waitforattackdecider = 1.5f;
+  
    
 
     [Header("Boss movement")]
@@ -71,8 +68,7 @@ public class Boss1 : MonoBehaviour {
     public GameObject waypoint2;
     private bool movetoA = true;
     private bool movetoB;
-    public bool nearby;
-
+ 
     [Header("Boss vision")]
     public GameObject visionpoint;
     public RaycastHit2D vishit;
@@ -85,11 +81,17 @@ public class Boss1 : MonoBehaviour {
     public GameObject hp_seventy;
     public GameObject hp_sixty;
     public GameObject hp_fifty;
-    public GameObject hp_forty;
+ 
+
+
+    private bool facingLeft;
+    public bool knocked;
 
 	void Start () {
 
-        player = GameObject.FindGameObjectWithTag("Player");
+       // player = GameObject.FindGameObjectWithTag("Player");
+
+        facingLeft = true;
 
       
 
@@ -102,10 +104,13 @@ public class Boss1 : MonoBehaviour {
 
 
         //if alive do something
+       
+
         if (health > 50)
         {
             if(!isStunned)
-                Movement();
+              
+            Movement();
             ThrowAttackAlert();
 
 
@@ -127,8 +132,10 @@ public class Boss1 : MonoBehaviour {
             if (!isStunned)
             {
                 Movement();
+              
                 //decide what to use
-                AttackDecider();
+                //AttackDecider();
+                Invoke("AttackDecider", 2f);
                 if (shoulddash)
                 {
                     Dash(12f);
@@ -178,28 +185,36 @@ public class Boss1 : MonoBehaviour {
 
 
 
-   
+        if (!isStunned)
+        {
+            DetectPlayer();
+        }
 
+      
 
 
         if (isStunned)
         {
+            playerdetected = false;
+            shoulddash = false;
             Stunned();
         }
 
-        if(targetposition == Vector3.zero)
-        {
-            if (playerdetected)
-            {
-                targetposition = player.transform.position;
-            }
-        }
-            DetectPlayer();
-        
+   
 
-      
-       
-	}
+        /* if (targetposition == Vector3.zero)
+         {
+             if (playerdetected)
+             {
+                 targetposition = player.transform.position;
+             }
+         }*/
+
+
+
+
+
+    }
 
     private void GroundSmash()
     {
@@ -210,10 +225,7 @@ public class Boss1 : MonoBehaviour {
 
     private void AttackDecider()
     {
-        waitforattackdecider = waitforattackdecider - Time.deltaTime;
-        
-        if(waitforattackdecider <= 0)
-        {
+       
             attackdecider = (int)Random.Range(1, 6);
 
             if (attackdecider <= 2)
@@ -229,8 +241,7 @@ public class Boss1 : MonoBehaviour {
                 //groundsmash
             }
 
-            waitforattackdecider = 3f;
-        }
+       
       
 
     }
@@ -238,27 +249,47 @@ public class Boss1 : MonoBehaviour {
     private void DetectPlayer()
     {
         vishit = Physics2D.Raycast(visionpoint.transform.position, -transform.right, 10f,playerlayer);
-
         
-        if(vishit == null)
+        Debug.DrawRay(visionpoint.transform.position, -transform.right,Color.red);
+
+        if (vishit == null)
         {
             playerdetected = false;
-            Debug.Log("Player not in sight");
+
         }
-        if(vishit   != null){
-            if (vishit.collider.gameObject.tag == "Player")
-            {
-                Debug.Log("Player in sight");
-                playerdetected = true;
-                targetposition = player.transform.position;
-            }
-            else
-            {
-                playerdetected = false;
-            }
+
+        /* else if(vishit != null){
+
+             Debug.Log(vishit.collider.gameObject.name);
+            // if (vishit.collider.gameObject.tag == "Player")
+            // {
+
+                 playerdetected = true;
+
+                 targetposition = player.transform.position;
+           //  }
+
+
+
+         }*/
+
+       else if(vishit.collider.gameObject.CompareTag("Player"))
+        {
+            playerdetected = true;
+            targetposition = player.transform.position;
         }
-      
+
+        else
+        {
+            playerdetected = false;
+        }
+        
+
+        
+
     }
+
+  
 
     private void Stunned()
     {
@@ -267,7 +298,11 @@ public class Boss1 : MonoBehaviour {
             stunobj = Instantiate(stunpref,alertpos.transform.position,alertpos.transform.rotation);
 
         }
-       
+
+        if (health <= 0)
+        {
+            Destroy(stunobj);
+        }
 
         stuncounter = stuncounter - Time.deltaTime;
 
@@ -309,37 +344,21 @@ public class Boss1 : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    public void PlayerNearby()
-    {
-        if(Vector2.Distance(player.transform.position,this.transform.position) < 7f)
-        {
-            nearby = true;
-          
-        }
-
-        else
-        {
-            //flip to player's side.
-            //take player position.
-            //attack ready
-            //dash
-            //or aoe slash on both sides
-            nearby = false;
-        }
-    }
+   
     public void Dash(float speed)
     { 
 
         //detect player
         Destroy(alertobject);
-        dashattackcounter = dashattackcounter - Time.deltaTime;
+       // dashattackcounter = dashattackcounter - Time.deltaTime;
         indash = true;
 
-        if(dashattackcounter <= 0 && !isStunned)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, speed * Time.deltaTime);
+       // if(dashattackcounter <= 0 && !isStunned)
+       // {
+            targetposition.y = 0.67f;
+            this.transform.position = Vector3.MoveTowards(this.transform.position, targetposition, speed * Time.deltaTime);
 
-            if (Vector2.Distance(targetposition, this.transform.position) < 0.3f)
+            if (Vector3.Distance(targetposition, this.transform.position) < 0.3f)
             {
                 Debug.Log("Reached dash position");
                 shoulddash = false;
@@ -348,7 +367,7 @@ public class Boss1 : MonoBehaviour {
                 
                 dashattackcounter = 1f;
             }
-        }
+       // }
       
     }
 
@@ -356,14 +375,14 @@ public class Boss1 : MonoBehaviour {
 
     public void Movement()
     {
-       
 
+       
         if (movetoA)
         {
-          
-            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
+           
+            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, 1f * Time.deltaTime);
 
-            if (Vector3.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
+            if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 2f)
             {
                flip();
                 movetoA = false;
@@ -373,10 +392,10 @@ public class Boss1 : MonoBehaviour {
 
         if (movetoB)
         {
-        
-            this.transform.position = Vector3.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
+       
+            this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, 1f * Time.deltaTime);
 
-            if (Vector3.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
+            if (Vector2.Distance(waypoint2.transform.position, this.transform.position) <= 2f)
             {
                 flip();
                 movetoA = true;
@@ -404,7 +423,46 @@ public class Boss1 : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             HitBack();
+            shoulddash = false;
         }
+
+        if(collision.gameObject.tag == "projectile")
+        {
+            
+            float hitFrom = collision.gameObject.GetComponent<playerKnife2D>().GetPosX();
+          
+            health = health - 2f;
+            knocked = true;
+          
+            KnockBack(hitFrom);
+        }
+    }
+
+    private void KnockBack(float hitFrom)
+    {
+        Vector2 knockbackpos;
+
+        if(hitFrom < this.transform.position.x)
+        {
+            //Hit from left,,,move to right
+
+            knockbackpos = new Vector2(this.transform.position.x + 0.8f,0.67f);
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, knockbackpos, 1.5f );
+            Invoke("KnockedChange", 1f);
+
+        }
+
+        if (hitFrom > this.transform.position.x)
+        {
+            //hit from right, move to left
+
+            knockbackpos = new Vector2(this.transform.position.x - 0.8f, 0.64f);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, knockbackpos, 1.5f);
+            Invoke("KnockedChange", 1f);
+
+        }
+
     }
 
     private void HitBack()
@@ -427,8 +485,16 @@ public class Boss1 : MonoBehaviour {
         }
     }
 
-  
+    private void KnockedChange()
+    {
+        knocked = false;
+    }
 
+  
+    public float GetHealth()
+    {
+        return health;
+    }
    
 
     public void applyDamage(int damage)
@@ -441,6 +507,7 @@ public class Boss1 : MonoBehaviour {
 
     private void flip()
     {
+        facingLeft = !facingLeft;
         this.transform.RotateAround(transform.position, transform.up, 180f);
     }
 

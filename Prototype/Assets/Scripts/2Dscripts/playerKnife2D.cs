@@ -51,5 +51,10 @@ public class playerKnife2D : MonoBehaviour {
         }
         
     }
+
+    public float GetPosX()
+    {
+        return this.transform.position.x;
+    }
     
 }

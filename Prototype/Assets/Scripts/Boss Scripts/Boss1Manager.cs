@@ -9,6 +9,10 @@ public class Boss1Manager : MonoBehaviour {
     public GameObject crate_prefab;
     public GameObject[] current_crates;
 
+    public GameObject door;
+    public GameObject boss;
+    private int boss_health;
+
 	void Start () {
 		
 	}
@@ -22,5 +26,15 @@ public class Boss1Manager : MonoBehaviour {
         {
             Instantiate(crate_prefab, this.transform.position, this.transform.rotation);
         }
+        
+        if(boss !=null)
+        boss_health = (int)boss.GetComponent<Boss1>().GetHealth();
+
+        if(boss_health <= 0)
+        {
+            door.SetActive(true);
+        }
+
+        
 	}
 }
