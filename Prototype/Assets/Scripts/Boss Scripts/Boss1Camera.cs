@@ -27,7 +27,7 @@ public class Boss1Camera : MonoBehaviour {
         {
           Vector2 CamShake = Random.insideUnitCircle * 0.2f;
 
-            this.transform.position = new Vector3(this.transform.position.x + CamShake.x, player.transform.position.y   + CamShake.y, 0f);
+            this.transform.position = new Vector3(this.transform.position.x + CamShake.x, this.transform.position.y + CamShake.y, this.transform.position.z);
 
           
                 shakedur = shakedur - Time.deltaTime;
