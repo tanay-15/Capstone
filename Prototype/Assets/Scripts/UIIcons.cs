@@ -17,6 +17,10 @@ public class UIIcons : MonoBehaviour {
     public Image[] icons;
     public Color activeColor;
     public Color inactiveColor;
+    public Image qButton;
+
+    IEnumerator routine;
+    Color transparent;
 
     static UIIcons()
     {
@@ -28,7 +32,36 @@ public class UIIcons : MonoBehaviour {
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
+        transparent = new Color(1f, 1f, 1f, 0.5f);
 	}
+
+    public void SetQButton(bool set)
+    {
+        if (routine != null)
+            StopCoroutine(routine);
+        if (set)
+        {
+            routine = QButtonRoutine();
+            StartCoroutine(routine);
+        }
+        else
+        {
+            qButton.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator QButtonRoutine()
+    {
+        qButton.gameObject.SetActive(true);
+        qButton.color = Color.white;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.7f);
+            qButton.color = transparent;
+            yield return new WaitForSeconds(0.7f);
+            qButton.color = Color.white;
+        }
+    }
 
     public void SetIconActive(UIIcon icon, bool active)
     {

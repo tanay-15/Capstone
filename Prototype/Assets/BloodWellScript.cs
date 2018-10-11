@@ -7,17 +7,11 @@ public class BloodWellScript : MonoBehaviour {
 
     bool contactPlayer;
     rageBar rb;
-    Color normalColor;
-    Color fillingColor;
 
 	// Use this for initialization
 	void Start () {
         contactPlayer = false;
         rb = FindObjectOfType<rageBar>();
-        normalColor = rb.GetFiller().color;
-        fillingColor = normalColor;
-        fillingColor.g = 0.5f;
-        fillingColor.b = 0.5f;
 	}
 	
 	// Update is called once per frame
@@ -27,11 +21,6 @@ public class BloodWellScript : MonoBehaviour {
             if (rb.RBar.fillAmount <= 1)
             {
                 rb.RBar.fillAmount += 0.2f * Time.deltaTime;
-                SetFillerColor(fillingColor);
-            }
-            else
-            {
-                SetFillerColor(normalColor);
             }
         }
     }
@@ -46,6 +35,7 @@ public class BloodWellScript : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             contactPlayer = true;
+            rb.BarColorFill = true;
         }
     }
 
@@ -54,7 +44,7 @@ public class BloodWellScript : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             contactPlayer = false;
-            SetFillerColor(normalColor);
+            rb.BarColorFill = false;
         }
     }
 

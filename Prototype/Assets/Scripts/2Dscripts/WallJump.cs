@@ -101,7 +101,7 @@ public class WallJump : MonoBehaviour
         //}
         if(ground.grounded)
         {
-            Debug.Log("Testing");
+            //Debug.Log("Testing");
             playerMovement.enabled = true;
         }
         

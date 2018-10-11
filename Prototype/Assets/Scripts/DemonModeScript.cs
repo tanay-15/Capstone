@@ -80,6 +80,7 @@ public class DemonModeScript : MonoBehaviour {
 
     public void Transformation()
     {
+        UIIcons.sharedInstance.SetQButton(false);
         transitioning = true;
         StartCoroutine("SpriteTransform", !DemonModeActive);
         for (int i = 0; i < 50; i++)

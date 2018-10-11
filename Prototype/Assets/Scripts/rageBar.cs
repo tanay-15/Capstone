@@ -15,13 +15,35 @@ public class rageBar : MonoBehaviour {
     public float speedtoIncrease;
     [SerializeField]
     private Image filler;
+    bool rageBarFilled;
+    Color normalColor;
+    Color fillingColor;
+    private bool barColorFill;
+
+    public bool BarColorFill
+    {
+        get { return barColorFill; }
+        set
+        {
+            //Ignore setting the filler color if the bar is already full or if rage mode is active
+            if (fillAmount < 1 && !rageBarActive)
+                filler.color = (value) ? fillingColor : normalColor;
+            barColorFill = value;
+        }
+    }
 
    
                                        // Use this for initialization
     void Start () {
         rageBarActive = false;
         RBar = GetComponent<rageBar>();
-	}
+        rageBarFilled = false;
+
+        normalColor = RBar.filler.color;
+        fillingColor = normalColor;
+        fillingColor.g = 0.5f;
+        fillingColor.b = 0.5f;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,7 +53,7 @@ public class rageBar : MonoBehaviour {
         {
             if (GetComponent<DemonModeScript>().DemonModeActive && !GetComponent<DemonModeScript>().transitioning)
             {
-                rageBarActive = true;              
+                rageBarActive = true;
             }
             else
             {
@@ -48,8 +70,9 @@ public class rageBar : MonoBehaviour {
                 RBar.fillAmount = 0;
                 GetComponent<DemonModeScript>().Transformation();
                 rageBarActive = false;
+
+                BarColorFill = false;
             }
-                
         }
 
 
@@ -58,8 +81,22 @@ public class rageBar : MonoBehaviour {
             RBar.fillAmount += 0.02f * Time.deltaTime;
         }
 
-        
-	}
+        //Call one time once the bar fills
+        if (RBar.fillAmount >= 1f && !rageBarFilled && !rageBarActive)
+        {
+            rageBarFilled = true;
+            UIIcons.sharedInstance.SetQButton(true);
+        }
+
+        //Probably not necessary unless the rage bar drains without entering demon mode
+        else if (RBar.fillAmount < 1f && rageBarFilled && !rageBarActive)
+        {
+            rageBarFilled = false;
+            UIIcons.sharedInstance.SetQButton(false);
+        }
+
+
+    }
     private void handleBar()
     {
         if(RBar.fillAmount != filler.fillAmount)
