@@ -99,6 +99,7 @@ public class rageBar : MonoBehaviour {
     }
     private void handleBar()
     {
+        if (filler == null) return;
         if(RBar.fillAmount != filler.fillAmount)
         {
             filler.fillAmount = RBar.fillAmount;

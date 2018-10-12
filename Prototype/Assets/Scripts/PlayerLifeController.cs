@@ -7,8 +7,27 @@ public class PlayerLifeController : MonoBehaviour {
 
     SpriteRenderer[] renderers;
 
+    [System.NonSerialized]
+    public Vector3 startPosition;
+    [System.NonSerialized]
+    public Vector3 respawnPosition;
+
+    Rigidbody2D rb;
+    int respawnBlinkLoop = 5;
+    bool invincible;
+
+    IEnumerator respawnBlink = null;
+    Color transparentColor;
+
 	void Start () {
         renderers = GetComponentsInChildren<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+
+        startPosition = transform.position;
+        respawnPosition = startPosition;
+
+        invincible = false;
+        transparentColor = new Color(1f, 1f, 1f, 0.5f);
 	}
 	
 	void Update () {
@@ -16,18 +35,52 @@ public class PlayerLifeController : MonoBehaviour {
         if (PlayerLife.sharedInstance.currentLife <= 0)
         {
             gameObject.SetActive(false);
-            Invoke("ResetLevel", 1.2f);
+            Invoke("Respawn", 1.2f);
         }
 
     }
 
-    void ResetLevel()
+    void StartRespawnBlink()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (respawnBlink != null)
+            StopCoroutine(respawnBlink);
+        respawnBlink = RespawnBlink();
+        StartCoroutine(respawnBlink);
     }
+
+    IEnumerator RespawnBlink()
+    {
+        invincible = true;
+        for (int i = 0; i < respawnBlinkLoop; i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+            SetRendererColors(transparentColor);
+            yield return new WaitForSeconds(0.2f);
+            SetRendererColors(Color.white);
+        }
+        invincible = false;
+    }
+
+    public void SetRespawnPosition(Vector3 pos)
+    {
+        respawnPosition = pos;
+    }
+
+    public void Respawn()
+    {
+        rb.velocity = Vector3.zero;
+        transform.position = respawnPosition;
+        StartRespawnBlink();
+    }
+
+    //void ResetLevel()
+    //{
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //}
 
     public void GetHit(int addLife)
     {
+        if (invincible) return;
         PlayerLife.sharedInstance.AddLife(-10);
         FindObjectOfType<CameraFollow>().ShakeCamera();
         BlinkRed(true);
@@ -53,12 +106,21 @@ public class PlayerLifeController : MonoBehaviour {
         BlinkRed(false);
     }
 
-    void BlinkRed(bool blink)
+    void SetRendererColors(Color col)
     {
         foreach (SpriteRenderer r in renderers)
         {
-            r.color = (blink) ? Color.red : Color.white;
+            r.color = col;
         }
+    }
+
+    void BlinkRed(bool blink)
+    {
+        SetRendererColors((blink) ? Color.red : Color.white);
+        //foreach (SpriteRenderer r in renderers)
+        //{
+        //    r.color = (blink) ? Color.red : Color.white;
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -66,7 +128,7 @@ public class PlayerLifeController : MonoBehaviour {
         
         if (col.gameObject.tag == "Instant Death")
         {
-            ResetLevel();
+            Respawn();
         }
     }
 }

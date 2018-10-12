@@ -105,7 +105,8 @@ public class Tutorial : MonoBehaviour {
     public void SetPhase(int newPhase)
     {
         phase = newPhase;
-        StartCoroutine(TransitionText(messages[++textPhase].Replace("\\n", "\n")));
+        if (text != null)
+            StartCoroutine(TransitionText(messages[++textPhase].Replace("\\n", "\n")));
 
         //Enable or disable GameObjects...
         switch (phase)

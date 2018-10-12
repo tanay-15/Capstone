@@ -59,7 +59,6 @@ public class Movement2D : MonoBehaviour
         facingRight = true;
         sprite = GetComponentInChildren<SpriteRenderer>();
         latchingScript = GetComponent<Latching>();
-
     }
 
     void FixedUpdate()
