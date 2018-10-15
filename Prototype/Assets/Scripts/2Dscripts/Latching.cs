@@ -121,7 +121,28 @@ public class Latching : MonoBehaviour {
             walkonCeilings = false;            
         }
     }
-   
+    void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
+            walkonWalls = true;
+            walkonCeilings = false;
+            walkonGround = false;
+        }
+        else if (coll.collider.gameObject.layer == LayerMask.NameToLayer("Ceilings"))
+        {
+            walkonCeilings = true;
+            walkonGround = false;
+            walkonWalls = false;
+        }
+        else if (coll.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            walkonGround = true;
+            walkonWalls = false;
+            walkonCeilings = false;
+        }
+    }
+
 
 
     void OnCollisionExit2D(Collision2D coll)
