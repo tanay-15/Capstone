@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RagdollEnemy : BasicEnemy {
+public class RagdollEnemy : MonoBehaviour {
 
     Collider2D[] playerColliders;
     Collider2D[] myColliders;
@@ -85,7 +85,7 @@ public class RagdollEnemy : BasicEnemy {
             if (fadeAfterDeath)
                 StartCoroutine(DieRoutine());
 
-            events.OnDeath.Invoke();
+            //events.OnDeath.Invoke();
             isDead = true;
             Debug.Log("hit");
             SetChildrenKinematic(false);
