@@ -97,6 +97,8 @@ public class SkeletonBossScript : MonoBehaviour {
 
         foreach (Transform t in Grunts)
         {
+            //Skip over deleted Lifebar transforms
+            if (t == null) continue;
             if (t.name == "Torso" || t.name == "biceps" || t.name == "forearm" || t.name == "shin" || t.name == "thigh" || t.name == "Head")
             {               
                 BonesManager[i] = new BoneSystem(t, null,null, false);
