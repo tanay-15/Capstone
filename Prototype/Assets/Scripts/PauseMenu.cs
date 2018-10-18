@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour {
 	void Start () {
         pauseMenu.SetActive(false);
         grayscale = FindObjectOfType<Grayscale>();
-        grayscale.enabled = false;
+        if (grayscale != null)  grayscale.enabled = false;
         GamePaused = false;
         if (sharedInstance != null)
             Destroy(sharedInstance);
@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour {
         {
             GamePaused = !GamePaused;
             pauseMenu.SetActive(GamePaused);
-            grayscale.enabled = GamePaused;
+            if (grayscale != null)  grayscale.enabled = GamePaused;
             Time.timeScale = (GamePaused) ? 0f : 1f;
         }
 	}

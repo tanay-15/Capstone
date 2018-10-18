@@ -118,12 +118,12 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 2:
-                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one * 0.5f, enterCurve1, defaultIconEnterSpeed));
+                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed));
                 break;
 
             case 3:
                 levitationSystem.SetActive(true);
-                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one * 0.5f, enterCurve1, defaultIconEnterSpeed));
+                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed));
                 break;
 
             case 4:
