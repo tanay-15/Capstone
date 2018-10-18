@@ -395,7 +395,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.133
+      value: -2.04
       objectReference: {fileID: 0}
     - target: {fileID: 4144058629130524, guid: 4e190663ac050a146aca7b5f99bdd0d0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -844,6 +844,7 @@ MonoBehaviour:
   Range: 4
   moveTospeed: 3
   targetPlayer: {fileID: 0}
+  facingLeft: 0
   playerdetected: 0
   decisionParameter: 0
   doAttack: 0
