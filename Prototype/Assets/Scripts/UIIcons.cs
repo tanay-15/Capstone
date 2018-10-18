@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Should be ordered from left to right top to bottom
-public enum UIIcon
+public enum UIIconType
 {
     Levitation = 0,
     Arrow,
@@ -63,7 +63,7 @@ public class UIIcons : MonoBehaviour {
         }
     }
 
-    public void SetIconActive(UIIcon icon, bool active)
+    public void SetIconActive(UIIconType icon, bool active)
     {
         icons[(int)icon].color = (active) ? activeColor : inactiveColor;
         icons[(int)icon].gameObject.transform.GetChild(0).gameObject.SetActive(active);
