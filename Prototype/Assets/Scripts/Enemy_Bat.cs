@@ -110,6 +110,11 @@ public class Enemy_Bat : MonoBehaviour {
             //attack player
             Destroy(this.gameObject);
         }
+
+        if(collision.gameObject.tag == "projectile")
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 

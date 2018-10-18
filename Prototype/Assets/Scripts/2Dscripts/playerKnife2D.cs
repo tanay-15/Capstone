@@ -20,7 +20,16 @@ public class playerKnife2D : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Torso" || collision.gameObject.name == "Head" || collision.gameObject.name == "thigh" || collision.gameObject.name == "shin")
+
+        if (collision.gameObject.name == "AttackTrigger")
+        {
+            Debug.Log(collision.gameObject.name);
+            Debug.Log(collision.gameObject.transform.position);
+        }
+        {
+            Debug.Log(collision.gameObject.name);
+        }
+        if (collision.gameObject.name == "Torso" || collision.gameObject.name == "Head" || collision.gameObject.name == "thigh" || collision.gameObject.name == "shin")
         {
             hasHit = true;
             GetComponent<Rigidbody2D>().isKinematic = true;
@@ -37,7 +46,11 @@ public class playerKnife2D : MonoBehaviour {
             collision.gameObject.SendMessageUpwards("applyDamage", 5);
             Destroy(this.gameObject);
         }
+
+   
     }
+
+    
 
    
     private void OnTriggerEnter2D(Collider2D collision)
