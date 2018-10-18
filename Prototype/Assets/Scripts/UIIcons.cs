@@ -14,7 +14,7 @@ public enum UIIconType
 public class UIIcons : MonoBehaviour {
 
     public static UIIcons sharedInstance;
-    public Image[] icons;
+    public GameObject[] icons;
     public Color activeColor;
     public Color inactiveColor;
     public Image qButton;
@@ -63,9 +63,9 @@ public class UIIcons : MonoBehaviour {
         }
     }
 
-    public void SetIconActive(UIIconType icon, bool active)
-    {
-        icons[(int)icon].color = (active) ? activeColor : inactiveColor;
-        icons[(int)icon].gameObject.transform.GetChild(0).gameObject.SetActive(active);
-    }
+    //public void SetIconActive(UIIconType icon, bool active)
+    //{
+    //    icons[(int)icon].color = (active) ? activeColor : inactiveColor;
+    //    icons[(int)icon].gameObject.transform.GetChild(0).gameObject.SetActive(active);
+    //}
 }
