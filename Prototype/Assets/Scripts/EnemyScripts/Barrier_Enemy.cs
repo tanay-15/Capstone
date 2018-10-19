@@ -16,6 +16,8 @@ public class Barrier_Enemy : MonoBehaviour {
 
     public float decisionParameter = 0;
     public bool doAttack;
+
+
     
 	void Start () {
 
@@ -28,6 +30,11 @@ public class Barrier_Enemy : MonoBehaviour {
         MoveToPlayer();
         Attack();
 
+        if(doAttack == false && decisionParameter > 0) 
+        {
+            decisionParameter = decisionParameter - Time.deltaTime;
+        }
+
 	}
 
     void Attack()
@@ -35,19 +42,19 @@ public class Barrier_Enemy : MonoBehaviour {
         if (doAttack)
         {
             Debug.Log("Enemy attacks");
-            targetPlayer.SendMessageUpwards("applyDamage", 5);
+          // attack player
             doAttack = false;
         }
     }
 
     void MoveToPlayer()
     {
-        if (targetPlayer && decisionParameter == 0)
+        if (targetPlayer && decisionParameter <= 0)
         {
             CheckForFlip();
             this.transform.position = Vector2.MoveTowards(this.transform.position, targetPlayer.transform.position, moveTospeed * Time.deltaTime);
 
-            if(Vector2.Distance(this.transform.position,targetPlayer.transform.position) < 1.3f)
+            if(Vector2.Distance(this.transform.position,targetPlayer.transform.position) < 1.8f)
             {
                 decisionParameter = 3f;
                 doAttack = true;
@@ -90,6 +97,15 @@ public class Barrier_Enemy : MonoBehaviour {
         {
             playerdetected = true;
             targetPlayer = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if(collider.gameObject.tag == "Player")
+        {
+            playerdetected = false;
+            targetPlayer = collider.gameObject;
         }
     }
 

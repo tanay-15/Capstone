@@ -24,7 +24,7 @@ public class playerKnife2D : MonoBehaviour {
         if (collision.gameObject.name == "AttackTrigger")
         {
             Debug.Log(collision.gameObject.name);
-            Debug.Log(collision.gameObject.transform.position);
+        
         }
         {
             Debug.Log(collision.gameObject.name);
