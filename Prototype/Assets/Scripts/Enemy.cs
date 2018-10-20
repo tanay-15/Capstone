@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour {
 
    
 
-        SetChildrenKinematic(true);
+
 
 
     }
@@ -98,7 +98,6 @@ public class Enemy : MonoBehaviour {
         movway2 = false;
              currentstate = States.Dead;
             anim.SetTrigger("Death");
-            SetChildrenKinematic(false);
         
 
       
@@ -290,6 +289,14 @@ public class Enemy : MonoBehaviour {
             health = 0;
           
         }
+
+        if(collision.gameObject.tag == "Player")
+        {
+            target = collision.gameObject;
+            targetpos = collision.gameObject.transform.position;
+            currentstate = States.Alert;
+            anim.SetBool("Alert", true);
+        }
     }
 
 
@@ -299,6 +306,16 @@ public class Enemy : MonoBehaviour {
         {
            
             AttackReady = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if(collider.gameObject.tag == "Player")
+        {
+            target = null;
+            currentstate = States.Idle;
+           
         }
     }
 
@@ -313,19 +330,7 @@ public class Enemy : MonoBehaviour {
         return IsAlive;
     }
 
-    void SetChildrenKinematic(bool state)
-    {
-        foreach (Rigidbody2D rb2d in bones)
-        {
-            if (rb2d.name != gameObject.name)
-            {
-                rb2d.isKinematic = state;
-                rb2d.GetComponent<Collider2D>().enabled = !state;
-                //Debug.Log(rb2d.name);
-            }
-
-        }
-    }
+  
     
     void flip()
     {
