@@ -102,6 +102,9 @@ public class Enemy_Spider : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             Debug.Log("Player attacked");
+            atPointB = true;
+            attackdone = false;
+            staycounter = 4f;
 
         }
     }

@@ -10,7 +10,7 @@ public class DarkOrbs : MonoBehaviour {
     private float descounter = 5f;
 	void Start () {
 
-        moveVector = new Vector3(-10 * Time.deltaTime, 0, 0);
+        moveVector = new Vector3(0, -2.5f * Time.deltaTime, 0);
 	}
 	
 	// Update is called once per frame
@@ -25,7 +25,7 @@ public class DarkOrbs : MonoBehaviour {
         }
 	}
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Hits " + collision.gameObject.name);
         Destroy(this.gameObject);

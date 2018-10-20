@@ -22,6 +22,7 @@ public class BossSpider : MonoBehaviour {
         Idle,
         GoToStart,
         DecidingAttack,
+        Moving,
         Attack1,
         Attack2,
         Attack3,
@@ -33,6 +34,27 @@ public class BossSpider : MonoBehaviour {
     public float moveSpeed;
     public float attackdoneCounter;
     public bool AttackDone;
+
+    public GameObject slingshotPrefab;
+
+    public GameObject spiderlingPrefab;
+    public GameObject location1;
+    public GameObject location2;
+
+    public Vector3 positionC;
+    public Vector3 positionD;
+
+    public bool testfac;
+    private bool isAttacking;       // is currently using an attack
+    public bool attackCounter;      // attack when counter hits 0
+    public bool startCounter;
+
+    public GameObject movepoint1;
+    public GameObject movepoint2;
+    private bool moveA = true;
+    private bool moveB;
+   
+ 
     
 	void Start () {
 
@@ -46,12 +68,28 @@ public class BossSpider : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Attack1();
+      
+      Attack1();
+        Attack2();
+        AttackDecider();
+        Attack3();
         IsAttackDone();
+        Movement();
         GoBackToPosition();
 	}
 
+    void AttackDecider()
+    {
 
+        //Decide attack
+        if (testfac)
+        {
+          
+            testfac = false;
+        }
+        
+
+    }
     void IsAttackDone()
     {
         if (AttackDone)
@@ -77,14 +115,40 @@ public class BossSpider : MonoBehaviour {
             }
         }
     }
+    
+    void Movement()
+    {
+        if(currentState == States.Moving)
+        {
+            if (moveA)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, movepoint2.transform.position, 2f * Time.deltaTime);
+                if(Vector2.Distance(this.transform.position,movepoint2.transform.position)< 0.7f)
+                {
+                    moveA = false;
+                    moveB = true;
+                }
+            }
 
+            if (moveB)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, movepoint1.transform.position, 2f * Time.deltaTime);
+                if (Vector2.Distance(this.transform.position, movepoint1.transform.position) < 0.7f)
+                {
+                    moveA = true;
+                    moveB = false;
+                }
+            }
+        }
+    }
     void Attack1()
     {   
         if(currentState == States.Attack1)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, positionB, moveSpeed * Time.deltaTime);
 
-            if(Vector2.Distance(this.transform.position,positionB)< 0.3f)
+            this.transform.position = Vector2.MoveTowards(this.transform.position, positionC, moveSpeed * Time.deltaTime);
+
+            if(Vector2.Distance(this.transform.position,positionC)< 0.6f)
             {
                 AttackDone = true;
             }
@@ -92,5 +156,41 @@ public class BossSpider : MonoBehaviour {
         
     }
 
-    
+    void Attack2()
+    {
+        if(currentState == States.Attack2 && AttackDone == false)
+        {
+            Instantiate(slingshotPrefab, position3.transform.position, position3.transform.rotation);
+            Instantiate(slingshotPrefab, position5.transform.position, position5.transform.rotation);
+            Instantiate(slingshotPrefab, position4.transform.position, position4.transform.rotation);
+            AttackDone = true;
+        }
+    }
+
+
+    void Attack3()
+    {
+        if (currentState == States.Attack3 && AttackDone == false){
+
+            Instantiate(spiderlingPrefab, location1.transform.position, location1.transform.rotation);
+            Instantiate(spiderlingPrefab, location2.transform.position, location2.transform.rotation);
+            AttackDone = true;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.gameObject.tag == "Player")
+        {
+            //perform attack1
+            Debug.Log("Player in attack range");
+            if(attackdoneCounter == 4)
+            {
+                positionC = position2.transform.position;
+                currentState = States.Attack1;
+
+            }
+
+        }
+    }
 }
