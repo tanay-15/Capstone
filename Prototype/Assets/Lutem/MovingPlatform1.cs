@@ -58,11 +58,11 @@ public class MovingPlatform1 : MonoBehaviour {
         yield return null;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Vector3 s = start;
         Vector3 e = end;
         Gizmos.color = Color.black;
         Gizmos.DrawLine(s, e);
-    }
+    }*/
 }
