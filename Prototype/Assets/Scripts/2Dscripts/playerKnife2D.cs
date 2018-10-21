@@ -26,9 +26,7 @@ public class playerKnife2D : MonoBehaviour {
             Debug.Log(collision.gameObject.name);
         
         }
-        {
-            Debug.Log(collision.gameObject.name);
-        }
+
         if (collision.gameObject.name == "Torso" || collision.gameObject.name == "Head" || collision.gameObject.name == "thigh" || collision.gameObject.name == "shin")
         {
             hasHit = true;
@@ -38,7 +36,7 @@ public class playerKnife2D : MonoBehaviour {
         }
         else if(!(collision.gameObject.name == "biceps" || collision.gameObject.name == "forearm"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
      if (collision.gameObject.tag == "Enemy")
