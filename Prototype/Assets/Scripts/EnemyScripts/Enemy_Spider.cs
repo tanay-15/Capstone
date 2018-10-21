@@ -10,6 +10,7 @@ public class Enemy_Spider : MonoBehaviour {
 
     private Vector3 positionA;
     private Vector3 positionB;
+    private Vector3 positionC;
 
     public GameObject targetPlayer;
     public bool shouldAttack;
@@ -48,9 +49,9 @@ public class Enemy_Spider : MonoBehaviour {
     {
         if (shouldAttack)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, positionB, movespeed * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, positionC, movespeed * Time.deltaTime);
 
-            if(Vector2.Distance(this.transform.position,positionB)< 0.3f)
+            if(Vector2.Distance(this.transform.position,positionC)< 0.6f)
             {
                 attackdone = true;
                 shouldAttack = false;
@@ -78,6 +79,7 @@ public class Enemy_Spider : MonoBehaviour {
         {
             shouldAttack = true;
             targetPlayer = collider.gameObject;
+            positionC = collider.gameObject.transform.position;
 
         }
     }

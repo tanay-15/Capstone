@@ -8,9 +8,11 @@ public class DarkOrbs : MonoBehaviour {
 
     private Vector3 moveVector;
     private float descounter = 5f;
+
+    public float movespeed;
 	void Start () {
 
-        moveVector = new Vector3(0, -2.5f * Time.deltaTime, 0);
+        moveVector = new Vector3(0, -movespeed * Time.deltaTime, 0);
 	}
 	
 	// Update is called once per frame
