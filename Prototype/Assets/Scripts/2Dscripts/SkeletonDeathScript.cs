@@ -12,7 +12,9 @@ public class SkeletonDeathScript : MonoBehaviour {
     void Start () {
 
         Physics2D.IgnoreLayerCollision(15, 15);
+        IKSystem.SetActive(false);
         SetChildrenKinematic(true);
+        IKSystem.SetActive(true);
     }
 	
 	// Update is called once per frame

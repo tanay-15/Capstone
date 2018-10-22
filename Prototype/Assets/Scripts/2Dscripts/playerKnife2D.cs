@@ -27,24 +27,30 @@ public class playerKnife2D : MonoBehaviour {
         
         }
 
-        if (collision.gameObject.name == "Torso" || collision.gameObject.name == "Head" || collision.gameObject.name == "thigh" || collision.gameObject.name == "shin")
+        if (collision.gameObject.tag == "Enemy")
         {
             hasHit = true;
+            GetComponent<Rigidbody2D>().velocity = new Vector3(0,0,0);
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
+
+            collision.gameObject.SendMessageUpwards("applyDamage", 5);
+            StartCoroutine(DelayDestroy());
         }
-        else if(!(collision.gameObject.name == "biceps" || collision.gameObject.name == "forearm"))
+        else if(!(collision.gameObject.layer == 15))
         {
-            //Destroy(gameObject);
+            Debug.Log(collision.gameObject.name);
+            Destroy(gameObject);
         }
 
+        /*
      if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.SendMessageUpwards("applyDamage", 5);
             Destroy(this.gameObject);
         }
-
+        */
    
     }
 
@@ -67,5 +73,10 @@ public class playerKnife2D : MonoBehaviour {
     {
         return this.transform.position.x;
     }
-    
+
+    IEnumerator DelayDestroy()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+    }
 }
