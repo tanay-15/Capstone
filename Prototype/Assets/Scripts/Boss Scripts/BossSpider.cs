@@ -109,7 +109,7 @@ public class BossSpider : MonoBehaviour {
                     currentState = States.Attack2;
                 }
                 Attack2();
-                attack2Counter = 2.5f;
+                attack2Counter = 5f;
             }
             
         }
@@ -129,7 +129,7 @@ public class BossSpider : MonoBehaviour {
                     currentState = States.Attack2;
                 }
                 Attack2();
-                attack2Counter = 1f;
+                attack2Counter = 3f;
             }
         }
     }
