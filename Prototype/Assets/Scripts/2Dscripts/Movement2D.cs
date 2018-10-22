@@ -8,7 +8,7 @@ public class Movement2D : MonoBehaviour
 
     float trackedYPosition;
     float highestJumpHeight;
-
+    int currentAnimation = 0;
     public float speed = 5;
     public float jumpVelocity = 5;
     private Rigidbody2D player;
@@ -191,8 +191,32 @@ public class Movement2D : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log("z being pressed");
-            myAnim.SetBool("isPunching", true);
+            //if(currentAnimation == -1)
+            switch(currentAnimation)
+            {
+                case 0:
+                    myAnim.ResetTrigger("secondPunch");
+                    myAnim.SetTrigger("firstPunch");
+                    myAnim.SetBool("isPunching", true);
+                    currentAnimation++;
+                    
+                    break;
+                case 1:
+                    myAnim.ResetTrigger("firstPunch");
+                    myAnim.SetTrigger("secondPunch");
+                    myAnim.SetBool("isPunching", true);
+                    currentAnimation = 0;
+                    Debug.Log("z being pressed");
+                    break;
+                default:
+                    myAnim.SetBool("isPunching", false);
+                    myAnim.ResetTrigger("firstPunch");
+                    myAnim.ResetTrigger("secondPunch");
+                    break;
+            }
+            
+            
+            
         }
         else
         {
