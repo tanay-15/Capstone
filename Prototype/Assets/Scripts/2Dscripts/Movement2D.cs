@@ -13,6 +13,7 @@ public class Movement2D : MonoBehaviour
     public float jumpVelocity = 5;
     private Rigidbody2D player;
     public Animator myAnim;
+    public Animator demonAnim;
     public bool facingRight;
     public float cooldownTime = 1f;
     private float nextFiretime = 0f;
@@ -55,6 +56,7 @@ public class Movement2D : MonoBehaviour
         wallJumpScript = GetComponent<WallJump>();
 
         myAnim = GameObject.Find("Normal").GetComponent<Animator>();
+        //demonAnim = GameObject.Find("Demon").GetComponent<Animator>();
         //myAnim = GetComponent<Animator>();
         facingRight = true;
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -187,6 +189,15 @@ public class Movement2D : MonoBehaviour
             myAnim.SetBool("isAttacking", false);
         }
 
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.Log("z being pressed");
+            myAnim.SetBool("isPunching", true);
+        }
+        else
+        {
+            myAnim.SetBool("isPunching", false);   
+        }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
