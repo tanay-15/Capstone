@@ -35,6 +35,12 @@ public class PlayerLife : MonoBehaviour {
         barGraphic.fillAmount = currentLife / maxLife;
     }
 
+    public void ResetLife()
+    {
+        currentLife = maxLife;
+        UpdateWidth();
+    }
+
     public void SetLife(int life)
     {
         currentLife = Mathf.Clamp(life, 0f, 100f);

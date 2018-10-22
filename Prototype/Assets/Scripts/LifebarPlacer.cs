@@ -9,12 +9,12 @@ public class LifebarPlacer : MonoBehaviour {
     //RagdollEnemy
     IEnumerable<BasicEnemy> enemies;
 	void Start () {
-        offset = new Vector3(0f, 1f, 0f);
+        //offset = new Vector3(0f, 1f, 0f);
         enemies = FindObjectsOfType<BasicEnemy>();
         foreach(BasicEnemy enemy in enemies)
         {
             Lifebar lifebar = (Instantiate(lifebarPrefab, enemy.gameObject.transform, true) as GameObject).GetComponent<Lifebar>();
-            lifebar.gameObject.transform.position = enemy.gameObject.transform.position + offset;
+            lifebar.gameObject.transform.position = enemy.gameObject.transform.position + enemy.lifebarOffset;//offset;
             lifebar.AssignEnemy(enemy);
         }
 	}

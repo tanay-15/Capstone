@@ -14,5 +14,6 @@ public class EnemyEvents
 }
 
 public class BasicEnemy : MonoBehaviour {
+    public virtual Vector3 lifebarOffset { get { return new Vector3(0f, 1f, 0f); } }
     public EnemyEvents events;
 }

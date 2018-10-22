@@ -68,6 +68,8 @@ public class PlayerLifeController : MonoBehaviour {
 
     public void Respawn()
     {
+        PlayerLife.sharedInstance.ResetLife();
+        gameObject.SetActive(true);
         rb.velocity = Vector3.zero;
         transform.position = respawnPosition;
         StartRespawnBlink();

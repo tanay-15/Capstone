@@ -1,12 +1,24 @@
-﻿using System.Collections;
+﻿using Anima2D;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonDeathScript : MonoBehaviour {
+public class SkeletonDeathScript : BasicEnemy {
 
     public Transform BoneSystem;
     //public Transform BodyParts;
     public GameObject IKSystem;
+    Collider2D[] playerColliders;
+    Collider2D[] myColliders;
+    SpriteMeshInstance[] mySprites;
+
+    public override Vector3 lifebarOffset
+    {
+        get
+        {
+            return Vector3.up * 2f;
+        }
+    }
 
     // Use this for initialization
     void Start () {
@@ -15,12 +27,46 @@ public class SkeletonDeathScript : MonoBehaviour {
         IKSystem.SetActive(false);
         SetChildrenKinematic(true);
         IKSystem.SetActive(true);
+
+        myColliders = GetComponentsInChildren<Collider2D>();
+        mySprites = GetComponentsInChildren<SpriteMeshInstance>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    void TurnOffCollisions()
+    {
+        playerColliders = Movement2D.sharedInstance.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D playerCol in playerColliders)
+        {
+            foreach (Collider2D myCol in myColliders)
+            {
+                Physics2D.IgnoreCollision(playerCol, myCol, true);
+            }
+        }
+    }
+
+    IEnumerator DieRoutine()
+    {
+        //TurnOffCollisions();
+        yield return new WaitForSeconds(2f);
+
+        float speed = 2.5f;
+        Color newColor = Color.white;
+        for (float i = 0f; i < 1f; i += Time.deltaTime * speed)
+        {
+            foreach (SpriteMeshInstance s in mySprites)
+            {
+                newColor.a = 1f - i;
+                s.color = newColor;
+            }
+            yield return 0;
+        }
+        Destroy(gameObject);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,6 +76,10 @@ public class SkeletonDeathScript : MonoBehaviour {
             SetChildrenKinematic(false);
             IKSystem.SetActive(false);
             //SetBodyPartsToBody();
+
+            events.OnDeath.Invoke();
+            StartCoroutine(DieRoutine());
+            TurnOffCollisions();
         }
     }
     /*
