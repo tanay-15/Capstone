@@ -12,7 +12,6 @@ public class SkeletonDeathScript : BasicEnemy {
     Collider2D[] myColliders;
     SpriteMeshInstance[] mySprites;
 
-    public Collider2D deathCollider;
 
     public override Vector3 lifebarOffset
     {
