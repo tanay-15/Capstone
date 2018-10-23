@@ -35,6 +35,11 @@ public class playerKnife2D : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             transform.parent = collision.gameObject.transform;
 
+
+            // Impact Sprite
+            var impact = Instantiate(transform.GetChild(0), transform.position,Quaternion.identity);
+            impact.gameObject.SetActive(true);
+
             collision.gameObject.SendMessageUpwards("applyDamage", 5);
             StartCoroutine(DelayDestroy());
         }

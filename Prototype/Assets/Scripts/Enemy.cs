@@ -292,7 +292,7 @@ public class Enemy : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "projectile")
+        if(collision.gameObject.tag == "projectile" && Vector3.Distance(collision.transform.position,transform.position) < 2f )
         {
             IsAlive = false;
             Debug.Log("Hit by " + collision.gameObject.name);
