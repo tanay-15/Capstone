@@ -12,6 +12,8 @@ public class SkeletonDeathScript : BasicEnemy {
     Collider2D[] myColliders;
     SpriteMeshInstance[] mySprites;
 
+    public Collider2D deathCollider;
+
     public override Vector3 lifebarOffset
     {
         get
@@ -70,17 +72,22 @@ public class SkeletonDeathScript : BasicEnemy {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
+        if (Vector3.Distance(transform.position,collision.transform.position) < 1f)  // Checking which trigger
         {
-            GetComponent<Animator>().enabled = false;
-            SetChildrenKinematic(false);
-            IKSystem.SetActive(false);
-            //SetBodyPartsToBody();
+            if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
+            {
+                GetComponent<Animator>().enabled = false;
+                SetChildrenKinematic(false);
+                IKSystem.SetActive(false);
+                //SetBodyPartsToBody();
 
-            events.OnDeath.Invoke();
-            StartCoroutine(DieRoutine());
-            TurnOffCollisions();
+                events.OnDeath.Invoke();
+                StartCoroutine(DieRoutine());
+                TurnOffCollisions();
+            }
         }
+        
+        
     }
     /*
     void SetBodyPartsToBody()

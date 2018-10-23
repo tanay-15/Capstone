@@ -1681,7 +1681,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.25, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2305,6 +2305,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   BoneSystem: {fileID: 4898452297803270}
   IKSystem: {fileID: 1260330754601076}
+  deathCollider: {fileID: 0}
 --- !u!114 &114306996174009364
 MonoBehaviour:
   m_ObjectHideFlags: 1
