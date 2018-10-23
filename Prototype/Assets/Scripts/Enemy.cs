@@ -30,8 +30,11 @@ public class Enemy : MonoBehaviour {
     public bool IsAlive ;
     public bool movway1 = true;
     public bool movway2;
-    public GameObject waypoint1;
-    public GameObject waypoint2;
+
+    public GameObject MovePoint1;
+    public GameObject MovePoint2;
+    private Vector3 waypoint1;
+    private Vector3 waypoint2;
     
     public enum States
     {
@@ -65,8 +68,9 @@ public class Enemy : MonoBehaviour {
 
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
-   
 
+        waypoint1 = MovePoint1.transform.position;
+        waypoint2 = MovePoint2.transform.position;
 
 
 
@@ -172,6 +176,9 @@ public class Enemy : MonoBehaviour {
     public virtual void Patrol()
     {
         Debug.Log("Patrolling");
+
+        anim.SetBool("Walking", true);
+        anim.SetBool("Attack", false);
         if (IsAlive)
         {
             if (target == null)
@@ -186,8 +193,8 @@ public class Enemy : MonoBehaviour {
                 if (movway1)
                 {
 
-                    this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1.transform.position, movspeed * Time.deltaTime);
-                    if (Vector2.Distance(waypoint1.transform.position, this.transform.position) <= 1f)
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1, movspeed * Time.deltaTime);
+                    if (Vector2.Distance(waypoint1, this.transform.position) <= 1f)
                     {
                         flip();
                         //move to point two
@@ -200,8 +207,8 @@ public class Enemy : MonoBehaviour {
 
                 if (movway2)
                 {
-                    this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2.transform.position, movspeed * Time.deltaTime);
-                    if (Vector2.Distance(waypoint2.transform.position, this.transform.position) <= 1f)
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2, movspeed * Time.deltaTime);
+                    if (Vector2.Distance(waypoint2, this.transform.position) <= 1f)
                     {
                         flip();
                         movway1 = true;
@@ -216,6 +223,8 @@ public class Enemy : MonoBehaviour {
 
     public virtual void Pursuit()
     {
+        anim.SetBool("Walking", true);
+        anim.SetBool("Attack", false);
         if (IsAlive)
         {
             if (target && !AttackReady)
@@ -233,12 +242,13 @@ public class Enemy : MonoBehaviour {
 
         if (AttackReady)
         {
+            anim.SetBool("Attack", true);
             rateofattack -= Time.deltaTime;
             if(rateofattack <= 0)
             {
+                
                 currentstate = States.Attack;
-                anim.SetBool("ShouldPursuit", false);
-                anim.SetTrigger("Attack");
+                
                 //Debug.Log("Enemy now attacks the player");
                 rateofattack = 2f;
             }
@@ -257,11 +267,11 @@ public class Enemy : MonoBehaviour {
     {
         health -= damage;
 
-        if (health <= 0)
+       /* if (health <= 0)
         {
             //temporary
             Destroy(gameObject);
-        }
+        }*/
     }
 
     public void OnCollisionEnter2D(Collision2D collision)

@@ -87,6 +87,7 @@ public class BossSpider : MonoBehaviour {
         if(health <= 0)
         {
             currentState = States.Dead;
+            Destroy(this.gameObject);
         }
 	}
 
