@@ -30,7 +30,7 @@ public class MovingPlatform1 : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         Debug.DrawLine(start, end, Color.black);
         if (!wait)
