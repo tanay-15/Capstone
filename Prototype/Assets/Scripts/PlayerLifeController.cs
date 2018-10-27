@@ -73,6 +73,9 @@ public class PlayerLifeController : MonoBehaviour {
         rb.velocity = Vector3.zero;
         transform.position = respawnPosition;
         StartRespawnBlink();
+
+        if (GetComponent<DemonModeScript>().DemonModeActive)
+        { GetComponent<DemonModeScript>().Transformation(); }
     }
 
     //void ResetLevel()
