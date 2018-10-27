@@ -9,6 +9,8 @@ public class DemonModeScript : MonoBehaviour {
     public bool transitioning;
     public Camera MainCam;
     public GameObject DemonCircle;
+    public GameObject Darkness;
+    public GameObject Landscape;
     bool DemonCircleSpawn = false;
 
      float demonCircleLerp = -0.8f;
@@ -34,8 +36,10 @@ public class DemonModeScript : MonoBehaviour {
             if(!DemonModeActive)
             { 
                 MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.001f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b - 0.001f, MainCam.backgroundColor.a);
-                Color darkness = GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color;
-                GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g,darkness.b, darkness.a + 0.001f);
+                Color darkness = Darkness.GetComponent<SpriteRenderer>().color;
+                Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g,darkness.b, darkness.a + 0.002f);
+                Color landscape = Landscape.GetComponent<SpriteRenderer>().color;
+                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a - 0.007f);
 
                 DemonCircleSpawn = true;
 
@@ -43,8 +47,10 @@ public class DemonModeScript : MonoBehaviour {
             else
             {
                 MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.001f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b + 0.001f, MainCam.backgroundColor.a);
-                Color darkness = GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color;
-                GameObject.Find("Darkness").GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g, darkness.b, darkness.a - 0.001f);
+                Color darkness = Darkness.GetComponent<SpriteRenderer>().color;
+                Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g, darkness.b, darkness.a - 0.002f);
+                Color landscape = Landscape.GetComponent<SpriteRenderer>().color;
+                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a + 0.007f);
             }
         }
 
