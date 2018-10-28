@@ -281,7 +281,7 @@ public class SkeletonBossScript : MonoBehaviour {
                         Status = State.Active;
                         Eyes.SetActive(true);
                         HealthBar.SetActive(true);
-                        HealthBar.transform.parent = GameObject.Find("Canvas").transform;
+                        HealthBar.transform.SetParent(GameObject.Find("Canvas").transform);
                     }
                 }
 
@@ -338,7 +338,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     GetComponent<BoxCollider2D>().enabled = false;
                     Eyes.SetActive(false);
                     DemonicCircle.SetActive(false);
-                    HealthBar.transform.parent = transform;
+                    HealthBar.transform.SetParent(transform);
                     HealthBar.SetActive(false);
 
                     foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>())

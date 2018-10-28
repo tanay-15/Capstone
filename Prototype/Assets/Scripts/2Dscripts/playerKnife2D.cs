@@ -12,7 +12,12 @@ public class playerKnife2D : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+
+        if(!hasHit)
+            transform.eulerAngles = -new Vector3(0, 0, Vector2.SignedAngle(GetComponent<Rigidbody2D>().velocity, new Vector2(GetComponent<Rigidbody2D>().velocity.x,0)));
+        
+        
         //if(!hasHit == true)
             //transform.Rotate(new Vector3(0,0,-Time.deltaTime * 300));
 
@@ -21,33 +26,25 @@ public class playerKnife2D : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.name == "AttackTrigger")
-        {
-            Debug.Log(collision.gameObject.name);
-        
-        }
-
-        if (collision.gameObject.tag == "Enemy")
-        {
-            hasHit = true;
-            GetComponent<Rigidbody2D>().velocity = new Vector3(0,0,0);
-            GetComponent<Rigidbody2D>().isKinematic = true;
-            GetComponent<Collider2D>().enabled = false;
-            transform.parent = collision.gameObject.transform;
-
-
-            // Impact Sprite
-            var impact = Instantiate(transform.GetChild(0), transform.position,Quaternion.identity);
-            impact.gameObject.SetActive(true);
-
-            collision.gameObject.SendMessageUpwards("applyDamage", 5);
-            StartCoroutine(DelayDestroy());
-        }
-        else if(!(collision.gameObject.layer == 15))
+        if(!(collision.gameObject.layer == 15))
         {
             Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }
+
+        hasHit = true;
+        GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Collider2D>().enabled = false;
+        transform.parent = collision.gameObject.transform;
+
+
+        // Impact Sprite
+        var impact = Instantiate(transform.GetChild(0), transform.position, Quaternion.identity);
+        impact.gameObject.SetActive(true);
+
+        collision.gameObject.SendMessageUpwards("applyDamage", 5);
+        StartCoroutine(DelayDestroy());
 
         /*
      if (collision.gameObject.tag == "Enemy")
@@ -56,23 +53,23 @@ public class playerKnife2D : MonoBehaviour {
             Destroy(this.gameObject);
         }
         */
-   
+
     }
 
     
 
    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "Torso" || collision.gameObject.name == "thigh" || collision.gameObject.name == "Head" || collision.gameObject.name == "shin")
-        {
-            hasHit = true;
-            GetComponent<Rigidbody2D>().isKinematic = true;
-            GetComponent<Collider2D>().enabled = false;
-            transform.parent = collision.gameObject.transform;
-        }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.name == "Torso" || collision.gameObject.name == "thigh" || collision.gameObject.name == "Head" || collision.gameObject.name == "shin")
+    //    {
+    //        hasHit = true;
+    //        GetComponent<Rigidbody2D>().isKinematic = true;
+    //        GetComponent<Collider2D>().enabled = false;
+    //        transform.parent = collision.gameObject.transform;
+    //    }
         
-    }
+    //}
 
     public float GetPosX()
     {
