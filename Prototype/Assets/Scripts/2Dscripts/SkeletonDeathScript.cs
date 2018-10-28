@@ -24,7 +24,7 @@ public class SkeletonDeathScript : BasicEnemy {
     // Use this for initialization
     void Start () {
 
-        Physics2D.IgnoreLayerCollision(15, 15);
+        //Physics2D.IgnoreLayerCollision(15, 15);
 
         
         IKSystem.SetActive(false);

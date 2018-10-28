@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerKnife2D : MonoBehaviour {
 
     bool hasHit = false;
+    public GameObject ImpactAnim;
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +41,7 @@ public class playerKnife2D : MonoBehaviour {
 
 
         // Impact Sprite
-        var impact = Instantiate(transform.GetChild(0), transform.position, Quaternion.identity);
+        var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
         impact.gameObject.SetActive(true);
 
         collision.gameObject.SendMessageUpwards("applyDamage", 5);

@@ -22,7 +22,7 @@ GameObject:
   m_Layer: 0
   m_Name: Waypoint1
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -37,7 +37,7 @@ GameObject:
   m_Layer: 0
   m_Name: Waypoint1 (2)
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 58256020521747782}
   - component: {fileID: 114974005763745200}
   - component: {fileID: 58527222657416416}
+  - component: {fileID: 95938101622639842}
   m_Layer: 0
   m_Name: Bat_Enemy
   m_TagString: Enemy
@@ -71,7 +72,7 @@ GameObject:
   m_Layer: 0
   m_Name: Waypoint1 (1)
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -108,8 +109,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1200276240847194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 105.97, y: 29.58, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: 91.8, y: 30.13, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 4928881215502246}
   - {fileID: 4317488436538986}
@@ -157,9 +158,27 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0055318475, y: 0.055317402}
+  m_Offset: {x: 0.0055318475, y: -0.03}
   serializedVersion: 2
-  m_Radius: 0.14080328
+  m_Radius: 0.12
+--- !u!95 &95938101622639842
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1200276240847194}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 86beba9f89f1e014785d1033c06571a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114974005763745200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,8 +192,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Range: 6
   player: {fileID: 0}
-  attackspeed: 4
-  movspeed: 3
+  attackspeed: 3
+  movspeed: 2
   waypoints:
   - {fileID: 1021761332229998}
   - {fileID: 1691920907540558}
@@ -222,7 +241,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 21300000, guid: 6129692f46d920848b425e50fb3f76a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b44ad350aab99416da042ed03d420869, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

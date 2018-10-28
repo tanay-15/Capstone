@@ -45,7 +45,7 @@ public class RagdollEnemy : BasicEnemy {
         }
     }
 
-    void TurnOffCollisions()
+    public void TurnOffCollisions(bool isTrue)
     {
         playerColliders = Movement2D.sharedInstance.GetComponentsInChildren<Collider2D>();
         myColliders = GetComponentsInChildren<Collider2D>();
@@ -54,14 +54,14 @@ public class RagdollEnemy : BasicEnemy {
         {
             foreach (Collider2D myCol in myColliders)
             {
-                Physics2D.IgnoreCollision(playerCol, myCol, true);
+                Physics2D.IgnoreCollision(playerCol, myCol, isTrue);
             }
         }
     }
 
     IEnumerator DieRoutine()
     {
-        TurnOffCollisions();
+        TurnOffCollisions(true);
         yield return new WaitForSeconds(2f);
 
         float speed = 2.5f;
@@ -84,7 +84,8 @@ public class RagdollEnemy : BasicEnemy {
         {
             if (fadeAfterDeath)
                 StartCoroutine(DieRoutine());
-
+            else
+                TurnOffCollisions(true);
             events.OnDeath.Invoke();
             isDead = true;
             Debug.Log("hit");
