@@ -11,7 +11,8 @@ public class UIIcon : MonoBehaviour {
     float fillAmount;
     float fillSpeed = 0.1f;
 	void Start () {
-        fillAmount = 0f;
+        //Temporary
+        fillAmount = 1f;// 0f;
 	}
 
     public void SetEmpty()
