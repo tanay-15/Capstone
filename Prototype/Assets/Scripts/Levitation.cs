@@ -14,7 +14,7 @@ public class Levitation : MonoBehaviour {
     public GameObject heldObject;
     public float mouseZPosition = 0f;
     float minimumMagnitude = 0.15f;
-    float joystickSpeed = 3f;
+    float joystickSpeed = 6f;
     bool rightTriggerDown;
     bool rightTriggerPressed;
     bool rightTriggerReleased;
@@ -208,7 +208,7 @@ public class Levitation : MonoBehaviour {
 
     void CheckJoystickAndMouse()
     {
-        dJoystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical")) * 3;
+        dJoystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical")) ;
         if (dJoystick.magnitude > minimumMagnitude)
         {
             baseJoystickPosition = grabPosition - PlayerPos;
