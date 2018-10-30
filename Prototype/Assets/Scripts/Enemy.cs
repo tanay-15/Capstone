@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour {
     {
 
 
-        Debug.Log("Is detecting");
+
 
         if (movway1)
         {
@@ -183,7 +183,7 @@ public class Enemy : MonoBehaviour {
 
     public virtual void Patrol()
     {
-        Debug.Log("Patrolling");
+
 
         anim.SetBool("Walking", true);
         anim.SetBool("Attack", false);
@@ -308,7 +308,7 @@ public class Enemy : MonoBehaviour {
                 anim.SetBool("Attack", true);
                 currentstate = States.Attack;
                 
-                //Debug.Log("Enemy now attacks the player");
+                //l.Log("Enemy now attacks the player");
                
             }
            
@@ -348,7 +348,7 @@ public class Enemy : MonoBehaviour {
         }
         if(collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player hit!");
+
 
             CollidedWithPlayer = true;
             AttackReady = true;    
@@ -362,7 +362,7 @@ public class Enemy : MonoBehaviour {
         if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 2f )
         {
             IsAlive = false;
-            Debug.Log("Hit by " + collision.gameObject.name);
+
             health = 0;
           
         }

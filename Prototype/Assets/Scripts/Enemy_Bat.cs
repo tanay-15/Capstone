@@ -111,7 +111,7 @@ public class Enemy_Bat : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
-        if(collision.gameObject.tag == "projectile")
+        if(collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
         {
             Destroy(this.gameObject);
         }

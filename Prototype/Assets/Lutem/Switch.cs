@@ -15,7 +15,7 @@ public class Switch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && player)
+        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("PS4TRIANGLE")) && player)
         {
             Interact();
         }

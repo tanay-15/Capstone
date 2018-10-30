@@ -231,7 +231,7 @@ public class Levitation : MonoBehaviour {
     }
 	
 	void Update () {
-        Debug.Log(useJoystick);
+
         CheckJoystickAndMouse();
         if (useJoystick)
             CalculatePositionJoystick();

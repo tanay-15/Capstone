@@ -124,7 +124,7 @@ public class rageBar : MonoBehaviour {
         //RBar.fillAmount = updatedValue;
 
         
-            RBar.fillAmount -= 0.1f* Time.deltaTime;
+            RBar.fillAmount -= 0.06f* Time.deltaTime;
      }
 
     private void  rageBarRegen()
@@ -133,6 +133,6 @@ public class rageBar : MonoBehaviour {
         //RBar.fillAmount = Mathf.Lerp(RBar.fillAmount, newValue, Time.deltaTime * speedtoIncrease);  
 
        
-            RBar.fillAmount += 0.05f * Time.deltaTime;
+            RBar.fillAmount += 0.04f * Time.deltaTime;
     }
 }

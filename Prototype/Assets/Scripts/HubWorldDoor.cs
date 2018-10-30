@@ -21,7 +21,7 @@ public class HubWorldDoor : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && player && !locked)
+        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("PS4TRIANGLE")) && player && !locked)
         {
             SceneManager.LoadScene(levelName);
         }
