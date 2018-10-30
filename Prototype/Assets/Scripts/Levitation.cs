@@ -13,13 +13,26 @@ public class Levitation : MonoBehaviour {
     [System.NonSerialized]
     public GameObject heldObject;
     public float mouseZPosition = 0f;
+    float minimumMagnitude = 0.1f;
+    float joystickSpeed = 3f;
     
     bool active;
+    Vector3 PlayerPos
+    {
+        get
+        {
+            return Movement2D.sharedInstance.gameObject.transform.position;
+        }
+    }
 
+    Vector2 baseJoystickPosition;
+    Vector2 dJoystick;
     float grabRadius = 0.1f;
     float maxGrabDistance = 4f;
     Vector3 grabPosition;
     IEnumerable<Collider2D> collidingObjects;
+
+    bool useJoystick;
 
     GameObject Player
     {
@@ -43,6 +56,8 @@ public class Levitation : MonoBehaviour {
         active = true;
 
         heldObject = null;
+        baseJoystickPosition = Vector2.zero;
+        useJoystick = false;
 	}
 
     public void SetActive(bool active)
@@ -55,21 +70,32 @@ public class Levitation : MonoBehaviour {
         }
     }
 
-    void CalculatePosition()
+    void CalculatePositionMouse()
     {
-        Vector3 playerPos = Movement2D.sharedInstance.gameObject.transform.position;
         //TODO: Make this easier
         grabPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
         //This line may not be necessary
         grabPosition = Camera.main.ScreenToWorldPoint(grabPosition);
 
         //Tether the grab area to the player
-        Vector3 distance = grabPosition - playerPos;
+        Vector3 distance = grabPosition - PlayerPos;
         if (distance.magnitude > maxGrabDistance)
         {
-            Ray r = new Ray(playerPos, distance);
+            Ray r = new Ray(PlayerPos, distance);
             grabPosition = r.GetPoint(maxGrabDistance);
         }
+        particles.gameObject.transform.position = grabPosition;
+    }
+
+    void CalculatePositionJoystick()
+    {
+        if (dJoystick.magnitude > minimumMagnitude)
+            baseJoystickPosition += dJoystick * Time.deltaTime * joystickSpeed;
+        if (baseJoystickPosition.magnitude > maxGrabDistance)
+            baseJoystickPosition = baseJoystickPosition.normalized * maxGrabDistance;
+
+        grabPosition = PlayerPos + (Vector3)baseJoystickPosition;
+        
         particles.gameObject.transform.position = grabPosition;
     }
 
@@ -123,9 +149,10 @@ public class Levitation : MonoBehaviour {
         heldObject = null;
     }
 
+    //In the future, detect input from any button/axis on keyboard or controller to switch modes
     void CheckForButtonPress()
     {
-        if (Input.GetMouseButtonDown(0) && active)
+        if ((Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger2") != 0) && active)
         {
             if (heldObject == null)
             {
@@ -140,6 +167,20 @@ public class Levitation : MonoBehaviour {
         }
     }
 
+    void CheckJoystickAndMouse()
+    {
+        dJoystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"));
+        if (dJoystick.magnitude > minimumMagnitude)
+        {
+            baseJoystickPosition = grabPosition - PlayerPos;
+            useJoystick = true;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            useJoystick = false;
+        }
+    }
+
     void MoveHeldObject()
     {
         if (heldObject != null)
@@ -151,7 +192,12 @@ public class Levitation : MonoBehaviour {
     }
 	
 	void Update () {
-        CalculatePosition();
+        Debug.Log(useJoystick);
+        CheckJoystickAndMouse();
+        if (useJoystick)
+            CalculatePositionJoystick();
+        else
+            CalculatePositionMouse();
         UpdateColor();
         CheckForButtonPress();
         MoveHeldObject();
