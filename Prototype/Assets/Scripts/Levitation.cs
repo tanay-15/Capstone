@@ -15,6 +15,9 @@ public class Levitation : MonoBehaviour {
     public float mouseZPosition = 0f;
     float minimumMagnitude = 0.1f;
     float joystickSpeed = 3f;
+    bool rightTriggerDown;
+    bool rightTriggerPressed;
+    bool rightTriggerReleased;
     
     bool active;
     Vector3 PlayerPos
@@ -48,6 +51,9 @@ public class Levitation : MonoBehaviour {
     }
 
 	void Start () {
+        rightTriggerDown = false;
+        rightTriggerPressed = false;
+        rightTriggerReleased = false;
         if (sharedInstance != null)
         {
             Destroy(sharedInstance);
@@ -149,10 +155,30 @@ public class Levitation : MonoBehaviour {
         heldObject = null;
     }
 
+    void CheckRightTrigger()
+    {
+        if (Input.GetAxis("RightTrigger2") != 0 && !rightTriggerDown)
+        {
+            rightTriggerDown = true;
+            rightTriggerPressed = true;
+        }
+        else if (Input.GetAxis("RightTrigger2") == 0 && rightTriggerDown)
+        {
+            rightTriggerDown = false;
+            rightTriggerReleased = true;
+        }
+    }
+
+    void ResetTriggerCheck()
+    {
+        rightTriggerPressed = false;
+        rightTriggerReleased = false;
+    }
+
     //In the future, detect input from any button/axis on keyboard or controller to switch modes
     void CheckForButtonPress()
     {
-        if ((Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger2") != 0) && active)
+        if ((Input.GetMouseButtonDown(0) || rightTriggerPressed) && active)
         {
             if (heldObject == null)
             {
@@ -160,11 +186,24 @@ public class Levitation : MonoBehaviour {
                 if (hoveringObject != null)
                     PickUpObject(hoveringObject.gameObject);
             }
-            else
-            {
-                ReleaseObject();
-            }
         }
+        else if ((Input.GetMouseButtonUp(0) || rightTriggerReleased) && active)
+        {
+            ReleaseObject();
+        }
+        //if ((Input.GetMouseButtonDown(0) || Input.GetAxis("RightTrigger2") != 0) && active)
+        //{
+        //    if (heldObject == null)
+        //    {
+        //        Collider2D hoveringObject = collidingObjects.FirstOrDefault();
+        //        if (hoveringObject != null)
+        //            PickUpObject(hoveringObject.gameObject);
+        //    }
+        //    else
+        //    {
+        //        ReleaseObject();
+        //    }
+        //}
     }
 
     void CheckJoystickAndMouse()
@@ -199,7 +238,9 @@ public class Levitation : MonoBehaviour {
         else
             CalculatePositionMouse();
         UpdateColor();
+        CheckRightTrigger();
         CheckForButtonPress();
+        ResetTriggerCheck();
         MoveHeldObject();
 	}
 }
