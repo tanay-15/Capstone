@@ -13,7 +13,7 @@ public class Levitation : MonoBehaviour {
     [System.NonSerialized]
     public GameObject heldObject;
     public float mouseZPosition = 0f;
-    float minimumMagnitude = 0.1f;
+    float minimumMagnitude = 0.15f;
     float joystickSpeed = 3f;
     bool rightTriggerDown;
     bool rightTriggerPressed;

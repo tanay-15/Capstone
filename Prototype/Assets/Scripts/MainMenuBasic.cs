@@ -13,6 +13,9 @@ public class MainMenuBasic : MonoBehaviour {
     int selectIndex;
     int prevIndex;
 
+    int axisDirectionPressed;
+    int axisDirection;
+
     Color transparentColor;
 
 	void Start () {
@@ -20,12 +23,40 @@ public class MainMenuBasic : MonoBehaviour {
         selectIndex = 0;
         prevIndex = selectIndex;
         InitializeText();
+        axisDirection = 0;
+        axisDirectionPressed = 0;
 	}
 	
 	void Update () {
+        CheckAxis();
         CheckForArrowKeys();
         CheckForConfirmButton();
+        ResetCheckAxis();
 	}
+
+    void CheckAxis()
+    {
+        if (Input.GetAxis("Vertical") == 1 && axisDirection != 1)
+        {
+            axisDirection = 1;
+            axisDirectionPressed = 1;
+        }
+        else if (Input.GetAxis("Vertical") == -1 && axisDirection != -1)
+        {
+            axisDirection = -1;
+            axisDirectionPressed = -1;
+        }
+        else if (Input.GetAxis("Vertical") == 0 && axisDirection != 0)
+        {
+            axisDirection = 0;
+            axisDirectionPressed = 0;
+        }
+    }
+
+    void ResetCheckAxis()
+    {
+        axisDirectionPressed = 0;
+    }
 
     void UpdateMenu(int newIndex, int oldIndex)
     {
@@ -45,11 +76,11 @@ public class MainMenuBasic : MonoBehaviour {
 
     void CheckForArrowKeys()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || axisDirectionPressed == 1)
         {
             selectIndex--;
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || axisDirectionPressed == -1)
         {
             selectIndex++;
         }
@@ -67,7 +98,7 @@ public class MainMenuBasic : MonoBehaviour {
 
     void CheckForConfirmButton()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump"))
         {
             switch (selectIndex)
             {
