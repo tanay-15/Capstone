@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour {
     public bool movway1 = true;
     public bool movway2;
 
+    public bool checkforAttackHit;
     public GameObject MovePoint1;
     public GameObject MovePoint2;
     private Vector3 waypoint1;
@@ -59,8 +60,8 @@ public class Enemy : MonoBehaviour {
     public RaycastHit eyehit;
     private RaycastHit2D vishit;
 
-   
 
+    public bool CollidedWithPlayer;
     Component[] bones;
 
    public GameObject[] compobones;
@@ -300,15 +301,15 @@ public class Enemy : MonoBehaviour {
 
         if (AttackReady)
         {
-            anim.SetBool("Attack", true);
+            
             rateofattack -= Time.deltaTime;
             if(rateofattack <= 0)
             {
-                
+                anim.SetBool("Attack", true);
                 currentstate = States.Attack;
                 
                 //Debug.Log("Enemy now attacks the player");
-                rateofattack = 2f;
+               
             }
            
         }
@@ -325,11 +326,17 @@ public class Enemy : MonoBehaviour {
     {
         health -= damage;
 
-       /* if (health <= 0)
+      
+    }
+
+    public void AttackHit()
+    {
+        /*if (!CollidedWithPlayer && rateofattack <=0)
         {
-            //temporary
-            Destroy(gameObject);
+            target.gameObject.SendMessage("GetHit", -1f);
+            rateofattack = 2f;
         }*/
+  
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -342,6 +349,8 @@ public class Enemy : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             Debug.Log("Player hit!");
+
+            CollidedWithPlayer = true;
             AttackReady = true;    
         }
 
@@ -372,7 +381,7 @@ public class Enemy : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Player")
         {
-           
+            CollidedWithPlayer = false;
             AttackReady = false;
         }
     }

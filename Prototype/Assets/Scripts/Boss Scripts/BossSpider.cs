@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossSpider : MonoBehaviour {
 
@@ -16,6 +17,8 @@ public class BossSpider : MonoBehaviour {
 
     private Vector3 positionA;
     private Vector3 positionB;
+
+    public Slider bossHealthBar;
 
     public enum States
     {
@@ -89,6 +92,8 @@ public class BossSpider : MonoBehaviour {
             currentState = States.Dead;
             Destroy(this.gameObject);
         }
+
+        bossHealthBar.value = health;
 	}
 
     void Brain()
@@ -269,6 +274,11 @@ public class BossSpider : MonoBehaviour {
         if(collision.gameObject.tag == "Grabbable")
         {
             health = health - 10;
+        }
+
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SendMessage("GetHit", -20);
         }
     }
 }
