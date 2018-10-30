@@ -499,6 +499,11 @@ MonoBehaviour:
   slashHit: 0
   inslash: 0
   target: {fileID: 0}
+--- !u!1 &271985121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1915422515657174, guid: 4e190663ac050a146aca7b5f99bdd0d0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1241390066}
 --- !u!1 &397325002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,6 +1992,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1430321133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430321135}
+  - component: {fileID: 1430321134}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1430321134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1430321133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17c080f5fd04654b8c728c229316a9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 271985121}
+  door: {fileID: 1790500307}
+  boss: {fileID: 1970429505}
+  playerUI: {fileID: 1801919796}
+--- !u!4 &1430321135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1430321133}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.107595, y: 4.0513067, z: -0.13547574}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1439298071
 GameObject:
   m_ObjectHideFlags: 0
@@ -2621,6 +2670,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1801919796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595379377231810, guid: 7232852753f32ae4cb816b893e18f1e0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1835584877}
 --- !u!1 &1822639289
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,7 +3131,7 @@ MonoBehaviour:
   movepoint1: {fileID: 1147138946}
   movepoint2: {fileID: 1596642969}
   attack2Counter: 0
-  health: 80
+  health: 100
 --- !u!50 &1970429511
 Rigidbody2D:
   serializedVersion: 4
