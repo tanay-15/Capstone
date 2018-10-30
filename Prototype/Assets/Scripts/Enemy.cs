@@ -331,11 +331,11 @@ public class Enemy : MonoBehaviour {
 
     public void AttackHit()
     {
-        /*if (!CollidedWithPlayer && rateofattack <=0)
+        if (CollidedWithPlayer)
         {
             target.gameObject.SendMessage("GetHit", -1f);
             rateofattack = 2f;
-        }*/
+        }
   
     }
 

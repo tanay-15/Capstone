@@ -94,15 +94,15 @@ public class PlayerLifeController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy")
-        {
+     //   if (col.gameObject.tag == "Enemy")
+       // {
             //PlayerLife.sharedInstance.AddLife(-10);
             //FindObjectOfType<CameraFollow>().ShakeCamera();
             //BlinkRed(true);
             //Invoke("Unblink", 0.1f);
-            GetHit(-10);
+         //   GetHit(-10);
             
-        }
+       // }
     }
 
     //Eventually make these two into one function or coroutine
