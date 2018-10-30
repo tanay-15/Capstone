@@ -33,7 +33,6 @@ public class SkeletonDeathScript : BasicEnemy {
 
         foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
         {
-            Debug.Log(t.gameObject.name);
             t.gameObject.SetActive(false);
             t.gameObject.SetActive(true);
         }

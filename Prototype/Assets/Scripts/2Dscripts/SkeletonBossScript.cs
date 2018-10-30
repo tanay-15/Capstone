@@ -383,8 +383,9 @@ public class SkeletonBossScript : MonoBehaviour {
     }
 
 
-    public void applyDamage(int damage)
+    public void ApplyDamage(int damage)
     {
+        Debug.Log("Damage");
         Health -= damage;
     }
 }

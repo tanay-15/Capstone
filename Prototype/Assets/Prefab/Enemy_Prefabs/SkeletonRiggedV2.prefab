@@ -1855,7 +1855,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2.17}
+  m_Offset: {x: -0.09, y: 2.17}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1866,7 +1866,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.84, y: 4.18}
+  m_Size: {x: 1.02, y: 3.87}
   m_EdgeRadius: 0
 --- !u!61 &61525454147930924
 BoxCollider2D:
@@ -2450,7 +2450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25dd5139c7530f48826ab1c7024b82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookingLeft: 0
+  LookingLeft: 1
   health: 0
   rateofattack: 2
   range: 12
@@ -2463,10 +2463,12 @@ MonoBehaviour:
   IsAlive: 0
   movway1: 1
   movway2: 0
+  checkforAttackHit: 0
   MovePoint1: {fileID: 1773466629880240}
   MovePoint2: {fileID: 1975862283390072}
   currentstate: 0
   vision: {fileID: 1582369255221190}
+  CollidedWithPlayer: 0
   compobones: []
 --- !u!114 &114378153625026394
 MonoBehaviour:

@@ -27,10 +27,11 @@ public class OrbitorObjectScript : MonoBehaviour {
         GetComponent<Rigidbody2D>().gravityScale = 1;
         hit = true;
 
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.layer == 15 || collision.gameObject.tag == "Enemy")
         {
+            Debug.Log("CrateEnemy");
             Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
-            collision.gameObject.SendMessage("applyDamage", 15);
+            collision.gameObject.SendMessage("ApplyDamage", 15);
         }
 
     }
