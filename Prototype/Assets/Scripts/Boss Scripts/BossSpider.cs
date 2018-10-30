@@ -211,10 +211,10 @@ public class BossSpider : MonoBehaviour {
     {   
         if(currentState == States.Attack1)
         {
-
+            
             this.transform.position = Vector2.MoveTowards(this.transform.position, positionC, moveSpeed * Time.deltaTime);
 
-            if(Vector2.Distance(this.transform.position,positionC)< 0.6f)
+            if(Vector2.Distance(this.transform.position,positionC)< 5f)
             {
                 Attack1Done = true;
             
@@ -257,6 +257,7 @@ public class BossSpider : MonoBehaviour {
             if(attackdoneCounter > 0f)
             {
                 positionC = position2.transform.position;
+                positionC.y = positionC.y + 1f;
                 currentState = States.Attack1;
 
             }
