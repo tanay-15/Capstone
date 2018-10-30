@@ -169,7 +169,7 @@ public class Levitation : MonoBehaviour {
 
     void CheckJoystickAndMouse()
     {
-        dJoystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"));
+        dJoystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical")) * 3;
         if (dJoystick.magnitude > minimumMagnitude)
         {
             baseJoystickPosition = grabPosition - PlayerPos;

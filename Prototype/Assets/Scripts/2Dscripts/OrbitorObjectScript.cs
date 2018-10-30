@@ -6,6 +6,7 @@ public class OrbitorObjectScript : MonoBehaviour {
 
     public bool isOrbiting = false;
     public bool hit = true;
+    public GameObject impact;
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +27,11 @@ public class OrbitorObjectScript : MonoBehaviour {
         GetComponent<Rigidbody2D>().gravityScale = 1;
         hit = true;
 
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
             collision.gameObject.SendMessage("applyDamage", 15);
+        }
 
     }
 }
