@@ -10,6 +10,11 @@ public class Enemy : MonoBehaviour {
     protected Animator anim;
     protected Rigidbody rigi;
 
+    public bool LookingLeft;
+    private bool shouldLookLeft;
+    private bool shouldLookRight;
+    private bool checkingFlips;
+
     [Header("Attributes")]
     public int health;
     public float rateofattack = 2f;
@@ -53,6 +58,8 @@ public class Enemy : MonoBehaviour {
     public GameObject vision;
     public RaycastHit eyehit;
     private RaycastHit2D vishit;
+
+   
 
     Component[] bones;
 
@@ -192,7 +199,7 @@ public class Enemy : MonoBehaviour {
             {
                 if (movway1)
                 {
-
+                    CheckForFlip(waypoint1);
                     this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1, movspeed * Time.deltaTime);
                     if (Vector2.Distance(waypoint1, this.transform.position) <= 1f)
                     {
@@ -207,6 +214,7 @@ public class Enemy : MonoBehaviour {
 
                 if (movway2)
                 {
+                    CheckForFlip(waypoint2);
                     this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2, movspeed * Time.deltaTime);
                     if (Vector2.Distance(waypoint2, this.transform.position) <= 1f)
                     {
@@ -225,16 +233,66 @@ public class Enemy : MonoBehaviour {
     {
         anim.SetBool("Walking", true);
         anim.SetBool("Attack", false);
+
         if (IsAlive)
         {
+
+        
             if (target && !AttackReady)
             {
                 currentstate = States.Pursuit;
+                CheckForFlip(targetpos);
                 anim.SetBool("ShouldPursuit", true);
                 this.transform.position = Vector2.MoveTowards(this.transform.position, targetpos, movspeed * Time.deltaTime);
             }
         }
     }
+
+    public void CheckForFlip(Vector3 _targetpos)
+    {
+        if (!checkingFlips)
+        {
+            if (_targetpos.x < this.transform.position.x)
+            {
+                shouldLookLeft = true;
+                shouldLookRight = false;
+                if (LookingLeft && shouldLookLeft)
+                {
+                    //ignore
+                    checkingFlips = true;
+                }
+
+               else if(shouldLookLeft && !LookingLeft)
+                {
+                    flip();
+                    checkingFlips = true;
+                }
+
+
+                
+            }
+
+          else if (_targetpos.x > this.transform.position.x)
+            {
+                shouldLookRight = true;
+                shouldLookLeft = false;
+                if(shouldLookRight && !LookingLeft)
+                {
+                    checkingFlips = true;
+                }
+                else if(shouldLookRight && LookingLeft)
+                {
+                    flip();
+                    checkingFlips = true;
+                }
+               
+            }
+        }
+
+        checkingFlips = false;
+       
+    }
+
 
     public virtual void Attack()
     {
@@ -345,7 +403,7 @@ public class Enemy : MonoBehaviour {
     void flip()
     {
 
-
+        LookingLeft = !LookingLeft;
 
         this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
       
