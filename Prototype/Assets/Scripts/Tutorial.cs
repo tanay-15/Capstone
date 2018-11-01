@@ -42,6 +42,7 @@ public class Tutorial : MonoBehaviour {
         {
             UILevitationIcon.transform.localScale = Vector3.zero;
             levitationSystem.SetActive(false);
+            Debug.Log("Disable levitation system");
         }
         if (phase < 4)
         {
@@ -53,8 +54,8 @@ public class Tutorial : MonoBehaviour {
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
-        DisableObjects();
         SetPhase(startPhase);
+        DisableObjects();
         StartCoroutine(MoveArrow());
 
         //DisableObjects();
