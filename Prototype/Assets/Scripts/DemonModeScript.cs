@@ -13,14 +13,37 @@ public class DemonModeScript : MonoBehaviour {
     public GameObject Landscape;
     bool DemonCircleSpawn = false;
 
-     float demonCircleLerp = -0.8f;
+    float demonCircleLerp = -0.8f;
     float demonCirclePrevSize = 0.05f;
     float demonCircleFinalSize = 0.5f;
+
+    float l1Time = 0f;
+    float l2Time = 0f;
 
     // Use this for initialization
     void Start () {
         DemonModeActive = false;
         transitioning = false;       
+    }
+
+    void CheckTriggerInput()
+    {
+        if (Input.GetButtonDown("LeftTrigger1"))
+        {
+            l1Time = 1f;
+        }
+        if (Input.GetButtonDown("LeftTrigger2"))
+        {
+            l2Time = 1f;
+        }
+        if (Input.GetButtonUp("LeftTrigger1"))
+        {
+            l1Time = 0f;
+        }
+        if (Input.GetButtonUp("LeftTrigger2"))
+        {
+            l2Time = 0f;
+        }
     }
 	
 	// Update is called once per frame
@@ -29,6 +52,15 @@ public class DemonModeScript : MonoBehaviour {
         if (Input.GetButtonDown("Fire2") && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
         {
             Transformation();
+        }
+
+        CheckTriggerInput();
+
+        if (l1Time > 0f && l2Time > 0f && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
+        {
+            Transformation();
+            l1Time = 0f;
+            l2Time = 0f;
         }
 
         if (transitioning)
@@ -82,6 +114,11 @@ public class DemonModeScript : MonoBehaviour {
                 DemonCircle.SetActive(false);
             }
         }
+
+        if (l1Time > 0f)
+            l1Time -= Time.deltaTime * 8f;
+        if (l2Time > 0f)
+            l2Time -= Time.deltaTime * 8f;
     }
 
     public void Transformation()
