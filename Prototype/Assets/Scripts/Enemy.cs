@@ -370,7 +370,7 @@ public class Enemy : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
 
-
+            collision.gameObject.SendMessage("GetHit", -5);
             CollidedWithPlayer = true;
             AttackReady = true;    
         }

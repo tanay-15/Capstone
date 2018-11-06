@@ -19,7 +19,7 @@ public class Lifebar : MonoBehaviour {
         myEnemy.events.OnDeath.RemoveListener(OnEnemyDeath);
         myEnemy.events.OnTakeDamage.RemoveListener(OnEnemyTakeDamage);
         Destroy(gameObject);
-        EnemySoulGenerator.sharedInstance.GenerateSoul(transform.position);
+        EnemySoulGenerator.sharedInstance.GenerateSoul(myEnemy.gameObject.transform.position + Vector3.up);
     }
 
     void OnEnemyTakeDamage()
