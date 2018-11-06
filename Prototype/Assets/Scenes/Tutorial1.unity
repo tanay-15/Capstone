@@ -307,6 +307,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   text: {fileID: 764205205}
   messages:
   - Use WASD or arrow keys to move.\nUse Space to jump.
@@ -319,6 +343,7 @@ MonoBehaviour:
   UILevitationIcon: {fileID: 1486156678}
   levitationSystem: {fileID: 1325450206}
   rageBar: {fileID: 1031465738}
+  canvasCenter: {fileID: 1542924718}
 --- !u!1 &140419707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,7 +1590,7 @@ Prefab:
     - target: {fileID: 224390275645871682, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
@@ -2465,6 +2490,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4679634015155594, guid: 35769be5a9ccec8449741563f366c549,
     type: 2}
   m_PrefabInternal: {fileID: 1048857415}
+--- !u!1 &1542924717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1542924718}
+  m_Layer: 5
+  m_Name: Canvas Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1542924718
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1542924717}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1031465737}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1547550035
 GameObject:
   m_ObjectHideFlags: 0

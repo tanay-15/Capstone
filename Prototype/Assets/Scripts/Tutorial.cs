@@ -16,6 +16,7 @@ public class Tutorial : MonoBehaviour {
     public GameObject arrow;
     public AnimationCurve enterCurve1;
     public AnimationCurve enterCurve2;
+    public AnimationCurve moveCurve;
     public Text text;
     public string[] messages;
     public int startPhase = 0;
@@ -28,6 +29,8 @@ public class Tutorial : MonoBehaviour {
     public GameObject UILevitationIcon;
     public GameObject levitationSystem;
     public GameObject rageBar;
+
+    public Transform canvasCenter;
 
     static Tutorial()
     {
@@ -77,14 +80,30 @@ public class Tutorial : MonoBehaviour {
         }
     }
 
-    IEnumerator MoveInIcon(GameObject icon, Vector3 maxScale, AnimationCurve curve, float moveSpeed)
+    IEnumerator MoveInIcon(GameObject icon, Vector3 maxScale, AnimationCurve curve, float moveSpeed, bool startInCenter = false)
     {
+        Vector3 startPos = icon.transform.position;
+        if (startInCenter)
+        {
+            icon.transform.position = canvasCenter.position;
+            Debug.Log(canvasCenter.position);
+        }
         for (float i = 0f; i < 1f; i += Time.deltaTime * defaultIconEnterSpeed)
         {
             icon.transform.localScale = maxScale * curve.Evaluate(i);
             yield return 0;
         }
         icon.transform.localScale = maxScale;
+        if (startInCenter)
+        {
+            yield return new WaitForSeconds(0.6f);
+            for(float i = 0f; i < 1f; i += Time.deltaTime)
+            {
+                icon.transform.position = Vector3.Lerp(canvasCenter.position, startPos, moveCurve.Evaluate(i));
+                yield return 0;
+            }
+            icon.transform.position = startPos;
+        }
     }
 
     IEnumerator TransitionText(string newText)
@@ -119,16 +138,16 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 2:
-                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed));
+                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 break;
 
             case 3:
                 levitationSystem.SetActive(true);
-                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed));
+                StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 break;
 
             case 4:
-                StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f));
+                StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
                 break;
         }
     }
