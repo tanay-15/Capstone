@@ -18,6 +18,26 @@ public class BossSpider : MonoBehaviour {
     private Vector3 positionA;
     private Vector3 positionB;
 
+
+    //****************Phase 2********************
+    public GameObject phase2positionA;
+    public GameObject phase2positionB;
+    public GameObject phase2positionC;
+    public GameObject phase2positionD;
+
+   public bool phasemovA;
+    public bool phasemovB ;
+    public bool phasemovC;
+    public bool phasemovD;
+
+    public float oneSideCounter = 10f;
+    public float Phase2AttackCounter = 3f;
+
+    public bool isOnLeft;
+    public bool isOnRight;
+
+
+    //****************
     public Slider bossHealthBar;
 
     public enum States
@@ -29,6 +49,7 @@ public class BossSpider : MonoBehaviour {
         Attack1,
         Attack2,
         Attack3,
+        Phase2,
         Dead
 
     }
@@ -78,6 +99,7 @@ public class BossSpider : MonoBehaviour {
 	void Update () {
 
         Brain();
+        Brain2();
       
       Attack1();
         //Attack2();
@@ -92,7 +114,7 @@ public class BossSpider : MonoBehaviour {
             currentState = States.Dead;
             Destroy(this.gameObject);
         }
-
+        
         bossHealthBar.value = health;
 	}
 
@@ -100,6 +122,7 @@ public class BossSpider : MonoBehaviour {
     {
         //attack 1 and movement keeps updating no matter what till death
 
+        IdleState();
 
         if (health <= 75)
         {
@@ -115,28 +138,153 @@ public class BossSpider : MonoBehaviour {
                     currentState = States.Attack2;
                 }
                 Attack2();
-                attack2Counter = 5f;
+                attack2Counter = 3.65f;
             }
             
         }
 
 
-        if(health <= 40)
+        
+    }
+
+    //*********phase 2 of spider*******
+
+    void Brain2()
+    {
+        if(health <= 50)
         {
-            //hp falls below 40
-            // do all 3 attacks
-            //attack 2 counter 3 secs
-            //attack 3 spawn them once
-            attack2Counter = attack2Counter - Time.deltaTime;
-            if (attack2Counter <= 0)
+            currentState = States.Phase2;
+
+
+            if (oneSideCounter <= 0)
             {
-                if (currentState == States.Moving)
+                if (isOnLeft)
                 {
-                    currentState = States.Attack2;
+
+                    isOnLeft = false;
+                    isOnRight = true;
+
+
                 }
-                Attack2();
-                attack2Counter = 3f;
+                else if (isOnRight)
+                {
+                    isOnRight = false;
+                    isOnLeft = true;
+
+                }
+
+                oneSideCounter = 10f;
+
             }
+            //decide to go left or right
+            //player x is less then move to right
+            //if player x is more then move to left
+            if(!isOnLeft && !isOnRight)
+            {
+                if (player.transform.position.x < this.transform.position.x)
+                {
+                    isOnRight = true;
+                    isOnLeft = false;
+                }
+
+                if (player.transform.position.x > this.transform.position.x)
+                {
+                    isOnRight = false;
+                    isOnLeft = true;
+                }
+            }
+          
+            //starts at positionA
+            if (isOnRight)
+            {
+                phasemovC = false;
+                phasemovD = false;
+                if(!phasemovA && !phasemovB)
+                {
+                    phasemovA = true;
+                }
+                if (phasemovA)
+                {
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionB.transform.position, 7f * Time.deltaTime);
+                    if (Vector2.Distance(this.transform.position, phase2positionB.transform.position) < 1f)
+                    {
+                        phasemovA = false;
+                        phasemovB = true;
+                    }
+                }
+
+                if (phasemovB)
+                {
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionA.transform.position, 7f * Time.deltaTime);
+
+                    if (Vector2.Distance(this.transform.position, phase2positionA.transform.position) < 1f)
+                    {
+                        phasemovA = true;
+                        phasemovB = false;
+                    }
+                }
+
+            }
+
+           
+
+            if (isOnLeft)
+            {
+                phasemovA = false;
+                phasemovB = false;
+                if(!phasemovC && !phasemovD)
+                {
+                    phasemovC = true;
+                }
+                if (phasemovD)
+                {
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionC.transform.position, 7f * Time.deltaTime);
+                    if (Vector2.Distance(this.transform.position, phase2positionC.transform.position) < 1f)
+                    {
+                        phasemovD = false;
+                        phasemovC = true;
+                    }
+                }
+
+                if (phasemovC)
+                {
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionD.transform.position, 7f * Time.deltaTime);
+
+                    if (Vector2.Distance(this.transform.position, phase2positionD.transform.position) < 1f)
+                    {
+                        phasemovD = true;
+                        phasemovC = false;
+                    }
+                }
+
+            }
+
+           
+
+            oneSideCounter = oneSideCounter - Time.deltaTime;
+
+            
+           
+
+        }
+    }
+    
+
+    //******End of Phase 2*******
+
+    void IdleState()
+    {
+        float idleCounter = 0;
+        if(currentState == States.Idle)
+        {
+            idleCounter = idleCounter + Time.deltaTime;
+
+            if(idleCounter >= 5f)
+            {
+                currentState = States.GoToStart;
+                idleCounter = 0;
+            }
+
         }
     }
     void AttackDecider()
@@ -176,7 +324,7 @@ public class BossSpider : MonoBehaviour {
             if (Vector2.Distance(this.transform.position, positionA) < 0.3f)
             {
                 currentState = States.Moving;
-                attackdoneCounter = 2.5f;
+                attackdoneCounter = 4;
             }
         }
     }
@@ -185,7 +333,7 @@ public class BossSpider : MonoBehaviour {
     {
         if(currentState == States.Moving)
         {
-            attackdoneCounter = 2.5f;
+            attackdoneCounter = 4f;
             if (moveA)
             {
                 this.transform.position = Vector2.MoveTowards(this.transform.position, movepoint2.transform.position, 5f * Time.deltaTime);
@@ -257,7 +405,7 @@ public class BossSpider : MonoBehaviour {
             if(attackdoneCounter > 0f)
             {
                 positionC = position2.transform.position;
-                positionC.y = positionC.y + 1f;
+                positionC.y = positionC.y + 0.8f;
                 currentState = States.Attack1;
 
             }
@@ -280,6 +428,7 @@ public class BossSpider : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.SendMessage("GetHit", -20);
+            currentState = States.Idle;
         }
     }
 }

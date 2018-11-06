@@ -92,7 +92,16 @@ public class Enemy : MonoBehaviour {
             DetectingPlayer();
             Patrol();
             Pursuit();
+            DirectAttack();
             Attack();
+
+            //when player is respawned
+            if(Vector2.Distance(target.transform.position,this.transform.position)> 5f)
+            {
+                target = null;
+                currentstate = States.Idle;
+                anim.SetBool("Attack", false);
+            }
         }
         else
         {
@@ -100,6 +109,18 @@ public class Enemy : MonoBehaviour {
         }
       
 	}
+
+    void DirectAttack()
+    {
+        if(target)
+        {
+            if (Vector2.Distance(target.transform.position, this.transform.position)<1f) {
+
+                currentstate = States.Attack;
+                anim.SetBool("Attack", true);
+            }
+        }
+    }
 
     public void Death()
     {
