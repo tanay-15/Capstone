@@ -219,7 +219,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_LocalScale.x
@@ -260,7 +260,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.35490137, w: 0.93490374}
   m_LocalPosition: {x: -2.35, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1715678579}
   m_Father: {fileID: 1970429508}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -41.575}
@@ -348,7 +349,8 @@ GameObject:
   m_Component:
   - component: {fileID: 242844422}
   - component: {fileID: 242844423}
-  m_Layer: 0
+  - component: {fileID: 242844424}
+  m_Layer: 9
   m_Name: Castle_1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,6 +416,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &242844424
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 242844421}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1001 &262583267
 Prefab:
   m_ObjectHideFlags: 0
@@ -451,7 +478,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_LocalScale.x
@@ -530,7 +557,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &397325002
 GameObject:
@@ -541,7 +568,8 @@ GameObject:
   m_Component:
   - component: {fileID: 397325003}
   - component: {fileID: 397325004}
-  m_Layer: 0
+  - component: {fileID: 397325005}
+  m_Layer: 9
   m_Name: Castle_1 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,6 +635,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &397325005
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 397325002}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &411149550
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +686,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &423974504
 GameObject:
@@ -644,7 +697,8 @@ GameObject:
   m_Component:
   - component: {fileID: 423974505}
   - component: {fileID: 423974506}
-  m_Layer: 0
+  - component: {fileID: 423974507}
+  m_Layer: 9
   m_Name: Castle_1 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,6 +764,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &423974507
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 423974504}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &466603475
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +1027,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &694377211
 Prefab:
@@ -995,7 +1074,7 @@ Prefab:
     - target: {fileID: 224966247432892612, guid: c26f864cd252c1c4597731d17734c613,
         type: 2}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 224966247432892612, guid: c26f864cd252c1c4597731d17734c613,
         type: 2}
@@ -1372,7 +1451,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1168483522
 GameObject:
@@ -1383,7 +1462,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1168483523}
   - component: {fileID: 1168483524}
-  m_Layer: 0
+  - component: {fileID: 1168483525}
+  m_Layer: 9
   m_Name: Castle_1 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1449,6 +1529,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1168483525
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1168483522}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &1169243704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1169243705}
   - component: {fileID: 1169243706}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Castle_1 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1636,7 +1741,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4060120853962058, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
       propertyPath: m_LocalScale.x
@@ -1649,93 +1754,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d5fcc109e50afd4c843aa6a121c0aa9, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &1198455882
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1198455886}
-  - component: {fileID: 1198455885}
-  - component: {fileID: 1198455884}
-  - component: {fileID: 1198455883}
-  m_Layer: 0
-  m_Name: Plane
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!64 &1198455883
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1198455882}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1198455884
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1198455882}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: 42d78a75231df504789e8a6aafa6c2fc, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &1198455885
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1198455882}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1198455886
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1198455882}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1237611819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,7 +1780,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1241390066
 Prefab:
@@ -1905,7 +1923,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1341244071
 GameObject:
@@ -2000,7 +2018,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4632593769113886, guid: 7a76c6781ae603d44b11fa3868f60302, type: 2}
       propertyPath: m_RootOrder
-      value: 21
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a76c6781ae603d44b11fa3868f60302, type: 2}
@@ -2014,7 +2032,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1412488481}
   - component: {fileID: 1412488482}
-  m_Layer: 0
+  - component: {fileID: 1412488483}
+  m_Layer: 9
   m_Name: Castle_1 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2080,6 +2099,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1412488483
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1412488480}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &1430321133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,7 +2166,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1439298071
 GameObject:
@@ -2133,7 +2177,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1439298072}
   - component: {fileID: 1439298073}
-  m_Layer: 0
+  - component: {fileID: 1439298074}
+  m_Layer: 9
   m_Name: Castle_1 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2199,6 +2244,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1439298074
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1439298071}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &1497358477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,7 +2342,7 @@ Transform:
   m_LocalScale: {x: 3.3148, y: 3.3148, z: 3.3148}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1546424459
 GameObject:
@@ -2320,7 +2390,7 @@ Transform:
   - {fileID: 1173620714}
   - {fileID: 1592823895}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1592823894
 GameObject:
@@ -2423,7 +2493,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1600569131
 GameObject:
@@ -2434,7 +2504,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1600569132}
   - component: {fileID: 1600569133}
-  m_Layer: 0
+  - component: {fileID: 1600569134}
+  m_Layer: 9
   m_Name: Castle_1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2500,6 +2571,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1600569134
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1600569131}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &1663832865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,7 +2622,35 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1715678578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715678579}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1715678579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1715678578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 197289021}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1720890812
 GameObject:
@@ -2537,7 +2661,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1720890813}
   - component: {fileID: 1720890814}
-  m_Layer: 0
+  - component: {fileID: 1720890815}
+  m_Layer: 9
   m_Name: Castle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2603,6 +2728,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1720890815
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1720890812}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1 &1726225938
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,7 +2779,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1751314195
 GameObject:
@@ -2734,7 +2884,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4231712476835376, guid: 3ababb9fc4beab94dbf9416e04df8d7e, type: 2}
       propertyPath: m_RootOrder
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ababb9fc4beab94dbf9416e04df8d7e, type: 2}
@@ -2812,7 +2962,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1801919796 stripped
 GameObject:
@@ -2828,7 +2978,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1822639290}
   - component: {fileID: 1822639291}
-  m_Layer: 0
+  - component: {fileID: 1822639292}
+  m_Layer: 9
   m_Name: Castle_1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2894,6 +3045,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1822639292
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1822639289}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2962963, y: 0.30555555}
+    newSize: {x: 0.2962963, y: 0.30555555}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2962963, y: 0.30555555}
+  m_EdgeRadius: 0
 --- !u!1001 &1835584877
 Prefab:
   m_ObjectHideFlags: 0
@@ -2904,7 +3080,7 @@ Prefab:
     - target: {fileID: 224236397709096920, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 224236397709096920, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
@@ -2944,7 +3120,7 @@ Prefab:
     - target: {fileID: 224236397709096920, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 224236397709096920, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
@@ -3034,7 +3210,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857417235
 GameObject:
@@ -3256,7 +3432,7 @@ Transform:
   - {fileID: 562692073}
   - {fileID: 1349517836}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1970429509
 Animator:
@@ -3297,8 +3473,14 @@ MonoBehaviour:
   phase2positionB: {fileID: 637439234}
   phase2positionC: {fileID: 1853935402}
   phase2positionD: {fileID: 277663979}
+  phasemovA: 0
+  phasemovB: 0
+  phasemovC: 0
+  phasemovD: 0
   oneSideCounter: 10
   Phase2AttackCounter: 3
+  isOnLeft: 0
+  isOnRight: 0
   bossHealthBar: {fileID: 1932561926}
   currentState: 0
   moveSpeed: 7.5

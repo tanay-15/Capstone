@@ -98,6 +98,10 @@ public class BossSpider : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        Vector3 relative;
+        
+        //relative = position3.transform.localRotation;
+    
         Brain();
         Brain2();
       
@@ -375,9 +379,11 @@ public class BossSpider : MonoBehaviour {
     {
         if(currentState == States.Attack2 && AttackDone == false)
         {
+           
             Instantiate(slingshotPrefab, position3.transform.position, position3.transform.rotation);
             Instantiate(slingshotPrefab, position5.transform.position, position5.transform.rotation);
             Instantiate(slingshotPrefab, position4.transform.position, position4.transform.rotation);
+
             AttackDone = true;
         }
     }
