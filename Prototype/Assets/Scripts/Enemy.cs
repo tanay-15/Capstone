@@ -247,6 +247,8 @@ public class Enemy : MonoBehaviour {
                 }
 
             }
+
+          
         }
         
     }
@@ -263,9 +265,18 @@ public class Enemy : MonoBehaviour {
             if (target && !AttackReady)
             {
                 currentstate = States.Pursuit;
-                CheckForFlip(targetpos);
+                CheckForFlip(target.transform.position);
                 anim.SetBool("ShouldPursuit", true);
-                this.transform.position = Vector2.MoveTowards(this.transform.position, targetpos, movspeed * Time.deltaTime);
+                if(Mathf.Abs(this.transform.position.y - target.transform.position.y) > 3f)
+                {
+                    currentstate = States.Patrol;
+                    
+                }
+                else
+                {
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
+                }
+               
             }
         }
     }
@@ -354,8 +365,8 @@ public class Enemy : MonoBehaviour {
     {
         if (CollidedWithPlayer)
         {
-            target.gameObject.SendMessage("GetHit", -1f);
-            rateofattack = 2f;
+            target.gameObject.SendMessage("GetHit", -10f);
+            rateofattack = 3f;
         }
   
     }
