@@ -19,8 +19,11 @@ public class DarkOrbs : MonoBehaviour {
     public float movespeed;
 	void Start () {
 
-        moveVector = new Vector3(0, -movespeed * Time.deltaTime, 0);
+    moveVector = new Vector3(0, -movespeed * Time.deltaTime, 0);
+     //moveVector = -transform.up * Time.deltaTime * 7f;
         layer_mask = LayerMask.NameToLayer("Ground");
+
+   
 	}
 	
 	// Update is called once per frame
@@ -44,20 +47,25 @@ public class DarkOrbs : MonoBehaviour {
               go =   Instantiate(HitIndicator, indicPos, HitIndicator.transform.rotation) as GameObject;
                 indicflag = true;
             }
-           
-            
+           // Physics2D.IgnoreLayerCollision(16, 16, true);
+
         }
-        Debug.DrawRay(this.transform.position, -transform.up);
+       // Debug.DrawRay(this.transform.position, -transform.up);
 	}
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Hits " + collision.gameObject.name);
+
+        if(collision.gameObject.tag == "EnemyAttack")
+        {
+            Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),collision.gameObject.GetComponent<Collider2D>());
+        }
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.SendMessage("GetHit", -15);
         }
         Destroy(go);
-        Destroy(this.gameObject);
+      Destroy(this.gameObject);
     }
 }

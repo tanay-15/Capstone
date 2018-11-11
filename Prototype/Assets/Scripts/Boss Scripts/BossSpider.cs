@@ -14,6 +14,12 @@ public class BossSpider : MonoBehaviour {
     public GameObject position3;
     public GameObject position4;
     public GameObject position5;
+    public GameObject position6;
+    public GameObject position7;
+    public GameObject position8;
+    public GameObject position9;
+    public GameObject position10;
+    public GameObject position11;
 
     private Vector3 positionA;
     private Vector3 positionB;
@@ -102,6 +108,10 @@ public class BossSpider : MonoBehaviour {
         
         //relative = position3.transform.localRotation;
     
+
+
+
+
         Brain();
         Brain2();
       
@@ -153,10 +163,36 @@ public class BossSpider : MonoBehaviour {
 
     //*********phase 2 of spider*******
 
+     
+
     void Brain2()
     {
+        
+
         if(health <= 50)
         {
+
+            Phase2AttackCounter = Phase2AttackCounter - Time.deltaTime;
+
+            if(Phase2AttackCounter <= 0)
+            {
+                Debug.Log("Perform attack");
+
+                if (isOnLeft)
+                {
+                    Instantiate(slingshotPrefab, position9.transform.position, position9.transform.rotation);
+                    Instantiate(slingshotPrefab, position10.transform.position, position10.transform.rotation);
+                    Instantiate(slingshotPrefab, position11.transform.position, position11.transform.rotation);
+                }
+
+                if (isOnRight)
+                {
+                    Instantiate(slingshotPrefab, position6.transform.position, position6.transform.rotation);
+                    Instantiate(slingshotPrefab, position7.transform.position, position7.transform.rotation);
+                    Instantiate(slingshotPrefab, position8.transform.position, position8.transform.rotation);
+                }
+                Phase2AttackCounter = 2f;
+            }
             currentState = States.Phase2;
 
 
@@ -209,7 +245,7 @@ public class BossSpider : MonoBehaviour {
                 }
                 if (phasemovA)
                 {
-                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionB.transform.position, 7f * Time.deltaTime);
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionB.transform.position, 5f * Time.deltaTime);
                     if (Vector2.Distance(this.transform.position, phase2positionB.transform.position) < 1f)
                     {
                         phasemovA = false;
@@ -219,7 +255,7 @@ public class BossSpider : MonoBehaviour {
 
                 if (phasemovB)
                 {
-                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionA.transform.position, 7f * Time.deltaTime);
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, phase2positionA.transform.position, 5f * Time.deltaTime);
 
                     if (Vector2.Distance(this.transform.position, phase2positionA.transform.position) < 1f)
                     {
@@ -227,6 +263,8 @@ public class BossSpider : MonoBehaviour {
                         phasemovB = false;
                     }
                 }
+
+
 
             }
 

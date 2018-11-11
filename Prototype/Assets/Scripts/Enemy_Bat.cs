@@ -108,6 +108,7 @@ public class Enemy_Bat : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             //attack player
+            collision.gameObject.SendMessage("GetHit", -15);
             Destroy(this.gameObject);
         }
 
