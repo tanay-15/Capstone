@@ -11,6 +11,7 @@ public class ArrowRing : MonoBehaviour {
         baseScale = transform.localScale;
         spr = GetComponent<SpriteRenderer>();
         newColor = Color.white;
+        transform.localScale = Vector3.zero;
 	}
 	
 	void Update () {
@@ -18,5 +19,7 @@ public class ArrowRing : MonoBehaviour {
         transform.localScale = baseScale * time;
         newColor.a = (1f - time);
         spr.color = newColor;
+        if (time > 1f)
+            Destroy(gameObject);
 	}
 }

@@ -72,8 +72,9 @@ public class playerKnife2D : MonoBehaviour {
         
     //}
 
-    public float GetPosX()
+    virtual public float GetPosX()
     {
+        Debug.Log("Position requested");
         return this.transform.position.x;
     }
 

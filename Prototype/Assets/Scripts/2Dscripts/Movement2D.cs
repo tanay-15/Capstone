@@ -18,6 +18,7 @@ public class Movement2D : MonoBehaviour
     public float cooldownTime = 1f;
     private float nextFiretime = 0f;
     public GameObject knifePrefab;
+    public GameObject chargedArrowPrefab;
     public Transform handEnd;
     private SpriteRenderer sprite;
     public static Movement2D sharedInstance;
@@ -264,7 +265,8 @@ public class Movement2D : MonoBehaviour
 
     void CreateShine()
     {
-        GameObject shine = Instantiate(shinePrefab, transform.position + shinePosition, Quaternion.identity);
+        Vector3 offset = shinePosition * (facingRight ? 1f : -1f);
+        GameObject shine = Instantiate(shinePrefab, transform.position + offset, Quaternion.identity);
         shine.transform.localScale *= 0.5f;
         Destroy(shine, 1f);
     }
@@ -284,17 +286,19 @@ public class Movement2D : MonoBehaviour
         }
         myAnim.speed = 1f;
 
+        GameObject shootingObject = (charge >= arrowChargeTime) ? chargedArrowPrefab : knifePrefab;
+
         //Shoot
         if (facingRight)
         {
-            var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
-            knifeInstance.GetComponent<Rigidbody2D>().velocity = (handEnd.right * 7) + new Vector3(0, 1, 0);
+            var knifeInstance = Instantiate(shootingObject, handEnd.position, Quaternion.identity);
+            knifeInstance.GetComponent<Rigidbody2D>().velocity = (charge >= arrowChargeTime) ? Vector3.right * 12f : (handEnd.right * 7) + new Vector3(0, 1, 0);
         }
         else
         {
-            var knifeInstance = Instantiate(knifePrefab, handEnd.position, new Quaternion(knifePrefab.transform.rotation.x, knifePrefab.transform.rotation.y, knifePrefab.transform.rotation.z, 1));
+            var knifeInstance = Instantiate(shootingObject, handEnd.position, new Quaternion(shootingObject.transform.rotation.x, shootingObject.transform.rotation.y, shootingObject.transform.rotation.z, 1));
             knifeInstance.GetComponent<SpriteRenderer>().flipX = true;
-            knifeInstance.GetComponent<Rigidbody2D>().velocity = (-handEnd.right * 7) + new Vector3(0, 1, 0);
+            knifeInstance.GetComponent<Rigidbody2D>().velocity = (charge >= arrowChargeTime) ? Vector3.left * 12f : (-handEnd.right * 7) + new Vector3(0, 1, 0);
         }
     }
 
