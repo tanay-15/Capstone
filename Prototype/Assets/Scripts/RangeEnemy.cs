@@ -14,6 +14,7 @@ public class RangeEnemy : Enemy {
 	// Use this for initialization
 	void Start () {
 
+      
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
     }
@@ -23,56 +24,21 @@ public class RangeEnemy : Enemy {
 
         if (IsAlive)
         {
-            DetectingPlayer();
-            Patrol();
-            Pursuit();
-            Attack();
+            if(target!= null)
+            {
+                Debug.Log("Found Target now attack him");
+                ThrowAxe();
+            }
         }
-
-        Death();
     }
 
-    public override void Attack()
+   public void ThrowAxe()
     {
-
-        if (AttackReady)
-        {
-            rateofattack -= Time.deltaTime;
-
-            if(rateofattack <= 0f)
-            {
-                //Throw shruriken
-                currentstate = States.Attack;
-                anim.SetBool("ShouldPursuit", false);
-                anim.SetTrigger("Attack");
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-                {
-                    go = Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
-                    go.transform.SetParent(this.gameObject.transform);
-                    rateofattack = 3f;
-                }
-              
-            }
-        }
-
-        /*
-         *   if (AttackReady)
-        {
-            rateofattack -= Time.deltaTime;
-            if(rateofattack <= 0)
-            {
-              
-               
-                
-                Debug.Log("Enemy now attacks the player");
-                rateofattack = 2f;
-            }
-           
-        }
-         */
-        
+        Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
     }
 
+
+  
     public override void Pursuit()
     {
 
@@ -90,6 +56,38 @@ public class RangeEnemy : Enemy {
             }
         }
 
+    }
+
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position, transform.position) < 2f)
+        {
+            IsAlive = false;
+
+            health = 0;
+
+        }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            target = collision.gameObject;
+            targetpos = collision.gameObject.transform.position;
+            anim.SetBool("Attack", true);
+            currentstate = States.Attack;
+            AttackReady = true;
+            Debug.Log("Enemy attack ready");
+        }
+    }
+
+    public override void OnTriggerExit2D(Collider2D collider)
+    {
+        if(collider.gameObject.tag == "Player")
+        {
+            target = null;
+            anim.SetBool("Attack", false);
+            AttackReady = false;
+            currentstate = States.Idle;
+        }
     }
 
     public Vector2 GetTargetpos()

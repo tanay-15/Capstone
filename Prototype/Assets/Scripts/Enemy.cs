@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour {
       
     }
 
-    public void DetectingPlayer()
+    public virtual void DetectingPlayer()
     {
 
 
@@ -389,7 +389,7 @@ public class Enemy : MonoBehaviour {
      
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 2f )
         {
@@ -403,8 +403,7 @@ public class Enemy : MonoBehaviour {
         {
             target = collision.gameObject;
             targetpos = collision.gameObject.transform.position;
-            currentstate = States.Alert;
-            anim.SetBool("Alert", true);
+           
         }
     }
 
@@ -418,7 +417,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collider)
+    public virtual void OnTriggerExit2D(Collider2D collider)
     {
         if(collider.gameObject.tag == "Player")
         {
