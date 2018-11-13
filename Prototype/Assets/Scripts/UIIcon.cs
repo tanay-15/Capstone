@@ -9,7 +9,7 @@ public class UIIcon : MonoBehaviour {
     public Image mask;
     public Sprite[] fillGraphics;
     float fillAmount;
-    float fillSpeed = 0.1f;
+    public float fillSpeed = 0.1f;
 	void Start () {
         //Temporary
         fillAmount = 1f;// 0f;

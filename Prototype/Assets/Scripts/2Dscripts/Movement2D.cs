@@ -25,6 +25,10 @@ public class Movement2D : MonoBehaviour
     private Latching latchingScript;
     float minJumpSpeed = 2.0f;
 
+    public GameObject shinePrefab;
+    Vector3 shinePosition = new Vector3(0.4f, 0f, 0f);
+    float arrowChargeTime = 0.6f;
+
     [Header("ShadowSlash Collider")]
     public Collider2D sscollider;
 
@@ -179,7 +183,8 @@ public class Movement2D : MonoBehaviour
                 // Rigidbody knifeInstance;
                 nextFiretime = Time.time + cooldownTime;
 
-                StartCoroutine("DelayedAttack");
+                StartCoroutine("ShootArrow");   //"DelayedAttack"
+                UIIcons.sharedInstance.icons[1].GetComponent<UIIcon>().SetEmpty();
             }
             else
                 myAnim.SetBool("isAttacking", false);
@@ -255,6 +260,42 @@ public class Movement2D : MonoBehaviour
     {
         //player.enabled = true;
         sprite.enabled = true;
+    }
+
+    void CreateShine()
+    {
+        GameObject shine = Instantiate(shinePrefab, transform.position + shinePosition, Quaternion.identity);
+        shine.transform.localScale *= 0.5f;
+        Destroy(shine, 1f);
+    }
+
+    IEnumerator ShootArrow()
+    {
+        float charge = 0f;
+        //Normalized time where player shoots arrow: 0.625
+        AnimatorStateInfo info = myAnim.GetCurrentAnimatorStateInfo(0);
+        for(float i = 0f; i < info.length * 0.625f; i += Time.deltaTime) {yield return 0;}
+        while (Input.GetKey(KeyCode.E))
+        {
+            myAnim.speed = 0f;
+            if (charge < arrowChargeTime) charge += Time.deltaTime;
+            if (charge > arrowChargeTime) { charge = arrowChargeTime; CreateShine(); }
+            yield return 0;
+        }
+        myAnim.speed = 1f;
+
+        //Shoot
+        if (facingRight)
+        {
+            var knifeInstance = Instantiate(knifePrefab, handEnd.position, Quaternion.identity);
+            knifeInstance.GetComponent<Rigidbody2D>().velocity = (handEnd.right * 7) + new Vector3(0, 1, 0);
+        }
+        else
+        {
+            var knifeInstance = Instantiate(knifePrefab, handEnd.position, new Quaternion(knifePrefab.transform.rotation.x, knifePrefab.transform.rotation.y, knifePrefab.transform.rotation.z, 1));
+            knifeInstance.GetComponent<SpriteRenderer>().flipX = true;
+            knifeInstance.GetComponent<Rigidbody2D>().velocity = (-handEnd.right * 7) + new Vector3(0, 1, 0);
+        }
     }
 
 
