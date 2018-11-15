@@ -440,7 +440,7 @@ public class Enemy : MonoBehaviour {
 
   
     
-    void flip()
+  public  void flip()
     {
 
         LookingLeft = !LookingLeft;

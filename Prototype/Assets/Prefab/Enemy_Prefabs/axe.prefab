@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23924069684587902}
   - component: {fileID: 68776650287526328}
   - component: {fileID: 50470046729217280}
+  - component: {fileID: 114686870381996478}
   m_Layer: 0
   m_Name: axe
   m_TagString: Untagged
@@ -100,7 +101,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.7
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -140,6 +141,17 @@ EdgeCollider2D:
   - {x: -2.4307117, y: -4.1582007}
   - {x: -6.150136, y: 1.3877422}
   - {x: -7.1614866, y: 4.24461}
+--- !u!114 &114686870381996478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1900246247028210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e522e0390c5e30d4a95ed10b49c58a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114948362168205596
 MonoBehaviour:
   m_ObjectHideFlags: 1

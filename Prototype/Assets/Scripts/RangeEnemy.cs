@@ -9,6 +9,7 @@ public class RangeEnemy : Enemy {
     public GameObject shurikenprefab;
     public GameObject shuriloct;
     private GameObject go;
+    private bool Thrown = false;
 
 
 	// Use this for initialization
@@ -26,8 +27,53 @@ public class RangeEnemy : Enemy {
         {
             if(target!= null)
             {
-                Debug.Log("Found Target now attack him");
-                ThrowAxe();
+                rateofattack = rateofattack - Time.deltaTime;
+                CheckForPlayerPosition();
+                   if(rateofattack <= 1f)
+                {
+                    Thrown = false;
+                }
+                if (!Thrown && rateofattack <=0)
+                {
+                    
+                    Debug.Log("Found Target now attack him");
+                    ThrowAxe();
+                }
+             
+            }
+        }
+    }
+
+    public void CheckForPlayerPosition()
+    {
+        if(target.transform.position.x < this.transform.position.x)
+        {
+            //check where it is looking
+            //look left
+            if (LookingLeft)
+            {
+                //ignore
+            }
+            if (!LookingLeft)
+            {
+                flip();
+            }
+
+        }
+
+        if(target.transform.position.x > this.transform.position.x)
+        {
+            //check where it is looking
+            //Look right
+
+            if (LookingLeft)
+            {
+                flip();
+            }
+
+            if (!LookingLeft)
+            {
+                //ignore
             }
         }
     }
@@ -35,6 +81,8 @@ public class RangeEnemy : Enemy {
    public void ThrowAxe()
     {
         Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
+        rateofattack = 1.3f;
+        Thrown = true;
     }
 
 
