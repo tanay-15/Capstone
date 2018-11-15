@@ -32,6 +32,9 @@ public class Tutorial : MonoBehaviour {
 
     public Transform canvasCenter;
 
+    public Transform door;
+    bool doorVisible;
+
     static Tutorial()
     {
         sharedInstance = null;
@@ -54,6 +57,7 @@ public class Tutorial : MonoBehaviour {
     }
 
 	void Start () {
+        doorVisible = false;
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
@@ -66,15 +70,20 @@ public class Tutorial : MonoBehaviour {
 
     IEnumerator MoveArrow()
     {
-        Vector3 startPosition = arrow.transform.position;
-        Vector3 newPos = startPosition;
+        Vector3 basePosition = arrow.transform.position;
+        Vector3 newPos = basePosition;
+        Vector3 doorPosition = Vector3.zero;
         float x;
+        float y;
         float i = 0f;
         while (true)
         {
             i += Time.deltaTime * 5f;
             x = -Mathf.Cos(i) * 50f;
-            newPos.x = startPosition.x + x;
+            y = 200f - Mathf.Cos(i) * 50f;
+            doorPosition = Camera.main.WorldToScreenPoint(door.position);
+            newPos.x = (doorVisible) ? doorPosition.x : basePosition.x + x;
+            newPos.y = (doorVisible) ? doorPosition.y + y : basePosition.y;
             arrow.transform.position = newPos;
             yield return 0;
         }
@@ -155,4 +164,16 @@ public class Tutorial : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void OnDoorBecameVisible()
+    {
+        doorVisible = true;
+        arrow.transform.Rotate(0f, 0f, 270f);
+    }
+
+    public void OnDoorBecameInvisible()
+    {
+        doorVisible = false;
+        arrow.transform.Rotate(0f, 0f, -270f);
+    }
 }

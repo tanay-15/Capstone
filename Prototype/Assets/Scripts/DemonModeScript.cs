@@ -32,7 +32,7 @@ public class DemonModeScript : MonoBehaviour {
         {
             l1Time = 1f;
         }
-        if (Input.GetButtonDown("LeftTrigger2"))
+        if (Input.GetButtonDown("RightTrigger1"))
         {
             l2Time = 1f;
         }
@@ -40,7 +40,7 @@ public class DemonModeScript : MonoBehaviour {
         {
             l1Time = 0f;
         }
-        if (Input.GetButtonUp("LeftTrigger2"))
+        if (Input.GetButtonUp("RightTrigger1"))
         {
             l2Time = 0f;
         }
@@ -49,10 +49,11 @@ public class DemonModeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetButtonDown("Fire2") && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
-        {
-            Transformation();
-        }
+        //Disable circle button for transformation. It is now L1 + L2
+        //if (Input.GetButtonDown("Fire2") && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
+        //{
+        //    Transformation();
+        //}
 
         CheckTriggerInput();
 
