@@ -7,6 +7,7 @@ public class ActionIndicator : MonoBehaviour {
     public AnimationCurve showCurve;
     public AnimationCurve hideCurve;
     float speed = 5f;
+    bool shown = false;
 
     public GameObject indicator;
     IEnumerator routine;
@@ -32,6 +33,8 @@ public class ActionIndicator : MonoBehaviour {
 
     public void Show(bool show)
     {
+        if (shown == show) { return; }
+        shown = show;
         //UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, show);
 
         if (routine != null)

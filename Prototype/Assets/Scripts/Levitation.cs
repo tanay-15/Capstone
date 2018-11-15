@@ -18,6 +18,7 @@ public class Levitation : MonoBehaviour {
     bool rightTriggerDown;
     bool rightTriggerPressed;
     bool rightTriggerReleased;
+    ActionIndicator action;
     
     bool active;
     Vector3 PlayerPos
@@ -64,6 +65,7 @@ public class Levitation : MonoBehaviour {
         heldObject = null;
         baseJoystickPosition = Vector2.zero;
         useJoystick = false;
+        action = GetComponent<ActionIndicator>();
 	}
 
     public void SetActive(bool active)
@@ -105,7 +107,7 @@ public class Levitation : MonoBehaviour {
         particles.gameObject.transform.position = grabPosition;
     }
 
-    void UpdateColor()
+    void UpdateColorAndIcon()
     {
         collidingObjects = from col in Physics2D.OverlapCircleAll(grabPosition, grabRadius).ToList()
                                where col.gameObject.tag == "Grabbable" || col.gameObject.tag == "Player Weapon"
@@ -122,6 +124,8 @@ public class Levitation : MonoBehaviour {
             main.startColor = nonHoverColor;
             main.startSize = 0.2f;
         }
+
+        action.Show(collidingObjects.Count() > 0 || heldObject != null);
     }
 
     void IgnoreCollisions(GameObject obj, bool ignore)
@@ -237,7 +241,7 @@ public class Levitation : MonoBehaviour {
             CalculatePositionJoystick();
         else
             CalculatePositionMouse();
-        UpdateColor();
+        UpdateColorAndIcon();
         CheckRightTrigger();
         CheckForButtonPress();
         ResetTriggerCheck();
