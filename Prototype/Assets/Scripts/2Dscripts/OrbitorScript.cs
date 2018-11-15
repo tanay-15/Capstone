@@ -6,7 +6,7 @@ public class OrbitorScript : MonoBehaviour {
 
     GameObject Player;
     GameObject Trail;
-    GameObject Projectile;
+    public GameObject Projectile;
     //public Camera MainCam;
 
     public float speed = 1.0f;
@@ -22,7 +22,7 @@ public class OrbitorScript : MonoBehaviour {
 
     //private float startTime = 0;
     //private float journeyLength = 0;
-    float fracJourney = 0;
+    public float fracJourney = 0;
     bool facingRight = true;
 
 
@@ -69,7 +69,9 @@ public class OrbitorScript : MonoBehaviour {
                         foreach (Collider2D coll in hitColliders)
                         {
                             if (coll.gameObject.tag == "Grabbable" && coll.gameObject.GetComponent<OrbitorObjectScript>() 
-                                && coll.gameObject.GetComponent<OrbitorObjectScript>().hit == true && transform.childCount<2)
+                                && coll.gameObject.GetComponent<OrbitorObjectScript>().hit == true
+                                && coll.gameObject.GetComponent<OrbitorObjectScript>().isOrbiting == false 
+                                && transform.childCount<2)
                             {
                                 Projectile = coll.gameObject;
                                 Projectile.transform.parent = transform;
@@ -111,41 +113,41 @@ public class OrbitorScript : MonoBehaviour {
 
                         // Throw to mouse click position
                        
-                            if(transform.localPosition.y > -0.3f)
-                            { 
-                                if((transform.localPosition.x > 0.7f && Player.GetComponent<Movement2D>().facingRight)
-                                    || (transform.localPosition.x < -0.7f) && !Player.GetComponent<Movement2D>().facingRight)
-                                {
+                            //if(transform.localPosition.y > -0.3f)
+                            //{ 
+                            //    if((transform.localPosition.x > 0.7f && Player.GetComponent<Movement2D>().facingRight)
+                            //        || (transform.localPosition.x < -0.7f) && !Player.GetComponent<Movement2D>().facingRight)
+                            //    {
 
-                                    if (Input.GetMouseButtonDown(0))
-                                    {
-                                        Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                        Vector3 direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - Projectile.transform.position);
-                                        Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
-                                        Projectile.GetComponent<Collider2D>().enabled = true;
-                                        Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
-                                        Projectile.transform.parent = null;
-                                        fracJourney = 0;
-                                        Status = State.ShootingProjectile;
-                                    }
+                            //        if (Input.GetMouseButtonDown(0))
+                            //        {
+                            //            Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            //            Vector3 direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - Projectile.transform.position);
+                            //            Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
+                            //            Projectile.GetComponent<Collider2D>().enabled = true;
+                            //            Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
+                            //            Projectile.transform.parent = null;
+                            //            fracJourney = 0;
+                            //            Status = State.ShootingProjectile;
+                            //        }
 
-                                    if(Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.7f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.7f)
-                                    {                                       
-                                        Vector3 direction = Vector3.Normalize(new Vector3(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"), 0));
-                                        Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
-                                        Projectile.GetComponent<Collider2D>().enabled = true;
-                                        Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
-                                        Projectile.transform.parent = null;
-                                        fracJourney = 0;
+                            //        if(Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.7f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.7f)
+                            //        {                                       
+                            //            Vector3 direction = Vector3.Normalize(new Vector3(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"), 0));
+                            //            Projectile.GetComponent<Rigidbody2D>().velocity = 10 * direction;
+                            //            Projectile.GetComponent<Collider2D>().enabled = true;
+                            //            Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
+                            //            Projectile.transform.parent = null;
+                            //            fracJourney = 0;
 
-                                        Status = State.ShootingProjectile;
-                                    }
+                            //            Status = State.ShootingProjectile;
+                            //        }
 
-                                    Trail.GetComponent<TrailRenderer>().material = HighlightTrailColor;
+                            //        Trail.GetComponent<TrailRenderer>().material = HighlightTrailColor;
 
 
-                                }
-                            }
+                            //    }
+                            //}
                         
 
                         break;
@@ -155,10 +157,11 @@ public class OrbitorScript : MonoBehaviour {
 
                 case State.ShootingProjectile:
                     {
-                        Trail.transform.position = Projectile.transform.position;
+                        Trail.transform.position = Projectile.transform.position- new Vector3(0,0,0.1f);
 
                         if (Projectile.GetComponent<OrbitorObjectScript>().hit)
                         {
+                            Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
                             Status = State.NoProjectile;
                             Trail.SetActive(false);
                         }
@@ -180,11 +183,14 @@ public class OrbitorScript : MonoBehaviour {
                 Projectile.GetComponent<OrbitorObjectScript>().hit = true;
                 Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = false;
                 Projectile.GetComponent<Collider2D>().enabled = true;
-                Projectile.GetComponent<Rigidbody2D>().gravityScale = 1;
-                Trail.SetActive(false);
-
+                Projectile.GetComponent<Rigidbody2D>().gravityScale = 0.4f;              
                 Status = State.NoProjectile;
             }
+            else if (Status == State.ShootingProjectile)
+            {
+                Status = State.NoProjectile;
+            }
+            Trail.SetActive(false);
         }
 
 

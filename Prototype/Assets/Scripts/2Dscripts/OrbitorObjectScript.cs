@@ -5,7 +5,7 @@ using UnityEngine;
 public class OrbitorObjectScript : MonoBehaviour {
 
     public bool isOrbiting = false;
-    public bool hit = true;
+    public bool hit = false;
     public GameObject impact;
 
 	// Use this for initialization
@@ -30,10 +30,19 @@ public class OrbitorObjectScript : MonoBehaviour {
         if (collision.gameObject.layer == 15 || collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.SendMessage("ApplyDamage", 15);
-            if(!hit)
-                Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
+            Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
+            hit = true;
         }
 
-        hit = true;
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.tag == "Wall")
+        {
+            hit = true;
+        }
+        
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        //hit = false;
     }
 }
