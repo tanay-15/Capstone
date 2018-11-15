@@ -10,6 +10,13 @@ public class PlayerLife : MonoBehaviour {
     [System.NonSerialized]
     public float currentLife;
     public Image barGraphic;
+    float time = 0f;
+
+    Color goodColor;
+    Color badColor;
+    Color cosColor;
+
+    float lifebarRatio;
 
     static PlayerLife()
     {
@@ -17,22 +24,41 @@ public class PlayerLife : MonoBehaviour {
     }
 
 	void Start () {
+        lifebarRatio = 1f;
+        cosColor = Color.black;
         if (sharedInstance != null)
         {
             Destroy(sharedInstance);
         }
         sharedInstance = this;
         currentLife = maxLife;
+
+        goodColor = barGraphic.color;
+        badColor = Color.red;
 	}
 	
 	void Update () {
-		
+        time += Time.deltaTime;
+        cosColor.r = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
+        cosColor.g = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
+        cosColor.b = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
+        if (lifebarRatio <= 0.25f)
+        {
+            barGraphic.color = badColor + cosColor;
+        }
+        else
+        {
+            barGraphic.color = goodColor;
+        }
 	}
 
     void UpdateWidth()
     {
         //barGraphic.transform.localScale = new Vector3(currentLife / maxLife, 1f, 1f);
-        barGraphic.fillAmount = currentLife / maxLife;
+        lifebarRatio = currentLife / maxLife;
+        barGraphic.fillAmount = lifebarRatio;
+
+        //barGraphic.color = (ratio <= 0.25f) ? badColor : goodColor;
     }
 
     public void ResetLife()
