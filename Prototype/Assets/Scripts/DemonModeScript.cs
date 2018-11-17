@@ -50,10 +50,10 @@ public class DemonModeScript : MonoBehaviour {
 	void Update () {
 
         //Disable circle button for transformation. It is now L1 + L2
-        //if (Input.GetButtonDown("Fire2") && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
-        //{
-        //    Transformation();
-        //}
+        if (Input.GetKeyDown(KeyCode.Q) && !transitioning && GetComponent<rageBar>().fillAmount >= 1)
+        {
+            Transformation();
+        }
 
         CheckTriggerInput();
 

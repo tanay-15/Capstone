@@ -1093,6 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25dd5139c7530f48826ab1c7024b82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookingLeft: 0
   health: 0
   rateofattack: 2
   range: 0
@@ -1105,10 +1106,12 @@ MonoBehaviour:
   IsAlive: 0
   movway1: 1
   movway2: 0
-  waypoint1: {fileID: 0}
-  waypoint2: {fileID: 0}
+  checkforAttackHit: 0
+  MovePoint1: {fileID: 0}
+  MovePoint2: {fileID: 0}
   currentstate: 0
   vision: {fileID: 1157635533183044}
+  CollidedWithPlayer: 0
   compobones: []
 --- !u!114 &114024739401067872
 MonoBehaviour:

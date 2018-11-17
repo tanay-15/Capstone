@@ -125,7 +125,7 @@ public class Levitation : MonoBehaviour {
             main.startSize = 0.2f;
         }
 
-        action.Show(collidingObjects.Count() > 0 || heldObject != null);
+        action.Show(collidingObjects.Count() > 0 && heldObject == null);
     }
 
     void IgnoreCollisions(GameObject obj, bool ignore)
@@ -148,6 +148,7 @@ public class Levitation : MonoBehaviour {
         rb.velocity = Vector3.zero;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         IgnoreCollisions(obj, true);
+        action.Show(false);
     }
 
     void ReleaseObject()
