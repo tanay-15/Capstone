@@ -12,10 +12,9 @@ public class SoundScript : MonoBehaviour {
     public bool playCombatMusic = false;
     public bool stopExploreMusic = false;
     public bool stopCombatMusic = false;
-    public bool alreadyPlayed = false;
-    private bool inCalmZone = true;
-    private bool inAlertZone = false;
-    private bool inDangerZone = false;
+    public bool alreadyPlayedE = false;
+    public bool alreadyPlayedC = false;
+  
    
 	// Use this for initialization
 	void Start () {
@@ -27,38 +26,38 @@ public class SoundScript : MonoBehaviour {
     {
         if (playExploreMusic)
         {
-            if (!alreadyPlayed)
+            if (!alreadyPlayedE)
             {
                 SoundManager.PlayMusic(gameObject, Background_Music[1]);
-                alreadyPlayed = true;
+                alreadyPlayedE = true;
             }
 
         }
 
         if (stopExploreMusic)
         {
-            if (alreadyPlayed)
+            if (alreadyPlayedE)
             {
                 SoundManager.StopMusic(gameObject, Background_Music[1]);
-                alreadyPlayed = false;
+                alreadyPlayedE = false;
             }
         }
 
         if (playCombatMusic)
         {
-            if (!alreadyPlayed)
+            if (!alreadyPlayedC)
             {
                 SoundManager.PlayMusic(gameObject, Combat_Music[0]);
-                alreadyPlayed = true;
+                alreadyPlayedC = true;
             }
         }
 
         if (stopCombatMusic)
         {
-            if (alreadyPlayed)
+            if (alreadyPlayedC)
             {
                 SoundManager.StopMusic(gameObject, Combat_Music[0]);
-                alreadyPlayed = false;
+                alreadyPlayedC= false;
             }
         }
     }
@@ -69,42 +68,42 @@ public class SoundScript : MonoBehaviour {
       
         //}
 
-        if (coll.gameObject.name == "CombatTrigger")
-        {
-
-        }
+       
     }
 
     void OnTriggerStay2D(Collider2D coll)
     {
-        if (coll.gameObject.name == "ExploreTrigger")
+        if (coll.gameObject.tag == "ExploreTrigger")
         {
             stopExploreMusic = false;         
             playExploreMusic = true;
             playCombatMusic = false;
             stopCombatMusic = false;
+            alreadyPlayedC = false;
 
         }
 
-        if (coll.gameObject.name == "CombatTrigger")
+        if (coll.gameObject.tag == "CombatTrigger")
         {
             playExploreMusic = false;
             playCombatMusic = true;
             stopCombatMusic = false;
             stopExploreMusic = false;
-           
+            alreadyPlayedE = false;
+
+
         }
     }
 
     void OnTriggerExit2D(Collider2D coll)
     {
-        if (coll.gameObject.name == "ExploreTrigger")
+        if (coll.gameObject.tag == "ExploreTrigger")
         {
             playExploreMusic = false;
             stopExploreMusic = true;
            // alreadyPlayed = false;
         }
-        if (coll.gameObject.name == "CombatTrigger")
+        if (coll.gameObject.tag == "CombatTrigger")
         {
             playCombatMusic = false;
             stopCombatMusic = true;

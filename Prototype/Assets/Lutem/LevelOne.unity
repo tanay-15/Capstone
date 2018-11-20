@@ -3869,7 +3869,7 @@ GameObject:
   - component: {fileID: 242800157}
   m_Layer: 0
   m_Name: ExploreTrigger
-  m_TagString: Untagged
+  m_TagString: ExploreTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9945,7 +9945,8 @@ MonoBehaviour:
   playCombatMusic: 0
   stopExploreMusic: 0
   stopCombatMusic: 0
-  alreadyPlayed: 0
+  alreadyPlayedE: 0
+  alreadyPlayedC: 0
 --- !u!1 &741872933
 GameObject:
   m_ObjectHideFlags: 0
@@ -17419,6 +17420,60 @@ Prefab:
     - {fileID: 61540195550503660, guid: 35769be5a9ccec8449741563f366c549, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 35769be5a9ccec8449741563f366c549, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1246665904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1246665906}
+  - component: {fileID: 1246665905}
+  m_Layer: 0
+  m_Name: CombatTrigger (1)
+  m_TagString: CombatTrigger
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1246665905
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1246665904}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 25, y: 10}
+  m_EdgeRadius: 0
+--- !u!4 &1246665906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1246665904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 32.67, y: 1.4, z: 0}
+  m_LocalScale: {x: 0.76540214, y: 0.80062, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 230
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1252919585
 Prefab:
   m_ObjectHideFlags: 0
@@ -18022,7 +18077,7 @@ GameObject:
   - component: {fileID: 1273601868}
   m_Layer: 0
   m_Name: CombatTrigger
-  m_TagString: Untagged
+  m_TagString: CombatTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
