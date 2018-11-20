@@ -40,7 +40,6 @@ public class Movement2D : MonoBehaviour
 
     void ResetJumpTracking()
     {
-        Debug.Log("Jump tracking reset.");
         trackedYPosition = transform.position.y;
         highestJumpHeight = 0f;
     }
@@ -89,7 +88,6 @@ public class Movement2D : MonoBehaviour
             {
                 ResetJumpTracking();
             }
-            Debug.Log("Highest jump height: " + highestJumpHeight + "\nTracked y position: " + trackedYPosition);
         }
 
 
@@ -182,10 +180,9 @@ public class Movement2D : MonoBehaviour
                 myAnim.SetBool("isAttacking", true);
 
                 // Rigidbody knifeInstance;
-                nextFiretime = Time.time + cooldownTime;
+                //nextFiretime = Time.time + cooldownTime;
 
                 StartCoroutine("ShootArrow");   //"DelayedAttack"
-                UIIcons.sharedInstance.icons[1].GetComponent<UIIcon>().SetEmpty();
             }
             else
                 myAnim.SetBool("isAttacking", false);
@@ -212,7 +209,6 @@ public class Movement2D : MonoBehaviour
                     myAnim.SetTrigger("secondPunch");
                     myAnim.SetBool("isPunching", true);
                     currentAnimation = 0;
-                    Debug.Log("z being pressed");
                     break;
                 default:
                     myAnim.SetBool("isPunching", false);
@@ -276,12 +272,18 @@ public class Movement2D : MonoBehaviour
         float charge = 0f;
         //Normalized time where player shoots arrow: 0.625
         AnimatorStateInfo info = myAnim.GetCurrentAnimatorStateInfo(0);
-        for(float i = 0f; i < info.length * 0.625f; i += Time.deltaTime) {yield return 0;}
-        while (Input.GetKey(KeyCode.E))
+        for(float i = 0f; i < info.length * 0.625f; i += Time.deltaTime) {
+            UIIcons.sharedInstance.icons[1].GetComponent<UIIcon>().SetEmpty();
+            nextFiretime = Time.time + cooldownTime;
+            yield return 0;
+        }
+        while (Input.GetButton("Fire1"))
         {
             myAnim.speed = 0f;
             if (charge < arrowChargeTime) charge += Time.deltaTime;
             if (charge > arrowChargeTime) { charge = arrowChargeTime; CreateShine(); }
+            UIIcons.sharedInstance.icons[1].GetComponent<UIIcon>().SetEmpty();
+            nextFiretime = Time.time + cooldownTime;
             yield return 0;
         }
         myAnim.speed = 1f;

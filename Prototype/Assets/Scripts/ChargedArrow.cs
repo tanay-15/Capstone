@@ -52,10 +52,10 @@ public class ChargedArrow : playerKnife2D {
         if (!hitObjects.Contains(collision.gameObject))
         {
              hitObjects.Add(collision.gameObject);
-            GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-            GetComponent<Rigidbody2D>().isKinematic = true;
-            GetComponent<Collider2D>().enabled = false;
-            transform.parent = collision.gameObject.transform;
+            //GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+            //GetComponent<Rigidbody2D>().isKinematic = true;
+            //GetComponent<Collider2D>().enabled = false;
+            //transform.parent = collision.gameObject.transform;
 
 
             // Impact Sprite

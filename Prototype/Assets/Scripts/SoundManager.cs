@@ -14,7 +14,6 @@ public class SoundManager : MonoBehaviour
         asource.clip = audio;
         asource.Play();
         asource.loop = true;
-
     }
 
     static public void StopMusic(GameObject gameobj, AudioClip audio)

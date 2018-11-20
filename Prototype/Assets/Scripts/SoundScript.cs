@@ -24,6 +24,10 @@ public class SoundScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (!playExploreMusic && !alreadyPlayedE)
+        {
+            Debug.Log("Playing");
+        }
         if (playExploreMusic)
         {
             if (!alreadyPlayedE)
@@ -80,7 +84,6 @@ public class SoundScript : MonoBehaviour {
             playCombatMusic = false;
             stopCombatMusic = false;
             alreadyPlayedC = false;
-
         }
 
         if (coll.gameObject.tag == "CombatTrigger")
@@ -90,7 +93,6 @@ public class SoundScript : MonoBehaviour {
             stopCombatMusic = false;
             stopExploreMusic = false;
             alreadyPlayedE = false;
-
 
         }
     }
