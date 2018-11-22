@@ -233,7 +233,10 @@ public class Movement2D : MonoBehaviour
         }
     }
 
-
+    public bool getfacingRight()
+    {
+        return facingRight;
+    }
 // Flipping chracter
 
     public void flip()

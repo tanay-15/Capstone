@@ -33,15 +33,8 @@ public class WallJump : MonoBehaviour
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
-        Direction = new Vector2(hAxis, vAxis).normalized;  
-        //Direction = transform.TransformDirection(Direction);
-        //float angle = Mathf.Atan2(vAxis, hAxis) * Mathf.Rad2Deg;
-
-
-
-
-        //RaycastHit2D hit = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance, LayerMask.GetMask("Walls"));
-        // Debug.DrawRay(wallCheckpoint.position, Direction, Color.green);
+        Direction = new Vector2(hAxis, vAxis).normalized;
+        
         Collider2D hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
         Collider2D hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
         if ((hit && !ground.grounded) || (hitback && !ground.grounded))
@@ -72,33 +65,34 @@ public class WallJump : MonoBehaviour
         {
             playerMovement.enabled = false;
            
-            if ((hAxis > 0.1 || hAxis < -0.1) && (vAxis > 0.1 || vAxis < -0.1))
+           // if ((hAxis > 0.1 || hAxis < -0.1) && (vAxis > 0.1 || vAxis < -0.1))
+            //{
+            if(playerMovement.facingRight)
             {
-                //RaycastHit2D hitRay = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance, LayerMask.GetMask("Walls"));
-                //Debug.DrawRay(wallCheckpoint.position, Direction, Color.red);
-                //if (hitRay.collider != null)
-                RaycastHit2D hitTest = Physics2D.Raycast(wallCheckpoint.position, Direction, maxDistance);
-                Debug.DrawRay(wallCheckpoint.position, Direction, Color.green);
                 if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                 {
                     Debug.Log("inside walljump");
-                    //Debug.Log("Direction" + Direction);
-                    //player.AddForce(Direction * force);
-                    //player.velocity = new Vector2(Direction.x,Direction.y) * force;
                     Debug.Log("Direction for jump " + Direction);
-                    player.velocity = new Vector2(0,0);
-                    //player.AddForce(new Vector2(Direction.x * forceX, Direction.y * forceY) * maxDistance);
-                    player.velocity = new Vector2(Direction.x * forceX, Direction.y * forceY) * maxDistance;
+                    player.velocity = new Vector2(0, 0);
+                    player.velocity = new Vector2(forceX, forceY);                
                 }
             }
+            else if(!playerMovement.facingRight)
+            {
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
+                {
+                    Debug.Log("inside walljump");
+                    Debug.Log("Direction for jump " + Direction);
+                    player.velocity = new Vector2(0, 0);
+                    player.velocity = new Vector2(-forceX, forceY);
+                }
+            }
+               
+           // }
             
                 
             
-        }
-        //else
-        //{
-        //    playerMovement.enabled = true;
-        //}
+        }      
         if(ground.grounded)
         {
             //Debug.Log("Testing");
