@@ -97,15 +97,19 @@ public class Movement2D : MonoBehaviour
         }
 
         float hAxis = Input.GetAxis("Horizontal");
+        float vAxis = Input.GetAxis("Vertical");
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
 
         if(hAxis > 0.5f)
             player.velocity = new Vector3(Mathf.Sign(hAxis) * speed, player.velocity.y, 0);
         else
             player.velocity = new Vector3(hAxis * speed, player.velocity.y, 0);
-        //Vector3 movement = new Vector3(hAxis, 0, 0) * speed * Time.deltaTime;
-        //player.MovePosition(transform.position + movement);
-        //player.position += new Vector2(movement.x,movement.y);
+        
+        //if (vAxis > 0.5f)
+        //    player.velocity = new Vector3(player.velocity.x, (Mathf.Sign(vAxis) * speed), 0);
+        //else
+        //    player.velocity = new Vector3(player.velocity.x, vAxis * speed, 0);
+
 
         if (hAxis > 0 && !facingRight)
         {

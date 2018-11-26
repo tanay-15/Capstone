@@ -19627,6 +19627,7 @@ GameObject:
   - component: {fileID: 1283182845}
   - component: {fileID: 1283182844}
   - component: {fileID: 1283182850}
+  - component: {fileID: 1283182852}
   - component: {fileID: 1283182848}
   - component: {fileID: 1283182843}
   - component: {fileID: 1283182842}
@@ -19872,7 +19873,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9fb381de0fd1d644b9fe68d3bb909a7, type: 3}
   m_Name: 
@@ -19900,7 +19901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpVelocity: 7.5
+  jumpVelocity: 9
   myAnim: {fileID: 0}
   demonAnim: {fileID: 0}
   facingRight: 0
@@ -19963,7 +19964,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 1.573, z: 0}
+  m_LocalPosition: {x: -1.96, y: 1.573, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 827302078}
@@ -20005,7 +20006,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283182836}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017ffa8ed5a0ae446871ff26edec4a81, type: 3}
   m_Name: 
@@ -20041,6 +20042,17 @@ ConstantForce2D:
   m_Force: {x: 0, y: 0}
   m_RelativeForce: {x: 0, y: 0}
   m_Torque: 0
+--- !u!114 &1283182852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1283182836}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93fc0b7a085c82249bfdce87ad7c2f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &1283182853
 SpriteRenderer:
   m_ObjectHideFlags: 0
