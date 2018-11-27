@@ -93,5 +93,9 @@ public class RagdollEnemy : BasicEnemy {
             GetComponents<BoxCollider2D>()[0].enabled = false;
             GetComponents<BoxCollider2D>()[1].enabled = false;
         }
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SendMessage("GetHit", -15);
+        }
     }
 }

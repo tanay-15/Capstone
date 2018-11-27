@@ -79,9 +79,6 @@ public class Enemy : MonoBehaviour {
 
         waypoint1 = MovePoint1.transform.position;
         waypoint2 = MovePoint2.transform.position;
-
-
-
     }
 
     // Update is called once per frame
@@ -380,13 +377,10 @@ public class Enemy : MonoBehaviour {
         }
         if(collision.gameObject.tag == "Player")
         {
-
             collision.gameObject.SendMessage("GetHit", -5);
             CollidedWithPlayer = true;
-            AttackReady = true;    
+            AttackReady = true;
         }
-
-     
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)

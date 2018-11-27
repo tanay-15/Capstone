@@ -40,18 +40,18 @@ public class PlayerLifeController : MonoBehaviour {
 
     }
 
-    void StartRespawnBlink()
+    void StartInvincibleBlink(int loopCount)
     {
         if (respawnBlink != null)
             StopCoroutine(respawnBlink);
-        respawnBlink = RespawnBlink();
+        respawnBlink = RespawnBlink(loopCount);
         StartCoroutine(respawnBlink);
     }
 
-    IEnumerator RespawnBlink()
+    IEnumerator RespawnBlink(int loopCount)
     {
         invincible = true;
-        for (int i = 0; i < respawnBlinkLoop; i++)
+        for (int i = 0; i < loopCount; i++)
         {
             yield return new WaitForSeconds(0.2f);
             SetRendererColors(transparentColor);
@@ -72,7 +72,7 @@ public class PlayerLifeController : MonoBehaviour {
         gameObject.SetActive(true);
         rb.velocity = Vector3.zero;
         transform.position = respawnPosition;
-        StartRespawnBlink();
+        StartInvincibleBlink(respawnBlinkLoop);
 
         if (GetComponent<DemonModeScript>().DemonModeActive)
         { GetComponent<DemonModeScript>().Transformation(); }
@@ -86,6 +86,7 @@ public class PlayerLifeController : MonoBehaviour {
     public void GetHit(int addLife)
     {
         if (invincible) return;
+        StartInvincibleBlink(2);
         PlayerLife.sharedInstance.AddLife(-10);
         FindObjectOfType<CameraFollow>().ShakeCamera();
         BlinkRed(true);
