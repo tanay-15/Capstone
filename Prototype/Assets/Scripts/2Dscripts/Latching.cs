@@ -40,14 +40,12 @@ public class Latching : MonoBehaviour {
         float vAxis = Input.GetAxisRaw("RVertical");
         Vector2 direction = new Vector2(hAxis, vAxis);
         
-        if ((hAxis > 0.1 || hAxis < -0.1) && (vAxis > 0.1 || vAxis < -0.1))
+        if ((hAxis > 0.1 || hAxis < -0.1) || (vAxis > 0.1 || vAxis < -0.1))
         {
             hit = Physics2D.Raycast(checkpoint.position, direction, maxDistance, LayerMask.GetMask( "Ground", "Ceilings"));
             Debug.DrawRay(checkpoint.position, direction, Color.red);
             if (hit.collider != null)
             {
-
-               
                 hitCollider = true;
             }
 
@@ -91,21 +89,21 @@ public class Latching : MonoBehaviour {
             player.gravityScale = 1.5f;
             Debug.Log("gravity: " + player.gravityScale);
         }
-        else if (walkonWalls && dir.x < 0 && !hitCollider)
-        {
-            verticalMovement.enabled = true;
-            movement.enabled = false;
-            player.gravityScale = 0;
-            Force.force = new Vector2(-1.5f, 0);
+        //else if (walkonWalls && dir.x < 0 && !hitCollider)
+        //{
+        //    verticalMovement.enabled = true;
+        //    movement.enabled = false;
+        //    player.gravityScale = 0;
+        //    Force.force = new Vector2(-1.5f, 0);
             
-        }
-        else if (walkonWalls && dir.x > 0 && !hitCollider)
-        {
-            verticalMovement.enabled = true;
-            movement.enabled = false;
-            player.gravityScale = 0;
-            Force.force = new Vector2(1.5f, 0);
-        }     
+        //}
+        //else if (walkonWalls && dir.x > 0 && !hitCollider)
+        //{
+        //    verticalMovement.enabled = true;
+        //    movement.enabled = false;
+        //    player.gravityScale = 0;
+        //    Force.force = new Vector2(1.5f, 0);
+        //}     
     }
 
     void OnCollisionEnter2D(Collision2D coll)
