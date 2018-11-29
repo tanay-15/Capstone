@@ -150,7 +150,12 @@ public class DemonModeScript : MonoBehaviour {
         transitioning = false;
         DemonModeActive = toDemon;
         Levitation.sharedInstance.SetActive(!toDemon);
+
+        //0: Levitation icon
+        //3: Orbit icon
+        UIIcons.sharedInstance.icons[0].SetActive(!toDemon);
+        UIIcons.sharedInstance.icons[3].SetActive(toDemon);
     }
 
-   
+
 }
