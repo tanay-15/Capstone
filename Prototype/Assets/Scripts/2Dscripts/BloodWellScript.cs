@@ -35,7 +35,7 @@ public class BloodWellScript : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             contactPlayer = true;
-            rb.BarColorFill = true;
+            //rb.BarColorFill = true;
         }
     }
 
@@ -44,7 +44,7 @@ public class BloodWellScript : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             contactPlayer = false;
-            rb.BarColorFill = false;
+            //rb.BarColorFill = false;
         }
     }
 

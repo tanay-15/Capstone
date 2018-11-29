@@ -19,18 +19,19 @@ public class rageBar : MonoBehaviour {
     Color normalColor;
     Color fillingColor;
     private bool barColorFill;
+    GradientScroll gradientScroll;
 
-    public bool BarColorFill
-    {
-        get { return barColorFill; }
-        set
-        {
-            //Ignore setting the filler color if the bar is already full or if rage mode is active
-            if (fillAmount < 1 && !rageBarActive)
-                filler.color = (value) ? fillingColor : normalColor;
-            barColorFill = value;
-        }
-    }
+    //public bool BarColorFill
+    //{
+    //    get { return barColorFill; }
+    //    set
+    //    {
+    //        //Ignore setting the filler color if the bar is already full or if rage mode is active
+    //        if (fillAmount < 1 && !rageBarActive)
+    //            filler.color = (value) ? fillingColor : normalColor;
+    //        barColorFill = value;
+    //    }
+    //}
 
    
                                        // Use this for initialization
@@ -38,6 +39,7 @@ public class rageBar : MonoBehaviour {
         rageBarActive = false;
         RBar = GetComponent<rageBar>();
         rageBarFilled = false;
+        gradientScroll = FindObjectOfType<GradientScroll>();
 
         normalColor = RBar.filler.color;
         fillingColor = normalColor;
@@ -71,7 +73,7 @@ public class rageBar : MonoBehaviour {
                 GetComponent<DemonModeScript>().Transformation();
                 rageBarActive = false;
 
-                BarColorFill = false;
+                //BarColorFill = false;
             }
         }
 
@@ -103,6 +105,16 @@ public class rageBar : MonoBehaviour {
         if(RBar.fillAmount != filler.fillAmount)
         {
             filler.fillAmount = RBar.fillAmount;
+        }
+        Debug.Log(RBar.fillAmount);
+        if (RBar.fillAmount >= 1f)
+        {
+            //filler.color = fillingColor;
+            gradientScroll.EnableGradient(true);
+        }
+        else if (RBar.fillAmount < 1f)
+        {
+            gradientScroll.EnableGradient(false);
         }
         
     }
