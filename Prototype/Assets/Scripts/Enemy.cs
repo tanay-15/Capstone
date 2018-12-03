@@ -353,7 +353,8 @@ public class Enemy : MonoBehaviour {
     }
     public void applyDamage(int damage)
     {
-        health -= damage;
+        Debug.Log("Hit by arrow~!!");
+        this.health = this.health -  damage;
 
       
     }

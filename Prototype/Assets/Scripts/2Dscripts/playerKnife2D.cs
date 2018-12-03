@@ -44,7 +44,7 @@ public class playerKnife2D : MonoBehaviour {
         var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
         impact.gameObject.SetActive(true);
 
-        collision.gameObject.SendMessageUpwards("ApplyDamage", 5);
+        collision.gameObject.SendMessageUpwards("applyDamage", 5);
         StartCoroutine(DelayDestroy());
 
         /*

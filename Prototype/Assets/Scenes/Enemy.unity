@@ -3369,11 +3369,16 @@ Prefab:
     - target: {fileID: 224618915016268578, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1824979003549224, guid: 7232852753f32ae4cb816b893e18f1e0, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224808018378718300, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7232852753f32ae4cb816b893e18f1e0, type: 2}
@@ -3684,13 +3689,13 @@ MonoBehaviour:
   phasemovC: 0
   phasemovD: 0
   oneSideCounter: 10
-  Phase2AttackCounter: 3
+  Phase2AttackCounter: 6
   isOnLeft: 0
   isOnRight: 0
   bossHealthBar: {fileID: 1932561926}
   currentState: 0
   moveSpeed: 7.5
-  attackdoneCounter: 2.5
+  attackdoneCounter: 6
   AttackDone: 0
   slingshotPrefab: {fileID: 1015697178932572, guid: 746860d8618e97b40a76c2415f660911,
     type: 2}
