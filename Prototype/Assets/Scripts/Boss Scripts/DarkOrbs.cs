@@ -55,16 +55,20 @@ public class DarkOrbs : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Hits " + collision.gameObject.name);
+        
 
-        if(collision.gameObject.tag == "EnemyAttack")
+        if(collision.gameObject.tag == "BossPlatforms")
         {
+            Debug.Log("Hitting boss platformns");
             Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),collision.gameObject.GetComponent<Collider2D>());
         }
+       
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.SendMessage("GetHit", -15);
         }
+
+       
         Destroy(go);
       Destroy(this.gameObject);
     }

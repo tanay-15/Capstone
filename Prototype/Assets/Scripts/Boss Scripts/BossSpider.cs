@@ -474,5 +474,11 @@ public class BossSpider : MonoBehaviour {
             collision.gameObject.SendMessage("GetHit", -20);
             currentState = States.Idle;
         }
+
+        if(collision.gameObject.tag == "BossPlatforms")
+        {
+            Debug.Log("Ignoring the platforms");
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(),this.GetComponent<Collider2D>());
+        }
     }
 }
