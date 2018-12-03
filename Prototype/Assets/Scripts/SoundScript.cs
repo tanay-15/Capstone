@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SoundScript : MonoBehaviour {
     public GameObject player;
-    public GameObject enemy;
     public List<AudioClip> Background_Music;
     public List<AudioClip> Combat_Music;
 
@@ -14,11 +13,12 @@ public class SoundScript : MonoBehaviour {
     public bool stopCombatMusic = false;
     public bool alreadyPlayedE = false;
     public bool alreadyPlayedC = false;
-  
+    SoundManager soundmanagerScript;
    
 	// Use this for initialization
 	void Start () {
-       // SoundManager.PlayMusic(gameObject, Background_Music[0]);
+       
+        soundmanagerScript = GetComponent<SoundManager>();
 	}
 
     // Update is called once per frame
@@ -26,13 +26,15 @@ public class SoundScript : MonoBehaviour {
     {
         if (!playExploreMusic && !alreadyPlayedE)
         {
-            Debug.Log("Playing");
+            
+           
         }
         if (playExploreMusic)
         {
             if (!alreadyPlayedE)
             {
-                SoundManager.PlayMusic(gameObject, Background_Music[1]);
+                Debug.Log("Playing");
+                soundmanagerScript.PlayMusic(gameObject, Background_Music);
                 alreadyPlayedE = true;
             }
 
@@ -42,7 +44,7 @@ public class SoundScript : MonoBehaviour {
         {
             if (alreadyPlayedE)
             {
-                SoundManager.StopMusic(gameObject, Background_Music[1]);
+                soundmanagerScript.StopMusic(gameObject, Background_Music);
                 alreadyPlayedE = false;
             }
         }
@@ -51,7 +53,7 @@ public class SoundScript : MonoBehaviour {
         {
             if (!alreadyPlayedC)
             {
-                SoundManager.PlayMusic(gameObject, Combat_Music[0]);
+                soundmanagerScript.PlayMusic(gameObject, Combat_Music);
                 alreadyPlayedC = true;
             }
         }
@@ -60,18 +62,13 @@ public class SoundScript : MonoBehaviour {
         {
             if (alreadyPlayedC)
             {
-                SoundManager.StopMusic(gameObject, Combat_Music[0]);
-                alreadyPlayedC= false;
+                soundmanagerScript.StopMusic(gameObject, Combat_Music);
+                alreadyPlayedC = false;
             }
         }
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        //if(coll.gameObject.name == "ExploreTrigger")
-        //{
-      
-        //}
-
        
     }
 
@@ -93,7 +90,6 @@ public class SoundScript : MonoBehaviour {
             stopCombatMusic = false;
             stopExploreMusic = false;
             alreadyPlayedE = false;
-
         }
     }
 
@@ -103,13 +99,13 @@ public class SoundScript : MonoBehaviour {
         {
             playExploreMusic = false;
             stopExploreMusic = true;
-           // alreadyPlayed = false;
         }
         if (coll.gameObject.tag == "CombatTrigger")
         {
             playCombatMusic = false;
             stopCombatMusic = true;
-           // alreadyPlayed = false;
         }
     }
+
+   
 }

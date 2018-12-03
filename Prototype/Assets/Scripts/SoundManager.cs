@@ -6,21 +6,72 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-
-    static public void PlayMusic(GameObject gameobject, AudioClip audio)
+    AudioSource asource;
+    bool keepFadingIn = false;
+    bool keepFadingOut = false;
+    float trackLength;
+    int i;
+    float maxVolume =1;
+    float minVolume = 0;
+    float speed =0.1f;
+    public void PlayMusic(GameObject gameobject, List<AudioClip> audio)
     {
+        Debug.Log("play music");
         //gameobject.GetComponent<AudioSource>().PlayOneShot(audio);
-        var asource = gameobject.GetComponent<AudioSource>();
-        asource.clip = audio;
-        asource.Play();
-        asource.loop = true;
+        asource = gameobject.GetComponent<AudioSource>();
+        
+        //for (i = 0; i < audio[i].length; i++)
+        foreach(AudioClip clip in audio)
+        {
+            asource.clip = clip;
+            Debug.Log("Before FADE IN");
+            asource.Play();
+            StartCoroutine(FadeIn(gameobject, asource.clip));
+           
+            asource.loop = true;
+         
+        }
     }
 
-    static public void StopMusic(GameObject gameobj, AudioClip audio)
+    public void StopMusic(GameObject gameobj, List<AudioClip> audio)
     {
-        var asource = gameobj.GetComponent<AudioSource>();
-        //asource.clip = audio;
-        asource.Stop();
+        asource = gameobj.GetComponent<AudioSource>();
+        StartCoroutine(FadeOut(gameobj, asource.clip));
+        //asource.Stop();
+        
+    }
+    IEnumerator FadeIn(GameObject obj, AudioClip audio)
+    {
+        Debug.Log("Inside Fade in");
+        asource = obj.GetComponent<AudioSource>();       
+        asource.clip = audio;
+        Debug.Log("before making volume 0");
+        asource.volume = 0;
+        keepFadingIn = true;
+        keepFadingOut = false;       
+        float audioVolume = asource.volume;
+        while(asource.volume < maxVolume && keepFadingIn)
+        {
+            audioVolume += speed;
+            asource.volume = audioVolume;
+            yield return new WaitForSeconds(0.35f);
+        }
+
+        
+    }
+
+    IEnumerator FadeOut(GameObject obj, AudioClip audio)
+    {
+        asource = obj.GetComponent<AudioSource>();
+        keepFadingIn = false;
+        keepFadingOut = true;
+        float audioVolume = asource.volume;
+        while (asource.volume >= minVolume && keepFadingOut)
+        {
+            audioVolume -= speed;
+            asource.volume = audioVolume;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
   
