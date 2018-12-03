@@ -52,9 +52,9 @@ public class SoundManager : MonoBehaviour
         float audioVolume = asource.volume;
         while(asource.volume < maxVolume && keepFadingIn)
         {
-            audioVolume += speed;
+            audioVolume += speed * Time.deltaTime;
             asource.volume = audioVolume;
-            yield return new WaitForSeconds(0.35f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         
@@ -68,9 +68,9 @@ public class SoundManager : MonoBehaviour
         float audioVolume = asource.volume;
         while (asource.volume >= minVolume && keepFadingOut)
         {
-            audioVolume -= speed;
+            audioVolume -= speed * Time.deltaTime;
             asource.volume = audioVolume;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }
