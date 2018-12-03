@@ -107,6 +107,16 @@ public class BossSpider : MonoBehaviour {
         Vector3 relative;
         
         //relative = position3.transform.localRotation;
+
+       if(this.gameObject.activeInHierarchy == true)
+        {
+            bossHealthBar.gameObject.SetActive(true);
+        }
+
+        else if(this.gameObject.activeInHierarchy == false)
+        {
+            bossHealthBar.gameObject.SetActive(false);
+        }
     
 
 
@@ -126,7 +136,9 @@ public class BossSpider : MonoBehaviour {
         if(health <= 0)
         {
             currentState = States.Dead;
+            Destroy(bossHealthBar.gameObject);
             Destroy(this.gameObject);
+            
         }
         
         bossHealthBar.value = health;
