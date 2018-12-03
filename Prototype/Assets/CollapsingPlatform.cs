@@ -27,6 +27,7 @@ public class CollapsingPlatform : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.5f);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        GetComponent<Rigidbody2D>().gravityScale = 5.0f;
         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -25.0f));
         GetComponents<BoxCollider2D>()[0].enabled = false;
         yield return null;
