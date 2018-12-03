@@ -32,19 +32,29 @@ public class MovingPlatform1 : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        Debug.DrawLine(start, end, Color.black);
+        //Debug.DrawLine(start, end, Color.black);
         if (!wait)
         {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, end, (Mathf.Abs(Vector3.Distance(start, end)) / timeToTravel) * Time.deltaTime);
 
-            float t = Time.time - startTime;
-            transform.position = Vector3.Lerp(start, end, t / timeToTravel);
+            //float t = Time.time - startTime;
+            //transform.position = Vector3.Lerp(start, end, t / timeToTravel);
                 
-            if (t > timeToTravel){
+            /*if (t > timeToTravel){
                 wait = true;
                 Vector3 temp = start;
                 start = end;
                 end = temp;
                 target = -target;
+                StartCoroutine(Wait());
+            }*/
+
+            if(this.transform.position == end)
+            {
+                wait = true;
+                Vector3 temp = start;
+                start = end;
+                end = temp;
                 StartCoroutine(Wait());
             }
         }
