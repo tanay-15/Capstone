@@ -14,12 +14,9 @@ public class BossSpiderLevel : MonoBehaviour {
     private float playerhealth;
     public GameObject playerUI;
 
-    public Slider bossHPbar;
-
     private float bosshealth;
 	void Start () {
-
-        bossHPbar.gameObject.SetActive(false);
+		
 	}
 	
 	// Update is called once per frame
@@ -27,9 +24,6 @@ public class BossSpiderLevel : MonoBehaviour {
 
         bosshealth = boss.GetComponent<BossSpider>().health;
         playerhealth = playerUI.GetComponent<PlayerLife>().currentLife;
-
-      
-     
 
         if (bosshealth <= 0)
         {
@@ -46,21 +40,5 @@ public class BossSpiderLevel : MonoBehaviour {
         {
             SceneManager.LoadScene("Enemy");
         }
-
-       // BossCheck();
 	}
-
-    void BossCheck()
-    {
-        if(boss.activeInHierarchy == true)
-        {
-            bossHPbar.gameObject.SetActive(true);
-
-        }
-
-        else
-        {
-            bossHPbar.gameObject.SetActive(false);
-        }
-    }
 }
