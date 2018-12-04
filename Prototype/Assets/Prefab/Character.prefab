@@ -288,8 +288,6 @@ GameObject:
   - component: {fileID: 82136820047750502}
   - component: {fileID: 114319122168463772}
   - component: {fileID: 114943494201147056}
-  - component: {fileID: 114163635337408896}
-  - component: {fileID: 114766673371355020}
   m_Layer: 14
   m_Name: Character
   m_TagString: Player
@@ -388,7 +386,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915422515657174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.04, y: 29.11, z: 0}
+  m_LocalPosition: {x: -17.57, y: 2.17, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4990740603744274}
@@ -648,7 +646,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1125,29 +1123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grounded: 0
---- !u!114 &114163635337408896
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1915422515657174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c73b6936dd242c42977f8599ff07629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1915422515657174}
-  Background_Music:
-  - {fileID: 8300000, guid: 111f8598ff367a6408d3e581bff7cf82, type: 3}
-  - {fileID: 0}
-  Combat_Music:
-  - {fileID: 0}
-  playExploreMusic: 0
-  playCombatMusic: 0
-  stopExploreMusic: 0
-  stopCombatMusic: 0
-  alreadyPlayedE: 0
-  alreadyPlayedC: 0
 --- !u!114 &114201339504739538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1191,9 +1166,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1915422515657174}
   Background_Music:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 94e51913b20619843bd76943c2afd79e, type: 3}
   Combat_Music:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: cffb22680c3903e49875c927cc4db9d8, type: 3}
   playExploreMusic: 0
   playCombatMusic: 0
   stopExploreMusic: 0
@@ -1332,17 +1307,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   indicator: {fileID: 1842940262224382}
---- !u!114 &114766673371355020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1915422515657174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7efd4d9fe0fc27a4482b05c9f996acaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114769860227202694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1424,7 +1388,7 @@ MonoBehaviour:
   myAnim: {fileID: 0}
   demonAnim: {fileID: 0}
   facingRight: 0
-  cooldownTime: 0.5
+  cooldownTime: 1
   knifePrefab: {fileID: 1517853802281472, guid: 72642c5fd19a233408ba7f5efdfe4cce,
     type: 2}
   chargedArrowPrefab: {fileID: 1625923831552238, guid: 2aa539d237f5159499486002c0113868,
