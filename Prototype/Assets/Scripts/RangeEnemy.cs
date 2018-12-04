@@ -110,9 +110,13 @@ public class RangeEnemy : Enemy {
     {
         if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position, transform.position) < 2f)
         {
-            IsAlive = false;
-
-            health = 0;
+            if (health <= 0)
+                IsAlive = false;
+            else
+            {
+                applyDamage(5);
+                Destroy(collision.gameObject);
+            }
 
         }
 

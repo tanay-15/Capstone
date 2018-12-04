@@ -11,7 +11,7 @@ public class ThrowAxe : MonoBehaviour {
     
 	void Start () {
 
-        moveVector = new Vector3(-5f * Time.deltaTime, 0, 0);
+        moveVector = new Vector3(-8f * Time.deltaTime, 0, 0);
 	}
 	
 	// Update is called once per frame
@@ -25,7 +25,16 @@ public class ThrowAxe : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.SendMessage("GetHit", -15);
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
+        if(collision.gameObject.tag == "projectile")
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+        }
+        
     }
 }

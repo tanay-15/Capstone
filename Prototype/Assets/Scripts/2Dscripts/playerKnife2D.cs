@@ -49,13 +49,13 @@ public class playerKnife2D : MonoBehaviour {
         collision.gameObject.SendMessageUpwards("applyDamage", 5);
         StartCoroutine(DelayDestroy());
 
-        /*
+       
      if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.SendMessageUpwards("applyDamage", 5);
             Destroy(this.gameObject);
         }
-        */
+      
 
     }
 

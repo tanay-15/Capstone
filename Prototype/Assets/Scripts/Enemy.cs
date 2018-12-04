@@ -364,7 +364,7 @@ public class Enemy : MonoBehaviour {
         if (CollidedWithPlayer)
         {
             target.gameObject.SendMessage("GetHit", -10f);
-            rateofattack = 3f;
+            rateofattack = 2f;
         }
   
     }
@@ -388,9 +388,16 @@ public class Enemy : MonoBehaviour {
     {
         if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 2f )
         {
-            IsAlive = false;
+            if(health <=0)
+                IsAlive = false;
+            else
+            {
+                applyDamage(5);
+                Destroy(collision.gameObject);
+            }
+           
 
-            health = 0;
+            //health = 0;
           
         }
 

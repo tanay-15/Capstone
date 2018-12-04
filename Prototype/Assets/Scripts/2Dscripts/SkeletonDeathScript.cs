@@ -15,6 +15,9 @@ public class SkeletonDeathScript : BasicEnemy {
     public AudioClip[] BonesBreak;
     AudioSource Audio;
 
+    //health death
+    public int mhealth;
+
     public override Vector3 lifebarOffset
     {
         get
@@ -47,7 +50,8 @@ public class SkeletonDeathScript : BasicEnemy {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        mhealth = this.gameObject.GetComponent<Enemy>().GetHealth();
 	}
 
     void TurnOffCollisions()
@@ -89,6 +93,10 @@ public class SkeletonDeathScript : BasicEnemy {
         {
             if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
             {
+                if(mhealth <= 0)
+                {
+
+          
                 GetComponent<Animator>().enabled = false;
                 SetChildrenKinematic(false);
                 IKSystem.SetActive(false);
@@ -97,6 +105,7 @@ public class SkeletonDeathScript : BasicEnemy {
                 events.OnDeath.Invoke();
                 StartCoroutine(DieRoutine());
                 TurnOffCollisions();
+            }
             }
         }
         
