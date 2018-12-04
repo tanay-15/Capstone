@@ -277,7 +277,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4144058629130524}
-  - component: {fileID: 114025598347018486}
   - component: {fileID: 114304581374282320}
   - component: {fileID: 114572393372644210}
   - component: {fileID: 114983765038645822}
@@ -287,6 +286,8 @@ GameObject:
   - component: {fileID: 50886479926175692}
   - component: {fileID: 70945505782471834}
   - component: {fileID: 82136820047750502}
+  - component: {fileID: 114319122168463772}
+  - component: {fileID: 114943494201147056}
   m_Layer: 14
   m_Name: Character
   m_TagString: Player
@@ -385,7 +386,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915422515657174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.58, y: -2.09, z: 0}
+  m_LocalPosition: {x: -17.57, y: 2.17, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4990740603744274}
@@ -606,7 +607,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1.5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd23a8c637f15a9428efcc2c50d2edfe, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -685,7 +686,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f0c4bbc333a271f4c8c12329f29eca76, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1110,18 +1111,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114025598347018486
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1915422515657174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 318eaac13f40eb64eaa0338370cd566b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackTrigger: {fileID: 61864516376753934}
 --- !u!114 &114098956800703260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1164,6 +1153,28 @@ MonoBehaviour:
   DemonCircle: {fileID: 1855085303268096}
   Darkness: {fileID: 0}
   Landscape: {fileID: 0}
+--- !u!114 &114319122168463772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1915422515657174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73b6936dd242c42977f8599ff07629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1915422515657174}
+  Background_Music:
+  - {fileID: 8300000, guid: 94e51913b20619843bd76943c2afd79e, type: 3}
+  Combat_Music:
+  - {fileID: 8300000, guid: cffb22680c3903e49875c927cc4db9d8, type: 3}
+  playExploreMusic: 0
+  playCombatMusic: 0
+  stopExploreMusic: 0
+  stopCombatMusic: 0
+  alreadyPlayedE: 0
+  alreadyPlayedC: 0
 --- !u!114 &114572393372644210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1198,8 +1209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9fb381de0fd1d644b9fe68d3bb909a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceX: 2
-  forceY: 1.65
+  forceX: 5
+  forceY: 7
   maxDistance: 5
   wallSliding: 0
   wallCheckpoint: {fileID: 4073061030153632}
@@ -1331,6 +1342,17 @@ MonoBehaviour:
   speedtoDecrease: 0.11
   speedtoIncrease: 0.01
   filler: {fileID: 0}
+--- !u!114 &114943494201147056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1915422515657174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7efd4d9fe0fc27a4482b05c9f996acaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114961502161296112
 MonoBehaviour:
   m_ObjectHideFlags: 1
