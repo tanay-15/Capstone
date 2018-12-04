@@ -72,7 +72,7 @@ public class DemonModeScript : MonoBehaviour {
                 Color darkness = Darkness.GetComponent<SpriteRenderer>().color;
                 Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g,darkness.b, darkness.a + 0.002f);
                 Color landscape = Landscape.GetComponent<SpriteRenderer>().color;
-                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a - 0.007f);
+                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a - 0.014f);
 
                 DemonCircleSpawn = true;
 
@@ -83,7 +83,7 @@ public class DemonModeScript : MonoBehaviour {
                 Color darkness = Darkness.GetComponent<SpriteRenderer>().color;
                 Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g, darkness.b, darkness.a - 0.002f);
                 Color landscape = Landscape.GetComponent<SpriteRenderer>().color;
-                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a + 0.007f);
+                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a + 0.014f);
             }
         }
 
