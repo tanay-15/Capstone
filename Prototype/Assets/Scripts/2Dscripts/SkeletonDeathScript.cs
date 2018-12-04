@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonDeathScript : BasicEnemy {
+public class SkeletonDeathScript : MonoBehaviour {
 
     public Transform BoneSystem;
     //public Transform BodyParts;
@@ -17,14 +17,6 @@ public class SkeletonDeathScript : BasicEnemy {
 
     //health death
     public int mhealth;
-
-    public override Vector3 lifebarOffset
-    {
-        get
-        {
-            return Vector3.up * 2f;
-        }
-    }
 
     // Use this for initialization
     void Start () {
@@ -87,6 +79,17 @@ public class SkeletonDeathScript : BasicEnemy {
         Destroy(gameObject);
     }
 
+    void Die()
+    {
+        GetComponent<Animator>().enabled = false;
+        SetChildrenKinematic(false);
+        IKSystem.SetActive(false);
+        //SetBodyPartsToBody();
+
+        StartCoroutine(DieRoutine());
+        TurnOffCollisions();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (Vector3.Distance(transform.position,collision.transform.position) < 2f)  // Checking which trigger
@@ -96,16 +99,9 @@ public class SkeletonDeathScript : BasicEnemy {
                 if(mhealth <= 0)
                 {
 
-          
-                GetComponent<Animator>().enabled = false;
-                SetChildrenKinematic(false);
-                IKSystem.SetActive(false);
-                //SetBodyPartsToBody();
+                    Die();
 
-                events.OnDeath.Invoke();
-                StartCoroutine(DieRoutine());
-                TurnOffCollisions();
-            }
+                }
             }
         }
         
