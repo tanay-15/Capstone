@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Bat : BasicEnemy {
+public class Enemy_Bat : MonoBehaviour {
 
     // Use this for initialization
 
@@ -109,13 +109,11 @@ public class Enemy_Bat : BasicEnemy {
         {
             //attack player
             collision.gameObject.SendMessage("GetHit", -15);
-            events.OnDeath.Invoke();
             Destroy(this.gameObject);
         }
 
         if(collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
         {
-            events.OnDeath.Invoke();
             Destroy(this.gameObject);
         }
     }

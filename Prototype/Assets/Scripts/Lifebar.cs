@@ -9,7 +9,6 @@ public class Lifebar : MonoBehaviour {
 
 	public void AssignEnemy(BasicEnemy enemy)
     {
-        Debug.Log(enemy == null);
         myEnemy = enemy;
         myEnemy.events.OnDeath.AddListener(OnEnemyDeath);
         myEnemy.events.OnTakeDamage.AddListener(OnEnemyTakeDamage);
@@ -23,8 +22,8 @@ public class Lifebar : MonoBehaviour {
         EnemySoulGenerator.sharedInstance.GenerateSoul(myEnemy.gameObject.transform.position + Vector3.up);
     }
 
-    void OnEnemyTakeDamage(float newHealth)
+    void OnEnemyTakeDamage()
     {
-        scaledLifebar.transform.localScale = new Vector3(newHealth, 1f, 1f);
+
     }
 }

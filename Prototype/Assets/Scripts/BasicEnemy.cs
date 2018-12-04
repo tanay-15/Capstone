@@ -4,16 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class UnityFloatEvent : UnityEvent<float> { }
-
-[System.Serializable]
 public class EnemyEvents
 {
     //[System.NonSerialized]
     public UnityEvent OnDeath;
 
     //[System.NonSerialized]
-    public UnityFloatEvent OnTakeDamage;
+    public UnityEvent OnTakeDamage;
 }
 
 public class BasicEnemy : MonoBehaviour {

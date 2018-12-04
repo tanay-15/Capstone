@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : BasicEnemy {
+public class Enemy : MonoBehaviour {
 
     // Use this for initialization
 
@@ -14,8 +14,6 @@ public class Enemy : BasicEnemy {
     private bool shouldLookLeft;
     private bool shouldLookRight;
     private bool checkingFlips;
-
-    protected int maxHealth;
 
     [Header("Attributes")]
     public int health;
@@ -68,14 +66,6 @@ public class Enemy : BasicEnemy {
 
    public GameObject[] compobones;
 
-   public override Vector3 lifebarOffset
-   {
-       get
-       {
-           return Vector3.up * 2f;
-       }
-   }
-
 
 
     void Start () {
@@ -89,8 +79,6 @@ public class Enemy : BasicEnemy {
 
         waypoint1 = MovePoint1.transform.position;
         waypoint2 = MovePoint2.transform.position;
-
-        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -368,9 +356,6 @@ public class Enemy : BasicEnemy {
         Debug.Log("Hit by arrow~!!");
         this.health = this.health -  damage;
 
-        events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
-        //Temporary; health bar does not update properly
-        if (this.health < 0) { events.OnDeath.Invoke(); }
       
     }
 

@@ -11,18 +11,11 @@ public class RangeEnemy : Enemy {
     private GameObject go;
     private bool Thrown = false;
 
-    public override Vector3 lifebarOffset
-    {
-        get
-        {
-            return Vector3.up * 2f;
-        }
-    }
 
 	// Use this for initialization
 	void Start () {
 
-        maxHealth = health;
+      
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
     }
@@ -122,7 +115,6 @@ public class RangeEnemy : Enemy {
             else
             {
                 applyDamage(5);
-                
                 Destroy(collision.gameObject);
             }
 
