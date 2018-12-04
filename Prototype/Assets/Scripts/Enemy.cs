@@ -407,10 +407,11 @@ public class Enemy : BasicEnemy {
                 IsAlive = false;
             else
             {
+                
                 applyDamage(5);
                 collision.GetComponent<OrbitorObjectScript>().hit = true;
 
-                Destroy(collision.gameObject);
+                //Destroy(collision.gameObject);
             }
            
 
