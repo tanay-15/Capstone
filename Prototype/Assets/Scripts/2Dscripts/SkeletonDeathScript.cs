@@ -12,6 +12,8 @@ public class SkeletonDeathScript : BasicEnemy {
     Collider2D[] myColliders;
     SpriteMeshInstance[] mySprites;
 
+    public AudioClip[] BonesBreak;
+    AudioSource Audio;
 
     public override Vector3 lifebarOffset
     {
@@ -25,8 +27,9 @@ public class SkeletonDeathScript : BasicEnemy {
     void Start () {
 
         //Physics2D.IgnoreLayerCollision(15, 15);
+        Audio = GetComponent<AudioSource>();
+        Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length-1)];
 
-        
         IKSystem.SetActive(false);
         SetChildrenKinematic(true);
         IKSystem.SetActive(true);
@@ -62,6 +65,8 @@ public class SkeletonDeathScript : BasicEnemy {
     IEnumerator DieRoutine()
     {
         //TurnOffCollisions();
+        Audio.Play();
+
         yield return new WaitForSeconds(2f);
 
         float speed = 2.5f;

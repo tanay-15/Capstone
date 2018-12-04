@@ -253,6 +253,7 @@ public class SkeletonBossScript : MonoBehaviour {
             {               
                 if (isAssembling)
                 {
+
                     fracLerp +=  Time.deltaTime;
                     for (int i = 0; i < BonesManager.Length; i++)
                     {                        
@@ -284,6 +285,8 @@ public class SkeletonBossScript : MonoBehaviour {
                         HealthBar.transform.SetParent(GameObject.Find("Canvas").transform);
                     }
                 }
+
+          
 
                 break;
             }
@@ -386,12 +389,13 @@ public class SkeletonBossScript : MonoBehaviour {
         Grunts[0].GetChild(2).GetComponent<RagdollEnemy>().SetChildrenKinematic(true);
 
         Assemble();
-
         isAssembling = true;
+
+        GetComponent<AudioSource>().Play();
     }
 
 
-    public void ApplyDamage(int damage)
+    public void applyDamage(int damage)
     {
         Debug.Log("Damage");
         Health -= damage;

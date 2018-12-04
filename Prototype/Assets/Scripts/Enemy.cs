@@ -93,12 +93,12 @@ public class Enemy : MonoBehaviour {
             Attack();
 
             //when player is respawned
-            if(Vector2.Distance(target.transform.position,this.transform.position)> 5f)
-            {
-                target = null;
-                currentstate = States.Idle;
-                anim.SetBool("Attack", false);
-            }
+            //if(Vector2.Distance(target.transform.position,this.transform.position)> 5f)
+            //{
+            //    target = null;
+            //    currentstate = States.Idle;
+            //    anim.SetBool("Attack", false);
+            //}
         }
         else
         {

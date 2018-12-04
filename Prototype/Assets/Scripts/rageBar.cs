@@ -106,7 +106,7 @@ public class rageBar : MonoBehaviour {
         {
             filler.fillAmount = RBar.fillAmount;
         }
-        Debug.Log(RBar.fillAmount);
+        //Debug.Log(RBar.fillAmount);
         if (RBar.fillAmount >= 1f)
         {
             //filler.color = fillingColor;

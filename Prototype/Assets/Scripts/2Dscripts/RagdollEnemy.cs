@@ -62,6 +62,7 @@ public class RagdollEnemy : BasicEnemy {
     IEnumerator DieRoutine()
     {
         TurnOffCollisions(true);
+
         yield return new WaitForSeconds(2f);
 
         float speed = 2.5f;
@@ -92,6 +93,9 @@ public class RagdollEnemy : BasicEnemy {
             SetChildrenKinematic(false);
             GetComponents<BoxCollider2D>()[0].enabled = false;
             GetComponents<BoxCollider2D>()[1].enabled = false;
+
+            if (GetComponent<AudioSource>())
+                GetComponent<AudioSource>().Play();
         }
         if (collision.gameObject.tag == "Player")
         {
