@@ -408,6 +408,8 @@ public class Enemy : BasicEnemy {
             else
             {
                 applyDamage(5);
+                collision.GetComponent<OrbitorObjectScript>().hit = true;
+
                 Destroy(collision.gameObject);
             }
            
