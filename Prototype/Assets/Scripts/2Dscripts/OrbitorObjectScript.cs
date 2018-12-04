@@ -29,7 +29,7 @@ public class OrbitorObjectScript : MonoBehaviour {
 
         if (collision.gameObject.layer == 15 || collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.SendMessage("applyDamage", 15);
+            collision.gameObject.SendMessage("ApplyDamage", 15);
             Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
             hit = true;
         }
