@@ -6,6 +6,8 @@ public class MovingPlatform : MonoBehaviour {
 
     public List<GameObject> getToggles;
 
+    List<GameObject> standingOn;
+
     int numDown;
 
     Vector2 startPos;
@@ -16,6 +18,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        standingOn = new List<GameObject>();
         t = 0.0f;
         numDown = 0;
         startPos = this.transform.position;
@@ -54,6 +57,25 @@ public class MovingPlatform : MonoBehaviour {
         }
 
         this.transform.position = Vector2.MoveTowards(this.transform.position, target, 0.05f);
+        foreach(GameObject g in standingOn)
+        {
+            g.transform.position = Vector2.MoveTowards(g.transform.position, new Vector2(g.transform.position.x, g.transform.position.y) + (target - new Vector2(this.transform.position.x, this.transform.position.y)), 0.05f);
+        }
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            standingOn.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            standingOn.Remove(collision.gameObject);
+        }
+    }
 }
