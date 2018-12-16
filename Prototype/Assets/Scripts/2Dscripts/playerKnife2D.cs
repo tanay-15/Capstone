@@ -45,34 +45,33 @@ public class playerKnife2D : MonoBehaviour {
         // Impact Sprite
         var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
         impact.gameObject.SetActive(true);
+        //StartCoroutine(DelayDestroy());
 
-        collision.gameObject.SendMessageUpwards("applyDamage", 5);
-        StartCoroutine(DelayDestroy());
 
-       
-     if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.SendMessageUpwards("applyDamage", 5);
-            Destroy(this.gameObject);
+            
         }
-      
+
 
     }
 
-    
 
-   
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.name == "Torso" || collision.gameObject.name == "thigh" || collision.gameObject.name == "Head" || collision.gameObject.name == "shin")
-    //    {
-    //        hasHit = true;
-    //        GetComponent<Rigidbody2D>().isKinematic = true;
-    //        GetComponent<Collider2D>().enabled = false;
-    //        transform.parent = collision.gameObject.transform;
-    //    }
-        
-    //}
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //if ((other.gameObject.layer != 14) && (other.GetType() == typeof(BoxCollider2D)))
+        //{
+        //    var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
+        //    impact.gameObject.SetActive(true);
+
+        //    other.gameObject.SendMessageUpwards("applyDamage", 5);
+        //    Destroy(gameObject);
+        //}
+
+    }
 
     virtual public float GetPosX()
     {

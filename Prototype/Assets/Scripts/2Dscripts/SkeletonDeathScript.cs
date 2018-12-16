@@ -79,7 +79,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    void Die()
+    public void Die()
     {
         GetComponent<Animator>().enabled = false;
         SetChildrenKinematic(false);
@@ -90,23 +90,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         TurnOffCollisions();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (Vector3.Distance(transform.position,collision.transform.position) < 2f)  // Checking which trigger
-        {
-            if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
-            {
-                if(mhealth <= 0)
-                {
 
-                    Die();
-
-                }
-            }
-        }
-        
-        
-    }
     /*
     void SetBodyPartsToBody()
     {

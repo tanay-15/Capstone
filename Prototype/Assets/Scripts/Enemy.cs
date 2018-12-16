@@ -138,11 +138,13 @@ public class Enemy : BasicEnemy {
         target = null;
         movway1 = false;
         movway2 = false;
-             currentstate = States.Dead;
-            anim.SetTrigger("Death");
+        currentstate = States.Dead;
+        GetComponent<SkeletonDeathScript>().Die();
+        events.OnDeath.Invoke();
+        anim.SetTrigger("Death");
         
 
-      
+
     }
 
     public virtual void DetectingPlayer()
@@ -370,7 +372,7 @@ public class Enemy : BasicEnemy {
 
         events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
         //Temporary; health bar does not update properly
-        if (this.health < 0) { events.OnDeath.Invoke(); }
+      
       
     }
 
@@ -405,7 +407,7 @@ public class Enemy : BasicEnemy {
         {
             if(health <=0)
                 IsAlive = false;
-            else
+            else if (collision.GetType() == typeof(BoxCollider2D))
             {
                 
                 applyDamage(5);

@@ -616,8 +616,8 @@ GameObject:
   - component: {fileID: 114293092894321764}
   - component: {fileID: 95614771149698954}
   - component: {fileID: 114374235149660432}
-  - component: {fileID: 61525454147930924}
   - component: {fileID: 82784731876791984}
+  - component: {fileID: 58908236051384214}
   m_Layer: 15
   m_Name: SkeletonRiggedV2
   m_TagString: Enemy
@@ -1706,6 +1706,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58908236051384214
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820244129443420}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.8}
+  serializedVersion: 2
+  m_Radius: 9.47
 --- !u!60 &60076061479198336
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1868,31 +1883,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1.02, y: 3.87}
-  m_EdgeRadius: 0
---- !u!61 &61525454147930924
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1820244129443420}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.5841613, y: 2.1876152}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 26.220528, y: 4.5635734}
   m_EdgeRadius: 0
 --- !u!61 &61910956292989516
 BoxCollider2D:

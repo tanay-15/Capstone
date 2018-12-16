@@ -32,22 +32,26 @@ public class RangeEnemy : Enemy {
 
         if (IsAlive)
         {
-            if(target!= null)
+            if (target != null)
             {
                 rateofattack = rateofattack - Time.deltaTime;
                 CheckForPlayerPosition();
-                   if(rateofattack <= 1f)
+                if (rateofattack <= 1f)
                 {
                     Thrown = false;
                 }
-                if (!Thrown && rateofattack <=0)
+                if (!Thrown && rateofattack <= 0)
                 {
-                    
+
                     Debug.Log("Found Target now attack him");
                     ThrowAxe();
                 }
-             
+
             }
+        }
+        else
+        {
+            Death();
         }
     }
 
