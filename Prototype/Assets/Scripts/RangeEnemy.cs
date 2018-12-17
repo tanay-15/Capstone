@@ -121,14 +121,23 @@ public class RangeEnemy : Enemy {
     {
         if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position, transform.position) < 2f)
         {
-            if (health <= 0)
-                IsAlive = false;
-            else
+
+            if(collision.GetType() == typeof(BoxCollider2D))
             {
                 applyDamage(5);
-                
+                if (collision.GetComponent<OrbitorObjectScript>())
+                    collision.GetComponent<OrbitorObjectScript>().hit = true;
+                else if (collision.GetComponent<playerKnife2D>())
+                    collision.GetComponent<playerKnife2D>().hasHit = true;
+
+                if (health <= 0)
+                    IsAlive = false;
+
+                var impact = Instantiate(ImpactAnim, collision.transform.position, Quaternion.identity);
+                impact.gameObject.SetActive(true);
                 Destroy(collision.gameObject);
             }
+
 
         }
 

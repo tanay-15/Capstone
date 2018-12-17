@@ -23,12 +23,14 @@ public class Enemy : BasicEnemy {
     public float range;
     public float damage;
     public float movspeed;
+    
     public enum World
     {
         Hero, Demon
     }
     public World InWorld;
     public float losrange;
+    public GameObject ImpactAnim;
 
     [Header("Brain")]
     public GameObject target;
@@ -405,20 +407,24 @@ public class Enemy : BasicEnemy {
     {
         if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 2f )
         {
-            if(health <=0)
-                IsAlive = false;
-            else if (collision.GetType() == typeof(BoxCollider2D))
-            {
+            if (collision.GetType() == typeof(BoxCollider2D))
+            { 
                 
-                applyDamage(5);
-                collision.GetComponent<OrbitorObjectScript>().hit = true;
+                    applyDamage(5);
+                    if(collision.GetComponent<OrbitorObjectScript>())
+                        collision.GetComponent<OrbitorObjectScript>().hit = true;
+                    else if(collision.GetComponent<playerKnife2D>())
+                        collision.GetComponent<playerKnife2D>().hasHit = true;
+                    //
+             
 
-                //Destroy(collision.gameObject);
+                if (health <= 0.0f)
+                    IsAlive = false;
+
+                var impact = Instantiate(ImpactAnim, collision.transform.position, Quaternion.identity);
+                impact.gameObject.SetActive(true);
+                Destroy(collision.gameObject);
             }
-           
-
-            //health = 0;
-          
         }
 
         if(collision.gameObject.tag == "Player")

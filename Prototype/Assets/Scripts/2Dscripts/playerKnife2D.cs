@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playerKnife2D : MonoBehaviour {
 
-    bool hasHit = false;
+    public bool hasHit = false;
     public GameObject ImpactAnim;
 
 	// Use this for initialization
@@ -35,6 +35,12 @@ public class playerKnife2D : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        if (!hasHit)
+        {
+            var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
+            impact.gameObject.SetActive(true);
+        }
+
         hasHit = true;
         GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         GetComponent<Rigidbody2D>().isKinematic = true;
@@ -43,16 +49,16 @@ public class playerKnife2D : MonoBehaviour {
 
 
         // Impact Sprite
-        var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
-        impact.gameObject.SetActive(true);
+
+           
         //StartCoroutine(DelayDestroy());
 
 
-        if (collision.gameObject.tag == "Enemy")
-        {
-            collision.gameObject.SendMessageUpwards("applyDamage", 5);
+        //if (collision.gameObject.tag == "Enemy")
+        //{
+        //    collision.gameObject.SendMessageUpwards("applyDamage", 5);
             
-        }
+        //}
 
 
     }
@@ -62,14 +68,13 @@ public class playerKnife2D : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //if ((other.gameObject.layer != 14) && (other.GetType() == typeof(BoxCollider2D)))
+        //if ((other.gameObject.layer != 14) && (other.GetType() == typeof(BoxCollider2D)) && !hasHit)
         //{
         //    var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
         //    impact.gameObject.SetActive(true);
 
-        //    other.gameObject.SendMessageUpwards("applyDamage", 5);
-        //    Destroy(gameObject);
         //}
+        //hasHit = true;
 
     }
 
