@@ -23,6 +23,7 @@ public class Enemy : BasicEnemy {
     public float range;
     public float damage;
     public float movspeed;
+    public bool withinRange;
     
     public enum World
     {
@@ -45,6 +46,9 @@ public class Enemy : BasicEnemy {
     public GameObject MovePoint2;
     private Vector3 waypoint1;
     private Vector3 waypoint2;
+
+    public LayerMask EnemyIgnoreMask;
+    public LayerMask groundMask;
     
     public enum States
     {
@@ -61,9 +65,18 @@ public class Enemy : BasicEnemy {
 
     [Header("Eyesight")]
     public GameObject vision;
+    public GameObject groundAhead;
+    public GameObject jumpAhead;
     public RaycastHit eyehit;
     private RaycastHit2D vishit;
+    private RaycastHit2D groundHit;
+    private RaycastHit2D jumpsideHit;
+    private bool hasgroundAhead;
+    private bool canJumpAhead;
+    private bool m_HasPatrol;
 
+    //Jump positions
+    private Vector3 jump_position;
 
     public bool CollidedWithPlayer;
     Component[] bones;
@@ -88,11 +101,12 @@ public class Enemy : BasicEnemy {
 
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
+        
 
-        waypoint1 = MovePoint1.transform.position;
-        waypoint2 = MovePoint2.transform.position;
 
         maxHealth = health;
+        EnemyIgnoreMask = ~LayerMask.GetMask("Enemy");
+        groundMask = LayerMask.GetMask("Ground");
     }
 
     // Update is called once per frame
@@ -100,6 +114,7 @@ public class Enemy : BasicEnemy {
 
         if (IsAlive)
         {
+            CheckForGroundAhead();
             DetectingPlayer();
             Patrol();
             Pursuit();
@@ -121,6 +136,30 @@ public class Enemy : BasicEnemy {
       
 	}
 
+    void SetPatrolPos()     //Helper function for Patrol points
+    {
+        if (!m_HasPatrol)
+        {
+            waypoint1 = MovePoint1.transform.position;
+            waypoint2 = MovePoint2.transform.position;
+            m_HasPatrol = true;
+        }
+    }
+    #region Ground Ahead Check
+    void CheckForGroundAhead()
+    {
+       if(groundHit = Physics2D.Raycast(groundAhead.transform.position, -transform.up, 0.4f,groundMask))
+        {
+            hasgroundAhead = true;
+            Debug.Log("Ground exists " + groundHit.collider.gameObject.name);
+        }
+        else
+        {
+            hasgroundAhead = false;
+            Debug.Log("No ground");
+        }
+    }
+    #endregion
     void DirectAttack()
     {
         if(target)
@@ -152,14 +191,39 @@ public class Enemy : BasicEnemy {
     public virtual void DetectingPlayer()
     {
 
+        if (withinRange)
+        {
+            Debug.Log("In here");
+            Debug.DrawRay(vision.transform.position, -transform.right);
+          
+            if(vishit = Physics2D.Raycast(vision.transform.position, -transform.right,10f,EnemyIgnoreMask))
+            {
+                Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                if(vishit.collider.gameObject.name == "Character")
+                {
+                   // anim.SetBool("Alert", true);
+                    target = vishit.collider.gameObject;
+                    targetpos = target.transform.position;
+                }
+            }
+        }
+
+        else if (!withinRange)
+        {
+            target = null;
+            
+        }
 
 
+        #region ExtraDetection
+        //Testing purpose
 
+        /*
         if (movway1)
         {
 
 
-            if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, losrange))
+            if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, losrange,layerMask))
             {
                 if (vishit.collider.gameObject.tag == "Player")
                 {
@@ -187,7 +251,7 @@ public class Enemy : BasicEnemy {
 
         if (movway2)
         {
-            if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, losrange))
+            if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, losrange,layerMask))
             {
                 if (vishit.collider.gameObject.tag == "Player")
                 {
@@ -211,7 +275,8 @@ public class Enemy : BasicEnemy {
                 anim.SetBool("Alert", false);
             }
         }
-
+        */
+        #endregion
 
     }
 
@@ -227,11 +292,13 @@ public class Enemy : BasicEnemy {
             {
                 // anim.SetTrigger("StartPatrol");
                 currentstate = States.Patrol;
+                
             }
 
 
             if (currentstate == States.Patrol)
             {
+                SetPatrolPos();
                 if (movway1)
                 {
                     CheckForFlip(waypoint1);
@@ -268,6 +335,7 @@ public class Enemy : BasicEnemy {
 
     public virtual void Pursuit()
     {
+        
         anim.SetBool("Walking", true);
         anim.SetBool("Attack", false);
 
@@ -277,6 +345,7 @@ public class Enemy : BasicEnemy {
         
             if (target && !AttackReady)
             {
+                m_HasPatrol = false;
                 currentstate = States.Pursuit;
                 CheckForFlip(target.transform.position);
                 anim.SetBool("ShouldPursuit", true);
@@ -287,9 +356,37 @@ public class Enemy : BasicEnemy {
                 }
                 else
                 {
-                    this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
+                    if (hasgroundAhead)
+                    {
+                        this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
+                    }
+
+                    else
+                    {
+                        Debug.Log("No ground, I am not moving");
+
+                        //Check if can make a jump 
+                        CheckJumpSide();
+                   
+                    }
+                
                 }
                
+            }
+        }
+    }
+
+    void CheckJumpSide()
+    {
+        Debug.DrawRay(jumpAhead.transform.position, -Vector3.up);
+        if(jumpsideHit = Physics2D.Raycast(jumpAhead.transform.position, -transform.up,4f,EnemyIgnoreMask))
+        {
+            Debug.Log("Jump Hit "+ jumpsideHit.collider.gameObject.name);
+            if(jumpsideHit.collider.gameObject.tag == "ground")
+            {
+                Debug.Log("Yes I can make a jump!");
+                jump_position = jumpsideHit.point;
+                this.transform.position = jump_position;
             }
         }
     }
@@ -346,7 +443,7 @@ public class Enemy : BasicEnemy {
 
         if (AttackReady)
         {
-            
+            m_HasPatrol = false;
             rateofattack -= Time.deltaTime;
             if(rateofattack <= 0)
             {
@@ -429,8 +526,10 @@ public class Enemy : BasicEnemy {
 
         if(collision.gameObject.tag == "Player")
         {
-            target = collision.gameObject;
-            targetpos = collision.gameObject.transform.position;
+            //player is within attacking range
+            withinRange = true;
+            //target = collision.gameObject;
+           // targetpos = collision.gameObject.transform.position;
            
         }
     }
@@ -449,7 +548,8 @@ public class Enemy : BasicEnemy {
     {
         if(collider.gameObject.tag == "Player")
         {
-            target = null;
+            withinRange = false;
+            //target = null;
             currentstate = States.Idle;
            
         }

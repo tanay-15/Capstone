@@ -8,10 +8,12 @@ public class ThrowAxe : MonoBehaviour {
     //Move in -x
 
     private Vector3 moveVector;
+    private Rigidbody2D rigi;
     
 	void Start () {
 
         //moveVector = new Vector3(-8f * Time.deltaTime, 0, 0);
+        rigi = this.GetComponent<Rigidbody2D>();
         moveVector = 8*Vector3.Normalize(GameObject.Find("Character").transform.position- transform.position);
 
     }
@@ -19,7 +21,8 @@ public class ThrowAxe : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        this.transform.Translate(moveVector);
+        //this.transform.Translate(moveVector);
+        rigi.velocity = moveVector;
 	}
 
     void OnCollisionEnter2D(Collision2D collision)
