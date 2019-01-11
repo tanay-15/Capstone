@@ -11,6 +11,7 @@ public class DemonModeScript : MonoBehaviour {
     public GameObject DemonCircle;
     public GameObject Darkness;
     public GameObject Landscape;
+    public GameObject Rain;
     bool DemonCircleSpawn = false;
 
     float demonCircleLerp = -0.8f;
@@ -70,9 +71,9 @@ public class DemonModeScript : MonoBehaviour {
             { 
                 MainCam.backgroundColor = new Color(MainCam.backgroundColor.r-0.001f, MainCam.backgroundColor.g - 0.002f, MainCam.backgroundColor.b - 0.001f, MainCam.backgroundColor.a);
                 Color darkness = Darkness.GetComponent<SpriteRenderer>().color;
-                Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g,darkness.b, darkness.a + 0.002f);
+                Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g,darkness.b, darkness.a + 0.004f);
                 Color landscape = Landscape.GetComponent<SpriteRenderer>().color;
-                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a - 0.014f);
+                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a - 0.018f);
 
                 DemonCircleSpawn = true;
 
@@ -81,9 +82,9 @@ public class DemonModeScript : MonoBehaviour {
             {
                 MainCam.backgroundColor = new Color(MainCam.backgroundColor.r + 0.001f, MainCam.backgroundColor.g + 0.002f, MainCam.backgroundColor.b + 0.001f, MainCam.backgroundColor.a);
                 Color darkness = Darkness.GetComponent<SpriteRenderer>().color;
-                Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g, darkness.b, darkness.a - 0.002f);
+                Darkness.GetComponent<SpriteRenderer>().color = new Color(darkness.r, darkness.g, darkness.b, darkness.a - 0.004f);
                 Color landscape = Landscape.GetComponent<SpriteRenderer>().color;
-                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a + 0.014f);
+                Landscape.GetComponent<SpriteRenderer>().color = new Color(landscape.r, landscape.g, landscape.b, landscape.a + 0.018f);
             }
         }
 
@@ -136,6 +137,15 @@ public class DemonModeScript : MonoBehaviour {
         if (!DemonModeActive)
         {
             GetComponent<AudioSource>().Play();
+            //Rain.GetComponent<ParticleSystem>().main.startColor = new Color(106, 28, 28, 128);
+            var main = Rain.GetComponent<ParticleSystem>().main;
+            main.startColor = new Color(1, 0, 0, 1);
+        }
+        else
+        {
+            var main = Rain.GetComponent<ParticleSystem>().main;
+            main.startColor = new Color(0, 0.7f, 1, 1);
+            //Rain.GetComponent<ParticleSystemRenderer>().material.color = new Color(27, 82, 106, 128);
         }
     }
 

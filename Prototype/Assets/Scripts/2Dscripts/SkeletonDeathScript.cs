@@ -119,16 +119,20 @@ public class SkeletonDeathScript : MonoBehaviour {
     {
         foreach (Rigidbody2D rb2d in BoneSystem.GetComponentsInChildren<Rigidbody2D>())
         {
-            if (rb2d.name != gameObject.name)
+            if (rb2d.name != gameObject.name && rb2d.gameObject.layer == 15)
             {
                 rb2d.isKinematic = state;
-                
+
                 //Debug.Log(rb2d.name);
             }
 
         }
 
         foreach (Collider2D coll in BoneSystem.GetComponentsInChildren<Collider2D>())
+        {
+            if(coll.gameObject.layer == 15)
             coll.enabled = !state;
+        }
+            
     }
 }

@@ -513,7 +513,7 @@ public class Enemy : BasicEnemy {
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 2f )
+        if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
         {
             if (collision.GetType() == typeof(BoxCollider2D))
             { 
@@ -523,15 +523,21 @@ public class Enemy : BasicEnemy {
                         collision.GetComponent<OrbitorObjectScript>().hit = true;
                     else if(collision.GetComponent<playerKnife2D>())
                         collision.GetComponent<playerKnife2D>().hasHit = true;
-                    //
-             
+                //
+
 
                 if (health <= 0.0f)
+                {
                     IsAlive = false;
+                }
+                else
+                {
+                    Destroy(collision.gameObject);
+                }
 
                 var impact = Instantiate(ImpactAnim, collision.transform.position, Quaternion.identity);
                 impact.gameObject.SetActive(true);
-                Destroy(collision.gameObject);
+
             }
         }
 
