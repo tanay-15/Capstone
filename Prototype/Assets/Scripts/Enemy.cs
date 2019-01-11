@@ -384,9 +384,20 @@ public class Enemy : BasicEnemy {
             Debug.Log("Jump Hit "+ jumpsideHit.collider.gameObject.name);
             if(jumpsideHit.collider.gameObject.tag == "ground")
             {
+                
                 Debug.Log("Yes I can make a jump!");
                 jump_position = jumpsideHit.point;
-                this.transform.position = jump_position;
+                if((int)jump_position.y==(int)target.transform.position.y)
+                {
+                    this.transform.position = jump_position;
+                }
+                else
+                {
+                    //Jumping down
+                    Debug.Log(jump_position.y);
+                    Debug.Log("Target is not there");
+                }
+                
             }
         }
     }
