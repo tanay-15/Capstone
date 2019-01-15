@@ -4,35 +4,27 @@ using UnityEngine;
 
 public class JumpThrough : MonoBehaviour {
 
-    BoxCollider2D collider;
-    BoxCollider2D trigger;
+    BoxCollider2D collide;
+
+    GameObject player;
 
 	// Use this for initialization
 	void Start () {
-        collider = GetComponents<BoxCollider2D>()[0];
-        trigger = GetComponents<BoxCollider2D>()[1];
+        collide = GetComponent<BoxCollider2D>();
+        player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(player.gameObject.transform.position.y < this.transform.position.y)
+        {
+            Physics2D.IgnoreCollision(collide, player.GetComponent<CapsuleCollider2D>());
+        }
+        else
+        {
+            Physics2D.IgnoreCollision(collide, player.GetComponent<CapsuleCollider2D>(), false);
+        }
 	}
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            collider.enabled = false;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            collider.enabled = true;
-        }
-    }
 
 
 }
