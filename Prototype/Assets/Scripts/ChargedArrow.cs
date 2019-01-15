@@ -71,4 +71,9 @@ public class ChargedArrow : playerKnife2D {
             //StartCoroutine(DelayDestroy());
         }
     }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
 }

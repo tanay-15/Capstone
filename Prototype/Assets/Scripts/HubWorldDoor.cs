@@ -20,6 +20,17 @@ public class HubWorldDoor : MonoBehaviour {
         levelDisplayText.text = (locked) ? "Locked" : levelDisplayName;
         levelDisplayText.color = (locked) ? Color.gray : Color.white;
         levelDisplayText.gameObject.SetActive(false);
+
+        if (locked)
+        {
+            Darken();
+        }
+    }
+
+    private void Darken()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.color = new Color(0.25f, 0.25f, 0.25f);
     }
 
     private void Update()
