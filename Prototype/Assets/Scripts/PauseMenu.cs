@@ -5,14 +5,33 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
+enum PauseMenuOption
+{
+    Resume = 0,
+    SkillTree,
+    Options,
+    ReturnHubWorld,
+    ReturnMainMenu
+}
+
+enum PauseMenuState
+{
+    None = 0,
+    Main,
+    Options,
+    SkillTree
+}
+
 public class PauseMenu : MonoBehaviour {
 
     public GameObject pauseMenu;
 
     public Text[] menuText;
+    public Image black;
     string[] menuStrings;
-    int selectIndex;
-    int prevIndex;
+    PauseMenuOption selectIndex;
+    PauseMenuOption prevIndex;
+    PauseMenuState menuState;
     Color transparentColor;
     Color disabledColor;
     int axisDirectionPressed;
@@ -38,24 +57,29 @@ public class PauseMenu : MonoBehaviour {
             Destroy(sharedInstance);
         sharedInstance = this;
 
-        selectIndex = 0;
+        selectIndex = PauseMenuOption.Resume;
         prevIndex = selectIndex;
-        menuStrings = new string[] { "Resume", "Options", "Return to Hub World", "Return to Main Menu" };
+        menuState = PauseMenuState.Main;
+        menuStrings = new string[] { "Resume", "Skill Tree", "Options", "Return to Hub World", "Return to Main Menu" };
         transparentColor = new Color(1f, 1f, 1f, 0.5f);
         disabledColor = new Color(1f, 1f, 1f, 0.2f);
         //InitializeText();
     }
 	
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options"))
+        Debug.Log(menuState);
+		if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options")) && (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options))
         {
             PauseUnpause();
         }
         if (GamePaused)
         {
             CheckAxis();
-            CheckForArrowKeys();
-            CheckForConfirmButton();
+            if (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options)
+            {
+                CheckForArrowKeys();
+                CheckForConfirmButton();
+            }
             ResetCheckAxis();
         }
     }
@@ -69,7 +93,7 @@ public class PauseMenu : MonoBehaviour {
 
         if (GamePaused)
         {
-            selectIndex = 0;
+            selectIndex = PauseMenuOption.Resume;
             prevIndex = selectIndex;
             InitializeText();
         }
@@ -113,14 +137,14 @@ public class PauseMenu : MonoBehaviour {
         //Skip return to Hub World if on a tutorial level
         if (disableReturnToHubWorld)
         {
-            if (selectIndex == 2)
+            if (selectIndex == PauseMenuOption.ReturnHubWorld)
             {
                 selectIndex += (prevIndex < selectIndex) ? 1 : -1;
             }
         }
 
         //Wrap around
-        if (selectIndex > menuStrings.Length - 1)
+        if ((int)selectIndex > menuStrings.Length - 1)
             selectIndex -= menuStrings.Length;
         else if (selectIndex < 0)
             selectIndex += menuStrings.Length;
@@ -132,10 +156,35 @@ public class PauseMenu : MonoBehaviour {
         }
     }
 
-    void UpdateMenu(int newIndex, int oldIndex)
+    void UpdateMenu(PauseMenuOption newIndex, PauseMenuOption oldIndex)
     {
-        menuText[oldIndex].color = transparentColor;
-        menuText[newIndex].color = Color.white;
+        menuText[(int)oldIndex].color = transparentColor;
+        menuText[(int)newIndex].color = Color.white;
+    }
+
+    //Return from skill tree back to pause menu
+    //Function called from skill tree
+    public void ReturnToPauseMenu()
+    {
+        StartCoroutine(TransitionToOrFromSkillTree(false));
+        menuState = PauseMenuState.None;
+    }
+
+    //Because Time.scale is 0, Coroutines will not be framerate-independent
+    IEnumerator TransitionToOrFromSkillTree(bool toTree)
+    {
+        if (!toTree)
+            SceneManager.UnloadSceneAsync("SkillTree");
+        Color col = Color.black;
+        for (float i = 0; i < 1f; i += 0.05f)
+        {
+            col.a = (toTree) ? i : (1 - i);
+            black.color = col;
+            yield return 0;
+        }
+        if (toTree)
+            SceneManager.LoadScene("SkillTree", LoadSceneMode.Additive);
+        menuState = (toTree) ? PauseMenuState.SkillTree : PauseMenuState.Main;
     }
 
     void CheckForConfirmButton()
@@ -145,16 +194,23 @@ public class PauseMenu : MonoBehaviour {
             switch (selectIndex)
             {
                 //Resume
-                case 0:
+                case PauseMenuOption.Resume:
                     PauseUnpause();
                     break;
 
+                //Skill Tree
+                case PauseMenuOption.SkillTree:
+                    StartCoroutine(TransitionToOrFromSkillTree(true));
+                    menuState = PauseMenuState.None;
+                    break;
+
                 //Options
-                case 1:
+                case PauseMenuOption.Options:
+                    //menuState = MenuState.Options;
                     break;
 
                 //Return to Hub World
-                case 2:
+                case PauseMenuOption.ReturnHubWorld:
                     if (!disableReturnToHubWorld)
                     {
                         Time.timeScale = 1f;
@@ -163,7 +219,7 @@ public class PauseMenu : MonoBehaviour {
                     break;
 
                 //Return to Main Menu
-                case 3:
+                case PauseMenuOption.ReturnMainMenu:
                     Time.timeScale = 1f;
                     SceneManager.LoadScene("MainMenuBasic");
                     break;
@@ -177,8 +233,8 @@ public class PauseMenu : MonoBehaviour {
         {
             menuText[i].text = menuStrings[i];
 
-            if (i != selectIndex)
-                menuText[i].color = (i == 2 && disableReturnToHubWorld) ? disabledColor : transparentColor;
+            if (i != (int)selectIndex)
+                menuText[i].color = (i == (int)PauseMenuOption.ReturnHubWorld && disableReturnToHubWorld) ? disabledColor : transparentColor;
             else
                 menuText[i].color = Color.white;
         }
