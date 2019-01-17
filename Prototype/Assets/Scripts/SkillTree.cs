@@ -17,17 +17,37 @@ public enum SkillNodes
     D_4 = 1 << 7
 }
 
+enum MenuState
+{
+    SkillTree = 0,
+    ConfirmWindow
+}
+
+struct SkillTreeInfo
+{
+    public int skillPoints;
+    public SkillNodes nodesActivated;
+}
+
 public class SkillTree : MonoBehaviour
 {
+    static SkillTreeInfo info;
+
+    MenuState state;
     const int NUM_DIRECTIONS = 4;
     const int NUM_NODES = 8;
     public GameObject cursor;
     public SkillTreeNode[] nodes;
     public Image black;
+    public Text nodeDescription;
+    public Text skillPointsCounter;
     public TextAsset neighborMatrixFile;
-    SkillNodes nodesEnum;
+    public TextAsset nodeDescriptionsFile;
+    public ConfirmWindow window;
 
     int[,] neighborMatrix;
+    string[] nodeDescriptions;
+    int[] skillCosts;
 
     int nodeIndex;
     // Row: Source
@@ -43,14 +63,42 @@ public class SkillTree : MonoBehaviour
     // 6 | 4 5 7 6
     // 7 | 5 5 7 6
 
+    static SkillTree()
+    {
+        info.nodesActivated = SkillNodes.None;
+        info.skillPoints = 16;
+    }
+    
     void Start()
     {
+        state = MenuState.SkillTree;
         StartCoroutine(Transition(true));
-        nodesEnum = SkillNodes.None;
         nodeIndex = 0;
-        MoveCursor();
 
+        InitializeNodes();
+        UpdateSkillPointCounter();
         LoadNeighborMatrix();
+        LoadDescriptions();
+
+        MoveCursor();
+        window.gameObject.SetActive(false);
+    }
+
+    //Initialize nodes when entering the menu with shared nodesActivated
+    void InitializeNodes()
+    {
+        for(int i = 0; i < nodes.Length; i++)
+        {
+            if ((info.nodesActivated & nodes[i].node) == nodes[i].node)
+            {
+                nodes[i].SetActive(true);
+            }
+        }
+    }
+
+    void UpdateSkillPointCounter()
+    {
+        skillPointsCounter.text = "Skill points: " + info.skillPoints.ToString();
     }
 
     void LoadNeighborMatrix()
@@ -65,6 +113,26 @@ public class SkillTree : MonoBehaviour
                 neighborMatrix[i, j] = (int)(lines[i][j] - 48);
             }
         }
+    }
+
+    void SetDescription(string description, int cost)
+    {
+        nodeDescription.text = description + "\nCost: " + cost.ToString() + " skill point" + ((cost != 1) ? "s." : ".");
+    }
+
+    void LoadDescriptions()
+    {
+        string[] lines = nodeDescriptionsFile.ToString().Split('\n');
+        nodeDescriptions = new string[lines.Length];
+        skillCosts = new int[lines.Length];
+        for(int i = 0; i < lines.Length; i++)
+        {
+            string[] line = lines[i].Split(',');
+            nodeDescriptions[i] = line[0];
+            skillCosts[i] = int.Parse(line[1]);
+        }
+
+        SetDescription(nodeDescriptions[0], skillCosts[0]);
     }
 
     IEnumerator Transition(bool fadeIn)
@@ -83,38 +151,118 @@ public class SkillTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckForArrowKeys();
+        CheckForConfirm();
+        CheckForBack();
+    }
+
+    void CheckForArrowKeys()
+    {
+        if (state == MenuState.SkillTree)
+        {
+            //TODO: Copy code from the Pause Menu and make an input manager
+            //Left: 0, Up: 1, Right: 2, Down: 3
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                nodeIndex = neighborMatrix[nodeIndex, 0];
+                MoveCursor();
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                nodeIndex = neighborMatrix[nodeIndex, 1];
+                MoveCursor();
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                nodeIndex = neighborMatrix[nodeIndex, 2];
+                MoveCursor();
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                nodeIndex = neighborMatrix[nodeIndex, 3];
+                MoveCursor();
+            }
+        }
+        else if (state == MenuState.ConfirmWindow)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                window.ChangeSelection();
+            }
+        }
+    }
+
+    void OnChangeState(MenuState newState)
+    {
+        if (state == newState) return;
+        switch (newState)
+        {
+            case MenuState.ConfirmWindow:
+                window.gameObject.SetActive(true);
+                break;
+
+            case MenuState.SkillTree:
+                window.gameObject.SetActive(false);
+                break;
+        }
+        state = newState;
+    }
+
+    void CheckForConfirm()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (state == MenuState.SkillTree)
+            {
+                //TODO: Make error noise
+                
+                //Check cost of skill
+                //Enough skill points
+                if (info.skillPoints >= skillCosts[nodeIndex] && ((info.nodesActivated & nodes[nodeIndex].node) != nodes[nodeIndex].node))
+                {
+                    OnChangeState(MenuState.ConfirmWindow);
+                    window.SetSkillPointsIndicator(skillCosts[nodeIndex]);
+                }
+                //Not enough skill points
+                else
+                {
+
+                }
+            }
+            else if (state == MenuState.ConfirmWindow)
+            {
+                //Activate a skill node
+                if (window.selectedYes)
+                {
+                    info.skillPoints -= skillCosts[nodeIndex];
+                    info.nodesActivated |= nodes[nodeIndex].node;
+                    nodes[nodeIndex].SetActive(true);
+                    UpdateSkillPointCounter();
+                }
+                else
+                {
+
+                }
+                OnChangeState(MenuState.SkillTree);
+            }
+        }
+    }
+
+    void CheckForBack()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StartCoroutine(Transition(false));
-        }
-
-        //TODO: Copy code from the Pause Menu and make an input manager
-        //Left: 0, Up: 1, Right: 2, Down: 3
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            nodeIndex = neighborMatrix[nodeIndex, 0];
-            MoveCursor();
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            nodeIndex = neighborMatrix[nodeIndex, 1];
-            MoveCursor();
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            nodeIndex = neighborMatrix[nodeIndex, 2];
-            MoveCursor();
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            nodeIndex = neighborMatrix[nodeIndex, 3];
-            MoveCursor();
+            if (state == MenuState.SkillTree)
+                StartCoroutine(Transition(false));
+            else if (state == MenuState.ConfirmWindow)
+                OnChangeState(MenuState.SkillTree);
         }
     }
 
     void MoveCursor()
     {
         cursor.transform.position = nodes[nodeIndex].gameObject.transform.position;
+        SetDescription(nodeDescriptions[nodeIndex], skillCosts[nodeIndex]);
     }
 
     void ReturnToPauseMenu()
