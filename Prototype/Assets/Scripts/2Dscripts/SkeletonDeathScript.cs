@@ -15,33 +15,37 @@ public class SkeletonDeathScript : MonoBehaviour {
     public AudioClip[] BonesBreak;
     AudioSource Audio;
 
+    public bool Kill = false;
+
     //health death
     public int mhealth;
 
     // Use this for initialization
     void Start () {
 
-        //Physics2D.IgnoreLayerCollision(15, 15);
-        Audio = GetComponent<AudioSource>();
-        Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length-1)];
-
-        IKSystem.SetActive(false);
-        SetChildrenKinematic(true);
-        IKSystem.SetActive(true);
-
-        foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
-        {
-            t.gameObject.SetActive(false);
-            t.gameObject.SetActive(true);
-        }
 
         myColliders = GetComponentsInChildren<Collider2D>();
         mySprites = GetComponentsInChildren<SpriteMeshInstance>();
 
+        //IKSystem.SetActive(false);
+        SetChildrenKinematic(true);
+        //IKSystem.SetActive(true);
+
+        //foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
+        //{
+        //    t.gameObject.SetActive(false);
+        //    t.gameObject.SetActive(true);
+        //}
+
+        Audio = GetComponent<AudioSource>();
+        Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (Kill)
+            Die();
 
         mhealth = this.gameObject.GetComponent<Enemy>().GetHealth();
 	}
@@ -83,36 +87,15 @@ public class SkeletonDeathScript : MonoBehaviour {
     {
         GetComponent<Animator>().enabled = false;
         SetChildrenKinematic(false);
-        IKSystem.SetActive(false);
-        //SetBodyPartsToBody();
+        //IKSystem.SetActive(false);
+
 
         StartCoroutine(DieRoutine());
         TurnOffCollisions();
     }
 
 
-    /*
-    void SetBodyPartsToBody()
-    {
 
-        
-        foreach (Transform t in BodyParts)
-        {
-            foreach (Transform u in BoneSystem.GetComponentsInChildren<Transform>())
-            {
-                Debug.Log(u.name);
-                if (u.name == "bone_" + t.name)
-                {
-                    t.transform.position = u.transform.position;
-                    t.transform.rotation = u.transform.rotation;
-                }
-            }
-        }
-        BodyParts.gameObject.SetActive(true);
-        Body.gameObject.SetActive(false);
-        
-    }
-    */
 
 
     public void SetChildrenKinematic(bool state)
