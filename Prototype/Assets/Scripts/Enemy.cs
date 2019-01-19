@@ -9,6 +9,7 @@ public class Enemy : BasicEnemy {
     //components used
     protected Animator anim;
     protected Rigidbody rigi;
+    private Rigidbody2D rigidbody;
 
     public bool LookingLeft;
     private bool shouldLookLeft;
@@ -98,7 +99,7 @@ public class Enemy : BasicEnemy {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
         IsAlive = true;
-
+        rigidbody = this.GetComponent<Rigidbody2D>();
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
         
@@ -142,6 +143,8 @@ public class Enemy : BasicEnemy {
         {
             waypoint1 = MovePoint1.transform.position;
             waypoint2 = MovePoint2.transform.position;
+            Debug.Log(waypoint1);
+            Debug.Log(waypoint2);
             m_HasPatrol = true;
         }
     }
@@ -293,6 +296,7 @@ public class Enemy : BasicEnemy {
                 // anim.SetTrigger("StartPatrol");
                 currentstate = States.Patrol;
                 
+
             }
 
 
@@ -303,6 +307,7 @@ public class Enemy : BasicEnemy {
                 {
                     CheckForFlip(waypoint1);
                     this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1, movspeed * Time.deltaTime);
+                    //rigidbody.velocity = new Vector2(movspeed, 0f);
                     if (Vector2.Distance(waypoint1, this.transform.position) <= 1f)
                     {
                         flip();
@@ -318,6 +323,7 @@ public class Enemy : BasicEnemy {
                 {
                     CheckForFlip(waypoint2);
                     this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2, movspeed * Time.deltaTime);
+                   // rigidbody.velocity = new Vector2(movspeed, 0f);
                     if (Vector2.Distance(waypoint2, this.transform.position) <= 1f)
                     {
                         flip();
