@@ -17,10 +17,28 @@ public class UIIcons : MonoBehaviour {
     public GameObject[] icons;
     public Color activeColor;
     public Color inactiveColor;
-    public Image qButton;
+    //public Image qButton;
+    public Image[] demonModeButtons;
+    public GameObject demonModeText;
 
     IEnumerator routine;
     Color transparent;
+
+    void SetDemonModeButtons(bool active)
+    {
+        foreach (Image img in demonModeButtons)
+        {
+            img.gameObject.SetActive(active);
+        }
+    }
+
+    void SetDemonModeButtonColors(Color color)
+    {
+        foreach (Image img in demonModeButtons)
+        {
+            img.color = color;
+        }
+    }
 
     static UIIcons()
     {
@@ -33,6 +51,9 @@ public class UIIcons : MonoBehaviour {
             Destroy(sharedInstance);
         sharedInstance = this;
         transparent = new Color(1f, 1f, 1f, 0.5f);
+
+        demonModeText.SetActive(false);
+        SetDemonModeButtons(false);
 	}
 
     public void SetQButton(bool set)
@@ -46,20 +67,25 @@ public class UIIcons : MonoBehaviour {
         }
         else
         {
-            qButton.gameObject.SetActive(false);
+            //qButton.gameObject.SetActive(false);
+            SetDemonModeButtons(false);
         }
+
+        demonModeText.SetActive(set);
     }
 
     IEnumerator QButtonRoutine()
     {
-        qButton.gameObject.SetActive(true);
-        qButton.color = Color.white;
+        //qButton.gameObject.SetActive(true);
+        SetDemonModeButtons(true);
+        //qButton.color = Color.white;
+        SetDemonModeButtonColors(Color.white);
         while (true)
         {
             yield return new WaitForSeconds(0.7f);
-            qButton.color = transparent;
+            SetDemonModeButtonColors(transparent);
             yield return new WaitForSeconds(0.7f);
-            qButton.color = Color.white;
+            SetDemonModeButtonColors(Color.white);
         }
     }
 

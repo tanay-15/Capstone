@@ -46,6 +46,11 @@ public class rageBar : MonoBehaviour {
         fillingColor.g = 0.5f;
         fillingColor.b = 0.5f;
     }
+
+    public void AddRage(float amount)
+    {
+        RBar.fillAmount = Mathf.Clamp(RBar.fillAmount + amount, 0f, 1f);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -65,8 +70,9 @@ public class rageBar : MonoBehaviour {
 
         if (rageBarActive)
         {
+            //Drain the rage bar while demon mode is active
             if (RBar.fillAmount >= 0)
-                RBar.fillAmount -= 0.07f * Time.deltaTime;
+                RBar.fillAmount -= 0.04f * Time.deltaTime;//0.07f * Time.deltaTime;
             else
             {
                 RBar.fillAmount = 0;
@@ -78,10 +84,11 @@ public class rageBar : MonoBehaviour {
         }
 
 
-        if (!rageBarActive && RBar.fillAmount <= 1)
-        {
-            RBar.fillAmount += 0.02f * Time.deltaTime;
-        }
+        //Slowly fill the rage bar when in normal mode
+        //if (!rageBarActive && RBar.fillAmount <= 1)
+        //{
+        //    RBar.fillAmount += 0.02f * Time.deltaTime;
+        //}
 
         //Call one time once the bar fills
         if (RBar.fillAmount >= 1f && !rageBarFilled && !rageBarActive)
@@ -111,10 +118,12 @@ public class rageBar : MonoBehaviour {
         {
             //filler.color = fillingColor;
             gradientScroll.EnableGradient(true);
+            filler.color = Color.red;
         }
         else if (RBar.fillAmount < 1f)
         {
             gradientScroll.EnableGradient(false);
+            filler.color = Color.yellow;
         }
         
     }

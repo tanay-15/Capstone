@@ -56,5 +56,7 @@ public class EnemySoulGenerator : MonoBehaviour {
         soul.transform.position = moveTo;
         Destroy(soul);
         Destroy(trail, 1f);
+
+        FindObjectOfType<rageBar>().AddRage(0.1f);
     }
 }
