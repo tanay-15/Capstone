@@ -4,16 +4,17 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c10c0be6d28fe4d539c4a39822fe301c, type: 3}
-  m_Name: SkeletonArt3_6
+  m_Name: SkeletonHand
   m_EditorClassIdentifier: 
   m_ApiVersion: 4
-  m_Sprite: {fileID: 21300012, guid: 8ee688063164ab24da763b4fc21d7d35, type: 3}
-  m_SharedMesh: {fileID: 43374011046837556}
+  m_Sprite: {fileID: 21300010, guid: 8ee688063164ab24da763b4fc21d7d35, type: 3}
+  m_SharedMesh: {fileID: 43071876131112202}
   pivotPoint: {x: 0, y: 0}
   texVertices: []
   edges: []
@@ -21,38 +22,39 @@ MonoBehaviour:
   indices: 
   bindPoses: []
   m_SharedMaterials: []
---- !u!43 &43374011046837556
+--- !u!43 &43071876131112202
 Mesh:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: SkeletonArt3_6
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkeletonArt3_5
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
-    indexCount: 12
+    indexCount: 15
     topology: 0
     baseVertex: 0
     firstVertex: 0
-    vertexCount: 6
+    vertexCount: 7
     localAABB:
-      m_Center: {x: 0.011214599, y: -0.0037384033, z: 0}
-      m_Extent: {x: 0.27229005, y: 0.55598146, z: 0}
+      m_Center: {x: -0.02482894, y: 0.013542637, z: 0}
+      m_Extent: {x: 0.3390007, y: 0.39882982, z: 0}
   m_Shapes:
     vertices: []
     shapes: []
     channels: []
     fullWeights: []
   m_BindPose:
-  - e00: -0.0034905772
-    e01: -0.99999386
+  - e00: -0.05756403
+    e01: -0.99834186
     e02: 0
-    e03: 0.27999908
-    e10: 0.99999386
-    e11: -0.0034905772
+    e03: 0.17199536
+    e10: 0.99834186
+    e11: -0.05756403
     e12: 0
-    e13: 0.0000003726067
+    e13: -0.010001037
     e20: 0
     e21: 0
     e22: 1
@@ -68,10 +70,10 @@ Mesh:
   m_KeepVertices: 1
   m_KeepIndices: 1
   m_IndexFormat: 0
-  m_IndexBuffer: 030000000400050004000200040000000200010005000200
+  m_IndexBuffer: 040000000500060005000200020001000300020005000000030006000200
   m_VertexData:
     serializedVersion: 2
-    m_VertexCount: 6
+    m_VertexCount: 7
     m_Channels:
     - stream: 0
       offset: 0
@@ -129,8 +131,8 @@ Mesh:
       offset: 16
       format: 11
       dimension: 4
-    m_DataSize: 480
-    _typelessdata: 85538d3ecd5f0d3f000000000000000000000000000080bf0000803f98c3d9b400000000000080bf9a4d663ecd490fbf000000000000000000000000000080bf0000803fd712b2b400000000000080bf8527913e29c7e5be000000000000000000000000000080bf0000803f9d9dd0b400000000000080bf7b105cbecd5f0d3f000000000000000000000000000080bf0000803f0000000000000000000080bf5c5f74be1f85eb3e000000000000000000000000000080bf0000803f0f62ccb400000000000080bfaeab85bed7ac06bf000000000000000000000000000080bf0000803f3ae5cdb400000000000080bf2c19233f0963b63e22ca213fa1e87a3e2c4a233f5c22833ec887163f0963b63e36ec153ffca9b13e3659153f9c5a7e3e0000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f00000000000000000000000000000000000000000000000000000000
+    m_DataSize: 576
+    _typelessdata: 1fdba03ee1a4c03e000000000000000000000000000080bf0000803f0d85cdb200000000000080bf2940883e5c44c5be000000000000000000000000000080bf0000803fdc6f8eb300000000000080bf1fdba03e1f3113be000000000000000000000000000080bf0000803fb51c1bb300000000000080bf33856bbe8505bcbe000000000000000000000000000080bf0000803f3042343300000000000080bf332371be7b22d33e000000000000000000000000000080bf0000803fd06aa43400000000000080bf3dad90be8f6d903e000000000000000000000000000080bf0000803f3f168b3100000000000080bfe147babec39f73be000000000000000000000000000080bf0000803fc80a81b200000000000080bf0000000000000000f4ecb33efa4fb53e0f77b13e41528e3ef4ecb33e3cb09a3e6210983ef03e8f3e7bc8973e5729b73e515f953ea57db03e4136913ee7dd953e00000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f000000000000000000000000000000000000000000000000000000000000803f00000000000000000000000000000000000000000000000000000000
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -184,33 +186,39 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: 0.011214599, y: -0.0037384033, z: 0}
-    m_Extent: {x: 0.27229005, y: 0.55598146, z: 0}
+    m_Center: {x: -0.02482894, y: 0.013542637, z: 0}
+    m_Extent: {x: 0.3390007, y: 0.39882982, z: 0}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
   m_MeshMetrics[1]: 1
   m_MeshOptimized: 0
---- !u!114 &114005427283798078
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
+--- !u!114 &114076277387384142
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e715ea371f114f4a8d2584ad476634d, type: 3}
-  m_Name: SkeletonArt3_6_Data
+  m_Name: SkeletonArt3_5_Data
   m_EditorClassIdentifier: 
-  m_PivotPoint: {x: 609.5, y: 301}
+  m_PivotPoint: {x: 320, y: 316.5}
   m_Vertices:
-  - {x: 637.1028, y: 356.2243}
-  - {x: 631.99054, y: 245.02802}
-  - {x: 637.85046, y: 256.1215}
-  - {x: 588.00934, y: 356.2243}
-  - {x: 585.6355, y: 347}
-  - {x: 583.39246, y: 248.39252}
+  - {x: 351.41718, y: 354.1258}
+  - {x: 346.61145, y: 277.97128}
+  - {x: 351.41718, y: 302.1258}
+  - {x: 296.99997, y: 279.77704}
+  - {x: 296.45142, y: 357.73724}
+  - {x: 291.74283, y: 344.7086}
+  - {x: 283.61703, y: 292.7086}
   m_BoneWeights:
   - weight0: 1
     weight1: 0
@@ -260,31 +268,41 @@ MonoBehaviour:
     boneIndex1: 0
     boneIndex2: 0
     boneIndex3: 0
+  - weight0: 1
+    weight1: 0
+    weight2: 0
+    weight3: 0
+    boneIndex0: 0
+    boneIndex1: 0
+    boneIndex2: 0
+    boneIndex3: 0
   m_Edges:
-  - index1: 5
-    index2: 4
-  - index1: 3
-    index2: 4
-  - index1: 5
-    index2: 1
-  - index1: 0
+  - index1: 6
+    index2: 5
+  - index1: 4
+    index2: 5
+  - index1: 6
     index2: 3
+  - index1: 0
+    index2: 4
   - index1: 2
     index2: 0
+  - index1: 1
+    index2: 3
   - index1: 2
     index2: 1
   m_Holes: []
-  m_Indices: 030000000000000004000000050000000400000002000000040000000000000002000000010000000500000002000000
+  m_Indices: 040000000000000005000000060000000500000002000000020000000100000003000000020000000500000000000000030000000600000002000000
   m_BindPoses:
   - bindPose:
-      e00: -0.0034905772
-      e01: -0.99999386
+      e00: -0.05756403
+      e01: -0.99834186
       e02: 0
-      e03: 0.27999908
-      e10: 0.99999386
-      e11: -0.0034905772
+      e03: 0.17199536
+      e10: 0.99834186
+      e11: -0.05756403
       e12: 0
-      e13: 0.0000003726067
+      e13: -0.010001037
       e20: 0
       e21: 0
       e22: 1
@@ -293,9 +311,9 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    boneLength: 0.5470369
-    path: bone_bicepsR
-    name: bone_bicepsR
+    boneLength: 0.31
+    path: bone_bicepsL/bone_forearmL/bone_handL
+    name: bone_handL
     color: {r: 1, g: 0, b: 0, a: 1}
     zOrder: 0
   m_Blendshapes: []
