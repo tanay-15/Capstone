@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Lifebar : MonoBehaviour {
 
-    public GameObject scaledLifebar;
+    public GameObject redScalingSprite;
+    public GameObject yellowScalingSprite;
     BasicEnemy myEnemy;
+
+    float yellowScale;
+    float targetScale;
+    float drainSpeed = 0.5f;
 
 	public void AssignEnemy(BasicEnemy enemy)
     {
@@ -13,6 +18,8 @@ public class Lifebar : MonoBehaviour {
         myEnemy = enemy;
         myEnemy.events.OnDeath.AddListener(OnEnemyDeath);
         myEnemy.events.OnTakeDamage.AddListener(OnEnemyTakeDamage);
+        targetScale = 1f;
+        yellowScale = targetScale;
     }
 
     void OnEnemyDeath()
@@ -25,6 +32,14 @@ public class Lifebar : MonoBehaviour {
 
     void OnEnemyTakeDamage(float newHealth)
     {
-        scaledLifebar.transform.localScale = new Vector3(newHealth, 1f, 1f);
+        targetScale = newHealth;
+        redScalingSprite.transform.localScale = new Vector3(targetScale, 1f, 1f);
+    }
+
+    void Update()
+    {
+        if (yellowScale > targetScale)
+            yellowScale -= Time.deltaTime * drainSpeed;
+        yellowScalingSprite.transform.localScale = new Vector3(yellowScale, 1f, 1f);
     }
 }
