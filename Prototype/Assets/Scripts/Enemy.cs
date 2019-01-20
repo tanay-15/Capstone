@@ -9,7 +9,7 @@ public class Enemy : BasicEnemy {
     //components used
     protected Animator anim;
     protected Rigidbody rigi;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbodyenem;
 
     public bool LookingLeft;
     private bool shouldLookLeft;
@@ -72,12 +72,12 @@ public class Enemy : BasicEnemy {
     private RaycastHit2D vishit;
     private RaycastHit2D groundHit;
     private RaycastHit2D jumpsideHit;
-    private bool hasgroundAhead;
+    public bool hasgroundAhead;
     private bool canJumpAhead;
     private bool m_HasPatrol;
 
     //Jump positions
-    private Vector3 jump_position;
+    public Vector3 jump_position;
 
     public bool CollidedWithPlayer;
     Component[] bones;
@@ -99,7 +99,7 @@ public class Enemy : BasicEnemy {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
         IsAlive = true;
-        rigidbody = this.GetComponent<Rigidbody2D>();
+        rigidbodyenem = this.GetComponent<Rigidbody2D>();
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
         
@@ -418,7 +418,24 @@ public class Enemy : BasicEnemy {
                 jump_position = jumpsideHit.point;
                 if((int)jump_position.y==(int)target.transform.position.y)
                 {
-                    this.transform.position = jump_position;
+                    //this.transform.position = jump_position;
+                    /*  float dist = Vector2.Distance(jump_position,transform.position);
+
+
+                       float Vi = Mathf.Sqrt(dist * -Physics2D.gravity.y / (Mathf.Sin(Mathf.Deg2Rad * 50)));
+
+                       float Vx, Vy;
+
+                       Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * 50);
+                       Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * 50);
+
+                       Vector2 localvelco = new Vector2(Vx, Vy);
+
+                       Vector2 globalvelco = transform.TransformVector(localvelco);
+
+                       rigidbodyenem.velocity = globalvelco;*/
+                    Vector2 jumpVecloc = new Vector2(0.05f, 0.1f);
+                    rigidbodyenem.AddForce(jumpVecloc,ForceMode2D.Impulse);
                 }
                 else
                 {
