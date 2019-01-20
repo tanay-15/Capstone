@@ -196,17 +196,40 @@ public class Enemy : BasicEnemy {
 
         if (withinRange)
         {
-            Debug.Log("In here");
-            Debug.DrawRay(vision.transform.position, -transform.right);
-          
-            if(vishit = Physics2D.Raycast(vision.transform.position, -transform.right,10f,EnemyIgnoreMask))
+            if (LookingLeft)
             {
-                Debug.Log("Vision hits " + vishit.collider.gameObject.name);
-                if(vishit.collider.gameObject.name == "Character")
+
+
+                Debug.Log("In here");
+                Debug.DrawRay(vision.transform.position, -transform.right);
+
+                if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 10f, EnemyIgnoreMask))
                 {
-                   // anim.SetBool("Alert", true);
-                    target = vishit.collider.gameObject;
-                    targetpos = target.transform.position;
+                    Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                    if (vishit.collider.gameObject.name == "Character")
+                    {
+                        // anim.SetBool("Alert", true);
+                        target = vishit.collider.gameObject;
+                        targetpos = target.transform.position;
+                    }
+                }
+
+            }
+
+            if (!LookingLeft)
+            {
+                Debug.Log("In here");
+                Debug.DrawRay(vision.transform.position, transform.right);
+
+                if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 10f, EnemyIgnoreMask))
+                {
+                    Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                    if (vishit.collider.gameObject.name == "Character")
+                    {
+                        // anim.SetBool("Alert", true);
+                        target = vishit.collider.gameObject;
+                        targetpos = target.transform.position;
+                    }
                 }
             }
         }
