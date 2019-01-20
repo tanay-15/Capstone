@@ -14,14 +14,6 @@ public class OrbitorScript : MonoBehaviour {
     public float theta = 0;
     int rotDirection = 1;
 
-    public Material OriginalTrailColor;
-    public Material HighlightTrailColor;
-
-    //public bool hasProjectile = false;
-    //public bool shootingProjectile = false;
-
-    //private float startTime = 0;
-    //private float journeyLength = 0;
     public float fracJourney = 0;
     bool facingRight = true;
 
@@ -38,11 +30,9 @@ public class OrbitorScript : MonoBehaviour {
     void Start () {
 
         Player = transform.parent.parent.gameObject;
-        Trail = transform.GetChild(0).gameObject;
+        //Trail = transform.GetChild(0).gameObject;
 
         Status = State.NoProjectile;
-
-        Trail.GetComponent<TrailRenderer>().material = OriginalTrailColor;
     }
 
 
@@ -87,6 +77,9 @@ public class OrbitorScript : MonoBehaviour {
                                 }
                             }
                         }
+
+                        Trail = Projectile.transform.GetChild(0).gameObject;
+
                         break;
                     }
 
@@ -97,8 +90,7 @@ public class OrbitorScript : MonoBehaviour {
                 case State.HasProjectile:
                     {
                         Trail.SetActive(true);
-                        Trail.transform.position = Projectile.transform.position;
-                        Trail.GetComponent<TrailRenderer>().material = OriginalTrailColor;
+                        //Trail.transform.position = Projectile.transform.position;
 
                         // Lerping 
                         if (Projectile.GetComponent<OrbitorObjectScript>().isOrbiting)
@@ -120,7 +112,7 @@ public class OrbitorScript : MonoBehaviour {
 
                 case State.ShootingProjectile:
                     {
-                        Trail.transform.position = Projectile.transform.position- new Vector3(0,0,0.1f);
+                        //Trail.transform.position = Projectile.transform.position- new Vector3(0,0,0.1f);
 
                         if (Projectile.GetComponent<OrbitorObjectScript>().hit)
                         {
