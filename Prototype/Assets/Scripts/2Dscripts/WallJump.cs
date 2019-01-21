@@ -16,6 +16,7 @@ public class WallJump : MonoBehaviour
     public Transform wallCheckpoint;
     public Transform wallCheckpoint1;
     public bool wallCheck;
+    public bool iswallSliding;
     public LayerMask wallLayerMask;
 
     // Use this for initialization
@@ -39,19 +40,19 @@ public class WallJump : MonoBehaviour
         Collider2D hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
         if ((hit && !ground.grounded) || (hitback && !ground.grounded))
         {
-          wallCheck = true;
-          if(hit != null)
-          {
-                playerMovement.flip();
-          }
-          
-          
+             wallCheck = true;
+            if(hit != null)
+                {
+                    playerMovement.flip();
+                }                  
         }
         else
         {
-          wallCheck = false;
-          wallSliding = false;
+            wallCheck = false;
+            wallSliding = false;
+            iswallSliding = false;
         }
+
         if(wallCheck)
         {
             wallSliding = true;
@@ -60,31 +61,34 @@ public class WallJump : MonoBehaviour
         {
           handleWallSliding();
         }
-
+      
         if (wallCheck && wallSliding)
         {
             playerMovement.enabled = false;
-           
-           // if ((hAxis > 0.1 || hAxis < -0.1) && (vAxis > 0.1 || vAxis < -0.1))
-            //{
-            if(playerMovement.facingRight)
+            iswallSliding = true;
+
+            if (playerMovement.facingRight)
             {
                 if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
-                {
-                    Debug.Log("inside walljump");
-                    Debug.Log("Direction for jump " + Direction);
+                {               
                     player.velocity = new Vector2(0, 0);
                     player.velocity = new Vector2(forceX, forceY);                
+                }
+                else if (Input.GetButtonDown("PS4CIRCLE"))
+                {
+                    player.velocity = new Vector2(2, 2);
                 }
             }
             else if(!playerMovement.facingRight)
             {
                 if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
-                {
-                    Debug.Log("inside walljump");
-                    Debug.Log("Direction for jump " + Direction);
+                {                                        
                     player.velocity = new Vector2(0, 0);
                     player.velocity = new Vector2(-forceX, forceY);
+                }
+                else if (Input.GetButtonDown("PS4CIRCLE"))
+                {
+                    player.velocity = new Vector2(-2, 2);
                 }
             }
                
