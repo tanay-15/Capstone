@@ -14,8 +14,15 @@ public class SkeletonBossScript : MonoBehaviour {
     public GameObject DemonicCircle;
     public GameObject HealthBar;
 
-   Transform[] BossBones;
-   Transform[] Grunts;
+    public GameObject[] gates;
+    Vector3 startPos1;
+    Vector3 startPos2;
+    Vector3 targetPos1;
+    Vector3 targetPos2;
+    bool gatesUp;
+
+    Transform[] BossBones;
+    Transform[] Grunts;
 
     float fracLerp = -2;
     float attackTimer = 0;
@@ -88,6 +95,57 @@ public class SkeletonBossScript : MonoBehaviour {
             new BoneSystem(null,null,null,false),
         };
  
+    void MoveGates(bool moveIn)
+    {
+        if (gatesUp != moveIn)
+        {
+            StartCoroutine(MoveGates_(moveIn));
+            gatesUp = moveIn;
+        }
+    }
+
+    //When the player gets near the battle area again (after respawning)
+    public void OnPlayerReEnter(Collider2D col)
+    {
+        if (col.gameObject.tag == "Player" && Status == State.Active)
+        {
+            MoveGates(false);
+        }
+    }
+
+    public void OnPlayerEnter(Collider2D col)
+    {
+        if (col.gameObject.tag == "Player" && Status == State.Active)
+        {
+            MoveGates(true);
+        }
+    }
+
+    void OffsetGates()
+    {
+        foreach (GameObject gate in gates)
+        {
+            gate.transform.Translate(0f, -8f, 0f);
+        }
+
+        startPos1 = gates[0].transform.position;
+        startPos2 = gates[1].transform.position;
+        targetPos1 = startPos1 + Vector3.up * 8f;
+        targetPos2 = startPos2 + Vector3.up * 8f;
+
+        gatesUp = false;
+    }
+
+    IEnumerator MoveGates_(bool moveIn)
+    {
+        for (float i = 0f; i < 1f; i += Time.deltaTime * 2f)
+        {
+            gates[0].transform.position = Vector3.Lerp(startPos1, targetPos1, (moveIn) ? i : (1 - i));
+            gates[1].transform.position = Vector3.Lerp(startPos2, targetPos2, (moveIn) ? i : (1 - i));
+            yield return 0;
+        }
+    }
+
 
     void Assemble()
     {
@@ -192,6 +250,8 @@ public class SkeletonBossScript : MonoBehaviour {
         BossBones = Boss.GetComponentsInChildren<Transform>();
         Grunts = transform.GetChild(0).GetComponentsInChildren<Transform>();
         MaxHealth = Health;
+        OffsetGates();
+        
         //Assemble();
     }
 
@@ -306,6 +366,7 @@ public class SkeletonBossScript : MonoBehaviour {
                     {
                         MainCamera.GetComponent<CameraFollow>().CameraPan(5f,0.5f);
                         Status = State.Dead;
+                        MoveGates(false);
                     }
 
                     attackTimer += Time.deltaTime;
@@ -392,6 +453,17 @@ public class SkeletonBossScript : MonoBehaviour {
         isAssembling = true;
 
         GetComponent<AudioSource>().Play();
+
+        //When the boss initializes for the first time, move the player inside the gates if they are outside
+        MoveGates(true);
+        if (Player.transform.position.x < gates[0].transform.position.x)
+        {
+            Player.transform.position = new Vector3(gates[0].transform.position.x + 1, Player.transform.position.y, Player.transform.position.z);
+        }
+        if (Player.transform.position.x > gates[1].transform.position.x)
+        {
+            Player.transform.position = new Vector3(gates[1].transform.position.x - 1, Player.transform.position.y, Player.transform.position.z);
+        }
     }
 
 
