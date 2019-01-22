@@ -8,10 +8,60 @@ public class BossCrate : MonoBehaviour
     public Transform upperRightBound;
     Vector3 startPos;
     Rigidbody2D rb;
+    Collider2D myCollider;
+    SpriteRenderer sr;
+    float bounceSpeed = 4f;
+    IEnumerator routine;
+
+    Collider2D[] ignoredColliders;
     void Start()
     {
         startPos = transform.position;
         rb = GetComponent<Rigidbody2D>();
+        myCollider = GetComponent<Collider2D>();
+        sr = GetComponent<SpriteRenderer>();
+        routine = null;
+    }
+
+    void IgnoreColliders(bool ignore)
+    {
+        foreach(Collider2D col in ignoredColliders)
+        {
+            Physics2D.IgnoreCollision(myCollider, col, ignore);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (Levitation.sharedInstance.HoldingObject && Levitation.sharedInstance.heldObject == gameObject)
+            {
+                Levitation.sharedInstance.ReleaseObject();
+            }
+            ignoredColliders = collision.gameObject.GetComponentsInChildren<Collider2D>();
+            IgnoreColliders(true);
+
+            Vector3 direction = (collision.gameObject.transform.position - transform.position).normalized;
+            rb.velocity = -direction * bounceSpeed;
+            if (routine != null)
+                StopCoroutine(routine);
+            routine = Cooldown();
+            StartCoroutine(routine);
+        }
+    }
+
+    IEnumerator Cooldown()
+    {
+        Color transparent = Color.white;
+        transparent.a = 0.5f;
+        for(int i = 0; i < 13; i++)
+        {
+            sr.color = (i%2 == 0) ? transparent : Color.white;
+            yield return new WaitForSeconds(0.1f);
+        }
+        sr.color = Color.white;
+        IgnoreColliders(false);
     }
 
     // Update is called once per frame
