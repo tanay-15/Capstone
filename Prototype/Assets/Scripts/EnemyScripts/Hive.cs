@@ -14,6 +14,8 @@ public class Hive : MonoBehaviour
     public float spawn_counter = 0f;
     private bool shouldspawn = false;
 
+    public float health = 10;
+
     void Start()
     {
         anim = this.GetComponent<Animator>();
@@ -28,6 +30,11 @@ public class Hive : MonoBehaviour
         {
             shouldspawn = true;
             spawn_counter = 3f;
+        }
+
+        if(health<= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -48,6 +55,15 @@ public class Hive : MonoBehaviour
                
                 SpawnBee();
             }
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "projectile")
+        {
+            health = health - 5f;
+
         }
     }
 }
