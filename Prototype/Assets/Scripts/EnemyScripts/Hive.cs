@@ -60,10 +60,16 @@ public class Hive : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "projectile")
+        if (collision.gameObject.tag == "projectile")
         {
             health = health - 5f;
 
         }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SendMessage("GetHit", -10);
+        }
+
     }
 }
