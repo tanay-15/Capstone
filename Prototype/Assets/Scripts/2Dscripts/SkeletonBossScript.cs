@@ -21,6 +21,8 @@ public class SkeletonBossScript : MonoBehaviour {
     Vector3 targetPos2;
     bool gatesUp;
 
+    public BossCrate[] bossCrates;
+
     Transform[] BossBones;
     Transform[] Grunts;
 
@@ -99,6 +101,10 @@ public class SkeletonBossScript : MonoBehaviour {
     {
         if (gatesUp != moveIn)
         {
+            foreach (BossCrate crate in bossCrates)
+            {
+                crate.CheckAndResetPosition();
+            }
             StartCoroutine(MoveGates_(moveIn));
             gatesUp = moveIn;
         }
@@ -456,6 +462,7 @@ public class SkeletonBossScript : MonoBehaviour {
 
         //When the boss initializes for the first time, move the player inside the gates if they are outside
         MoveGates(true);
+        GameObject heldObject = Levitation.sharedInstance.heldObject;
         if (Player.transform.position.x < gates[0].transform.position.x)
         {
             Player.transform.position = new Vector3(gates[0].transform.position.x + 1, Player.transform.position.y, Player.transform.position.z);

@@ -19,6 +19,14 @@ public class Levitation : MonoBehaviour {
     bool rightTriggerPressed;
     bool rightTriggerReleased;
     ActionIndicator action;
+
+    public bool HoldingObject
+    {
+        get
+        {
+            return (heldObject != null);
+        }
+    }
     
     bool active;
     Vector3 PlayerPos
@@ -151,7 +159,7 @@ public class Levitation : MonoBehaviour {
         action.Show(false);
     }
 
-    void ReleaseObject()
+    public void ReleaseObject()
     {
         Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
         IgnoreCollisions(heldObject, false);
