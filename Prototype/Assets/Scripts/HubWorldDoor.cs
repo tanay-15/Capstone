@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class HubWorldDoor : MonoBehaviour {
 
+    public LoadingScreen loadingScreen;
     public TextMesh levelDisplayText;
     public string levelName;
     public string levelDisplayName;
@@ -37,7 +38,11 @@ public class HubWorldDoor : MonoBehaviour {
     {
         if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("PS4TRIANGLE")) && player && !locked)
         {
-            SceneManager.LoadScene(levelName);
+            if (loadingScreen != null)
+            {
+                loadingScreen.gameObject.SetActive(true);
+            }
+            SceneManager.LoadSceneAsync(levelName);
         }
     }
 

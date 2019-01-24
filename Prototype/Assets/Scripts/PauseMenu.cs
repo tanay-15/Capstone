@@ -67,7 +67,6 @@ public class PauseMenu : MonoBehaviour {
     }
 	
 	void Update () {
-        Debug.Log(menuState);
 		if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options")) && (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options))
         {
             PauseUnpause();

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,8 +38,23 @@ public class PlayerLifeController : MonoBehaviour {
             gameObject.SetActive(false);
             Invoke("Respawn", 1.2f);
         }
-
+        //Thread testing
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    WaitCallback callback = new WaitCallback(Count);
+        //    ThreadPool.QueueUserWorkItem(callback);
+        //}
     }
+
+    //void Count(object obj)
+    //{
+    //    Debug.Log("Starting");
+    //    for (int i = -500000000; i < 500000000; i++)
+    //    {
+
+    //    }
+    //    Debug.Log("Done");
+    //}
 
     void StartInvincibleBlink(int loopCount)
     {
