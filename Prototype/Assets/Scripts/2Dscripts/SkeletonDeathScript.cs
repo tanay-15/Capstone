@@ -27,15 +27,15 @@ public class SkeletonDeathScript : MonoBehaviour {
         myColliders = GetComponentsInChildren<Collider2D>();
         mySprites = GetComponentsInChildren<SpriteMeshInstance>();
 
-        //IKSystem.SetActive(false);
+        IKSystem.SetActive(false);
         SetChildrenKinematic(true);
-        //IKSystem.SetActive(true);
+        IKSystem.SetActive(true);
 
-        //foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
-        //{
-        //    t.gameObject.SetActive(false);
-        //    t.gameObject.SetActive(true);
-        //}
+        foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
+        {
+            t.gameObject.SetActive(false);
+            t.gameObject.SetActive(true);
+        }
 
         Audio = GetComponent<AudioSource>();
         Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
@@ -87,7 +87,7 @@ public class SkeletonDeathScript : MonoBehaviour {
     {
         GetComponent<Animator>().enabled = false;
         SetChildrenKinematic(false);
-        //IKSystem.SetActive(false);
+        IKSystem.SetActive(false);
 
 
         StartCoroutine(DieRoutine());
