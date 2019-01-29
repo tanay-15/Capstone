@@ -15,8 +15,8 @@ public class SkeletonDeathScript : MonoBehaviour {
     public AudioClip[] BonesBreak;
     AudioSource Audio;
 
-    public bool Kill = false;
-
+    public bool kill = false;
+    bool dead = false;
     //health death
     public int mhealth;
 
@@ -44,7 +44,7 @@ public class SkeletonDeathScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Kill)
+        if (kill)
             Die();
 
         mhealth = this.gameObject.GetComponent<Enemy>().GetHealth();
@@ -85,13 +85,18 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     public void Die()
     {
-        GetComponent<Animator>().enabled = false;
-        SetChildrenKinematic(false);
-        IKSystem.SetActive(false);
+        if (!dead)
+        {
+            GetComponent<Animator>().enabled = false;
+            SetChildrenKinematic(false);
+            IKSystem.SetActive(false);
 
+            Explode(new Vector2(transform.position.x-0.5f, transform.position.y), 4);
+            StartCoroutine(DieRoutine());
+            TurnOffCollisions();
+            dead = true;
+        }
 
-        StartCoroutine(DieRoutine());
-        TurnOffCollisions();
     }
 
 
@@ -117,5 +122,22 @@ public class SkeletonDeathScript : MonoBehaviour {
             coll.enabled = !state;
         }
             
+    }
+
+
+    void Explode(Vector2 center, float magnitude)
+    {
+
+        foreach (Rigidbody2D rb2d in BoneSystem.GetComponentsInChildren<Rigidbody2D>())
+        {
+            if (rb2d.name != gameObject.name && rb2d.gameObject.layer == 15)
+            {
+                Vector2 direction = rb2d.position - center;
+                direction.Normalize();
+                rb2d.AddForce(direction*magnitude,ForceMode2D.Impulse);
+            }
+
+        }
+
     }
 }
