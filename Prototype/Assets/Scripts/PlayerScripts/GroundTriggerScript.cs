@@ -20,16 +20,18 @@ public class GroundTriggerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        grounded = true;
+        if(collision.gameObject.layer != 15)
+            grounded = true;
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        grounded = true;
-    }
+    //private void OnTriggerStay(Collider2D other)
+    //{
+    //    grounded = true;
+    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        grounded = false;
+        if (collision.gameObject.layer != 15)
+            grounded = false;
     }
 }
