@@ -9,7 +9,7 @@ public class ChargedArrow : playerKnife2D {
     Rigidbody2D rb;
     Vector3 startVelocity;
     float startY;
-    Vector3 newPos;
+    //Vector3 newPos;
     float ringInterval = 0.05f;
     float ringTime;
     Collider2D myCollider;
@@ -20,25 +20,32 @@ public class ChargedArrow : playerKnife2D {
         startVelocity = rb.velocity;
         ringTime = ringInterval;
         myCollider = GetComponent<Collider2D>();
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * 180f / Mathf.PI;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
 	}
 
     private void FixedUpdate()
     {
-        //Keep the arrow from changing velocity or y position
-        rb.velocity = startVelocity;
-        newPos.x = transform.position.x;
-        newPos.y = startY;
-        newPos.z = transform.position.z;
-        transform.position = newPos;
+        //Keep the arrow from changing velocity
+        //rb.velocity = startVelocity;
+        //newPos.x = transform.position.x;
+        //newPos.y = startY;
+        //newPos.z = transform.position.z;
+        //transform.position = newPos;
+
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * 180f / Mathf.PI;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     // Update is called once per frame
     void Update () {
+        GetComponent<SpriteRenderer>().flipX = false;
         ringTime -= Time.deltaTime;
+        Vector3 offset = new Vector3(rb.velocity.x, rb.velocity.y, 0f).normalized;
         if (ringTime < 0f)
         {
             ringTime = ringInterval;
-            Instantiate(ringPrefab, transform.position + Vector3.right * transform.localScale.x * 0.2f, Quaternion.identity);
+            Instantiate(ringPrefab, transform.position + transform.localScale.x * offset * 0.2f, transform.rotation);
         }
 	}
 

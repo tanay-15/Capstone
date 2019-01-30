@@ -25,6 +25,10 @@ public class Movement2D : MonoBehaviour
     private WallJump wallJumpScript;
     private Latching latchingScript;
     float minJumpSpeed = 2.0f;
+    bool canMove;
+    public GameObject reticle;
+    float reticleDistance = 2f;
+    float reticleHeight = 0f;
 
     public GameObject shinePrefab;
     Vector3 shinePosition = new Vector3(0.4f, 0f, 0f);
@@ -48,6 +52,8 @@ public class Movement2D : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        canMove = true;
+        reticle.SetActive(false);
         if (trackJumpHeight)
             ResetJumpTracking();
 
@@ -79,6 +85,18 @@ public class Movement2D : MonoBehaviour
         }
     }
 
+    //In the future may use different controls for keyboard and joystick
+    void MoveReticle()
+    {
+        float vAxis = Input.GetAxisRaw("Vertical");
+        reticleHeight += (vAxis * 0.02f);
+        reticleHeight = Mathf.Clamp(reticleHeight, -1f, 1f);
+
+        Vector2 position = new Vector2(Mathf.Cos(reticleHeight * Mathf.PI / 2), Mathf.Sin(reticleHeight * Mathf.PI / 2));
+        position *= reticleDistance;
+        reticle.transform.localPosition = (Vector3)position;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -100,10 +118,19 @@ public class Movement2D : MonoBehaviour
         float vAxis = Input.GetAxis("Vertical");
         myAnim.SetFloat("Speed", Mathf.Abs(hAxis));
 
-        if(hAxis > 0.5f)
-            player.velocity = new Vector3(Mathf.Sign(hAxis) * speed, player.velocity.y, 0);
+        if (canMove)
+        {
+            reticleHeight = 0f;
+            if (hAxis > 0.5f)
+                player.velocity = new Vector3(Mathf.Sign(hAxis) * speed, player.velocity.y, 0);
+            else
+                player.velocity = new Vector3(hAxis * speed, player.velocity.y, 0);
+        }
         else
-            player.velocity = new Vector3(hAxis * speed, player.velocity.y, 0);
+        {
+            MoveReticle();
+            player.velocity = new Vector3(0f, player.velocity.y, 0f);
+        }
         
         //if (vAxis > 0.5f)
         //    player.velocity = new Vector3(player.velocity.x, (Mathf.Sign(vAxis) * speed), 0);
@@ -182,6 +209,8 @@ public class Movement2D : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 myAnim.SetBool("isAttacking", true);
+                canMove = false;
+                reticle.SetActive(true);
 
                 // Rigidbody knifeInstance;
                 //nextFiretime = Time.time + cooldownTime;
@@ -189,11 +218,20 @@ public class Movement2D : MonoBehaviour
                 StartCoroutine("ShootArrow");   //"DelayedAttack"
             }
             else
+            {
                 myAnim.SetBool("isAttacking", false);
+            }
         }
-        else if (!Input.GetKeyDown(KeyCode.E))
+        else if (!Input.GetButtonDown("Fire1"))
         {
             myAnim.SetBool("isAttacking", false);
+        }
+
+        //Re-enable movement
+        if (Input.GetButtonUp("Fire1"))
+        {
+            canMove = true;
+            reticle.SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
@@ -297,17 +335,21 @@ public class Movement2D : MonoBehaviour
 
         GameObject shootingObject = (charge >= arrowChargeTime) ? chargedArrowPrefab : knifePrefab;
 
+        Vector2 shootingDirection = new Vector2(Mathf.Cos(reticleHeight * Mathf.PI / 2), Mathf.Sin(reticleHeight * Mathf.PI / 2));
+        Vector3 offset = shootingDirection * handEnd.localPosition.x;
+        offset.x *= (facingRight ? 1f : -1f);
         //Shoot
         if (facingRight)
         {
-            var knifeInstance = Instantiate(shootingObject, handEnd.position, Quaternion.identity);
-            knifeInstance.GetComponent<Rigidbody2D>().velocity = (charge >= arrowChargeTime) ? Vector3.right * 12f : (handEnd.right * 7) + new Vector3(0, 1, 0);
+            var knifeInstance = Instantiate(shootingObject, /*handEnd.position*/ transform.position + offset, Quaternion.identity);
+            knifeInstance.GetComponent<Rigidbody2D>().velocity = (charge >= arrowChargeTime) ? (Vector3)shootingDirection * 12f : (handEnd.right * 7) + new Vector3(0, 1, 0);
         }
         else
         {
-            var knifeInstance = Instantiate(shootingObject, handEnd.position, new Quaternion(shootingObject.transform.rotation.x, shootingObject.transform.rotation.y, shootingObject.transform.rotation.z, 1));
+            var knifeInstance = Instantiate(shootingObject, /*handEnd.position*/ transform.position + offset, new Quaternion(shootingObject.transform.rotation.x, shootingObject.transform.rotation.y, shootingObject.transform.rotation.z, 1));
             knifeInstance.GetComponent<SpriteRenderer>().flipX = true;
-            knifeInstance.GetComponent<Rigidbody2D>().velocity = (charge >= arrowChargeTime) ? Vector3.left * 12f : (-handEnd.right * 7) + new Vector3(0, 1, 0);
+            shootingDirection.x = -shootingDirection.x;
+            knifeInstance.GetComponent<Rigidbody2D>().velocity = (charge >= arrowChargeTime) ? (Vector3)shootingDirection * 12f : (-handEnd.right * 7) + new Vector3(0, 1, 0);
         }
     }
 

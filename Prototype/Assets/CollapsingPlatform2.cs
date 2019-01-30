@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollapsingPlatform : MonoBehaviour {
+public class CollapsingPlatform2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
