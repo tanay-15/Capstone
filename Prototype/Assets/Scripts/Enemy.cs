@@ -544,22 +544,22 @@ public class Enemy : BasicEnemy {
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        //Temporary. Let the Player Weapon GameObjects kill the enemy
-        if (collision.gameObject.tag == "Player Weapon")
-        {
-            Destroy(gameObject);
-        }
-        if(collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.SendMessage("GetHit", -5);
-            CollidedWithPlayer = true;
-            AttackReady = true;
-        }
+        ////Temporary. Let the Player Weapon GameObjects kill the enemy
+        //if (collision.gameObject.tag == "Player Weapon")
+        //{
+        //    Destroy(gameObject);
+        //}
+        //if(collision.gameObject.tag == "Player")
+        //{
+        //    collision.gameObject.SendMessage("GetHit", -5);
+        //    CollidedWithPlayer = true;
+        //    AttackReady = true;
+        //}
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
+        if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable" ) && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
         {
             if (collision.GetType() == typeof(BoxCollider2D))
             { 
@@ -587,7 +587,16 @@ public class Enemy : BasicEnemy {
             }
         }
 
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.name == "AttackTrigger")
+        {
+            applyDamage(15);
+            if (health <= 0.0f)
+                IsAlive = false;
+            var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x,transform.position.y+0.8f), Quaternion.identity);
+            impact.gameObject.SetActive(true);
+        }
+
+        if (collision.gameObject.tag == "Player")
         {
             //player is within attacking range
             withinRange = true;

@@ -189,7 +189,7 @@ public class PlayerStates : MonoBehaviour
                         PlayerAnimator.Play("Idle");
 
 
-                    if (Input.GetButtonDown("Jump"))
+                    if (Input.GetButtonDown("Jump")|| Input.GetButtonDown("PS4Jump"))
                         Rb2d.velocity = Vector3.up * jumpSpeed;
 
                     if (Input.GetButtonDown("Fire1"))
@@ -230,10 +230,14 @@ public class PlayerStates : MonoBehaviour
                 }
 
             case State.ChargingArrow:
-                ChargeArrow();
-                break;
+                {
+                    ChargeArrow();
+                    break;
+                }
         }
     }
+
+// Helper Functions
 
     void InitChargeArrow()
     {
@@ -267,10 +271,6 @@ public class PlayerStates : MonoBehaviour
 
 
 
-
-
-// Helper Functions
-
     public void flip()
     {
         facingRight = !facingRight;
@@ -281,7 +281,7 @@ public class PlayerStates : MonoBehaviour
 
     IEnumerator MeleeAttack()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         movable = true;
         status = State.Default;
     }

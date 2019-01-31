@@ -16,7 +16,7 @@ public class SkeletonDeathScript : MonoBehaviour {
     AudioSource Audio;
 
     public bool kill = false;
-    bool dead = false;
+    public bool dead = false;
     //health death
     public int mhealth;
 
@@ -52,7 +52,7 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     void TurnOffCollisions()
     {
-        playerColliders = Movement2D.sharedInstance.GetComponentsInChildren<Collider2D>();
+        playerColliders = GameObject.Find("Player").GetComponentsInChildren<Collider2D>();
         foreach (Collider2D playerCol in playerColliders)
         {
             foreach (Collider2D myCol in myColliders)
@@ -87,6 +87,7 @@ public class SkeletonDeathScript : MonoBehaviour {
     {
         if (!dead)
         {
+            dead = true;
             GetComponent<Animator>().enabled = false;
             SetChildrenKinematic(false);
             IKSystem.SetActive(false);
@@ -94,7 +95,7 @@ public class SkeletonDeathScript : MonoBehaviour {
             Explode(new Vector2(transform.position.x-0.5f, transform.position.y), 4);
             StartCoroutine(DieRoutine());
             TurnOffCollisions();
-            dead = true;
+            
         }
 
     }
