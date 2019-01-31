@@ -200,6 +200,11 @@ public class PlayerStates : MonoBehaviour
                         status = State.ChargingArrow;
                     }
 
+                    if (Input.GetButtonDown("PS4CIRCLE"))
+                    {
+                        status = State.Roll;
+                    }
+
                     if (grounded == false)
                         status = State.InAir;
 
@@ -226,6 +231,14 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.Roll:
                 {
+                    PlayerAnimator.Play("Roll");
+
+                    movable = false;
+                    invulnerable = true;
+                    StartCoroutine("Roll");
+
+                    transform.position = new Vector3(transform.position.x + 5*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
+
                     break;
                 }
 
@@ -282,6 +295,14 @@ public class PlayerStates : MonoBehaviour
     IEnumerator MeleeAttack()
     {
         yield return new WaitForSeconds(0.5f);
+        movable = true;
+        status = State.Default;
+    }
+
+    IEnumerator Roll()
+    {
+        yield return new WaitForSeconds(0.5f);
+        invulnerable = false;
         movable = true;
         status = State.Default;
     }
