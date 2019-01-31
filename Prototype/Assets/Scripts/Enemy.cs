@@ -159,7 +159,7 @@ public class Enemy : BasicEnemy {
         else
         {
             hasgroundAhead = false;
-            Debug.Log("No ground");
+            //Debug.Log("No ground");
         }
     }
     #endregion
