@@ -36,32 +36,35 @@ public class SkillTree : MonoBehaviour
     MenuState state;
     const int NUM_DIRECTIONS = 4;
     const int NUM_NODES = 8;
-    public GameObject cursor;
+    public SkillTreeCursor cursor;
     public SkillTreeNode[] nodes;
     public Image black;
     public Text nodeDescription;
     public Text skillPointsCounter;
     public TextAsset neighborMatrixFile;
     public TextAsset nodeDescriptionsFile;
+    public TextAsset requiredNodesFile;
     public ConfirmWindow window;
 
+    int nodeIndex;
     int[,] neighborMatrix;
+    SkillNodes[] requiredNodes;
     string[] nodeDescriptions;
     int[] skillCosts;
 
-    int nodeIndex;
+    //Neighbor Matrix
     // Row: Source
     // Column: Destination
     //     L U R D
     //    --------
-    // 0 | 1 1 4 2
-    // 1 | 3 1 0 2
-    // 2 | 3 1 0 2
-    // 3 | 3 1 1 2
-    // 4 | 0 5 5 6
-    // 5 | 4 5 7 6
-    // 6 | 4 5 7 6
-    // 7 | 5 5 7 6
+    // 0 | 1 1 4 0
+    // 1 | 2 1 0 0
+    // 2 | 2 3 1 2
+    // 3 | 3 3 3 2
+    // 4 | 0 5 5 4
+    // 5 | 4 5 6 4
+    // 6 | 5 7 6 6
+    // 7 | 7 7 7 6
 
     static SkillTree()
     {
@@ -79,6 +82,7 @@ public class SkillTree : MonoBehaviour
         UpdateSkillPointCounter();
         LoadNeighborMatrix();
         LoadDescriptions();
+        LoadRequiredNodes();
 
         MoveCursor();
         window.gameObject.SetActive(false);
@@ -89,9 +93,11 @@ public class SkillTree : MonoBehaviour
     {
         for(int i = 0; i < nodes.Length; i++)
         {
+            //Activate nodes for skills already active
             if ((info.nodesActivated & nodes[i].node) == nodes[i].node)
             {
-                nodes[i].SetActive(true);
+                //nodes[i].SetActive(true);
+                nodes[i].SetState(SkillTreeNodeState.active);
             }
         }
     }
@@ -101,6 +107,18 @@ public class SkillTree : MonoBehaviour
         skillPointsCounter.text = "Skill points: " + info.skillPoints.ToString();
     }
 
+    void LoadRequiredNodes()
+    {
+        string[] lines = requiredNodesFile.ToString().Split(',');
+        requiredNodes = new SkillNodes[lines.Length];
+        for (int i = 0; i < lines.Length; i++)
+        {
+            int line = int.Parse(lines[i]);
+            requiredNodes[i] = (SkillNodes)((line == -1) ? 0 : 1 << line);
+        }
+    }
+
+    //Load information for which nodes must be active before moving to another node
     void LoadNeighborMatrix()
     {
         neighborMatrix = new int[NUM_NODES, NUM_DIRECTIONS];
@@ -156,28 +174,34 @@ public class SkillTree : MonoBehaviour
         CheckForBack();
     }
 
+    //Is it possible to do with a single enum?
+    bool canMove(int index)
+    {
+        return ((requiredNodes[index] == SkillNodes.None) || (info.nodesActivated & requiredNodes[index]) == requiredNodes[index]);
+    }
+
     void CheckForArrowKeys()
     {
         if (state == MenuState.SkillTree)
         {
             //TODO: Copy code from the Pause Menu and make an input manager
             //Left: 0, Up: 1, Right: 2, Down: 3
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && nodeIndex != neighborMatrix[nodeIndex, 0] && canMove(neighborMatrix[nodeIndex, 0]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 0];
                 MoveCursor();
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow) && nodeIndex != neighborMatrix[nodeIndex, 1] && canMove(neighborMatrix[nodeIndex, 1]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 1];
                 MoveCursor();
             }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow) && nodeIndex != neighborMatrix[nodeIndex, 2] && canMove(neighborMatrix[nodeIndex, 2]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 2];
                 MoveCursor();
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.DownArrow) && nodeIndex != neighborMatrix[nodeIndex, 3] && canMove(neighborMatrix[nodeIndex, 3]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 3];
                 MoveCursor();
@@ -236,7 +260,8 @@ public class SkillTree : MonoBehaviour
                 {
                     info.skillPoints -= skillCosts[nodeIndex];
                     info.nodesActivated |= nodes[nodeIndex].node;
-                    nodes[nodeIndex].SetActive(true);
+                    //nodes[nodeIndex].SetActive(true);
+                    nodes[nodeIndex].SetState(SkillTreeNodeState.active);
                     UpdateSkillPointCounter();
                 }
                 else
@@ -261,8 +286,9 @@ public class SkillTree : MonoBehaviour
 
     void MoveCursor()
     {
-        cursor.transform.position = nodes[nodeIndex].gameObject.transform.position;
+        cursor.gameObject.transform.position = nodes[nodeIndex].gameObject.transform.position;
         SetDescription(nodeDescriptions[nodeIndex], skillCosts[nodeIndex]);
+        cursor.Reset();
     }
 
     void ReturnToPauseMenu()
