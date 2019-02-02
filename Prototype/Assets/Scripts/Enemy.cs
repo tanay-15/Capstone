@@ -206,7 +206,7 @@ public class Enemy : BasicEnemy {
                 if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 10f, EnemyIgnoreMask))
                 {
                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
-                    if (vishit.collider.gameObject.name == "Character")
+                    if (vishit.collider.gameObject.tag == "Player")
                     {
                         // anim.SetBool("Alert", true);
                         target = vishit.collider.gameObject;
@@ -224,7 +224,7 @@ public class Enemy : BasicEnemy {
                 if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 10f, EnemyIgnoreMask))
                 {
                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
-                    if (vishit.collider.gameObject.name == "Character")
+                    if (vishit.collider.gameObject.tag == "Player")
                     {
                         // anim.SetBool("Alert", true);
                         target = vishit.collider.gameObject;
