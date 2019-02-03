@@ -8,6 +8,7 @@ public class rageBar : MonoBehaviour {
     [SerializeField]
     public float fillAmount;
     private bool rageBarActive;
+    [System.NonSerialized]
     public rageBar RBar;
     private float newValue;
     private float updatedValue;
