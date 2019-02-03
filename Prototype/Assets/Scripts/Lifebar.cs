@@ -14,7 +14,6 @@ public class Lifebar : MonoBehaviour {
 
 	public void AssignEnemy(BasicEnemy enemy)
     {
-        Debug.Log(enemy == null);
         myEnemy = enemy;
         myEnemy.events.OnDeath.AddListener(OnEnemyDeath);
         myEnemy.events.OnTakeDamage.AddListener(OnEnemyTakeDamage);
