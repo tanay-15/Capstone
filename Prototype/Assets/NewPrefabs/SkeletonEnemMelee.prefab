@@ -301,32 +301,13 @@ MonoBehaviour:
   range: 12
   damage: 5
   movspeed: 1
-  withinRange: 0
-  InWorld: 0
-  losrange: 0
+  chaseSpeed: 0
   ImpactAnim: {fileID: 1057236091574462, guid: d1c3572964dd309439c9a1e438dffc0e, type: 3}
   target: {fileID: 0}
   AttackReady: 0
   IsAlive: 0
-  movway1: 1
-  movway2: 0
   checkforAttackHit: 0
-  MovePoint1: {fileID: 4521974395411361166}
-  MovePoint2: {fileID: 4521974395892473424}
-  EnemyIgnoreMask:
-    serializedVersion: 2
-    m_Bits: 0
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
   currentstate: 0
-  vision: {fileID: 4521974396718219143}
-  groundAhead: {fileID: 4521974396782185535}
-  jumpAhead: {fileID: 4521974395960530675}
-  hasgroundAhead: 0
-  jump_position: {x: 0, y: 0, z: 0}
-  CollidedWithPlayer: 0
-  compobones: []
 --- !u!50 &4521974395211325416
 Rigidbody2D:
   serializedVersion: 4

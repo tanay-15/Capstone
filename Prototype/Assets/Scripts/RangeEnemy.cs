@@ -11,6 +11,8 @@ public class RangeEnemy : Enemy {
     private GameObject go;
     private bool Thrown = false;
 
+    
+
     public override Vector3 lifebarOffset
     {
         get
@@ -92,7 +94,7 @@ public class RangeEnemy : Enemy {
    public void ThrowAxe()
     {
         Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
-        rateofattack = 1.3f;
+        rateofattack = 3f;
         Thrown = true;
     }
 

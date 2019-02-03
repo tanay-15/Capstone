@@ -24,14 +24,11 @@ public class Enemy : BasicEnemy {
     public float range;
     public float damage;
     public float movspeed;
-    public bool withinRange;
+    public float chaseSpeed;
+    private bool withinRange;
     
-    public enum World
-    {
-        Hero, Demon
-    }
-    public World InWorld;
-    public float losrange;
+ 
+    private float losrange;
     public GameObject ImpactAnim;
 
     [Header("Brain")]
@@ -39,17 +36,17 @@ public class Enemy : BasicEnemy {
     protected Vector3 targetpos;
     public bool AttackReady;
     public bool IsAlive ;
-    public bool movway1 = true;
-    public bool movway2;
+    private bool movway1 = true;
+    private bool movway2;
 
     public bool checkforAttackHit;
-    public GameObject MovePoint1;
-    public GameObject MovePoint2;
+    private GameObject MovePoint1;
+    private GameObject MovePoint2;
     private Vector3 waypoint1;
     private Vector3 waypoint2;
 
-    public LayerMask EnemyIgnoreMask;
-    public LayerMask groundMask;
+    private LayerMask EnemyIgnoreMask;
+    private LayerMask groundMask;
     
     public enum States
     {
@@ -58,6 +55,7 @@ public class Enemy : BasicEnemy {
         Alert,
         Pursuit,
         Attack,
+        Jumping,
         GetHit,
         Dead
     }
@@ -65,24 +63,25 @@ public class Enemy : BasicEnemy {
     public States currentstate;
 
     [Header("Eyesight")]
-    public GameObject vision;
-    public GameObject groundAhead;
-    public GameObject jumpAhead;
-    public RaycastHit eyehit;
+    private GameObject vision;
+    private GameObject groundAhead;
+    private GameObject jumpAhead;
+    private RaycastHit eyehit;
     private RaycastHit2D vishit;
     private RaycastHit2D groundHit;
     private RaycastHit2D jumpsideHit;
-    public bool hasgroundAhead;
+    private bool hasgroundAhead;
     private bool canJumpAhead;
     private bool m_HasPatrol;
 
     //Jump positions
-    public Vector3 jump_position;
+    private Vector3 jump_position;
+ 
 
-    public bool CollidedWithPlayer;
+    protected bool CollidedWithPlayer;
     Component[] bones;
 
-   public GameObject[] compobones;
+   protected GameObject[] compobones;
 
    public override Vector3 lifebarOffset
    {
@@ -95,25 +94,81 @@ public class Enemy : BasicEnemy {
 
 
     void Start () {
-		
+
+        SetupValues();
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
         IsAlive = true;
         rigidbodyenem = this.GetComponent<Rigidbody2D>();
         bones = gameObject.transform.GetComponentsInChildren<Rigidbody2D>();
 
-        
 
+        chaseSpeed = movspeed + 1f;
 
         maxHealth = health;
         EnemyIgnoreMask = ~LayerMask.GetMask("Enemy");
         groundMask = LayerMask.GetMask("Ground");
     }
 
+    void SetupValues()
+    {
+        foreach(Transform child in transform)
+        {
+            if(child.name == "WaypointA")
+            {
+                MovePoint1 = child.gameObject;
+            }
+            if (child.name == "WaypointB")
+            {
+                MovePoint2 = child.gameObject;
+            }
+            if (child.name == "Vision")
+            {
+                vision = child.gameObject;
+            }
+
+            if(child.name == "JumpSelection")
+            {
+                jumpAhead = child.gameObject;
+            }
+            if(child.name == "GroundAhead")
+            {
+                groundAhead = child.gameObject;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update () {
 
         if (IsAlive)
+        {
+            switch (currentstate)
+            {
+                case States.Idle:
+                    currentstate = States.Patrol;
+                    break;
+                case States.Patrol:
+                    DetectingPlayer();
+                    CheckForGroundAhead();
+                    Patrol();
+                    break;
+
+                case States.Pursuit:
+                    DetectingPlayer();
+                    CheckForGroundAhead();
+                    Pursuit();
+                    break;
+
+                case States.Attack:
+                    Attack();
+                    break;
+            }
+        }
+        
+
+
+     /*   if (IsAlive)
         {
             CheckForGroundAhead();
             DetectingPlayer();
@@ -122,14 +177,8 @@ public class Enemy : BasicEnemy {
             DirectAttack();
             Attack();
 
-            //when player is respawned
-            //if(Vector2.Distance(target.transform.position,this.transform.position)> 5f)
-            //{
-            //    target = null;
-            //    currentstate = States.Idle;
-            //    anim.SetBool("Attack", false);
-            //}
-        }
+         
+        }*/
         else
         {
             Death();
@@ -159,21 +208,11 @@ public class Enemy : BasicEnemy {
         else
         {
             hasgroundAhead = false;
-            //Debug.Log("No ground");
+          
         }
     }
     #endregion
-    void DirectAttack()
-    {
-        if(target)
-        {
-            if (Vector2.Distance(target.transform.position, this.transform.position)<1f) {
-
-                currentstate = States.Attack;
-                anim.SetBool("Attack", true);
-            }
-        }
-    }
+   
 
     public void Death()
     {
@@ -211,6 +250,7 @@ public class Enemy : BasicEnemy {
                         // anim.SetBool("Alert", true);
                         target = vishit.collider.gameObject;
                         targetpos = target.transform.position;
+                        currentstate = States.Pursuit;
                     }
                 }
 
@@ -229,6 +269,7 @@ public class Enemy : BasicEnemy {
                         // anim.SetBool("Alert", true);
                         target = vishit.collider.gameObject;
                         targetpos = target.transform.position;
+                        currentstate = States.Pursuit;
                     }
                 }
             }
@@ -241,68 +282,7 @@ public class Enemy : BasicEnemy {
         }
 
 
-        #region ExtraDetection
-        //Testing purpose
-
-        /*
-        if (movway1)
-        {
-
-
-            if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, losrange,layerMask))
-            {
-                if (vishit.collider.gameObject.tag == "Player")
-                {
-                    currentstate = States.Alert;
-                    anim.SetBool("Alert", true);
-                    target = vishit.collider.gameObject;
-                    targetpos = target.transform.position;
-                    //Debug.Log("Player spotted");
-                }
-
-
-
-
-            }
-
-
-            else
-            {
-                target = null;
-                currentstate = States.Idle;
-                anim.SetBool("Alert", false);
-            }
-
-        }
-
-        if (movway2)
-        {
-            if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, losrange,layerMask))
-            {
-                if (vishit.collider.gameObject.tag == "Player")
-                {
-                    currentstate = States.Alert;
-                    anim.SetBool("Alert", true);
-                    target = vishit.collider.gameObject;
-                    targetpos = target.transform.position;
-                    //Debug.Log("Player spotted");
-                }
-
-
-
-
-            }
-
-
-            else
-            {
-                target = null;
-                currentstate = States.Idle;
-                anim.SetBool("Alert", false);
-            }
-        }
-        */
-        #endregion
+     
 
     }
 
@@ -330,7 +310,7 @@ public class Enemy : BasicEnemy {
                 {
                     CheckForFlip(waypoint1);
                     this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint1, movspeed * Time.deltaTime);
-                    //rigidbody.velocity = new Vector2(movspeed, 0f);
+                 
                     if (Vector2.Distance(waypoint1, this.transform.position) <= 1f)
                     {
                         flip();
@@ -346,7 +326,7 @@ public class Enemy : BasicEnemy {
                 {
                     CheckForFlip(waypoint2);
                     this.transform.position = Vector2.MoveTowards(this.transform.position, waypoint2, movspeed * Time.deltaTime);
-                   // rigidbody.velocity = new Vector2(movspeed, 0f);
+                  
                     if (Vector2.Distance(waypoint2, this.transform.position) <= 1f)
                     {
                         flip();
@@ -383,6 +363,12 @@ public class Enemy : BasicEnemy {
                     currentstate = States.Patrol;
                     
                 }
+
+                if(Vector2.Distance(this.transform.position, target.transform.position) < 1f)
+                {
+                    currentstate = States.Attack;
+                    anim.SetBool("Attack", true);
+                }
                 else
                 {
                     if (hasgroundAhead)
@@ -394,7 +380,6 @@ public class Enemy : BasicEnemy {
                     {
                         Debug.Log("No ground, I am not moving");
 
-                        //Check if can make a jump 
                         CheckJumpSide();
                    
                     }
@@ -418,35 +403,31 @@ public class Enemy : BasicEnemy {
                 jump_position = jumpsideHit.point;
                 if((int)jump_position.y==(int)target.transform.position.y)
                 {
-                    //this.transform.position = jump_position;
-                    /*  float dist = Vector2.Distance(jump_position,transform.position);
 
+                    Invoke("TeleportEnemy", 1);
+                   
+                    
 
-                       float Vi = Mathf.Sqrt(dist * -Physics2D.gravity.y / (Mathf.Sin(Mathf.Deg2Rad * 50)));
-
-                       float Vx, Vy;
-
-                       Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * 50);
-                       Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * 50);
-
-                       Vector2 localvelco = new Vector2(Vx, Vy);
-
-                       Vector2 globalvelco = transform.TransformVector(localvelco);
-
-                       rigidbodyenem.velocity = globalvelco;*/
-                    Vector2 jumpVecloc = new Vector2(0.05f, 0.1f);
-                    rigidbodyenem.AddForce(jumpVecloc,ForceMode2D.Impulse);
+                   
                 }
                 else
                 {
-                    //Jumping down
-                    Debug.Log(jump_position.y);
+                   
+                 
                     Debug.Log("Target is not there");
                 }
                 
             }
         }
     }
+
+    void TeleportEnemy()
+    {
+        this.transform.position = jump_position;
+    }
+
+
+   
 
     public void CheckForFlip(Vector3 _targetpos)
     {
@@ -458,7 +439,7 @@ public class Enemy : BasicEnemy {
                 shouldLookRight = false;
                 if (LookingLeft && shouldLookLeft)
                 {
-                    //ignore
+                    
                     checkingFlips = true;
                 }
 
@@ -507,7 +488,7 @@ public class Enemy : BasicEnemy {
                 anim.SetBool("Attack", true);
                 currentstate = States.Attack;
                 
-                //l.Log("Enemy now attacks the player");
+         
                
             }
            
@@ -527,7 +508,7 @@ public class Enemy : BasicEnemy {
         this.health = this.health -  damage;
 
         events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
-        //Temporary; health bar does not update properly
+      
       
       
     }
@@ -598,10 +579,9 @@ public class Enemy : BasicEnemy {
 
         if (collision.gameObject.tag == "Player")
         {
-            //player is within attacking range
+           
             withinRange = true;
-            //target = collision.gameObject;
-           // targetpos = collision.gameObject.transform.position;
+           
            
         }
     }
@@ -621,7 +601,7 @@ public class Enemy : BasicEnemy {
         if(collider.gameObject.tag == "Player")
         {
             withinRange = false;
-            //target = null;
+           
             currentstate = States.Idle;
            
         }
@@ -651,4 +631,9 @@ public class Enemy : BasicEnemy {
       
         
     }
+
+
+
+
+  
 }
