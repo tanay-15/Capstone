@@ -3112,7 +3112,6 @@ GameObject:
   m_Component:
   - component: {fileID: 886675818}
   - component: {fileID: 886675817}
-  - component: {fileID: 886675821}
   - component: {fileID: 886675816}
   - component: {fileID: 886675815}
   - component: {fileID: 886675820}
@@ -3237,26 +3236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2661000029a00f4792b1b74806240c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &886675821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886675814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50afda752d026784386b72a086c9edf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bat: {fileID: 0}
-  DemonModeActive: 0
-  transitioning: 0
-  MainCam: {fileID: 0}
-  DemonCircle: {fileID: 0}
-  Darkness: {fileID: 0}
-  Landscape: {fileID: 0}
-  Rain: {fileID: 0}
 --- !u!1 &900623186
 GameObject:
   m_ObjectHideFlags: 0

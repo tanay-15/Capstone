@@ -37,8 +37,8 @@ public class SkeletonDeathScript : MonoBehaviour {
             t.gameObject.SetActive(true);
         }
 
-        Audio = GetComponent<AudioSource>();
-        Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
+        //Audio = GetComponent<AudioSource>();
+        //Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
     }
 	
 	// Update is called once per frame
