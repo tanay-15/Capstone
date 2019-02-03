@@ -697,35 +697,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Enabled
-    path: bones/pelvis/RLegB/RCalfB/RFeetB
-    classID: 96
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
+    attribute: m_Emitting
     path: bones/pelvis/LLegB/LCalfB/LFeetB
     classID: 96
     script: {fileID: 0}
@@ -753,7 +725,35 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Enabled
+    attribute: m_Emitting
+    path: bones/pelvis/RLegB/RCalfB/RFeetB
+    classID: 96
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Emitting
     path: bones/pelvis/spine1/chestB/RBicepB/RArmB/RFistB
     classID: 96
     script: {fileID: 0}
@@ -781,7 +781,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Enabled
+    attribute: m_Emitting
     path: bones/pelvis/spine1/chestB/LBicepB/LArmB/LFistB
     classID: 96
     script: {fileID: 0}
@@ -892,29 +892,29 @@ AnimationClip:
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3605014121
-      attribute: 3305885265
+      path: 652395124
+      attribute: 1228858774
       script: {fileID: 0}
       typeID: 96
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 652395124
-      attribute: 3305885265
+      path: 3605014121
+      attribute: 1228858774
       script: {fileID: 0}
       typeID: 96
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 2386958932
-      attribute: 3305885265
+      attribute: 1228858774
       script: {fileID: 0}
       typeID: 96
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 2878187295
-      attribute: 3305885265
+      attribute: 1228858774
       script: {fileID: 0}
       typeID: 96
       customType: 0
@@ -3059,35 +3059,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Enabled
-    path: bones/pelvis/RLegB/RCalfB/RFeetB
-    classID: 96
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
+    attribute: m_Emitting
     path: bones/pelvis/LLegB/LCalfB/LFeetB
     classID: 96
     script: {fileID: 0}
@@ -3115,7 +3087,35 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Enabled
+    attribute: m_Emitting
+    path: bones/pelvis/RLegB/RCalfB/RFeetB
+    classID: 96
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Emitting
     path: bones/pelvis/spine1/chestB/RBicepB/RArmB/RFistB
     classID: 96
     script: {fileID: 0}
@@ -3143,7 +3143,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Enabled
+    attribute: m_Emitting
     path: bones/pelvis/spine1/chestB/LBicepB/LArmB/LFistB
     classID: 96
     script: {fileID: 0}

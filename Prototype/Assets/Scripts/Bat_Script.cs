@@ -13,14 +13,14 @@ public class Bat_Script : MonoBehaviour {
     bool begin = false;
 
     public GameObject player;
-
+    bool DemonModeActive = false;
 
 	// Use this for initialization
 	void Start () {
 
         offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.7f), -1);
 
-        if (player.GetComponent<DemonModeScript>().DemonModeActive)
+        if (DemonModeActive)
         {
             radius = 0;
             direction = -1;
@@ -94,8 +94,10 @@ public class Bat_Script : MonoBehaviour {
                 transform.position = player.transform.position + new Vector3(radius * Mathf.Sin(theta), radius * Mathf.Cos(theta)) + offset;
             }
         }
-        else if(player.GetComponent<DemonModeScript>().DemonModeActive)
+        else if(DemonModeActive)
             transform.position = player.transform.position + offset;
+
+        DemonModeActive = player.GetComponent<DemonModeScript>().DemonModeActive;
     }
 
     /*
@@ -110,7 +112,7 @@ public class Bat_Script : MonoBehaviour {
     {
         float x;
 
-        if (player.GetComponent<DemonModeScript>().DemonModeActive)
+        if (DemonModeActive)
             x = Random.Range(2f, 3f);
         else
             x = Random.Range(0f, 1f);
