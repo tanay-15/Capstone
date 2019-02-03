@@ -96,6 +96,11 @@ public class Enemy : BasicEnemy {
     void Start () {
 
         SetupValues();
+       
+    }
+
+    void SetupValues()
+    {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
         IsAlive = true;
@@ -108,11 +113,9 @@ public class Enemy : BasicEnemy {
         maxHealth = health;
         EnemyIgnoreMask = ~LayerMask.GetMask("Enemy");
         groundMask = LayerMask.GetMask("Ground");
-    }
 
-    void SetupValues()
-    {
-        foreach(Transform child in transform)
+
+        foreach (Transform child in transform)
         {
             if(child.name == "WaypointA")
             {
@@ -530,12 +533,12 @@ public class Enemy : BasicEnemy {
         //{
         //    Destroy(gameObject);
         //}
-        //if(collision.gameObject.tag == "Player")
-        //{
-        //    collision.gameObject.SendMessage("GetHit", -5);
-        //    CollidedWithPlayer = true;
-        //    AttackReady = true;
-        //}
+        if(collision.gameObject.tag == "Player")
+        {
+           collision.gameObject.SendMessage("GetHit", -5);
+           CollidedWithPlayer = true;
+          AttackReady = true;
+        }
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -545,7 +548,7 @@ public class Enemy : BasicEnemy {
             if (collision.GetType() == typeof(BoxCollider2D))
             { 
                 
-                    applyDamage(5);
+                    applyDamage(Random.Range(2,5));
                     if(collision.GetComponent<OrbitorObjectScript>())
                         collision.GetComponent<OrbitorObjectScript>().hit = true;
                     else if(collision.GetComponent<playerKnife2D>())

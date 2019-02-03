@@ -24,7 +24,7 @@ public class GroundTriggerScript : MonoBehaviour
             grounded = true;
     }
 
-    private void OnTriggerStay(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer != 15)
             grounded = true;
