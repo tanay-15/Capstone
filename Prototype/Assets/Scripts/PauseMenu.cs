@@ -183,6 +183,11 @@ public class PauseMenu : MonoBehaviour {
         }
         if (toTree)
             SceneManager.LoadScene("SkillTree", LoadSceneMode.Additive);
+        else
+        {
+            col.a = 0f;
+            black.color = col;
+        }
         menuState = (toTree) ? PauseMenuState.SkillTree : PauseMenuState.Main;
     }
 

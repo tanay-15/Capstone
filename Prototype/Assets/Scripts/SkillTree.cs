@@ -6,15 +6,17 @@ using UnityEngine.UI;
 [System.Flags]
 public enum SkillNodes
 {
-    None = 0,
-    H_1 = 1,
-    H_2 = 1 << 1,
-    H_3 = 1 << 2,
-    H_4 = 1 << 3,
-    D_1 = 1 << 4,
-    D_2 = 1 << 5,
-    D_3 = 1 << 6,
-    D_4 = 1 << 7
+    None = 0,       //00000000
+    H_1 = 1,        //00000001
+    H_2 = 1 << 1,   //00000010
+    H_3 = 1 << 2,   //00000100
+    H_4 = 1 << 3,   //00001000
+    D_1 = 1 << 4,   //00010000
+    D_2 = 1 << 5,   //00100000
+    D_3 = 1 << 6,   //01000000
+    D_4 = 1 << 7,   //10000000
+    HUMAN = 15,     //00001111
+    DEMON = 240     //11110000
 }
 
 enum MenuState
@@ -32,10 +34,13 @@ struct SkillTreeInfo
 public class SkillTree : MonoBehaviour
 {
     static SkillTreeInfo info;
+    static int nodeIndex;
 
     MenuState state;
     const int NUM_DIRECTIONS = 4;
     const int NUM_NODES = 8;
+    public GameObject canvas;
+    public GameObject skillTreeEdgePrefab;
     public SkillTreeCursor cursor;
     public SkillTreeNode[] nodes;
     public Image black;
@@ -45,8 +50,10 @@ public class SkillTree : MonoBehaviour
     public TextAsset nodeDescriptionsFile;
     public TextAsset requiredNodesFile;
     public ConfirmWindow window;
+    public Color humanNodeEdgeColor;
+    public Color demonNodeEdgeColor;
 
-    int nodeIndex;
+    SkillTreeNodeEdge[] edges;
     int[,] neighborMatrix;
     SkillNodes[] requiredNodes;
     string[] nodeDescriptions;
@@ -70,26 +77,49 @@ public class SkillTree : MonoBehaviour
     {
         info.nodesActivated = SkillNodes.None;
         info.skillPoints = 16;
+        nodeIndex = 0;
     }
     
     void Start()
     {
         state = MenuState.SkillTree;
         StartCoroutine(Transition(true));
-        nodeIndex = 0;
 
-        InitializeNodes();
         UpdateSkillPointCounter();
         LoadNeighborMatrix();
         LoadDescriptions();
         LoadRequiredNodes();
+        UpdateNodes();
 
         MoveCursor();
         window.gameObject.SetActive(false);
     }
 
+    void PlaceEdge(int index, int requiredIndex)
+    {
+        if (requiredIndex != -1)
+        {
+            GameObject edge = Instantiate(skillTreeEdgePrefab, gameObject.transform);
+            Vector3 distance = nodes[requiredIndex].gameObject.transform.position - nodes[index].gameObject.transform.position;
+            float angle = Mathf.Atan2(distance.y, distance.x);
+            edge.transform.SetAsFirstSibling();
+            edge.transform.localRotation = Quaternion.Euler(0f, 0f, angle * 180 / Mathf.PI);
+            edge.transform.position = nodes[index].gameObject.transform.position;
+            edge.transform.SetAsFirstSibling();
+
+            edges[index] = edge.GetComponent<SkillTreeNodeEdge>();
+            //Assign a human or a demon color for the edge
+            if ((SkillNodes.HUMAN & nodes[index].node) == nodes[index].node)
+                edges[index].baseColor = humanNodeEdgeColor;
+            else if ((SkillNodes.DEMON & nodes[index].node) == nodes[index].node)
+                edges[index].baseColor = demonNodeEdgeColor;
+            else
+                Debug.Log("Error.");
+        }
+    }
+
     //Initialize nodes when entering the menu with shared nodesActivated
-    void InitializeNodes()
+    void UpdateNodes()
     {
         for(int i = 0; i < nodes.Length; i++)
         {
@@ -98,6 +128,13 @@ public class SkillTree : MonoBehaviour
             {
                 //nodes[i].SetActive(true);
                 nodes[i].SetState(SkillTreeNodeState.active);
+                if (edges[i] != null)
+                    edges[i].SetActive(true);
+            }
+            //If a node is accessible, but not activated
+            else if ((info.nodesActivated & requiredNodes[i]) == requiredNodes[i])
+            {
+                nodes[i].SetState(SkillTreeNodeState.inactive);
             }
         }
     }
@@ -110,10 +147,12 @@ public class SkillTree : MonoBehaviour
     void LoadRequiredNodes()
     {
         string[] lines = requiredNodesFile.ToString().Split(',');
+        edges = new SkillTreeNodeEdge[nodes.Length];
         requiredNodes = new SkillNodes[lines.Length];
         for (int i = 0; i < lines.Length; i++)
         {
             int line = int.Parse(lines[i]);
+            PlaceEdge(i, line);
             requiredNodes[i] = (SkillNodes)((line == -1) ? 0 : 1 << line);
         }
     }
@@ -164,6 +203,11 @@ public class SkillTree : MonoBehaviour
         }
         if (!fadeIn)
             ReturnToPauseMenu();
+        else
+        {
+            col.a = 0f;
+            black.color = col;
+        }
     }
 
     // Update is called once per frame
@@ -260,8 +304,8 @@ public class SkillTree : MonoBehaviour
                 {
                     info.skillPoints -= skillCosts[nodeIndex];
                     info.nodesActivated |= nodes[nodeIndex].node;
-                    //nodes[nodeIndex].SetActive(true);
-                    nodes[nodeIndex].SetState(SkillTreeNodeState.active);
+                    //nodes[nodeIndex].SetState(SkillTreeNodeState.active);
+                    UpdateNodes();
                     UpdateSkillPointCounter();
                 }
                 else

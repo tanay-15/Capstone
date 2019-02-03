@@ -41,7 +41,7 @@ public class SkillTreeCursor : MonoBehaviour
     {
         if (img != null)
         {
-            count += Time.deltaTime;
+            count += 0.02f; //Time.deltaTime;
             UpdateSprite();
         }
     }

@@ -14,6 +14,7 @@ public class SkillTreeNode : MonoBehaviour
 {
     Image img;
     public SkillNodes node;
+    public GameObject lockSprite;
     public Color activeColor;
     public Color inactiveColor;
     public Color disabledColor;
@@ -22,30 +23,28 @@ public class SkillTreeNode : MonoBehaviour
     [System.NonSerialized]
     public SkillTreeNodeState state;
 
-    void Start()
+    void Awake()
     {
         img = GetComponent<Image>();
         SetState(SkillTreeNodeState.disabled);
     }
-
-    //public void SetActive(bool setActive){
-    //    img.color = (setActive) ? activeColor : inactiveColor;
-    //    active = setActive;
-    //}
     public void SetState(SkillTreeNodeState newState)
     {
         state = newState;
         switch (newState)
         {
             case SkillTreeNodeState.disabled:
+                lockSprite.SetActive(true);
                 img.color = disabledColor;
                 break;
 
             case SkillTreeNodeState.inactive:
+                lockSprite.SetActive(false);
                 img.color = inactiveColor;
                 break;
 
             case SkillTreeNodeState.active:
+                lockSprite.SetActive(false);
                 img.color = activeColor;
                 break;
         }
