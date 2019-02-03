@@ -89,7 +89,7 @@ public class PlayerStates : MonoBehaviour
     public bool grounded = false;
     public bool invulnerable = false;
     public bool movable = true;
-
+    bool onStateStart = true;
     
 // References
 
@@ -162,13 +162,15 @@ public class PlayerStates : MonoBehaviour
 
         //// Grounded ////
 
-        grounded = GroundTrigger.GetComponent<GroundTriggerScript>().grounded;
+        if (Rb2d.velocity.y != 0)
+            grounded = GroundTrigger.GetComponent<GroundTriggerScript>().grounded;
+        else
+            grounded = true;
 
-        
-        
+
         //// State Switch ////
 
-        //Initially changing to state
+            //Initially changing to state
         if (prevState != status)
         {
             switch (status)
@@ -214,18 +216,28 @@ public class PlayerStates : MonoBehaviour
                 {
                     PlayerAnimator.Play("Jump");
 
+                    //if (onStateStart)
+                    //{
+                    //    StartCoroutine(InAirTimeLimit());
+                    //    onStateStart = false;
+                    //}
 
                     if (grounded == true)
                         status = State.Default;
+
 
                     break;
                 }
             case State.Melee:
                 {
                     PlayerAnimator.Play("MeleeAttack");
-
                     movable = false;
-                    StartCoroutine("MeleeAttack");
+
+                    if (onStateStart)
+                    {
+                        StartCoroutine("MeleeAttack");
+                        onStateStart = false;
+                    }
 
                     break;
                 }
@@ -237,7 +249,7 @@ public class PlayerStates : MonoBehaviour
                     invulnerable = true;
                     StartCoroutine("Roll");
 
-                    transform.position = new Vector3(transform.position.x + 5*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
+                    transform.position = new Vector3(transform.position.x + 8*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
 
                     break;
                 }
@@ -296,6 +308,7 @@ public class PlayerStates : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         movable = true;
+        onStateStart = true;
         status = State.Default;
     }
 
@@ -304,6 +317,14 @@ public class PlayerStates : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         invulnerable = false;
         movable = true;
+        //onStateStart = true;
         status = State.Default;
     }
+
+    //IEnumerator InAirTimeLimit()
+    //{
+    //    yield return new WaitForSeconds(4f);
+    //    onStateStart = true;
+    //    status = State.Default;
+    //}
 }
