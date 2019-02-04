@@ -36,6 +36,7 @@ public class Enemy : BasicEnemy {
     protected Vector3 targetpos;
     public bool AttackReady;
     public bool IsAlive ;
+    bool IsPunched = false;
     private bool movway1 = true;
     private bool movway2;
 
@@ -535,7 +536,7 @@ public class Enemy : BasicEnemy {
         //}
         if(collision.gameObject.tag == "Player")
         {
-           collision.gameObject.SendMessage("GetHit", -5);
+           //collision.gameObject.SendMessage("GetHit", -5);
            CollidedWithPlayer = true;
           AttackReady = true;
         }
@@ -571,12 +572,16 @@ public class Enemy : BasicEnemy {
             }
         }
 
-        if(collision.gameObject.name == "AttackTrigger")
+        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
         {
-            applyDamage(15);
+            applyDamage(5);
             if (health <= 0.0f)
                 IsAlive = false;
-            var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x,transform.position.y+0.8f), Quaternion.identity);
+
+            IsPunched = true;
+            StartCoroutine(IsPunchedReset());
+
+            var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
         }
 
@@ -589,6 +594,17 @@ public class Enemy : BasicEnemy {
         }
     }
 
+    //public void OnTriggerStay2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.name == "AttackTrigger" && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
+    //    {
+    //        applyDamage(5);
+    //        if (health <= 0.0f)
+    //            IsAlive = false;
+    //        var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
+    //        impact.gameObject.SetActive(true);
+    //    }
+    //}
 
     public void OnCollisionExit2D(Collision2D collision)
     {
@@ -637,6 +653,10 @@ public class Enemy : BasicEnemy {
 
 
 
-
+    IEnumerator IsPunchedReset()
+    {
+        yield return new WaitForSeconds(0.5f);
+        IsPunched = false;
+    }
   
 }

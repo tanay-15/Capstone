@@ -65,7 +65,7 @@ public class SkeletonDeathScript : MonoBehaviour {
     IEnumerator DieRoutine()
     {
         //TurnOffCollisions();
-        Audio.Play();
+        //Audio.Play();
 
         yield return new WaitForSeconds(2f);
 
