@@ -548,7 +548,7 @@ public class Enemy : BasicEnemy {
             if (collision.GetType() == typeof(BoxCollider2D))
             { 
                 
-                    applyDamage(Random.Range(2,5));
+                    applyDamage(Random.Range(5,8));
                     if(collision.GetComponent<OrbitorObjectScript>())
                         collision.GetComponent<OrbitorObjectScript>().hit = true;
                     else if(collision.GetComponent<playerKnife2D>())
