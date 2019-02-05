@@ -19,6 +19,7 @@ public class Levitation : MonoBehaviour {
     bool rightTriggerPressed;
     bool rightTriggerReleased;
     ActionIndicator action;
+    PlayerStates player;
 
     public bool HoldingObject
     {
@@ -33,7 +34,10 @@ public class Levitation : MonoBehaviour {
     {
         get
         {
-            return Movement2D.sharedInstance.gameObject.transform.position;
+            if (Movement2D.sharedInstance != null)
+                return Movement2D.sharedInstance.gameObject.transform.position;
+            else
+                return player.gameObject.transform.position;
         }
     }
 
@@ -50,7 +54,10 @@ public class Levitation : MonoBehaviour {
     {
         get
         {
-            return Movement2D.sharedInstance.gameObject;
+            if (Movement2D.sharedInstance != null)
+                return Movement2D.sharedInstance.gameObject;
+            else
+                return player.gameObject;
         }
     }
 
@@ -60,6 +67,7 @@ public class Levitation : MonoBehaviour {
     }
 
 	void Start () {
+        player = FindObjectOfType<PlayerStates>();
         rightTriggerDown = false;
         rightTriggerPressed = false;
         rightTriggerReleased = false;
@@ -191,7 +199,7 @@ public class Levitation : MonoBehaviour {
     //In the future, detect input from any button/axis on keyboard or controller to switch modes
     void CheckForButtonPress()
     {
-        if ((Input.GetMouseButtonDown(0) || rightTriggerPressed) && active)
+        if ((Input.GetMouseButtonDown(1) || rightTriggerPressed) && active)
         {
             if (heldObject == null)
             {
@@ -200,7 +208,7 @@ public class Levitation : MonoBehaviour {
                     PickUpObject(hoveringObject.gameObject);
             }
         }
-        else if ((Input.GetMouseButtonUp(0) || rightTriggerReleased) && active)
+        else if ((Input.GetMouseButtonUp(1) || rightTriggerReleased) && active)
         {
             ReleaseObject();
         }
@@ -227,7 +235,7 @@ public class Levitation : MonoBehaviour {
             baseJoystickPosition = grabPosition - PlayerPos;
             useJoystick = true;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             useJoystick = false;
         }
