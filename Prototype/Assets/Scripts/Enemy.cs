@@ -236,52 +236,61 @@ public class Enemy : BasicEnemy {
 
     public virtual void DetectingPlayer()
     {
+        #region Previous Detection with raycasting
+        /* if (withinRange)
+         {
+             if (LookingLeft)
+             {
+
+
+                 Debug.Log("In here");
+                 Debug.DrawRay(vision.transform.position, -transform.right);
+
+                 if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 10f, EnemyIgnoreMask))
+                 {
+                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                     if (vishit.collider.gameObject.tag == "Player")
+                     {
+                         // anim.SetBool("Alert", true);
+                         target = vishit.collider.gameObject;
+                         targetpos = target.transform.position;
+                         currentstate = States.Pursuit;
+                     }
+                 }
+
+             }
+
+             if (!LookingLeft)
+             {
+                 Debug.Log("In here");
+                 Debug.DrawRay(vision.transform.position, transform.right);
+
+                 if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 10f, EnemyIgnoreMask))
+                 {
+                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                     if (vishit.collider.gameObject.tag == "Player")
+                     {
+                         // anim.SetBool("Alert", true);
+                         target = vishit.collider.gameObject;
+                         targetpos = target.transform.position;
+                         currentstate = States.Pursuit;
+                     }
+                 }
+             }
+         }
+         */
+        #endregion
 
         if (withinRange)
         {
-            if (LookingLeft)
-            {
-
-
-                Debug.Log("In here");
-                Debug.DrawRay(vision.transform.position, -transform.right);
-
-                if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 10f, EnemyIgnoreMask))
-                {
-                    Debug.Log("Vision hits " + vishit.collider.gameObject.name);
-                    if (vishit.collider.gameObject.tag == "Player")
-                    {
-                        // anim.SetBool("Alert", true);
-                        target = vishit.collider.gameObject;
-                        targetpos = target.transform.position;
-                        currentstate = States.Pursuit;
-                    }
-                }
-
-            }
-
-            if (!LookingLeft)
-            {
-                Debug.Log("In here");
-                Debug.DrawRay(vision.transform.position, transform.right);
-
-                if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 10f, EnemyIgnoreMask))
-                {
-                    Debug.Log("Vision hits " + vishit.collider.gameObject.name);
-                    if (vishit.collider.gameObject.tag == "Player")
-                    {
-                        // anim.SetBool("Alert", true);
-                        target = vishit.collider.gameObject;
-                        targetpos = target.transform.position;
-                        currentstate = States.Pursuit;
-                    }
-                }
-            }
+            targetpos = target.transform.position;
+            currentstate = States.Pursuit;
         }
 
         else if (!withinRange)
         {
             target = null;
+            currentstate = States.Patrol;
             
         }
 
@@ -542,6 +551,18 @@ public class Enemy : BasicEnemy {
         }
     }
 
+    public virtual void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+
+            withinRange = true;
+            target = collision.gameObject;
+
+
+        }
+    }
+
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable" ) && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
@@ -589,8 +610,9 @@ public class Enemy : BasicEnemy {
         {
            
             withinRange = true;
-           
-           
+            target = collision.gameObject;
+
+
         }
     }
 
