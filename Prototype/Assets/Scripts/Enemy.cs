@@ -144,7 +144,10 @@ public class Enemy : BasicEnemy {
 
     // Update is called once per frame
     void Update () {
-
+        if (health <= 0.0f)
+        {
+            IsAlive = false;
+        }
         if (IsAlive)
         {
             switch (currentstate)
@@ -565,7 +568,7 @@ public class Enemy : BasicEnemy {
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable" ) && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
+        if((collision.gameObject.tag == "projectile"/* || collision.gameObject.tag == "Grabbable"*/ ) && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
         {
             if (collision.GetType() == typeof(BoxCollider2D))
             { 
@@ -578,11 +581,7 @@ public class Enemy : BasicEnemy {
                 //
 
 
-                if (health <= 0.0f)
-                {
-                    IsAlive = false;
-                }
-                else
+                if (health > 0.0f)
                 {
                     Destroy(collision.gameObject);
                 }
@@ -596,8 +595,6 @@ public class Enemy : BasicEnemy {
         if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
         {
             applyDamage(5);
-            if (health <= 0.0f)
-                IsAlive = false;
 
             IsPunched = true;
             StartCoroutine(IsPunchedReset());
