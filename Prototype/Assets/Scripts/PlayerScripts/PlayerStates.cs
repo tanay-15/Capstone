@@ -39,10 +39,10 @@ public class PlayerStates : MonoBehaviour
     GameObject GroundTrigger;
 
     Rigidbody2D Rb2d;
+    private IEnumerator coroutine;
 
 
-    
-   
+
 
 
 
@@ -183,13 +183,20 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.Melee:
                 {
-                    PlayerAnimator.Play("MeleeAttack");
                     movable = false;
 
                     if (onStateStart)
                     {
-                        StartCoroutine("MeleeAttack");
-                        //onStateStart = false;
+                        PlayerAnimator.Play("MeleeAttack", -1, 0);
+                        coroutine = MeleeAttack();
+                        StartCoroutine(coroutine);
+                        onStateStart = false;
+                    }
+
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        onStateStart = true;
+                        StopCoroutine(coroutine);
                     }
 
                     break;
