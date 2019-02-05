@@ -12,6 +12,7 @@ public class BossCrate : MonoBehaviour
     SpriteRenderer sr;
     float bounceSpeed = 4f;
     IEnumerator routine;
+    Color startColor;
 
     Collider2D[] ignoredColliders;
     void Start()
@@ -21,6 +22,7 @@ public class BossCrate : MonoBehaviour
         myCollider = GetComponent<Collider2D>();
         sr = GetComponent<SpriteRenderer>();
         routine = null;
+        startColor = sr.color;
     }
 
     void IgnoreColliders(bool ignore)
@@ -51,16 +53,36 @@ public class BossCrate : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (Levitation.sharedInstance.HoldingObject && Levitation.sharedInstance.heldObject == gameObject)
+            {
+                Levitation.sharedInstance.ReleaseObject();
+            }
+            ignoredColliders = collision.gameObject.GetComponentsInChildren<Collider2D>();
+            IgnoreColliders(true);
+
+            Vector3 direction = (collision.gameObject.transform.position - transform.position).normalized;
+            rb.velocity = -direction * bounceSpeed;
+            if (routine != null)
+                StopCoroutine(routine);
+            routine = Cooldown();
+            StartCoroutine(routine);
+        }
+    }
+
     IEnumerator Cooldown()
     {
-        Color transparent = Color.white;
+        Color transparent = startColor;
         transparent.a = 0.5f;
         for(int i = 0; i < 13; i++)
         {
-            sr.color = (i%2 == 0) ? transparent : Color.white;
+            sr.color = (i%2 == 0) ? transparent : startColor;
             yield return new WaitForSeconds(0.1f);
         }
-        sr.color = Color.white;
+        sr.color = startColor;
         IgnoreColliders(false);
     }
 

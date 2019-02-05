@@ -554,7 +554,7 @@ public class Enemy : BasicEnemy {
         }
     }
 
-    public virtual void OnTriggerStay2D(Collider2D collision)
+    public void TriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -566,9 +566,14 @@ public class Enemy : BasicEnemy {
         }
     }
 
-    public virtual void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerStay2D(Collider2D collision)
     {
-        if((collision.gameObject.tag == "projectile"/* || collision.gameObject.tag == "Grabbable"*/ ) && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
+
+    }
+
+    public virtual void TriggerEnter2D(Collider2D collision)
+    {
+        if((/*collision.gameObject.tag == "projectile" || */collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position,transform.position) < 1.5f )
         {
             if (collision.GetType() == typeof(BoxCollider2D))
             { 
@@ -583,7 +588,7 @@ public class Enemy : BasicEnemy {
 
                 if (health > 0.0f)
                 {
-                    Destroy(collision.gameObject);
+                    //Destroy(collision.gameObject);
                 }
 
                 var impact = Instantiate(ImpactAnim, collision.transform.position, Quaternion.identity);
@@ -613,6 +618,11 @@ public class Enemy : BasicEnemy {
         }
     }
 
+    public virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+
+    }
+
     //public void OnTriggerStay2D(Collision2D collision)
     //{
     //    if (collision.gameObject.name == "AttackTrigger" && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
@@ -634,7 +644,7 @@ public class Enemy : BasicEnemy {
         }
     }
 
-    public virtual void OnTriggerExit2D(Collider2D collider)
+    public void TriggerExit2D(Collider2D collider)
     {
         if(collider.gameObject.tag == "Player")
         {
@@ -643,6 +653,11 @@ public class Enemy : BasicEnemy {
             currentstate = States.Idle;
            
         }
+    }
+
+    public virtual void OnTriggerExit2D(Collider2D collider)
+    {
+
     }
 
     public int GetHealth()

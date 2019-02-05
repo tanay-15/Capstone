@@ -51,31 +51,67 @@ public class ChargedArrow : playerKnife2D {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!(collision.gameObject.layer == 15))
+        if (collision.gameObject.layer == 9)
         {
-            Debug.Log(collision.gameObject.name);
+            //Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }
 
-        //Don't hit the same object more than once
-        if (!hitObjects.Contains(collision.gameObject))
+        if (collision.gameObject.tag == "Enemy")
         {
-             hitObjects.Add(collision.gameObject);
-            //GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-            //GetComponent<Rigidbody2D>().isKinematic = true;
-            //GetComponent<Collider2D>().enabled = false;
-            //transform.parent = collision.gameObject.transform;
-            foreach(Collider2D enemyCol in collision.gameObject.GetComponentsInChildren<Collider2D>())
+            //Don't hit the same object more than once
+            if (!hitObjects.Contains(collision.gameObject))
             {
-                Physics2D.IgnoreCollision(myCollider, enemyCol);
+                hitObjects.Add(collision.gameObject);
+                //GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+                //GetComponent<Rigidbody2D>().isKinematic = true;
+                //GetComponent<Collider2D>().enabled = false;
+                //transform.parent = collision.gameObject.transform;
+                foreach (Collider2D enemyCol in collision.gameObject.GetComponentsInChildren<Collider2D>())
+                {
+                    Physics2D.IgnoreCollision(myCollider, enemyCol);
+                }
+
+                // Impact Sprite
+                var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
+                impact.gameObject.SetActive(true);
+
+                collision.gameObject.SendMessageUpwards("applyDamage", 10);  //Normal arrow does 5
+                                                                             //StartCoroutine(DelayDestroy());
             }
+        }
+    }
 
-            // Impact Sprite
-            var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
-            impact.gameObject.SetActive(true);
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            //Debug.Log(collision.gameObject.name);
+            Destroy(gameObject);
+        }
 
-            collision.gameObject.SendMessageUpwards("applyDamage", 10);  //Normal arrow does 5
-            //StartCoroutine(DelayDestroy());
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //Don't hit the same object more than once
+            if (!hitObjects.Contains(collision.gameObject))
+            {
+                hitObjects.Add(collision.gameObject);
+                //GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+                //GetComponent<Rigidbody2D>().isKinematic = true;
+                //GetComponent<Collider2D>().enabled = false;
+                //transform.parent = collision.gameObject.transform;
+                foreach (Collider2D enemyCol in collision.gameObject.GetComponentsInChildren<Collider2D>())
+                {
+                    Physics2D.IgnoreCollision(myCollider, enemyCol);
+                }
+
+                // Impact Sprite
+                var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
+                impact.gameObject.SetActive(true);
+
+                collision.gameObject.SendMessageUpwards("applyDamage", 10);  //Normal arrow does 5
+                                                                             //StartCoroutine(DelayDestroy());
+            }
         }
     }
 
