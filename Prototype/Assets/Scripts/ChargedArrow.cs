@@ -56,6 +56,13 @@ public class ChargedArrow : playerKnife2D {
             //Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }
+        if (collision.gameObject.tag == "ArrowDestroy")
+        {
+            Debug.Log(collision.gameObject.name);
+            Destroy(collision.gameObject);
+            //Destroy(gameObject);
+        }
+
 
         if (collision.gameObject.tag == "Enemy")
         {
