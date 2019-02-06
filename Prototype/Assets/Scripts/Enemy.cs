@@ -533,8 +533,14 @@ public class Enemy : BasicEnemy {
     {
         if (CollidedWithPlayer)
         {
-            target.gameObject.SendMessage("GetHit", -10f);
+            target.gameObject.SendMessage("GetHit", -100f);
             rateofattack = 2f;
+            if (PlayerLife.sharedInstance.currentLife <= 0)
+            {
+                withinRange = false;
+                currentstate = States.Idle;
+                Patrol();
+            }
         }
   
     }

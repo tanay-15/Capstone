@@ -90,6 +90,11 @@ public class PlayerLifeController : MonoBehaviour {
         transform.position = respawnPosition;
         StartInvincibleBlink(respawnBlinkLoop);
 
+        if (GetComponent<PlayerStates>() != null)
+        {
+            GetComponent<PlayerStates>().RestartInAir();
+        }
+
         if (GetComponent<DemonModeScript>().DemonModeActive)
         { GetComponent<DemonModeScript>().Transformation(); }
     }
@@ -103,7 +108,7 @@ public class PlayerLifeController : MonoBehaviour {
     {
         if (invincible) return;
         StartInvincibleBlink(2);
-        PlayerLife.sharedInstance.AddLife(-10);
+        PlayerLife.sharedInstance.AddLife(addLife);
         FindObjectOfType<CameraFollow>().ShakeCamera();
         BlinkRed(true);
         Invoke("Unblink", 0.1f);

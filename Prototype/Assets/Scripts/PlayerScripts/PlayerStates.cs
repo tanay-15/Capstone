@@ -66,6 +66,13 @@ public class PlayerStates : MonoBehaviour
         shootingArrowInfo.Initialize();
     }
 
+    public void RestartInAir()
+    {
+        grounded = false;
+        status = State.InAir;
+        GroundTrigger.GetComponent<GroundTriggerScript>().grounded = false;
+    }
+
 
 
 
