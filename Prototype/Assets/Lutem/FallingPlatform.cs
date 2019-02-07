@@ -11,12 +11,14 @@ public class FallingPlatform : MonoBehaviour
     Vector2 startPosition;
     Vector2 fallPosition;
     bool falling;
+    bool triggered;
 
     // Start is called before the first frame update
     void Start()
     {
         startPosition = this.transform.position;
         falling = false;
+        triggered = false;
         fallPosition = this.transform.position;
         fallPosition.y -= 0.5f;
     }
@@ -38,23 +40,25 @@ public class FallingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player" && collision.gameObject.transform.position.y > this.transform.position.y)
         {
-            if (timed)
+            if (timed && !triggered)
             {
+                triggered = true;
                 StartCoroutine(TimedFall());
             }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player" && collision.gameObject.transform.position.y > this.transform.position.y)
         {
-            if (!timed)
+            if (!timed && !triggered)
             {
                 this.GetComponent<BoxCollider2D>().enabled = false;
                 falling = true;
+                triggered = true;
             }
         }
     }
@@ -76,6 +80,11 @@ public class FallingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
         this.transform.position = startPosition;
+        if (timed)
+        {
+            this.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f);
+        }
+        triggered = false;
         this.GetComponent<BoxCollider2D>().enabled = true;
         this.GetComponent<SpriteRenderer>().enabled = true;
         yield return null;
