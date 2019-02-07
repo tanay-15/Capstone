@@ -9,7 +9,6 @@ public class RangeEnemy : Enemy {
     public GameObject shurikenprefab;
     public GameObject shuriloct;
     private GameObject go;
-    private bool IsPunched;
     private bool Thrown = false;
 
     
@@ -52,7 +51,7 @@ public class RangeEnemy : Enemy {
 
             }
         }
-        if(health <=0)
+        else
         {
             Death();
         }
@@ -92,18 +91,7 @@ public class RangeEnemy : Enemy {
         }
     }
 
-    public override void applyDamage(int damage)
-    {
-
-        this.health = this.health - damage;
-
-        events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
-
-
-
-    }
-
-    public void ThrowAxe()
+   public void ThrowAxe()
     {
         Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
         rateofattack = 3f;
@@ -131,7 +119,7 @@ public class RangeEnemy : Enemy {
 
     }
 
-   public  void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position, transform.position) < 2f)
         {
@@ -166,54 +154,6 @@ public class RangeEnemy : Enemy {
         }
     }
 
-    public override void TriggerEnter2D(Collider2D collision)
-    {
-        if ((/*collision.gameObject.tag == "projectile" || */collision.gameObject.tag == "Grabbable") && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
-        {
-            if (collision.GetType() == typeof(BoxCollider2D))
-            {
-
-                applyDamage(Random.Range(5, 8));
-                if (collision.GetComponent<OrbitorObjectScript>())
-                    collision.GetComponent<OrbitorObjectScript>().hit = true;
-                else if (collision.GetComponent<playerKnife2D>())
-                    collision.GetComponent<playerKnife2D>().hasHit = true;
-                //
-
-
-                if (health > 0.0f)
-                {
-                    //Destroy(collision.gameObject);
-                }
-
-                var impact = Instantiate(ImpactAnim, collision.transform.position, Quaternion.identity);
-                impact.gameObject.SetActive(true);
-
-            }
-        }
-
-        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
-        {
-            applyDamage(5);
-
-            IsPunched = true;
-            StartCoroutine(IsPunchedReset());
-
-            var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
-            impact.gameObject.SetActive(true);
-        }
-
-        if (collision.gameObject.tag == "Player")
-        {
-
-            
-            target = collision.gameObject;
-
-
-        }
-    }
-
-
     public override void OnTriggerExit2D(Collider2D collider)
     {
         if(collider.gameObject.tag == "Player")
@@ -234,11 +174,4 @@ public class RangeEnemy : Enemy {
     {
         return target;
     }
-
-    IEnumerator IsPunchedReset()
-    {
-        yield return new WaitForSeconds(0.25f);
-        IsPunched = false;
-    }
-
 }

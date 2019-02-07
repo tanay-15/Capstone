@@ -20,7 +20,7 @@ public class ThrowAxe : MonoBehaviour {
         rigi = this.GetComponent<Rigidbody2D>();
         player_target = GameObject.Find("Character");
         startpoint = this.transform.position;
-         moveVector = 4*Vector3.Normalize(GameObject.Find("Player").transform.position- transform.position);
+         moveVector = 4*Vector3.Normalize(GameObject.Find("Character").transform.position- transform.position);
         //Physics2D.gravity = new Vector2(0, -9.8f);
      
 

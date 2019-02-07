@@ -409,24 +409,32 @@ public class Enemy : BasicEnemy {
     void CheckJumpSide()
     {
         Debug.DrawRay(jumpAhead.transform.position, -Vector3.up);
-        if(jumpsideHit = Physics2D.Raycast(jumpAhead.transform.position, -transform.up,12f,EnemyIgnoreMask))
+        if(jumpsideHit = Physics2D.Raycast(jumpAhead.transform.position, -transform.up,4f,EnemyIgnoreMask))
         {
-            
-           
+            Debug.Log("Jump Hit "+ jumpsideHit.collider.gameObject.name);
+            if(jumpsideHit.collider.gameObject.tag == "ground")
+            {
                 
-               
+                Debug.Log("Yes I can make a jump!");
                 jump_position = jumpsideHit.point;
-             
+                if((int)jump_position.y==(int)target.transform.position.y)
+                {
+
                     Invoke("TeleportEnemy", 1);
                    
                     
 
                    
-                
-              
+                }
+                else
+                {
+                   
+                 
+                    Debug.Log("Target is not there");
+                }
                 
             }
-        
+        }
     }
 
     void TeleportEnemy()
@@ -510,9 +518,9 @@ public class Enemy : BasicEnemy {
         Gizmos.DrawWireSphere(this.transform.position,losrange);
         
     }
-    public virtual void applyDamage(int damage)
+    public void applyDamage(int damage)
     {
-        
+        Debug.Log("Hit by arrow~!!");
         this.health = this.health -  damage;
 
         events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
@@ -533,16 +541,8 @@ public class Enemy : BasicEnemy {
                 currentstate = States.Idle;
                 Patrol();
             }
-
-          
         }
-
-        if (Vector2.Distance(this.transform.position, target.transform.position) > 1.5f)
-        {
-            currentstate = States.Idle;
-            DetectingPlayer();
-        }
-
+  
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -560,8 +560,7 @@ public class Enemy : BasicEnemy {
         }
     }
 
- 
-    public virtual void OnTriggerStay2D(Collider2D collision)
+    public void TriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -571,6 +570,11 @@ public class Enemy : BasicEnemy {
 
 
         }
+    }
+
+    public virtual void OnTriggerStay2D(Collider2D collision)
+    {
+
     }
 
     public virtual void TriggerEnter2D(Collider2D collision)
@@ -620,7 +624,10 @@ public class Enemy : BasicEnemy {
         }
     }
 
- 
+    public virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+
+    }
 
     //public void OnTriggerStay2D(Collision2D collision)
     //{
