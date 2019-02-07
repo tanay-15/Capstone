@@ -3571,6 +3571,7 @@ MonoBehaviour:
   grounded: 0
   invulnerable: 0
   movable: 1
+  DustParticles: {fileID: 0}
 --- !u!50 &2700114358183790578
 Rigidbody2D:
   serializedVersion: 4
@@ -3588,7 +3589,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
