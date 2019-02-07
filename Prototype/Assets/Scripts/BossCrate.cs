@@ -55,7 +55,7 @@ public class BossCrate : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        /*if (collision.gameObject.tag == "Enemy")
         {
             if (Levitation.sharedInstance.HoldingObject && Levitation.sharedInstance.heldObject == gameObject)
             {
@@ -71,6 +71,7 @@ public class BossCrate : MonoBehaviour
             routine = Cooldown();
             StartCoroutine(routine);
         }
+        */
     }
 
     IEnumerator Cooldown()
