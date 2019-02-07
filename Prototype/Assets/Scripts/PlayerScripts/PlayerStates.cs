@@ -37,7 +37,8 @@ public class PlayerStates : MonoBehaviour
     GameObject Human;
     GameObject Demon;
     GameObject GroundTrigger;
-
+    [SerializeField]
+    ParticleSystem DustParticles;
     Rigidbody2D Rb2d;
     private IEnumerator coroutine;
 
@@ -184,7 +185,12 @@ public class PlayerStates : MonoBehaviour
                     PlayerAnimator.Play("Stomp");
                     Rb2d.velocity = Vector3.down *2* jumpSpeed;
                     if (grounded == true)
+                    {
+                        Destroy(Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                        DustParticles.Play();
+                        
                         status = State.Default;
+                    }
 
                     break;
                 }
