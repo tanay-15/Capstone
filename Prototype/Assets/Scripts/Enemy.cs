@@ -240,7 +240,7 @@ public class Enemy : BasicEnemy {
     public virtual void DetectingPlayer()
     {
         #region Previous Detection with raycasting
-        /* if (withinRange)
+        if (withinRange)
          {
              if (LookingLeft)
              {
@@ -281,10 +281,10 @@ public class Enemy : BasicEnemy {
                  }
              }
          }
-         */
+         
         #endregion
 
-        if (withinRange)
+       /* if (withinRange)
         {
             targetpos = target.transform.position;
             currentstate = States.Pursuit;
@@ -295,7 +295,7 @@ public class Enemy : BasicEnemy {
             target = null;
             currentstate = States.Patrol;
             
-        }
+        }*/
 
 
      
@@ -394,7 +394,7 @@ public class Enemy : BasicEnemy {
 
                     else
                     {
-                        Debug.Log("No ground, I am not moving");
+                      
 
                         CheckJumpSide();
                    
@@ -411,13 +411,18 @@ public class Enemy : BasicEnemy {
         Debug.DrawRay(jumpAhead.transform.position, -Vector3.up);
         if(jumpsideHit = Physics2D.Raycast(jumpAhead.transform.position, -transform.up,12f,EnemyIgnoreMask))
         {
-            
-           
-                
+
+
                
                 jump_position = jumpsideHit.point;
-             
-                    Invoke("TeleportEnemy", 1);
+        
+
+            if (Mathf.Approximately((int)jump_position.y, (int)target.transform.position.y))
+            {
+
+                StartCoroutine(TeleportEnemy(jump_position, 1f));
+            }
+      
                    
                     
 
@@ -429,9 +434,10 @@ public class Enemy : BasicEnemy {
         
     }
 
-    void TeleportEnemy()
+    IEnumerator TeleportEnemy(Vector3 _jumpPosition,float _delayTime)
     {
-        this.transform.position = jump_position;
+        yield return new WaitForSeconds(_delayTime);
+        this.transform.position = _jumpPosition;
     }
 
 
