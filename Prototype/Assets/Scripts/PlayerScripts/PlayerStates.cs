@@ -101,10 +101,13 @@ public class PlayerStates : MonoBehaviour
 
         //// Flip ////
 
-        if (hAxis > 0 && !facingRight)
-            flip();
-        else if (hAxis < 0 && facingRight)
-            flip();
+        if (status != State.ChargingArrow)
+        {
+            if (hAxis > 0 && !facingRight)
+                flip();
+            else if (hAxis < 0 && facingRight)
+                flip();
+        }
 
 
         //// Grounded ////
@@ -340,7 +343,6 @@ public class ArrowInfo
     public Vector2 GetShootingDirectionToMouse(Vector3 position, bool facingRight)
     {
         Vector2 shootingDirection = (Levitation.sharedInstance.grabPosition - position).normalized;
-        shootingDirection.x *= (facingRight) ? 1f : -1f;
         return shootingDirection;
     }
 
