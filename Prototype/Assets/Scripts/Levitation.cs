@@ -23,6 +23,10 @@ public class Levitation : MonoBehaviour {
     ActionIndicator action;
     PlayerStates player;
 
+    Vector3 positionInCamera;
+    Vector3 prevPositionInCamera;
+    float movementThreshold = 0.07f;
+
     public bool HoldingObject
     {
         get
@@ -49,7 +53,6 @@ public class Levitation : MonoBehaviour {
     float maxGrabDistance = 4f;
     [System.NonSerialized]
     public Vector3 grabPosition;
-    Vector3 prevGrabPosition;
     IEnumerable<Collider2D> collidingObjects;
 
     bool useJoystick;
@@ -89,6 +92,9 @@ public class Levitation : MonoBehaviour {
 
         nonHoverBaseColor = nonHoverColor;
         hoverBaseColor = hoverColor;
+
+        positionInCamera = particles.gameObject.transform.position - Camera.main.gameObject.transform.position;
+        prevPositionInCamera = positionInCamera;
 	}
 
     public void SetActive(bool active)
@@ -104,7 +110,6 @@ public class Levitation : MonoBehaviour {
     void CalculatePositionMouse()
     {
         //TODO: Make this easier
-        prevGrabPosition = grabPosition;
         grabPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
         //This line may not be necessary
         grabPosition = Camera.main.ScreenToWorldPoint(grabPosition);
@@ -126,7 +131,6 @@ public class Levitation : MonoBehaviour {
         if (baseJoystickPosition.magnitude > maxGrabDistance)
             baseJoystickPosition = baseJoystickPosition.normalized * maxGrabDistance;
 
-        prevGrabPosition = grabPosition;
         grabPosition = PlayerPos + (Vector3)baseJoystickPosition;
         
         particles.gameObject.transform.position = grabPosition;
@@ -134,16 +138,6 @@ public class Levitation : MonoBehaviour {
     
     void UpdateColorAndIcon()
     {
-        if (Vector3.Distance(grabPosition, prevGrabPosition) <= 0.05f)
-        {
-            nonHoverColor = nonHoverBaseColor * 0.5f;
-            hoverColor = hoverBaseColor * 0.5f;
-        }
-        else
-        {
-            nonHoverColor = nonHoverBaseColor;
-            hoverColor = hoverBaseColor;
-        }
         collidingObjects = from col in Physics2D.OverlapCircleAll(grabPosition, grabRadius).ToList()
                                where col.gameObject.tag == "Grabbable" || col.gameObject.tag == "Player Weapon"
                                select col;
@@ -269,6 +263,22 @@ public class Levitation : MonoBehaviour {
             heldObject.GetComponent<Rigidbody2D>().velocity = distance * moveSpeed;
         }
     }
+
+    void DullParticles()
+    {
+        positionInCamera = particles.gameObject.transform.position - Camera.main.gameObject.transform.position;
+        if (Vector3.Distance(positionInCamera,prevPositionInCamera) <= movementThreshold)
+        {
+            nonHoverColor = nonHoverBaseColor * 0.25f;
+            hoverColor = hoverBaseColor * 0.25f;
+        }
+        else
+        {
+            nonHoverColor = nonHoverBaseColor;
+            hoverColor = hoverBaseColor;
+        }
+        prevPositionInCamera = positionInCamera;
+    }
 	
 	void Update () {
 
@@ -277,6 +287,7 @@ public class Levitation : MonoBehaviour {
             CalculatePositionJoystick();
         else
             CalculatePositionMouse();
+        DullParticles();
         UpdateColorAndIcon();
         CheckRightTrigger();
         CheckForButtonPress();

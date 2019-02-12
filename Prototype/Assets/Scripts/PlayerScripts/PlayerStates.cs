@@ -371,7 +371,10 @@ public class ArrowInfo
 
     public void MoveWithMouse()
     {
-        reticle.transform.position = Levitation.sharedInstance.grabPosition;
+        if (Levitation.sharedInstance != null)
+            reticle.transform.position = Levitation.sharedInstance.grabPosition;
+        else
+            reticle.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
     }
 
     public void End()
