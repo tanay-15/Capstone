@@ -77,6 +77,9 @@ public class Enemy : BasicEnemy {
 
     //Jump positions
     private Vector3 jump_position;
+    private GameObject jump_up_origin;
+    private Vector3 jump_up_position;
+    private RaycastHit2D jump_up_hit;
  
 
     protected bool CollidedWithPlayer;
@@ -138,6 +141,11 @@ public class Enemy : BasicEnemy {
             if(child.name == "GroundAhead")
             {
                 groundAhead = child.gameObject;
+            }
+
+            if(child.name == "JumpUp")
+            {
+                jump_up_origin = child.gameObject;
             }
         }
     }
@@ -210,7 +218,7 @@ public class Enemy : BasicEnemy {
        if(groundHit = Physics2D.Raycast(groundAhead.transform.position, -transform.up, 0.4f,groundMask))
         {
             hasgroundAhead = true;
-            Debug.Log("Ground exists " + groundHit.collider.gameObject.name);
+        
         }
         else
         {
@@ -387,9 +395,15 @@ public class Enemy : BasicEnemy {
                 }
                 else
                 {
+                    if ((int)target.transform.position.y > (int)this.transform.position.y)
+                    {
+                        CheckJumpUp();
+                    }
+
                     if (hasgroundAhead)
                     {
                         this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
+                       
                     }
 
                     else
@@ -397,18 +411,35 @@ public class Enemy : BasicEnemy {
                       
 
                         CheckJumpSide();
+                    
                    
                     }
-                
+
+                   
+
+                   
                 }
                
             }
         }
     }
 
+    void CheckJumpUp()
+    {
+        if(jump_up_hit = Physics2D.Raycast(jump_up_origin.transform.position, -transform.up, 4f, EnemyIgnoreMask))
+        {
+            jump_up_position = jump_up_hit.point;
+
+            if (Mathf.Approximately((int)jump_up_position.y, (int)target.transform.position.y))
+            {
+                StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
+            }
+        }
+    }
+
     void CheckJumpSide()
     {
-        Debug.DrawRay(jumpAhead.transform.position, -Vector3.up);
+       
         if(jumpsideHit = Physics2D.Raycast(jumpAhead.transform.position, -transform.up,12f,EnemyIgnoreMask))
         {
 
@@ -513,7 +544,7 @@ public class Enemy : BasicEnemy {
     private void OnDrawGizmosSelected()
     {
         
-        Gizmos.DrawWireSphere(this.transform.position,losrange);
+       
         
     }
     public virtual void applyDamage(int damage)
@@ -553,14 +584,10 @@ public class Enemy : BasicEnemy {
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        ////Temporary. Let the Player Weapon GameObjects kill the enemy
-        //if (collision.gameObject.tag == "Player Weapon")
-        //{
-        //    Destroy(gameObject);
-        //}
+       
         if(collision.gameObject.tag == "Player")
         {
-           //collision.gameObject.SendMessage("GetHit", -5);
+           
            CollidedWithPlayer = true;
           AttackReady = true;
         }
