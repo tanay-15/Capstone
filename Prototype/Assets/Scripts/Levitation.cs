@@ -9,6 +9,8 @@ public class Levitation : MonoBehaviour {
     public float moveSpeed = 6f;
     public Color nonHoverColor;
     public Color hoverColor;
+    Color nonHoverBaseColor;
+    Color hoverBaseColor;
     public ParticleSystem particles;
     [System.NonSerialized]
     public GameObject heldObject;
@@ -47,6 +49,7 @@ public class Levitation : MonoBehaviour {
     float maxGrabDistance = 4f;
     [System.NonSerialized]
     public Vector3 grabPosition;
+    Vector3 prevGrabPosition;
     IEnumerable<Collider2D> collidingObjects;
 
     bool useJoystick;
@@ -83,6 +86,9 @@ public class Levitation : MonoBehaviour {
         baseJoystickPosition = Vector2.zero;
         useJoystick = false;
         action = GetComponent<ActionIndicator>();
+
+        nonHoverBaseColor = nonHoverColor;
+        hoverBaseColor = hoverColor;
 	}
 
     public void SetActive(bool active)
@@ -98,6 +104,7 @@ public class Levitation : MonoBehaviour {
     void CalculatePositionMouse()
     {
         //TODO: Make this easier
+        prevGrabPosition = grabPosition;
         grabPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.gameObject.transform.position.z + mouseZPosition);
         //This line may not be necessary
         grabPosition = Camera.main.ScreenToWorldPoint(grabPosition);
@@ -119,13 +126,24 @@ public class Levitation : MonoBehaviour {
         if (baseJoystickPosition.magnitude > maxGrabDistance)
             baseJoystickPosition = baseJoystickPosition.normalized * maxGrabDistance;
 
+        prevGrabPosition = grabPosition;
         grabPosition = PlayerPos + (Vector3)baseJoystickPosition;
         
         particles.gameObject.transform.position = grabPosition;
     }
-
+    
     void UpdateColorAndIcon()
     {
+        if (Vector3.Distance(grabPosition, prevGrabPosition) <= 0.05f)
+        {
+            nonHoverColor = nonHoverBaseColor * 0.5f;
+            hoverColor = hoverBaseColor * 0.5f;
+        }
+        else
+        {
+            nonHoverColor = nonHoverBaseColor;
+            hoverColor = hoverBaseColor;
+        }
         collidingObjects = from col in Physics2D.OverlapCircleAll(grabPosition, grabRadius).ToList()
                                where col.gameObject.tag == "Grabbable" || col.gameObject.tag == "Player Weapon"
                                select col;
