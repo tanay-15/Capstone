@@ -62,7 +62,7 @@ public class PlayerStates : MonoBehaviour
                 GroundTrigger = child.gameObject;
         }
 
-        PlayerAnimator = Human.GetComponent<Animator>();
+        PlayerAnimator = Demon.GetComponent<Animator>();
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
     }
