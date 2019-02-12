@@ -248,7 +248,9 @@ public class PlayerStates : MonoBehaviour
 
     void ChargeArrow()
     {
-        shootingArrowInfo.Move(Input.GetAxisRaw("Vertical"));
+        //shootingArrowInfo.Move(Input.GetAxisRaw("Vertical"));
+        shootingArrowInfo.MoveWithMouse();
+
         shootingArrowInfo.chargeTime += Time.deltaTime;
         if (Input.GetButtonUp("Fire2"))
         {
@@ -256,8 +258,8 @@ public class PlayerStates : MonoBehaviour
             if (shootingArrowInfo.IsCharged)
             {
                 Vector3 velocity;
-                Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirection(facingRight) * shootingArrowInfo.shootDistance;
-                velocity = (Vector3)shootingArrowInfo.GetShootingDirection(facingRight) * shootingArrowInfo.shootSpeed;
+                Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootDistance;
+                velocity = (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootSpeed;
                 GameObject arrow = Instantiate(shootingArrowInfo.arrowPrefab, position, Quaternion.identity);
                 arrow.GetComponent<Rigidbody2D>().velocity = velocity;
             }
@@ -335,6 +337,13 @@ public class ArrowInfo
         return shootingDirection;
     }
 
+    public Vector2 GetShootingDirectionToMouse(Vector3 position, bool facingRight)
+    {
+        Vector2 shootingDirection = (Levitation.sharedInstance.grabPosition - position).normalized;
+        shootingDirection.x *= (facingRight) ? 1f : -1f;
+        return shootingDirection;
+    }
+
     public void Initialize()
     {
         reticle.SetActive(false);
@@ -356,6 +365,11 @@ public class ArrowInfo
         reticlePosition.Normalize();
         reticlePosition *= reticleDistance;
         reticle.transform.localPosition = (Vector3)reticlePosition;
+    }
+
+    public void MoveWithMouse()
+    {
+        reticle.transform.position = Levitation.sharedInstance.grabPosition;
     }
 
     public void End()

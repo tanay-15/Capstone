@@ -45,7 +45,8 @@ public class Levitation : MonoBehaviour {
     Vector2 dJoystick;
     float grabRadius = 0.1f;
     float maxGrabDistance = 4f;
-    Vector3 grabPosition;
+    [System.NonSerialized]
+    public Vector3 grabPosition;
     IEnumerable<Collider2D> collidingObjects;
 
     bool useJoystick;
