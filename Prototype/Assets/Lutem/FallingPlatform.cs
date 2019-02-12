@@ -12,28 +12,30 @@ public class FallingPlatform : MonoBehaviour
     Vector2 fallPosition;
     bool falling;
     bool triggered;
+    bool respawning;
 
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = this.transform.position;
-        falling = false;
-        triggered = false;
-        fallPosition = this.transform.position;
-        fallPosition.y -= 0.5f;
+        this.startPosition = this.transform.position;
+        this.falling = false;
+        this.triggered = false;
+        respawning = false;
+        this.fallPosition = this.transform.position;
+        this.fallPosition.y -= 0.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (falling)
+        if (this.falling)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, fallPosition, 15.0f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, fallPosition, 12.0f * Time.deltaTime);
         }
-        if(this.transform.position == new Vector3(fallPosition.x, fallPosition.y, this.transform.position.z))
+        if(this.transform.position == new Vector3(fallPosition.x, fallPosition.y, this.transform.position.z) && !respawning)
         {
+            respawning = true;
             this.GetComponent<SpriteRenderer>().enabled = false;
-            falling = false;
             StartCoroutine(Respawn());
         }
     }
@@ -44,7 +46,7 @@ public class FallingPlatform : MonoBehaviour
         {
             if (timed && !triggered)
             {
-                triggered = true;
+                this.triggered = true;
                 StartCoroutine(TimedFall());
             }
         }
@@ -56,9 +58,10 @@ public class FallingPlatform : MonoBehaviour
         {
             if (!timed && !triggered)
             {
-                this.GetComponent<BoxCollider2D>().enabled = false;
-                falling = true;
-                triggered = true;
+                this.GetComponents<BoxCollider2D>()[0].enabled = false;
+                this.GetComponents<BoxCollider2D>()[1].enabled = false;
+                this.falling = true;
+                this.triggered = true;
             }
         }
     }
@@ -72,7 +75,7 @@ public class FallingPlatform : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
         yield return new WaitForSeconds(delayTime / 3.0f);
         this.GetComponent<BoxCollider2D>().enabled = false;
-        falling = true;
+        this.falling = true;
         yield return null;
     }
 
@@ -80,14 +83,26 @@ public class FallingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
         this.transform.position = startPosition;
+        RecreatePlatform();
+        yield return null;
+    }
+
+    private void RecreatePlatform()
+    {
         if (timed)
         {
             this.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f);
+            this.GetComponent<BoxCollider2D>().enabled = true;
         }
-        triggered = false;
-        this.GetComponent<BoxCollider2D>().enabled = true;
+        else
+        {
+            this.GetComponents<BoxCollider2D>()[0].enabled = true;
+            this.GetComponents<BoxCollider2D>()[1].enabled = true;
+        }
+        respawning = false;
+        this.falling = false;
+        this.triggered = false;
         this.GetComponent<SpriteRenderer>().enabled = true;
-        yield return null;
     }
     
 }
