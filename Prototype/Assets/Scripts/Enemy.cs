@@ -166,6 +166,7 @@ public class Enemy : BasicEnemy {
                 case States.Patrol:
                     DetectingPlayer();
                     CheckForGroundAhead();
+                    PartolHelper();
                     Patrol();
                     break;
 
@@ -253,13 +254,9 @@ public class Enemy : BasicEnemy {
              if (LookingLeft)
              {
 
-
-                 Debug.Log("In here");
-                 Debug.DrawRay(vision.transform.position, -transform.right);
-
                  if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 10f, EnemyIgnoreMask))
                  {
-                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                   
                      if (vishit.collider.gameObject.tag == "Player")
                      {
                          // anim.SetBool("Alert", true);
@@ -273,12 +270,12 @@ public class Enemy : BasicEnemy {
 
              if (!LookingLeft)
              {
-                 Debug.Log("In here");
-                 Debug.DrawRay(vision.transform.position, transform.right);
+                 
+                
 
                  if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 10f, EnemyIgnoreMask))
                  {
-                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                   
                      if (vishit.collider.gameObject.tag == "Player")
                      {
                          // anim.SetBool("Alert", true);
@@ -308,6 +305,45 @@ public class Enemy : BasicEnemy {
 
      
 
+    }
+
+    public void PartolHelper()
+    {
+        if (movway1)
+        {
+
+
+          
+            
+
+            if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 0.1f,EnemyIgnoreMask))
+            {
+                
+                if (vishit.collider.gameObject.tag == "ground")
+                {
+
+                    movway2 = true;
+                    movway1 = false;
+                }
+            }
+
+        }
+
+        if (movway2)
+        {
+            
+
+            if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 0.1f,EnemyIgnoreMask))
+            {
+              
+                if (vishit.collider.gameObject.tag == "ground")
+                {
+
+                    movway1 = true;
+                    movway2 = false;
+                }
+            }
+        }
     }
 
     public virtual void Patrol()
@@ -430,9 +466,14 @@ public class Enemy : BasicEnemy {
         {
             jump_up_position = jump_up_hit.point;
 
-            if (Mathf.Approximately((int)jump_up_position.y, (int)target.transform.position.y))
+            if (jump_up_hit && Mathf.Approximately((int)jump_up_position.y, (int)target.transform.position.y))
             {
                 StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
+            }
+
+            else
+            {
+
             }
         }
     }
