@@ -10,6 +10,7 @@ public class PlayerLife : MonoBehaviour {
     [System.NonSerialized]
     public float currentLife;
     public Image barGraphic;
+    public Image yellowBarGraphic;
     float time = 0f;
 
     Color goodColor;
@@ -17,6 +18,9 @@ public class PlayerLife : MonoBehaviour {
     Color cosColor;
 
     float lifebarRatio;
+
+    float lerpAmount = 0.08f;
+    float lerpThreshold = 0.002f;
 
     static PlayerLife()
     {
@@ -49,6 +53,21 @@ public class PlayerLife : MonoBehaviour {
         else
         {
             barGraphic.color = goodColor;
+        }
+
+        //Testing purposes
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    AddLife(-10);
+        //}
+
+        if (yellowBarGraphic.fillAmount - barGraphic.fillAmount <= lerpThreshold)
+        {
+            yellowBarGraphic.fillAmount = barGraphic.fillAmount;
+        }
+        else
+        {
+            yellowBarGraphic.fillAmount = Mathf.Lerp(yellowBarGraphic.fillAmount, barGraphic.fillAmount, lerpAmount);
         }
 	}
 
