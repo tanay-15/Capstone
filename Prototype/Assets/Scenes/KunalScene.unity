@@ -71649,7 +71649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1552602559}
   - component: {fileID: 1552602558}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: BCave (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71692,7 +71692,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -514806163
   m_SortingLayer: -1
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300002, guid: 62cd96723b961d4488e8c52c68cf0736, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -72786,7 +72786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2059789789
 Transform:
   m_ObjectHideFlags: 0
@@ -72957,6 +72957,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: RopeObject
       objectReference: {fileID: 0}
+    - target: {fileID: 1666356944293578861, guid: bd24e4d519c08ac409a4245004ab32b7,
+        type: 3}
+      propertyPath: m_TagString
+      value: ArrowDestroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1666356944035910730, guid: bd24e4d519c08ac409a4245004ab32b7,
+        type: 3}
+      propertyPath: m_TagString
+      value: ArrowDestroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1666356944488551451, guid: bd24e4d519c08ac409a4245004ab32b7,
+        type: 3}
+      propertyPath: m_TagString
+      value: ArrowDestroy
+      objectReference: {fileID: 0}
     - target: {fileID: 1666356943771046864, guid: bd24e4d519c08ac409a4245004ab32b7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -73016,21 +73031,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1666356944035910730, guid: bd24e4d519c08ac409a4245004ab32b7,
-        type: 3}
-      propertyPath: m_TagString
-      value: ArrowDestroy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1666356944293578861, guid: bd24e4d519c08ac409a4245004ab32b7,
-        type: 3}
-      propertyPath: m_TagString
-      value: ArrowDestroy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1666356944488551451, guid: bd24e4d519c08ac409a4245004ab32b7,
-        type: 3}
-      propertyPath: m_TagString
-      value: ArrowDestroy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd24e4d519c08ac409a4245004ab32b7, type: 3}
