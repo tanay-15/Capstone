@@ -166,6 +166,7 @@ public class Enemy : BasicEnemy {
                 case States.Patrol:
                     DetectingPlayer();
                     CheckForGroundAhead();
+                    PartolHelper();
                     Patrol();
                     break;
 
@@ -248,18 +249,14 @@ public class Enemy : BasicEnemy {
     public virtual void DetectingPlayer()
     {
         #region Previous Detection with raycasting
-        if (withinRange)
+      /*  if (withinRange)
          {
              if (LookingLeft)
              {
 
-
-                 Debug.Log("In here");
-                 Debug.DrawRay(vision.transform.position, -transform.right);
-
                  if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 10f, EnemyIgnoreMask))
                  {
-                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                   
                      if (vishit.collider.gameObject.tag == "Player")
                      {
                          // anim.SetBool("Alert", true);
@@ -273,12 +270,12 @@ public class Enemy : BasicEnemy {
 
              if (!LookingLeft)
              {
-                 Debug.Log("In here");
-                 Debug.DrawRay(vision.transform.position, transform.right);
+                 
+                
 
                  if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 10f, EnemyIgnoreMask))
                  {
-                     Debug.Log("Vision hits " + vishit.collider.gameObject.name);
+                   
                      if (vishit.collider.gameObject.tag == "Player")
                      {
                          // anim.SetBool("Alert", true);
@@ -289,10 +286,10 @@ public class Enemy : BasicEnemy {
                  }
              }
          }
-         
+         */
         #endregion
 
-       /* if (withinRange)
+        if (withinRange)
         {
             targetpos = target.transform.position;
             currentstate = States.Pursuit;
@@ -303,11 +300,50 @@ public class Enemy : BasicEnemy {
             target = null;
             currentstate = States.Patrol;
             
-        }*/
+        }
 
 
      
 
+    }
+
+    public void PartolHelper()
+    {
+        if (movway1)
+        {
+
+
+          
+            
+
+            if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 0.1f,EnemyIgnoreMask))
+            {
+                
+                if (vishit.collider.gameObject.layer == 9)
+                {
+
+                    movway2 = true;
+                    movway1 = false;
+                }
+            }
+
+        }
+
+        if (movway2)
+        {
+            
+
+            if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 0.1f,EnemyIgnoreMask))
+            {
+              
+                if (vishit.collider.gameObject.layer == 9)
+                {
+
+                    movway1 = true;
+                    movway2 = false;
+                }
+            }
+        }
     }
 
     public virtual void Patrol()
@@ -374,7 +410,7 @@ public class Enemy : BasicEnemy {
 
         if (IsAlive)
         {
-
+            
         
             if (target && !AttackReady)
             {
@@ -426,13 +462,33 @@ public class Enemy : BasicEnemy {
 
     void CheckJumpUp()
     {
+        Debug.DrawRay(jump_up_origin.transform.position, -transform.up);
+        
         if(jump_up_hit = Physics2D.Raycast(jump_up_origin.transform.position, -transform.up, 4f, EnemyIgnoreMask))
         {
+            Debug.Log("JUump hit " + jump_up_hit.collider.gameObject.name);
             jump_up_position = jump_up_hit.point;
+            Debug.Log("JUmp pos " + jump_up_position.y);
 
-            if (Mathf.Approximately((int)jump_up_position.y, (int)target.transform.position.y))
+
+            if (jump_up_hit.collider.gameObject.tag == "ground")
             {
-                StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
+
+
+                if (Mathf.Approximately((int)target.transform.position.y, (int)jump_up_position.y))
+                {
+
+
+
+                    StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
+                }
+                
+
+            }
+
+            else
+            {
+
             }
         }
     }

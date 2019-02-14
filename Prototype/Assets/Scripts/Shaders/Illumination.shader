@@ -7,7 +7,8 @@
 		_rimPower("Rim Power",Range(0.5,8.0)) = 3.0
 		_myEmission("Example Emission", Color) = (1,1,1,1)
 		_MainTex("Texture", 2D) = "white" {}
-	_BumpMap("Bumpmap", 2D) = "bump" {}
+		_BumpMap("Bumpmap", 2D) = "bump" {}
+		
 	}
 		SubShader
 	{
@@ -20,8 +21,9 @@
 		"CanUseSpriteAtlas" = "True"
 	}
 		Cull Off
-		Lighting Off
+		Lighting On
 		ZWrite Off
+		Fog{ Mode Off }
 		Blend One OneMinusSrcAlpha
 		CGPROGRAM
 		#pragma surface surf Lambert vertex:vert nofog keepalpha
@@ -31,8 +33,7 @@
 		fixed4 _myEmission;
 		fixed4 _Color;
 		sampler2D _BumpMap;
-		sampler2D _MainTex;
-		sampler2D _AlphaTex;
+		sampler2D _MainTex;		
 		float _rimPower;
 
 
@@ -43,38 +44,26 @@
 		fixed4 color;
 	};
 
+	
 	void vert(inout appdata_full v, out Input o)
 	{
 #if defined(PIXELSNAP_ON)
 		v.vertex = UnityPixelSnap(v.vertex);
 #endif
-
+	
 		UNITY_INITIALIZE_OUTPUT(Input, o);
 		o.color = v.color * _Color;
 	}
 
-	fixed4 SampleSpriteTexture(float2 uv)
-	{
-		fixed4 color = tex2D(_MainTex, uv);
-
-#if ETC1_EXTERNAL_ALPHA
-		color.a = tex2D(_AlphaTex, uv).r;
-#endif //ETC1_EXTERNAL_ALPHA
-
-		return color;
-	}
+	
 	void surf(Input IN, inout SurfaceOutput o)
 	{
-		fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
-		o.Albedo = c.rgb * c.a;
+		
+		fixed4 c = tex2D(_MainTex, IN.uv_MainTex) *IN.color;
+		o.Albedo = c.rgb;
+		o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
 		o.Alpha = c.a;
-		o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_MainTex));
-		half rim = 1 - saturate(dot(normalize(IN.viewDir), o.Normal));
-		o.Emission = _rimColor.rgb * pow(rim,_rimPower);
-		//o.Albedo = (tex2D(_MainTex, IN.uv_MainTex)).rgb;
-		//o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
-		//o.Albedo = _myColor.rgb;
-		//o.Emission = _myEmission.rgb;
+		
 	}
 	ENDCG
 

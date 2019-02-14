@@ -125,6 +125,8 @@ public class PlayerLifeController : MonoBehaviour {
          //   GetHit(-10);
             
        // }
+
+        
     }
 
     //Eventually make these two into one function or coroutine

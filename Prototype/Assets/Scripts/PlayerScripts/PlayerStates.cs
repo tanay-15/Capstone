@@ -32,10 +32,10 @@ public class PlayerStates : MonoBehaviour
     
 // References
 
-    Animator PlayerAnimator;
+    public Animator PlayerAnimator;
 
-    GameObject Human;
-    GameObject Demon;
+    public GameObject Human;
+    public GameObject Demon;
     GameObject GroundTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
@@ -62,7 +62,7 @@ public class PlayerStates : MonoBehaviour
                 GroundTrigger = child.gameObject;
         }
 
-        PlayerAnimator = Demon.GetComponent<Animator>();
+        PlayerAnimator = Human.GetComponent<Animator>();
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
     }
@@ -371,7 +371,10 @@ public class ArrowInfo
 
     public void MoveWithMouse()
     {
-        reticle.transform.position = Levitation.sharedInstance.grabPosition;
+        if (Levitation.sharedInstance != null)
+            reticle.transform.position = Levitation.sharedInstance.grabPosition;
+        else
+            reticle.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
     }
 
     public void End()

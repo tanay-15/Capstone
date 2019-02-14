@@ -92,7 +92,7 @@ public class SkeletonDeathScript : MonoBehaviour {
             SetChildrenKinematic(false);
             IKSystem.SetActive(false);
 
-            Explode(new Vector2(transform.position.x-0.5f, transform.position.y), 4);
+            Explode(new Vector2(transform.position.x, transform.position.y-1), 5);
             StartCoroutine(DieRoutine());
             TurnOffCollisions();
             
