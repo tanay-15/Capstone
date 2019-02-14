@@ -15,6 +15,14 @@ public class ChargedArrow : playerKnife2D {
     Collider2D myCollider;
     [System.NonSerialized]
     public bool fullyCharged;
+
+    public static int arrowCount;
+    public const int maxArrows = 3;
+
+    static ChargedArrow()
+    {
+        arrowCount = 0;
+    }
 	void Start () {
         hitObjects = new HashSet<GameObject>();
         rb = GetComponent<Rigidbody2D>();
@@ -24,6 +32,8 @@ public class ChargedArrow : playerKnife2D {
         myCollider = GetComponent<Collider2D>();
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * 180f / Mathf.PI;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        arrowCount++;
 	}
 
     private void FixedUpdate()
@@ -79,7 +89,7 @@ public class ChargedArrow : playerKnife2D {
                 var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
                 impact.gameObject.SetActive(true);
 
-                collision.gameObject.SendMessageUpwards("applyDamage", 10);  //Normal arrow does 5
+                collision.gameObject.SendMessageUpwards("applyDamage", (fullyCharged) ? 10 : 5);  //Normal arrow does 5
                                                                              //StartCoroutine(DelayDestroy());
             }
         }
@@ -88,5 +98,10 @@ public class ChargedArrow : playerKnife2D {
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        arrowCount--;
     }
 }

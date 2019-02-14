@@ -147,7 +147,7 @@ public class PlayerStates : MonoBehaviour
                     if (Input.GetButtonDown("Fire1"))
                         status = State.Melee;
 
-                    if (Input.GetButtonDown("Fire2"))
+                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
                     {
                         status = State.ChargingArrow;
                     }
@@ -180,7 +180,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
-                    if (Input.GetButtonDown("Fire2"))
+                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
                     {
                         status = State.ChargingArrow;
                     }
