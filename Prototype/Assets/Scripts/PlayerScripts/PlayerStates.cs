@@ -180,6 +180,11 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        status = State.ChargingArrow;
+                    }
+
 
                     break;
                 }
@@ -255,6 +260,11 @@ public class PlayerStates : MonoBehaviour
         shootingArrowInfo.MoveWithMouse();
 
         shootingArrowInfo.chargeTime += Time.deltaTime;
+        if (shootingArrowInfo.IsFullyCharged && !shootingArrowInfo.chargeFlag)
+        {
+            shootingArrowInfo.chargeFlag = true;
+            Instantiate(shootingArrowInfo.fullyChargeSparkPrefab, transform.position, Quaternion.identity);
+        }
         if (Input.GetButtonUp("Fire2"))
         {
             //Shoot an arrow
@@ -315,9 +325,11 @@ public class PlayerStates : MonoBehaviour
 public class ArrowInfo
 {
     public GameObject arrowPrefab;
+    public GameObject fullyChargeSparkPrefab;
     [SerializeField] GameObject reticle;
     public Vector3 shinePosition = new Vector3(0.4f, 0f, 0f);
     private Vector3 reticlePosition;
+    public bool chargeFlag;    //False, set to true when fully charged
     public float reticleDistance = 2f;
     public float minChargeTime = 0.6f;
     public float dReticleAngle = 0.02f;
@@ -360,6 +372,7 @@ public class ArrowInfo
     {
         reticle.SetActive(false);
         reticlePosition = new Vector2(reticleDistance, 0f);
+        chargeFlag = false;
     }
 
     public void Start()
@@ -393,5 +406,6 @@ public class ArrowInfo
         reticle.SetActive(false);
         reticlePosition = new Vector2(reticleDistance, 0f);
         reticleHeight = 0f;
+        chargeFlag = false;
     }
 }
