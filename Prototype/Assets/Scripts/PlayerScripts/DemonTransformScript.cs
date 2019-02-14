@@ -5,13 +5,19 @@ using UnityEngine;
 public class DemonTransformScript : MonoBehaviour
 {
 
-    public bool DemonModeActive;
+    public bool DemonModeActive = false;
     public GameObject bat;
+    GameObject Human;
+    GameObject Demon;
+
+    Animator PlayerAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerAnimator = transform.GetComponent<PlayerStates>().PlayerAnimator;
+        Human = transform.GetComponent<PlayerStates>().Human;
+        Demon = transform.GetComponent<PlayerStates>().Demon;
     }
 
     // Update is called once per frame
@@ -19,11 +25,35 @@ public class DemonTransformScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("RightTrigger2"))
         {
+            if (!DemonModeActive)
+            {
+                StartCoroutine(DelayedTransform(true));
+            }
+            else
+            {
+                StartCoroutine(DelayedTransform(false));
+            }
+
             for (int i = 0; i < 50; i++)
             {
                 var Bat = Instantiate(bat, transform.position + new Vector3(0, 100, 0), Quaternion.identity);
-                Bat.GetComponent<Bat_Script>().player = gameObject;
+                Bat.GetComponent<BatScript>().player = gameObject;
             }
+
         }
+    }
+
+    IEnumerator DelayedTransform(bool toDemon)
+    {
+        yield return new WaitForSeconds(2.7f);
+
+        DemonModeActive = toDemon;
+        Demon.gameObject.SetActive(toDemon);
+        Human.gameObject.SetActive(!toDemon);
+
+        transform.GetComponent<PlayerStates>().PlayerAnimator = toDemon ? Demon.GetComponent<Animator>() : Human.GetComponent<Animator>();
+
+        //Levitation.sharedInstance.SetActive(!toDemon);
+
     }
 }

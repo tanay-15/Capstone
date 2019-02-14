@@ -32,10 +32,10 @@ public class PlayerStates : MonoBehaviour
     
 // References
 
-    Animator PlayerAnimator;
+    public Animator PlayerAnimator;
 
-    GameObject Human;
-    GameObject Demon;
+    public GameObject Human;
+    public GameObject Demon;
     GameObject GroundTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
@@ -62,7 +62,7 @@ public class PlayerStates : MonoBehaviour
                 GroundTrigger = child.gameObject;
         }
 
-        PlayerAnimator = Demon.GetComponent<Animator>();
+        PlayerAnimator = Human.GetComponent<Animator>();
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
     }
