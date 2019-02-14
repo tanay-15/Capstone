@@ -12,6 +12,16 @@ public class Lifebar : MonoBehaviour {
     float targetScale;
     float drainSpeed = 0.5f;
 
+    Vector3 normalScale;
+    Vector3 flipScale;
+
+    void Start()
+    {
+        normalScale = transform.localScale;
+        flipScale = normalScale;
+        flipScale.x *= -1f;
+    }
+
 	public void AssignEnemy(BasicEnemy enemy)
     {
         myEnemy = enemy;
@@ -40,5 +50,7 @@ public class Lifebar : MonoBehaviour {
         if (yellowScale > targetScale)
             yellowScale -= Time.deltaTime * drainSpeed;
         yellowScalingSprite.transform.localScale = new Vector3(yellowScale, 1f, 1f);
+
+        transform.localScale = (myEnemy.gameObject.transform.localScale.x < 0) ? flipScale : normalScale;
     }
 }
