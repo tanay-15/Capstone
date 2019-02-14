@@ -258,14 +258,16 @@ public class PlayerStates : MonoBehaviour
         if (Input.GetButtonUp("Fire2"))
         {
             //Shoot an arrow
-            if (shootingArrowInfo.IsCharged)
-            {
-                Vector3 velocity;
-                Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootDistance;
-                velocity = (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootSpeed;
-                GameObject arrow = Instantiate(shootingArrowInfo.arrowPrefab, position, Quaternion.identity);
-                arrow.GetComponent<Rigidbody2D>().velocity = velocity;
-            }
+            Vector3 velocity;
+            float chargeAmount = (0.2f + shootingArrowInfo.ChargeAmount * 0.8f);
+            Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootDistance;
+            velocity = (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootSpeed * chargeAmount;
+            GameObject arrow = Instantiate(shootingArrowInfo.arrowPrefab, position, Quaternion.identity);
+            arrow.GetComponent<Rigidbody2D>().gravityScale = (shootingArrowInfo.IsFullyCharged) ? 0f : 1f;
+            arrow.GetComponent<Rigidbody2D>().velocity = velocity;
+            arrow.GetComponent<ChargedArrow>().fullyCharged = (shootingArrowInfo.IsFullyCharged);
+
+            //Gravity scale formerly 0.4
             shootingArrowInfo.End();
             status = (grounded) ? State.Default : State.InAir;
             movable = true;
@@ -325,11 +327,19 @@ public class ArrowInfo
     [System.NonSerialized] public float chargeTime;
     [System.NonSerialized] public float reticleHeight;
 
-    public bool IsCharged
+    public bool IsFullyCharged
     {
         get
         {
             return chargeTime > minChargeTime;
+        }
+    }
+
+    public float ChargeAmount
+    {
+        get
+        {
+            return Mathf.Min(chargeTime / minChargeTime, 1f);
         }
     }
 

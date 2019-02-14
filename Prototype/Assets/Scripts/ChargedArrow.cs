@@ -13,6 +13,8 @@ public class ChargedArrow : playerKnife2D {
     float ringInterval = 0.05f;
     float ringTime;
     Collider2D myCollider;
+    [System.NonSerialized]
+    public bool fullyCharged;
 	void Start () {
         hitObjects = new HashSet<GameObject>();
         rb = GetComponent<Rigidbody2D>();
@@ -42,52 +44,12 @@ public class ChargedArrow : playerKnife2D {
         GetComponent<SpriteRenderer>().flipX = false;
         ringTime -= Time.deltaTime;
         Vector3 offset = new Vector3(rb.velocity.x, rb.velocity.y, 0f).normalized;
-        if (ringTime < 0f)
+        if (ringTime < 0f && fullyCharged)
         {
             ringTime = ringInterval;
             Instantiate(ringPrefab, transform.position + transform.localScale.x * offset * 0.2f, transform.rotation);
         }
 	}
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 9)
-        {
-            //Debug.Log(collision.gameObject.name);
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.tag == "ArrowDestroy")
-        {
-            //Debug.Log(collision.gameObject.name);
-            Destroy(collision.gameObject);
-            //Destroy(gameObject);
-        }
-
-
-        if (collision.gameObject.tag == "Enemy")
-        {
-            //Don't hit the same object more than once
-            if (!hitObjects.Contains(collision.gameObject))
-            {
-                hitObjects.Add(collision.gameObject);
-                //GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-                //GetComponent<Rigidbody2D>().isKinematic = true;
-                //GetComponent<Collider2D>().enabled = false;
-                //transform.parent = collision.gameObject.transform;
-                foreach (Collider2D enemyCol in collision.gameObject.GetComponentsInChildren<Collider2D>())
-                {
-                    Physics2D.IgnoreCollision(myCollider, enemyCol);
-                }
-
-                // Impact Sprite
-                var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
-                impact.gameObject.SetActive(true);
-
-                collision.gameObject.SendMessageUpwards("applyDamage", 10);  //Normal arrow does 5
-                                                                             //StartCoroutine(DelayDestroy());
-            }
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -108,10 +70,6 @@ public class ChargedArrow : playerKnife2D {
             if (!hitObjects.Contains(collision.gameObject))
             {
                 hitObjects.Add(collision.gameObject);
-                //GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-                //GetComponent<Rigidbody2D>().isKinematic = true;
-                //GetComponent<Collider2D>().enabled = false;
-                //transform.parent = collision.gameObject.transform;
                 foreach (Collider2D enemyCol in collision.gameObject.GetComponentsInChildren<Collider2D>())
                 {
                     Physics2D.IgnoreCollision(myCollider, enemyCol);
