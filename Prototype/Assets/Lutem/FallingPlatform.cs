@@ -30,7 +30,7 @@ public class FallingPlatform : MonoBehaviour
     {
         if (this.falling)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, fallPosition, 12.0f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, fallPosition, 10.0f * Time.deltaTime);
         }
         if(this.transform.position == new Vector3(fallPosition.x, fallPosition.y, this.transform.position.z) && !respawning)
         {
