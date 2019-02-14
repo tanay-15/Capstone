@@ -8,12 +8,14 @@ public class ActionIndicator : MonoBehaviour {
     public AnimationCurve hideCurve;
     float speed = 5f;
     bool shown = false;
+    Vector3 initialScale;
 
     public GameObject indicator;
     IEnumerator routine;
 
     private void Start()
     {
+        initialScale = indicator.transform.localScale;
         indicator.transform.localScale = Vector3.zero;
         indicator.SetActive(true);
         //UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, false);
@@ -25,10 +27,10 @@ public class ActionIndicator : MonoBehaviour {
         {
             AnimationCurve curve = (show) ? showCurve : hideCurve;
             float scale = curve.Evaluate(i);
-            indicator.transform.localScale = Vector3.one * scale;
+            indicator.transform.localScale = initialScale * scale;
             yield return 0;
         }
-        indicator.transform.localScale = (show) ? Vector3.one : Vector3.zero;
+        indicator.transform.localScale = (show) ? initialScale : Vector3.zero;
     }
 
     public void Show(bool show)
