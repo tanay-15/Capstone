@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour {
     int axisDirectionPressed;
     int axisDirection;
     public bool disableReturnToHubWorld;
+    public bool disableSkillTree;
 
     public static PauseMenu sharedInstance;
     [System.NonSerialized]
@@ -134,12 +135,10 @@ public class PauseMenu : MonoBehaviour {
         }
 
         //Skip return to Hub World if on a tutorial level
-        if (disableReturnToHubWorld)
+        if ((disableReturnToHubWorld && selectIndex == PauseMenuOption.ReturnHubWorld) ||
+            (disableSkillTree && selectIndex == PauseMenuOption.SkillTree))
         {
-            if (selectIndex == PauseMenuOption.ReturnHubWorld)
-            {
-                selectIndex += (prevIndex < selectIndex) ? 1 : -1;
-            }
+            selectIndex += (prevIndex < selectIndex) ? 1 : -1;
         }
 
         //Wrap around
@@ -204,8 +203,11 @@ public class PauseMenu : MonoBehaviour {
 
                 //Skill Tree
                 case PauseMenuOption.SkillTree:
-                    StartCoroutine(TransitionToOrFromSkillTree(true));
-                    menuState = PauseMenuState.None;
+                    if (!disableSkillTree)
+                    {
+                        StartCoroutine(TransitionToOrFromSkillTree(true));
+                        menuState = PauseMenuState.None;
+                    }
                     break;
 
                 //Options
@@ -231,6 +233,13 @@ public class PauseMenu : MonoBehaviour {
         }
     }
 
+    //Used by InitializeText() to check if Skill Tree and/or Hub World menu options are disabled or not
+    bool IsTextDisabled(int index)
+    {
+        return ((index == (int)PauseMenuOption.ReturnHubWorld && disableReturnToHubWorld) ||
+            (index == (int)PauseMenuOption.SkillTree && disableSkillTree));
+    }
+
     void InitializeText()
     {
         for (int i = 0; i < menuStrings.Length; i++)
@@ -238,7 +247,9 @@ public class PauseMenu : MonoBehaviour {
             menuText[i].text = menuStrings[i];
 
             if (i != (int)selectIndex)
-                menuText[i].color = (i == (int)PauseMenuOption.ReturnHubWorld && disableReturnToHubWorld) ? disabledColor : transparentColor;
+            {
+                menuText[i].color = IsTextDisabled(i) ? disabledColor : transparentColor;
+            }
             else
                 menuText[i].color = Color.white;
         }

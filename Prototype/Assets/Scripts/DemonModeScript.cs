@@ -159,7 +159,7 @@ public class DemonModeScript : MonoBehaviour {
         transform.Find("Demon").gameObject.SetActive(toDemon);
         transitioning = false;
         DemonModeActive = toDemon;
-        Levitation.sharedInstance.SetActive(!toDemon);
+        Levitation.sharedInstance.SetLevitationActive(!toDemon);
 
         //0: Levitation icon
         //3: Orbit icon

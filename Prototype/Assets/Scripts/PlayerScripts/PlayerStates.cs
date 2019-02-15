@@ -364,7 +364,9 @@ public class ArrowInfo
 
     public Vector2 GetShootingDirectionToMouse(Vector3 position, bool facingRight)
     {
-        Vector2 shootingDirection = (Levitation.sharedInstance.grabPosition - position).normalized;
+        Vector2 shootingDirection = Input.mousePosition;
+        if (Levitation.sharedInstance != null)
+            shootingDirection = (Levitation.sharedInstance.grabPosition - position).normalized;
         return shootingDirection;
     }
 

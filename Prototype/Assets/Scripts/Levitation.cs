@@ -22,6 +22,8 @@ public class Levitation : MonoBehaviour {
     bool rightTriggerReleased;
     ActionIndicator action;
     PlayerStates player;
+    [System.NonSerialized]
+    public bool Active;
 
     Vector3 positionInCamera;
     Vector3 prevPositionInCamera;
@@ -73,7 +75,15 @@ public class Levitation : MonoBehaviour {
         sharedInstance = null;
     }
 
+    //Used to make the levitation system work or not but keep the GameObject and position active
+    //Because the Arrow shooting system uses the Levitation's position
+    void SetActive(bool active)
+    {
+        particles.gameObject.SetActive(active);
+    }
+
 	void Start () {
+        Active = true;
         player = FindObjectOfType<PlayerStates>();
         rightTriggerDown = false;
         rightTriggerPressed = false;
@@ -97,7 +107,7 @@ public class Levitation : MonoBehaviour {
         prevPositionInCamera = positionInCamera;
 	}
 
-    public void SetActive(bool active)
+    public void SetLevitationActive(bool active)
     {
         this.active = active;
         particles.gameObject.SetActive(active);
@@ -288,10 +298,13 @@ public class Levitation : MonoBehaviour {
         else
             CalculatePositionMouse();
         DullParticles();
-        UpdateColorAndIcon();
-        CheckRightTrigger();
-        CheckForButtonPress();
-        ResetTriggerCheck();
-        MoveHeldObject();
+        if (Active)
+        {
+            UpdateColorAndIcon();
+            CheckRightTrigger();
+            CheckForButtonPress();
+            ResetTriggerCheck();
+            MoveHeldObject();
+        }
 	}
 }

@@ -452,6 +452,18 @@ PrefabInstance:
       objectReference: {fileID: 354026176}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ababb9fc4beab94dbf9416e04df8d7e, type: 3}
+--- !u!114 &199706142 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114931108973425114, guid: 3ababb9fc4beab94dbf9416e04df8d7e,
+    type: 3}
+  m_PrefabInstance: {fileID: 199706141}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfbb6f957a9eb34aa384afc04e00048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &348902874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1719,7 +1731,7 @@ MonoBehaviour:
   startPhase: 4
   UIArrowIcon: {fileID: 765580049}
   UILevitationIcon: {fileID: 888097790}
-  levitationSystem: {fileID: 1325450206}
+  levitationSystem: {fileID: 199706142}
   rageBar: {fileID: 1091837406}
   canvasCenter: {fileID: 1062158160}
   door: {fileID: 1661980715}
@@ -2940,12 +2952,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -185}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1325450206 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1982536157709888, guid: 3ababb9fc4beab94dbf9416e04df8d7e,
-    type: 3}
-  m_PrefabInstance: {fileID: 199706141}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1367444460 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1301533761414704, guid: c5c65a1bc42a9e94aa90dee5b87a54b6,
@@ -4132,6 +4138,29 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: disableReturnToHubWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: disableSkillTree
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046332637, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 224069829541303806, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 773970968, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114892010536751468, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 3}

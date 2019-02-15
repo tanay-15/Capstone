@@ -27,7 +27,8 @@ public class Tutorial : MonoBehaviour {
     
     public GameObject UIArrowIcon;
     public GameObject UILevitationIcon;
-    public GameObject levitationSystem;
+    //public GameObject levitationSystem;
+    public Levitation levitationSystem;
     public GameObject rageBar;
 
     public Transform canvasCenter;
@@ -47,8 +48,7 @@ public class Tutorial : MonoBehaviour {
         if (phase < 3)
         {
             UILevitationIcon.transform.localScale = Vector3.zero;
-            levitationSystem.SetActive(false);
-            Debug.Log("Disable levitation system");
+            levitationSystem.SetLevitationActive(false);
         }
         if (phase < 4)
         {
@@ -151,7 +151,7 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 3:
-                levitationSystem.SetActive(true);
+                levitationSystem.SetLevitationActive(true);
                 StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 break;
 
