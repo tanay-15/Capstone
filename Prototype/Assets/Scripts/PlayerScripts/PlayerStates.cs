@@ -29,6 +29,7 @@ public class PlayerStates : MonoBehaviour
     public bool invulnerable = false;
     public bool movable = true;
     bool onStateStart = true;
+    bool resetState = false;
     
 // References
 
@@ -212,9 +213,10 @@ public class PlayerStates : MonoBehaviour
                         coroutine = MeleeAttack();
                         StartCoroutine(coroutine);
                         onStateStart = false;
+                        resetState = false;
                     }
 
-                    if (Input.GetButtonDown("Fire1"))
+                    if (Input.GetButtonDown("Fire1") && resetState)
                     {
                         onStateStart = true;
                         StopCoroutine(coroutine);
@@ -296,7 +298,10 @@ public class PlayerStates : MonoBehaviour
 
     IEnumerator MeleeAttack()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.125f);
+        resetState = true;
+        yield return new WaitForSeconds(0.125f);
+
         movable = true;
         onStateStart = true;
         status = State.Default;
@@ -305,6 +310,7 @@ public class PlayerStates : MonoBehaviour
     IEnumerator Roll()
     {
         yield return new WaitForSeconds(0.5f);
+
         invulnerable = false;
         movable = true;
         //onStateStart = true;

@@ -94,6 +94,13 @@ public class SkeletonDeathScript : MonoBehaviour {
 
             Explode(new Vector2(transform.position.x, transform.position.y-1), 5);
             StartCoroutine(DieRoutine());
+
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+            GetComponent<Rigidbody2D>().isKinematic = true;
+            GetComponents<BoxCollider2D>()[0].enabled = false;
+            GetComponents<BoxCollider2D>()[1].enabled = false;
+
+
             TurnOffCollisions();
             
         }
