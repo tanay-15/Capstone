@@ -37,14 +37,20 @@ public class Enemy : BasicEnemy {
     public bool AttackReady;
     public bool IsAlive ;
     bool IsPunched = false;
-    private bool movway1 = true;
-    private bool movway2;
+    [HideInInspector]
+    public bool movway1 = true;
+    [HideInInspector]
+    public bool movway2;
 
     public bool checkforAttackHit;
-    private GameObject MovePoint1;
-    private GameObject MovePoint2;
-    private Vector3 waypoint1;
-    private Vector3 waypoint2;
+    [HideInInspector]
+    public GameObject MovePoint1;
+    [HideInInspector]
+    public GameObject MovePoint2;
+    [HideInInspector]
+    public Vector3 waypoint1;
+    [HideInInspector]
+    public Vector3 waypoint2;
 
     private LayerMask EnemyIgnoreMask;
     private LayerMask groundMask;
@@ -64,9 +70,12 @@ public class Enemy : BasicEnemy {
     public States currentstate;
 
     [Header("Eyesight")]
-    private GameObject vision;
-    private GameObject groundAhead;
-    private GameObject jumpAhead;
+    [HideInInspector]
+    public GameObject vision;
+    [HideInInspector]
+    public GameObject groundAhead;
+    [HideInInspector]
+    public GameObject jumpAhead;
     private RaycastHit eyehit;
     private RaycastHit2D vishit;
     private RaycastHit2D groundHit;
@@ -103,7 +112,7 @@ public class Enemy : BasicEnemy {
        
     }
 
-    void SetupValues()
+   public void SetupValues()
     {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
@@ -202,7 +211,7 @@ public class Enemy : BasicEnemy {
       
 	}
 
-    void SetPatrolPos()     //Helper function for Patrol points
+    public void SetPatrolPos()     //Helper function for Patrol points
     {
         if (!m_HasPatrol)
         {
