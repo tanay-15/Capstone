@@ -126,10 +126,20 @@ public class PlayerStates : MonoBehaviour
 
         /////Wall Jump////
 
-       
-      
+        Collider2D hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.0005f, wallLayerMask);
+        if ((hit && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
+        {
 
-        
+
+            movable = false;
+            if (hit != null)
+            {
+                flip();
+                status = State.WallJump;
+            }
+        }
+
+
 
         //// State Switch ////
 
@@ -200,22 +210,7 @@ public class PlayerStates : MonoBehaviour
                     if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
                     {
                         status = State.ChargingArrow;
-                    }
-
-                    Collider2D hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.0005f, wallLayerMask);
-                    if ((hit && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
-                    {
-
-                        
-                        movable = false;
-                        if (hit != null)
-                        {
-                            flip();
-                            status = State.WallJump;
-                        }
-                    }
-
-
+                    }                 
                     break;
                 }
             case State.Stomp:
