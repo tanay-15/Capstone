@@ -18,11 +18,11 @@ public class PlayerStates : MonoBehaviour
 
 // Values
     [Header("Values")]
-    public ArrowInfo shootingArrowInfo;
     public float speed = 5.0f;
     public float jumpSpeed = 5.0f;
     public float forceX = 8.0f;
     public float forceY = 6.0f;
+    public ArrowInfo shootingArrowInfo;
 
     // Bools
     [Header("Bools")]
@@ -32,9 +32,10 @@ public class PlayerStates : MonoBehaviour
     public bool movable = true;
     bool onStateStart = true;
     bool resetState = false;
-    
-// References
 
+    // References
+
+    [Header("References")]
     public Animator PlayerAnimator;
 
     public GameObject Human;
