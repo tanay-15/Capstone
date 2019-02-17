@@ -11,8 +11,6 @@ public class HubWorldDoor : MonoBehaviour {
     public string levelName;
     public string levelDisplayName;
     public bool locked;
-    public UnityEvent OnDoorBecameVisible;
-    public UnityEvent OnDoorBecameInvisible;
     bool player;
 
     private void Start()
@@ -69,15 +67,5 @@ public class HubWorldDoor : MonoBehaviour {
             }
             levelDisplayText.gameObject.SetActive(false);
         }
-    }
-
-    private void OnBecameVisible()
-    {
-        OnDoorBecameVisible.Invoke();
-    }
-
-    private void OnBecameInvisible()
-    {
-        OnDoorBecameInvisible.Invoke();
     }
 }

@@ -35,8 +35,9 @@ public class DisappearingDoor : MonoBehaviour {
 
         if (open)
         {
-            this.GetComponent<BoxCollider2D>().enabled = false;
-            this.GetComponent<SpriteRenderer>().enabled = false;
+            //this.GetComponent<BoxCollider2D>().enabled = false;
+            //this.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.SetActive(false);
         }
 	}
 }

@@ -33,8 +33,9 @@ public class Tutorial : MonoBehaviour {
 
     public Transform canvasCenter;
 
-    public Transform door;
-    bool doorVisible;
+
+    GameObject pointedObject;
+    bool objectVisible;
 
     static Tutorial()
     {
@@ -57,7 +58,7 @@ public class Tutorial : MonoBehaviour {
     }
 
 	void Start () {
-        doorVisible = false;
+        objectVisible = false;
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
@@ -81,9 +82,9 @@ public class Tutorial : MonoBehaviour {
             i += Time.deltaTime * 5f;
             x = -Mathf.Cos(i) * 50f;
             y = 200f - Mathf.Cos(i) * 50f;
-            doorPosition = Camera.main.WorldToScreenPoint(door.position);
-            newPos.x = (doorVisible) ? doorPosition.x : basePosition.x + x;
-            newPos.y = (doorVisible) ? doorPosition.y + y : basePosition.y;
+            doorPosition = objectVisible ? Camera.main.WorldToScreenPoint(pointedObject.transform.position) : Vector3.zero;
+            newPos.x = (objectVisible) ? doorPosition.x : basePosition.x + x;
+            newPos.y = (objectVisible) ? doorPosition.y + y : basePosition.y;
             arrow.transform.position = newPos;
             yield return 0;
         }
@@ -95,7 +96,6 @@ public class Tutorial : MonoBehaviour {
         if (startInCenter)
         {
             icon.transform.position = canvasCenter.position;
-            Debug.Log(canvasCenter.position);
         }
         for (float i = 0f; i < 1f; i += Time.deltaTime * defaultIconEnterSpeed)
         {
@@ -165,15 +165,16 @@ public class Tutorial : MonoBehaviour {
 		
 	}
 
-    public void OnDoorBecameVisible()
+    public void OnObjectBecameVisible(GameObject obj, bool visible)
     {
-        doorVisible = true;
-        arrow.transform.Rotate(0f, 0f, 270f);
+        pointedObject = (visible) ? obj : null;
+        objectVisible = visible;
+        arrow.transform.Rotate(0f, 0f, (visible) ? 270f : -270f);
     }
 
-    public void OnDoorBecameInvisible()
-    {
-        doorVisible = false;
-        arrow.transform.Rotate(0f, 0f, -270f);
-    }
+    //public void OnObjectBecameInvisible(GameObject obj)
+    //{
+    //    objectVisible = false;
+    //    arrow.transform.Rotate(0f, 0f, -270f);
+    //}
 }

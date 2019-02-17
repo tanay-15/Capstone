@@ -47,7 +47,8 @@ public class RagdollEnemy : BasicEnemy {
 
     public void TurnOffCollisions(bool isTrue)
     {
-        playerColliders = Movement2D.sharedInstance.GetComponentsInChildren<Collider2D>();
+        //playerColliders = Movement2D.sharedInstance.GetComponentsInChildren<Collider2D>();
+        playerColliders = FindObjectOfType<PlayerStates>().GetComponentsInChildren<Collider2D>();
         myColliders = GetComponentsInChildren<Collider2D>();
 
         foreach (Collider2D playerCol in playerColliders)
@@ -89,7 +90,7 @@ public class RagdollEnemy : BasicEnemy {
                 TurnOffCollisions(true);
             events.OnDeath.Invoke();
             isDead = true;
-            Debug.Log("hit");
+            //Debug.Log("hit");
             SetChildrenKinematic(false);
             GetComponents<BoxCollider2D>()[0].enabled = false;
             GetComponents<BoxCollider2D>()[1].enabled = false;

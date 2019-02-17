@@ -21,6 +21,7 @@ public class rageBar : MonoBehaviour {
     Color fillingColor;
     private bool barColorFill;
     GradientScroll gradientScroll;
+    DemonModeScript demonModeScript;
 
     //public bool BarColorFill
     //{
@@ -41,6 +42,7 @@ public class rageBar : MonoBehaviour {
         RBar = GetComponent<rageBar>();
         rageBarFilled = false;
         gradientScroll = FindObjectOfType<GradientScroll>();
+        demonModeScript = GetComponent<DemonModeScript>();
 
         normalColor = RBar.filler.color;
         fillingColor = normalColor;
@@ -59,14 +61,8 @@ public class rageBar : MonoBehaviour {
 
         //if(Input.GetKeyDown(KeyCode.Q))
         {
-            if (GetComponent<DemonModeScript>().DemonModeActive && !GetComponent<DemonModeScript>().transitioning)
-            {
-                rageBarActive = true;
-            }
-            else
-            {
-                rageBarActive = false;
-            }      
+            if (demonModeScript != null)
+                rageBarActive = demonModeScript.DemonModeActive && !GetComponent<DemonModeScript>().transitioning;
         }
 
         if (rageBarActive)
