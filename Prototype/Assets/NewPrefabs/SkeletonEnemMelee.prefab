@@ -398,8 +398,17 @@ MonoBehaviour:
   target: {fileID: 0}
   AttackReady: 0
   IsAlive: 0
+  movway1: 1
+  movway2: 0
   checkforAttackHit: 0
+  MovePoint1: {fileID: 0}
+  MovePoint2: {fileID: 0}
+  waypoint1: {x: 0, y: 0, z: 0}
+  waypoint2: {x: 0, y: 0, z: 0}
   currentstate: 0
+  vision: {fileID: 0}
+  groundAhead: {fileID: 0}
+  jumpAhead: {fileID: 0}
 --- !u!50 &4521974395211325416
 Rigidbody2D:
   serializedVersion: 4

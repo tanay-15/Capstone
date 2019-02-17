@@ -9,18 +9,24 @@ public class ShieldEnemy : Enemy
     {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
+        SetupValues();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (IsAlive)
-        {
-            DetectingPlayer();
-            Patrol();
-            Pursuit();
-            Attack();
-        }
+
+          if (IsAlive)
+           {
+               //CheckForGroundAhead();
+               DetectingPlayer();
+               Patrol();
+               Pursuit();
+               //DirectAttack();
+               Attack();
+
+
+           }
     }
 
 
@@ -32,7 +38,7 @@ public class ShieldEnemy : Enemy
         {
             if (target == null)
             {
-                // anim.SetTrigger("StartPatrol");
+                
                 currentstate = States.Patrol;
 
 
@@ -73,5 +79,37 @@ public class ShieldEnemy : Enemy
 
             }
         }
+    }
+
+
+    public override void Pursuit()
+    {
+        anim.SetBool("Walking", true);
+        anim.SetBool("Attack", false);
+        if (target && !AttackReady)
+        {
+            currentstate = States.Pursuit;
+            CheckForFlip(target.transform.position);
+            if (Mathf.Abs(this.transform.position.y - target.transform.position.y) > 3f)
+            {
+                currentstate = States.Patrol;
+
+            }
+            if(Vector2.Distance(this.transform.position,target.transform.position)< 1.5f)
+            {
+                currentstate = States.Attack;
+                anim.SetBool("Attack", true);
+            }
+            else
+            {
+
+                this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
+            }
+        }
+    }
+
+    public void Blocking()
+    {
+
     }
 }

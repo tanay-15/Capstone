@@ -919,9 +919,8 @@ GameObject:
   - component: {fileID: 7675529794534742727}
   - component: {fileID: 7990745899253623822}
   - component: {fileID: 3607207141776824044}
-  - component: {fileID: 6077868130883039685}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -936,7 +935,7 @@ Transform:
   m_GameObject: {fileID: 2542249685017266790}
   m_LocalRotation: {x: 0, y: 0, z: -0.92652863, w: 0.37622422}
   m_LocalPosition: {x: -0.31, y: 0.46, z: 0.7946001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 330039494830321083}
   m_RootOrder: 0
@@ -978,7 +977,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 02546c12667bcb145bcbd752b9aa31b1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dbd8d9b516ec0764fbedfa9dfb5ebc30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1005,8 +1004,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.29102215, y: 0.112208754}
-    oldSize: {x: 3, y: 3}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.4, y: 6.77}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1024,18 +1023,6 @@ PolygonCollider2D:
       - {x: 0.36236352, y: 0.59744614}
       - {x: 0.5345055, y: 0.80420554}
       - {x: 1.1837342, y: 1.5564922}
---- !u!114 &6077868130883039685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2542249685017266790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab4015377b92a54e9ea8c45ef733e56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2619860866541401284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,7 +1749,7 @@ MonoBehaviour:
   TriggerEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5009176795645100156}
+      - m_Target: {fileID: 0}
         m_MethodName: TriggerEnter2D
         m_Mode: 0
         m_Arguments:
@@ -1778,7 +1765,7 @@ MonoBehaviour:
   TriggerStay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5009176795645100156}
+      - m_Target: {fileID: 0}
         m_MethodName: TriggerStay2D
         m_Mode: 0
         m_Arguments:
@@ -1794,7 +1781,7 @@ MonoBehaviour:
   TriggerExit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5009176795645100156}
+      - m_Target: {fileID: 0}
         m_MethodName: TriggerExit2D
         m_Mode: 0
         m_Arguments:
@@ -3198,8 +3185,8 @@ GameObject:
   - component: {fileID: 118643464342416354}
   - component: {fileID: 6999240616595140000}
   - component: {fileID: 8369744605477288194}
-  - component: {fileID: 5009176795645100156}
   - component: {fileID: 5698658421552016493}
+  - component: {fileID: 7948678044342086262}
   m_Layer: 15
   m_Name: SkeletonShield
   m_TagString: Enemy
@@ -3259,7 +3246,7 @@ Animator:
   m_GameObject: {fileID: 7948678044342086261}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 34117b3a2c6bb2745bb356e84b5a272c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 75e9956f13a7fb84a97f14a84d924dde, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3320,42 +3307,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.02, y: 3.87}
   m_EdgeRadius: 0
---- !u!114 &5009176795645100156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7948678044342086261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e25dd5139c7530f48826ab1c7024b82a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  events:
-    OnDeath:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    OnTakeDamage:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityFloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-  LookingLeft: 1
-  health: 15
-  rateofattack: 2
-  range: 12
-  damage: 5
-  movspeed: 1
-  chaseSpeed: 0
-  ImpactAnim: {fileID: 1057236091574462, guid: d1c3572964dd309439c9a1e438dffc0e, type: 3}
-  target: {fileID: 0}
-  AttackReady: 0
-  IsAlive: 0
-  checkforAttackHit: 0
-  currentstate: 0
 --- !u!50 &5698658421552016493
 Rigidbody2D:
   serializedVersion: 4
@@ -3377,6 +3328,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &7948678044342086262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7948678044342086261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06aa20081f6d9114485d68bef7abd1c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+    OnDeath:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnTakeDamage:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityFloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  LookingLeft: 1
+  health: 15
+  rateofattack: 2
+  range: 12
+  damage: 0
+  movspeed: 1
+  chaseSpeed: 0
+  ImpactAnim: {fileID: 1057236091574462, guid: d1c3572964dd309439c9a1e438dffc0e, type: 3}
+  target: {fileID: 0}
+  AttackReady: 0
+  IsAlive: 1
+  movway1: 1
+  movway2: 0
+  checkforAttackHit: 0
+  MovePoint1: {fileID: 0}
+  MovePoint2: {fileID: 0}
+  waypoint1: {x: 0, y: 0, z: 0}
+  waypoint2: {x: 0, y: 0, z: 0}
+  currentstate: 0
+  vision: {fileID: 0}
+  groundAhead: {fileID: 0}
+  jumpAhead: {fileID: 0}
 --- !u!1 &8209960125560255378
 GameObject:
   m_ObjectHideFlags: 0
