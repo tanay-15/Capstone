@@ -1,5 +1,75 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1803467789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1803467790}
+  - component: {fileID: 1803467792}
+  - component: {fileID: 1803467791}
+  m_Layer: 15
+  m_Name: HitTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1803467790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803467789}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.95, y: 2.21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 525404088637130852}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1803467792
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803467789}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.3164831, y: 0.21157789}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.052966, y: 4.6154613}
+  m_EdgeRadius: 0
+--- !u!114 &1803467791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803467789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4a22a9a0fe9df4ebca1dcffe27d420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &81918435085752381
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +988,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7675529794534742727}
   - component: {fileID: 7990745899253623822}
-  - component: {fileID: 3607207141776824044}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -988,41 +1057,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &3607207141776824044
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2542249685017266790}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.4, y: 6.77}
-    newSize: {x: 3, y: 3}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.1438473, y: 1.5248433}
-      - {x: 0.8696367, y: 1.5772629}
-      - {x: 1.0083017, y: 1.6624584}
-      - {x: 0.8226276, y: 1.492545}
-      - {x: 0.5098418, y: 1.1182929}
-      - {x: -0.49259937, y: 0.17943463}
-      - {x: -0.22073364, y: 0.11057608}
-      - {x: 0.36236352, y: 0.59744614}
-      - {x: 0.5345055, y: 0.80420554}
-      - {x: 1.1837342, y: 1.5564922}
 --- !u!1 &2619860866541401284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,7 +1783,7 @@ MonoBehaviour:
   TriggerEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7948678044342086262}
         m_MethodName: TriggerEnter2D
         m_Mode: 0
         m_Arguments:
@@ -1765,8 +1799,8 @@ MonoBehaviour:
   TriggerStay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: TriggerStay2D
+      - m_Target: {fileID: 7948678044342086262}
+        m_MethodName: OnTriggerStay2D
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1781,7 +1815,7 @@ MonoBehaviour:
   TriggerExit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7948678044342086262}
         m_MethodName: TriggerExit2D
         m_Mode: 0
         m_Arguments:
@@ -3215,6 +3249,7 @@ Transform:
   - {fileID: 2918625010105255317}
   - {fileID: 5778224064254198219}
   - {fileID: 8423929833175268082}
+  - {fileID: 1803467790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3358,6 +3393,7 @@ MonoBehaviour:
   damage: 0
   movspeed: 1
   chaseSpeed: 0
+  withinRange: 0
   ImpactAnim: {fileID: 1057236091574462, guid: d1c3572964dd309439c9a1e438dffc0e, type: 3}
   target: {fileID: 0}
   AttackReady: 0
@@ -3369,10 +3405,14 @@ MonoBehaviour:
   MovePoint2: {fileID: 0}
   waypoint1: {x: 0, y: 0, z: 0}
   waypoint2: {x: 0, y: 0, z: 0}
+  EnemyIgnoreMask:
+    serializedVersion: 2
+    m_Bits: 0
   currentstate: 0
   vision: {fileID: 0}
   groundAhead: {fileID: 0}
   jumpAhead: {fileID: 0}
+  isBlocking: 0
 --- !u!1 &8209960125560255378
 GameObject:
   m_ObjectHideFlags: 0

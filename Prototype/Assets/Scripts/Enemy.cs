@@ -25,7 +25,7 @@ public class Enemy : BasicEnemy {
     public float damage;
     public float movspeed;
     public float chaseSpeed;
-    private bool withinRange;
+    public bool withinRange;
     
  
     private float losrange;
@@ -52,7 +52,8 @@ public class Enemy : BasicEnemy {
     [HideInInspector]
     public Vector3 waypoint2;
 
-    private LayerMask EnemyIgnoreMask;
+    [HideInInspector]
+    public LayerMask EnemyIgnoreMask;
     private LayerMask groundMask;
     
     public enum States
@@ -77,7 +78,8 @@ public class Enemy : BasicEnemy {
     [HideInInspector]
     public GameObject jumpAhead;
     private RaycastHit eyehit;
-    private RaycastHit2D vishit;
+    [HideInInspector]
+    public RaycastHit2D vishit;
     private RaycastHit2D groundHit;
     private RaycastHit2D jumpsideHit;
     private bool hasgroundAhead;
@@ -217,8 +219,8 @@ public class Enemy : BasicEnemy {
         {
             waypoint1 = MovePoint1.transform.position;
             waypoint2 = MovePoint2.transform.position;
-            Debug.Log(waypoint1);
-            Debug.Log(waypoint2);
+           
+
             m_HasPatrol = true;
         }
     }
