@@ -32,10 +32,12 @@ public class Tutorial : MonoBehaviour {
     public GameObject rageBar;
 
     public Transform canvasCenter;
+    SortedList<int, VisibleTrigger> pointedObjects;
 
 
     GameObject pointedObject;
     bool objectVisible;
+    Vector3 arrowOffset;
 
     static Tutorial()
     {
@@ -65,6 +67,7 @@ public class Tutorial : MonoBehaviour {
         SetPhase(startPhase);
         DisableObjects();
         StartCoroutine(MoveArrow());
+        pointedObjects = new SortedList<int, VisibleTrigger>();
 
         //DisableObjects();
 	}
@@ -82,7 +85,7 @@ public class Tutorial : MonoBehaviour {
             i += Time.deltaTime * 5f;
             x = -Mathf.Cos(i) * 50f;
             y = 200f - Mathf.Cos(i) * 50f;
-            doorPosition = objectVisible ? Camera.main.WorldToScreenPoint(pointedObject.transform.position) : Vector3.zero;
+            doorPosition = objectVisible ? Camera.main.WorldToScreenPoint(pointedObject.transform.position + arrowOffset) : Vector3.zero;
             newPos.x = (objectVisible) ? doorPosition.x : basePosition.x + x;
             newPos.y = (objectVisible) ? doorPosition.y + y : basePosition.y;
             arrow.transform.position = newPos;
@@ -165,16 +168,20 @@ public class Tutorial : MonoBehaviour {
 		
 	}
 
-    public void OnObjectBecameVisible(GameObject obj, bool visible)
+    public void OnObjectBecameVisible(VisibleTrigger obj, bool visible, int priority)
     {
-        pointedObject = (visible) ? obj : null;
-        objectVisible = visible;
-        arrow.transform.Rotate(0f, 0f, (visible) ? 270f : -270f);
+        if (visible)
+        {
+            pointedObjects.Add(-obj.priority, obj);
+        }
+        else
+        {
+            pointedObjects.Remove(-obj.priority);
+        }
+        objectVisible = (pointedObjects.Count > 0);
+        pointedObject = objectVisible ? pointedObjects.Values[0].gameObject : null;
+        arrowOffset = objectVisible ? pointedObjects.Values[0].arrowOffset : Vector3.zero;
+        arrow.transform.Rotate(0f, 0f, (objectVisible) ? 270f : -270f);
+        arrow.transform.localRotation = Quaternion.Euler(0f, 0f, (objectVisible) ? 270f : 0f);
     }
-
-    //public void OnObjectBecameInvisible(GameObject obj)
-    //{
-    //    objectVisible = false;
-    //    arrow.transform.Rotate(0f, 0f, -270f);
-    //}
 }

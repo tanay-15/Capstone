@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ColorButton : MonoBehaviour {
+    public UnityEvent OnPressed;
     public bool pressed;
 
     List<GameObject> colliders;
@@ -32,6 +34,7 @@ public class ColorButton : MonoBehaviour {
     {
         if (collision.gameObject.GetComponent<SpriteRenderer>().color == this.GetComponent<SpriteRenderer>().color)
         {
+            OnPressed.Invoke();
             colliders.Add(collision.gameObject);
         }
     }
