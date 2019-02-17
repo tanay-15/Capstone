@@ -108,7 +108,7 @@ public class BossSpider : MonoBehaviour {
         
         //relative = position3.transform.localRotation;
 
-       if(this.gameObject.activeInHierarchy == true)
+     /*  if(this.gameObject.activeInHierarchy == true)
         {
             bossHealthBar.gameObject.SetActive(true);
         }
@@ -117,9 +117,9 @@ public class BossSpider : MonoBehaviour {
         {
             bossHealthBar.gameObject.SetActive(false);
         }
-    
+        */
 
-
+        Debug.Log("Boss is ALIVE");
 
 
         Brain();
@@ -141,7 +141,7 @@ public class BossSpider : MonoBehaviour {
             
         }
         
-        bossHealthBar.value = health;
+        //bossHealthBar.value = health;
 	}
 
     void Brain()
@@ -489,7 +489,7 @@ public class BossSpider : MonoBehaviour {
 
         if(collision.gameObject.tag == "BossPlatforms")
         {
-            Debug.Log("Ignoring the platforms");
+            
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(),this.GetComponent<Collider2D>());
         }
     }
