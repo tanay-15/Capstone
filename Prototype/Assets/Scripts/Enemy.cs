@@ -701,7 +701,7 @@ public class Enemy : BasicEnemy {
 
         if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
         {
-            applyDamage(5);
+            applyDamage(3);
 
             IsPunched = true;
             StartCoroutine(IsPunchedReset());
@@ -788,7 +788,7 @@ public class Enemy : BasicEnemy {
 
     IEnumerator IsPunchedReset()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.125f);
         IsPunched = false;
     }
   

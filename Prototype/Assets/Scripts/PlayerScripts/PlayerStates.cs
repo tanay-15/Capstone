@@ -260,7 +260,7 @@ public class PlayerStates : MonoBehaviour
                         StopCoroutine(coroutine);
                     }
 
-                    transform.position = new Vector3(transform.position.x + 1 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y, transform.position.z);
+                    //transform.position = new Vector3(transform.position.x + 1 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y, transform.position.z);
 
                     break;
                 }
@@ -341,7 +341,7 @@ public class PlayerStates : MonoBehaviour
 
     void InitChargeArrow()
     {
-        movable = false;
+        //movable = false;
         shootingArrowInfo.Start();
 
         //TODO: Change to a charge arrow animation
@@ -374,7 +374,7 @@ public class PlayerStates : MonoBehaviour
             //Gravity scale formerly 0.4
             shootingArrowInfo.End();
             status = (grounded) ? State.Default : State.InAir;
-            movable = true;
+            //movable = true;
         }
     }
 

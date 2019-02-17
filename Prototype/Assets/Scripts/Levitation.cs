@@ -201,12 +201,12 @@ public class Levitation : MonoBehaviour {
 
     void CheckRightTrigger()
     {
-        if (Input.GetAxis("RightTrigger2") != 0 && !rightTriggerDown)
+        if (Input.GetAxis("RightTrigger1") != 0 && !rightTriggerDown)
         {
             rightTriggerDown = true;
             rightTriggerPressed = true;
         }
-        else if (Input.GetAxis("RightTrigger2") == 0 && rightTriggerDown)
+        else if (Input.GetAxis("RightTrigger1") == 0 && rightTriggerDown)
         {
             rightTriggerDown = false;
             rightTriggerReleased = true;
