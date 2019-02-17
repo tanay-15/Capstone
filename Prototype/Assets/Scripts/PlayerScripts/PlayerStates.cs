@@ -222,6 +222,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                     {
                         Destroy(Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                        FindObjectOfType<CameraFollow>().ShakeCamera();
                         DustParticles.Play();
                         
                         status = State.Default;
