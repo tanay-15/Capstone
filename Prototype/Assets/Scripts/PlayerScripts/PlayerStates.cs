@@ -23,6 +23,7 @@ public class PlayerStates : MonoBehaviour
     public float forceX = 8.0f;
     public float forceY = 6.0f;
     public ArrowInfo shootingArrowInfo;
+    int attackCounter = 0;
 
     // Bools
     [Header("Bools")]
@@ -234,7 +235,18 @@ public class PlayerStates : MonoBehaviour
 
                     if (onStateStart)
                     {
-                        PlayerAnimator.Play("MeleeAttack", -1, 0);
+                        // Melee Combo
+                        if (attackCounter == 0)
+                        {
+                            PlayerAnimator.Play("MeleeAttack1", -1, 0);
+                            attackCounter++;
+                        }
+                        else if (attackCounter == 1)
+                        {
+                            PlayerAnimator.Play("MeleeAttack2", -1, 0);
+                            attackCounter = 0;
+                        }
+                        
                         coroutine = MeleeAttack();
                         StartCoroutine(coroutine);
                         onStateStart = false;
@@ -247,16 +259,23 @@ public class PlayerStates : MonoBehaviour
                         StopCoroutine(coroutine);
                     }
 
+                    transform.position = new Vector3(transform.position.x + 1 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y, transform.position.z);
+
                     break;
                 }
             case State.Roll:
                 {
-                    PlayerAnimator.Play("Roll");
 
+                    if (onStateStart)
+                    {
+                        PlayerAnimator.Play("Roll");
+                        StartCoroutine("Roll");
+                        onStateStart = false;
+                    }
+                        
                     movable = false;
                     invulnerable = true;
-                    StartCoroutine("Roll");
-
+                    
                     transform.position = new Vector3(transform.position.x + 8*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
 
                     break;
@@ -385,7 +404,7 @@ public class PlayerStates : MonoBehaviour
 
         invulnerable = false;
         movable = true;
-        //onStateStart = true;
+        onStateStart = true;
         status = State.Default;
     }
 
