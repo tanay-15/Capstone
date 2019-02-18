@@ -104,7 +104,7 @@ public class BossSpider : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Vector3 relative;
+        
         
         //relative = position3.transform.localRotation;
 
@@ -136,7 +136,7 @@ public class BossSpider : MonoBehaviour {
         if(health <= 0)
         {
             currentState = States.Dead;
-            Destroy(bossHealthBar.gameObject);
+            //Destroy(bossHealthBar.gameObject);
             Destroy(this.gameObject);
             
         }
@@ -466,6 +466,11 @@ public class BossSpider : MonoBehaviour {
 
             }
 
+        }
+
+        if(collider.gameObject.tag == "projectile")
+        {
+            health = health - 5;
         }
     }
 
