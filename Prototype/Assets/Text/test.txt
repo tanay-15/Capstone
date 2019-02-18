@@ -1,0 +1,5 @@
+Paragraphs are the building blocks of papers. 
+You can’t put a Content Size Fitter on each child. 
+The reason is that the Content Size Fitter wants control over its own Rect Transform,
+but the parent Layout Group also wants control over the child Rect Transform. 
+This creates a conflict and the result is undefined behavior.

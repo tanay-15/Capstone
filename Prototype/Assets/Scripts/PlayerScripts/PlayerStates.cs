@@ -49,7 +49,8 @@ public class PlayerStates : MonoBehaviour
     ParticleSystem DustParticles;
     Rigidbody2D Rb2d;
     private IEnumerator coroutine;
-
+    Collider2D hit;
+    Collider2D hitback;
 
 
 
@@ -128,11 +129,12 @@ public class PlayerStates : MonoBehaviour
 
         /////Wall Jump////
 
-        Collider2D hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.0005f, wallLayerMask);
-        if ((hit && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
+        hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.0005f, wallLayerMask);
+        //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
+
+        if ((hit && !grounded))// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
         {
-
-
+            Debug.Log("here");
             movable = false;
             if (hit != null)
             {
@@ -141,6 +143,13 @@ public class PlayerStates : MonoBehaviour
             }
         }
 
+        //if (hitback = null)
+        //{
+        //    Debug.Log("inside if in state");
+
+        //    status = State.InAir;
+        //    movable = true;
+        //}
 
 
         //// State Switch ////
@@ -294,6 +303,14 @@ public class PlayerStates : MonoBehaviour
                     if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
                     {
                         Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
+
+                        if (hitback = null)
+                        {
+                            Debug.Log("inside if in state");
+
+                            status = State.InAir;
+                            movable = true;
+                        }
                     }
 
                     if (facingRight)
@@ -326,12 +343,8 @@ public class PlayerStates : MonoBehaviour
                         movable = true;
                         status = State.Default;
                     }
-                    Collider2D hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
-                    if (hitback = null)
-                    {
-                        status = State.InAir;
-                        movable = true;
-                    }
+                    //Collider2D hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
+                   
                     break;
                 }
         }
