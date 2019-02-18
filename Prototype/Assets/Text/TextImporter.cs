@@ -8,7 +8,7 @@ public class TextImporter : MonoBehaviour
     public GameObject TextBox;
     public Text Text;
     public TextAsset TextFile;
-    public string[] Textlines;
+    private string[] Textlines;
     public int currentline;
     public int endAtline;
     private bool isTyping = false;
@@ -50,8 +50,8 @@ public class TextImporter : MonoBehaviour
 
             if(!isTyping)
             {
-                currentline += 1;
 
+                currentline += 1;
                 if (currentline > endAtline)
                 {
                     DisableTextBox();
@@ -61,6 +61,7 @@ public class TextImporter : MonoBehaviour
                     Debug.Log("here");
                     StartCoroutine(TextScroll(Textlines[currentline]));
                 }
+               
             }
             else if (isTyping && !cancelTyping)
             {

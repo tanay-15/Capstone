@@ -129,12 +129,12 @@ public class PlayerStates : MonoBehaviour
 
         /////Wall Jump////
 
-        hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.0005f, wallLayerMask);
+        hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
+        
         //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
 
-        if ((hit && !grounded))// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
+        if (hit && !grounded)// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
         {
-            Debug.Log("here");
             movable = false;
             if (hit != null)
             {
@@ -143,19 +143,19 @@ public class PlayerStates : MonoBehaviour
             }
         }
 
-        //if (hitback = null)
-        //{
-        //    Debug.Log("inside if in state");
+            //if (hitback = null)
+            //{
+            //    Debug.Log("inside if in state");
 
-        //    status = State.InAir;
-        //    movable = true;
-        //}
+            //    status = State.InAir;
+            //    movable = true;
+            //}
 
 
-        //// State Switch ////
+            //// State Switch ////
 
-        //Initially changing to state
-        if (prevState != status)
+            //Initially changing to state
+            if (prevState != status)
         {
             switch (status)
             {
@@ -303,48 +303,40 @@ public class PlayerStates : MonoBehaviour
                     if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
                     {
                         Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
-
-                        if (hitback = null)
+                        hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
+                        if (hitback == null)
                         {
-                            Debug.Log("inside if in state");
-
                             status = State.InAir;
+                            movable = true;
+                        }
+                        else if(hitback !=null && grounded)
+                        {
+                            status = State.Default;
                             movable = true;
                         }
                     }
 
-                    if (facingRight)
+                    else if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                     {
-                        if (Input.GetButtonDown("Jump")  || Input.GetButtonDown("PS4Jump"))
+                        if (facingRight && hAxis > 0f)
                         {
-                                                   
-                            
-                            Rb2d.velocity = new Vector2(forceX  , forceY);
+                            Rb2d.velocity = new Vector2(forceX, forceY);
                             status = State.InAir;
                             movable = true;
-
-                        }                       
-
-                    }
-                    else if (!facingRight)
-                    {
-                        if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
+                        }
+                        else if(!facingRight && hAxis <0f)
                         {
-                            
                             Rb2d.velocity = new Vector2(-forceX, forceY);
                             status = State.InAir;
                             movable = true;
                         }
                     }
 
-
-                    if (GroundTrigger.GetComponent<GroundTriggerScript>().grounded == true)
+                    else if (GroundTrigger.GetComponent<GroundTriggerScript>().grounded == true)
                     {
                         movable = true;
                         status = State.Default;
-                    }
-                    //Collider2D hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
-                   
+                    }              
                     break;
                 }
         }
