@@ -47,7 +47,6 @@ public class PlayerStates : MonoBehaviour
     GameObject GroundTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
-    GameObject dustParts;
     Rigidbody2D Rb2d;
     private IEnumerator coroutine;
     Collider2D hit;
@@ -106,13 +105,13 @@ public class PlayerStates : MonoBehaviour
                 Rb2d.velocity = new Vector3(hAxis * speed, Rb2d.velocity.y, 0);
         }
         else
-            Rb2d.velocity = new Vector3(0,Rb2d.velocity.y, 0);
+            Rb2d.velocity = new Vector3(Rb2d.velocity.x,Rb2d.velocity.y, 0);
 
 
 
         //// Flip ////
 
-        if (status != State.ChargingArrow || status!=State.WallJump || status!=State.InAir)
+        if (status != State.ChargingArrow || status!=State.InAir) //|| status != State.WallJump)
         {
             if (hAxis > 0 && !facingRight)
                 flip();
@@ -130,33 +129,34 @@ public class PlayerStates : MonoBehaviour
 
         /////Wall Jump////
 
-        hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
-        
-        //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
+        //hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
 
-        if (hit && !grounded)// || (hitback && !GroundTrigger.GetComponent<GroundTriggerScript>().grounded))
-        {
-            movable = false;
-            if (hit != null)
-            {
-                flip();
-                status = State.WallJump;
-            }
-        }
-
-            //if (hitback = null)
-            //{
-            //    Debug.Log("inside if in state");
-
-            //    status = State.InAir;
-            //    movable = true;
-            //}
+        ////Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
 
 
-            //// State Switch ////
+        //if ((hit && !grounded)|| (hitback && !grounded))
+        //{
+        //    movable = false;
+        //    if (hit != null)
+        //    {
+              
+        //        flip();
+        //        status = State.WallJump;
+        //    }
+        //}
+        //if (hitback = null)
+        //{
+        //    Debug.Log("inside if in state");
 
-            //Initially changing to state
-            if (prevState != status)
+        //    status = State.InAir;
+        //    movable = true;
+        //}
+
+
+        //// State Switch ////
+
+        //Initially changing to state
+        if (prevState != status)
         {
             switch (status)
             {
@@ -201,6 +201,13 @@ public class PlayerStates : MonoBehaviour
 
                     if (grounded == true)
                         movable = true;
+
+                    hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
+
+                    //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
+
+
+
                     break;
                 }
             case State.InAir:
@@ -224,7 +231,26 @@ public class PlayerStates : MonoBehaviour
                     if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
                     {
                         status = State.ChargingArrow;
-                    }                 
+                    }
+
+                    Debug.Log("checking for wall");
+                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.25f, wallLayerMask);
+                    hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
+                    //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
+
+                    
+                    if ((hit && !grounded) || (hitback && !grounded))
+                    {
+                        Debug.Log("In air looking for wall jump");
+                        
+                        //movable = false;
+                        if (hit != null)
+                        {
+                            Debug.Log("Inside hit");
+                            status = State.WallJump;
+                        }
+                    }
+
                     break;
                 }
             case State.Stomp:
@@ -233,8 +259,6 @@ public class PlayerStates : MonoBehaviour
                     Rb2d.velocity = Vector3.down *2* jumpSpeed;
                     if (grounded == true)
                     {
-                        // dustParts = Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity) as GameObject;
-                        //Destroy(Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity), 2f);
                         Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
                         FindObjectOfType<CameraFollow>().ShakeCamera();
                         DustParticles.Play();
@@ -303,7 +327,12 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.WallJump:
                 {
-                    movable = false;
+                    if(movable)
+                    {
+                        flip();
+                        movable = false;
+                    }
+                    
                     
                     if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
                     {
@@ -324,19 +353,19 @@ public class PlayerStates : MonoBehaviour
                     else if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                     {
                         movable = false;
+                        Rb2d.velocity = Vector2.zero;
                         if (facingRight && hAxis == 0f)
                         {
-                            Rb2d.velocity = new Vector2(forceX * 2, forceY);
-                            status = State.InAir;
-                            //movable = true;
-                           
+                            Rb2d.velocity = new Vector2(forceX , forceY);
                           
+                            status = State.InAir;
+    
                         }
                         else if(!facingRight && hAxis == 0f)
                         {
-                            Rb2d.velocity = new Vector2(-forceX * 2, forceY);
-                            status = State.InAir;
-                          
+                            Rb2d.velocity = new Vector2(-forceX , forceY);
+                     
+                            status = State.InAir;                         
                         }
                     }
 
@@ -345,11 +374,6 @@ public class PlayerStates : MonoBehaviour
                         movable = true;
                         status = State.Default;
                     }
-                    //else if (GroundTrigger.GetComponent<GroundTriggerScript>().grounded == true)
-                    //{
-                    //    movable = true;
-                    //    status = State.Default;
-                    //}              
                     break;
                 }
         }
