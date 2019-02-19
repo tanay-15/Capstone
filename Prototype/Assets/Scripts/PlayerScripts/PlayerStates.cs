@@ -47,6 +47,7 @@ public class PlayerStates : MonoBehaviour
     GameObject GroundTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
+    GameObject dustParts;
     Rigidbody2D Rb2d;
     private IEnumerator coroutine;
     Collider2D hit;
@@ -198,6 +199,8 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == false)
                         status = State.InAir;
 
+                    if (grounded == true)
+                        movable = true;
                     break;
                 }
             case State.InAir:
@@ -230,7 +233,9 @@ public class PlayerStates : MonoBehaviour
                     Rb2d.velocity = Vector3.down *2* jumpSpeed;
                     if (grounded == true)
                     {
-                        Destroy(Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                        // dustParts = Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity) as GameObject;
+                        //Destroy(Instantiate(DustParticles, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                        Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
                         FindObjectOfType<CameraFollow>().ShakeCamera();
                         DustParticles.Play();
                         
@@ -318,25 +323,33 @@ public class PlayerStates : MonoBehaviour
 
                     else if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                     {
-                        if (facingRight && hAxis > 0f)
+                        movable = false;
+                        if (facingRight && hAxis == 0f)
                         {
-                            Rb2d.velocity = new Vector2(forceX, forceY);
+                            Rb2d.velocity = new Vector2(forceX * 2, forceY);
                             status = State.InAir;
-                            movable = true;
+                            //movable = true;
+                           
+                          
                         }
-                        else if(!facingRight && hAxis <0f)
+                        else if(!facingRight && hAxis == 0f)
                         {
-                            Rb2d.velocity = new Vector2(-forceX, forceY);
+                            Rb2d.velocity = new Vector2(-forceX * 2, forceY);
                             status = State.InAir;
-                            movable = true;
+                          
                         }
                     }
 
-                    else if (GroundTrigger.GetComponent<GroundTriggerScript>().grounded == true)
+                    if(grounded == true)
                     {
                         movable = true;
                         status = State.Default;
-                    }              
+                    }
+                    //else if (GroundTrigger.GetComponent<GroundTriggerScript>().grounded == true)
+                    //{
+                    //    movable = true;
+                    //    status = State.Default;
+                    //}              
                     break;
                 }
         }
