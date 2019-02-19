@@ -33,6 +33,7 @@ public class PlayerStates : MonoBehaviour
     public bool movable = true;
     bool onStateStart = true;
     bool resetState = false;
+    bool wallSliding = false;
 
     // References
 
@@ -111,7 +112,7 @@ public class PlayerStates : MonoBehaviour
 
         //// Flip ////
 
-        if (status != State.ChargingArrow || status!=State.InAir) //|| status != State.WallJump)
+        if ((status != State.ChargingArrow || status!=State.InAir || status != State.WallJump)&& movable)
         {
             if (hAxis > 0 && !facingRight)
                 flip();
@@ -129,28 +130,7 @@ public class PlayerStates : MonoBehaviour
 
         /////Wall Jump////
 
-        //hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
-
-        ////Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
-
-
-        //if ((hit && !grounded)|| (hitback && !grounded))
-        //{
-        //    movable = false;
-        //    if (hit != null)
-        //    {
-              
-        //        flip();
-        //        status = State.WallJump;
-        //    }
-        //}
-        //if (hitback = null)
-        //{
-        //    Debug.Log("inside if in state");
-
-        //    status = State.InAir;
-        //    movable = true;
-        //}
+      
 
 
         //// State Switch ////
@@ -202,12 +182,6 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         movable = true;
 
-                    hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
-
-                    //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
-
-
-
                     break;
                 }
             case State.InAir:
@@ -233,20 +207,12 @@ public class PlayerStates : MonoBehaviour
                         status = State.ChargingArrow;
                     }
 
-                    Debug.Log("checking for wall");
-                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.25f, wallLayerMask);
-                    hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
-                    //Collider2D hitting = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.0025f, wallLayerMask);
-
-                    
+                    hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
+                    hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask); 
                     if ((hit && !grounded) || (hitback && !grounded))
                     {
-                        Debug.Log("In air looking for wall jump");
-                        
-                        //movable = false;
                         if (hit != null)
                         {
-                            Debug.Log("Inside hit");
                             status = State.WallJump;
                         }
                     }
