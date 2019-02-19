@@ -21,14 +21,14 @@ public class PulleyWheel : MonoBehaviour
         if (playerPresent)
         {
             // replace these with whatever keys/inputs we need
-            if (Input.GetKeyDown(KeyCode.LeftControl) && GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().enabled)
+            if (Input.GetKeyDown(KeyCode.LeftControl) && GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().movable)
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().enabled = false;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().movable = false;
                 grabbed = true;
             }
             else if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().enabled = true;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().movable = true;
                 grabbed = false;
             }
         }
