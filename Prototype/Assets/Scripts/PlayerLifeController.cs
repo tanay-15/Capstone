@@ -38,6 +38,7 @@ public class PlayerLifeController : MonoBehaviour {
             gameObject.SetActive(false);
             Invoke("Respawn", 1.2f);
         }
+
         //Thread testing
         //if (Input.GetKeyDown(KeyCode.T))
         //{
@@ -106,7 +107,7 @@ public class PlayerLifeController : MonoBehaviour {
 
     public void GetHit(int addLife)
     {
-        if (invincible) return;
+        if (invincible || transform.GetComponent<PlayerStates>().invulnerable) return;
         StartInvincibleBlink(2);
         PlayerLife.sharedInstance.AddLife(addLife);
         FindObjectOfType<CameraFollow>().ShakeCamera();
