@@ -28,6 +28,9 @@ public class SkeletonBoss : MonoBehaviour
 
     public GameObject flyingSkullPrefab;
 
+    private float flyspawnCounter = 0f;
+    private float skelspawnCounter = 0f;
+
     
     void Start()
     {
@@ -45,13 +48,39 @@ public class SkeletonBoss : MonoBehaviour
     void Update()
     {
         Movement();
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            Attack_Resurect();
-        }
+        Death();
+        Attack1();
+        Attack2();
+      
 
      }
+
+
+    void Attack1()
+    {
+        if(this.Health <= 70f)
+        {
+            if(skelspawnCounter <= 0)
+            {
+                Attack_Resurect();
+            }
+        }
+
+        skelspawnCounter = skelspawnCounter - Time.deltaTime;
+    }
+
+    void Attack2()
+    {
+        if(this.Health <= 40f)
+        {
+            if(flyspawnCounter <=0)
+            {
+                Flying_Skull_Resurect();
+            }
+
+            flyspawnCounter = flyspawnCounter - Time.deltaTime;
+        }
+    }
 
 
     void Movement()
@@ -80,6 +109,11 @@ public class SkeletonBoss : MonoBehaviour
         }
     }
 
+    void applyDamage(int amount)
+    {
+        this.Health = this.Health - amount;
+    }
+
 
     void Attack_Resurect()
     {
@@ -87,5 +121,34 @@ public class SkeletonBoss : MonoBehaviour
 
         Instantiate(skeletonPrefab, spawnPointLeftPos, Quaternion.identity);
         Instantiate(skeletonPrefab, spawnPointRightPos, Quaternion.identity);
+
+        skelspawnCounter = 12f;
+    }
+
+
+    void Flying_Skull_Resurect()
+    {
+        Instantiate(flyingSkullPrefab, skullspawnPoint.transform.position, Quaternion.identity);
+
+        flyspawnCounter = 14f;
+    }
+
+    void Death()
+    {
+        if(this.Health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SendMessage("applyDamage", 10f);
+
+        }
+
+       
     }
 }
