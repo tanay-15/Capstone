@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class TextImporter : MonoBehaviour
 {
     public GameObject TextBox;
     public Text Text;
     public TextAsset TextFile;
+    //private List<string> Textlines;
     private string[] Textlines;
     public int currentline;
     public int endAtline;
@@ -20,15 +22,20 @@ public class TextImporter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Textlines = new List<string>();
         if(TextFile != null)
         {
+            string fileInfo = TextFile.text;
+            //string fileInfo = System.IO.File.ReadAllText(@"test.txt");
+            //StreamReader reader = new StreamReader("Assets/Text/test.txt");
+            //Textlines = new List<string>();
+            //Textlines.AddRange(fileInfo.Split("\n"[0]));
             Textlines = (TextFile.text.Split('\n'));
-
         }
 
         if(endAtline == 0)
         {
-            endAtline = Textlines.Length - 1;
+            endAtline = Textlines.Length- 1;
         }
 
         if (isActive)

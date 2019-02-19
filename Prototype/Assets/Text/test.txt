@@ -1,5 +1,3 @@
-Paragraphs are the building blocks of papers. 
-You can’t put a Content Size Fitter on each child. 
-The reason is that the Content Size Fitter wants control over its own Rect Transform,
-but the parent Layout Group also wants control over the child Rect Transform. 
-This creates a conflict and the result is undefined behavior.
+Paragraphs are the building blocks of papers.
+First, open the state machine associated with this animator by double-clicking on the controller field of your object. 
+Then select the animation you would want to slow down in the state machine.
