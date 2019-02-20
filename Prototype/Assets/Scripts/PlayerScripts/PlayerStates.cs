@@ -212,7 +212,6 @@ public class PlayerStates : MonoBehaviour
                     }
                     if(hitback == null && !grounded)
                     {
-                        Debug.Log("here");
                         movable = true;
                     }
                     break;
