@@ -10,6 +10,8 @@ public class MovingPlatform : MonoBehaviour {
 
     int numDown;
 
+    public float offset;
+
     Vector2 startPos;
     Vector2 midPos;
     Vector2 topPos;
@@ -23,9 +25,9 @@ public class MovingPlatform : MonoBehaviour {
         numDown = 0;
         startPos = this.transform.position;
         midPos = startPos;
-        midPos.y += 1.65f;
+        midPos.y += offset;
         topPos = midPos;
-        topPos.y += 1.65f;
+        topPos.y += offset;
 	}
 	
 	// Update is called once per frame

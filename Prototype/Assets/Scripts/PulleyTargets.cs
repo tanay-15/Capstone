@@ -24,13 +24,13 @@ public class PulleyTargets : MonoBehaviour
 
     public void MoveTarget(float val)
     {
-        if (vert)
-        {
-            this.transform.position += new Vector3(0.0f, val * speed, 0.0f);
-        }
-        else
-        {
-            this.transform.position += new Vector3(val * speed, 0.0f, 0.0f);
-        }
+            if (vert)
+            {
+                this.transform.position += new Vector3(0.0f, val * speed, 0.0f);
+            }
+            else
+            {
+                this.transform.position += new Vector3(val * speed, 0.0f, 0.0f);
+            }
     }
 }
