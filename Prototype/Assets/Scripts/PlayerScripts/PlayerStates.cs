@@ -210,7 +210,11 @@ public class PlayerStates : MonoBehaviour
                             status = State.WallJump;
                         }
                     }
-
+                    if(hitback == null && !grounded)
+                    {
+                        Debug.Log("here");
+                        movable = true;
+                    }
                     break;
                 }
             case State.Stomp:
@@ -316,14 +320,14 @@ public class PlayerStates : MonoBehaviour
                     {
                         movable = false;
                         Rb2d.velocity = Vector2.zero;
-                        if (facingRight && hAxis == 0f)
+                        if (facingRight)// && hAxis == 0f)
                         {
                             Rb2d.velocity = new Vector2(forceX , forceY);
                           
                             status = State.InAir;
     
                         }
-                        else if(!facingRight && hAxis == 0f)
+                        else if(!facingRight)// && hAxis == 0f)
                         {
                             Rb2d.velocity = new Vector2(-forceX , forceY);
                      
