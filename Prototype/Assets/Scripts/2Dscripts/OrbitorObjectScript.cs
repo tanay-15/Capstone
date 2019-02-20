@@ -10,9 +10,10 @@ public class OrbitorObjectScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-
         Physics2D.IgnoreLayerCollision(11, 12);
+
+        Physics2D.IgnoreLayerCollision(17, 14);
+        Physics2D.IgnoreLayerCollision(17, 15);
 
     }
 	
@@ -31,7 +32,8 @@ public class OrbitorObjectScript : MonoBehaviour {
         {
             collision.gameObject.SendMessage("applyDamage", 15);
             Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
-            hit = true;
+            //hit = true;
+            Explode(transform.position, 8);
         }
 
         if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.tag == "Wall")
@@ -44,5 +46,41 @@ public class OrbitorObjectScript : MonoBehaviour {
     private void OnCollisionExit2D(Collision2D collision)
     {
         //hit = false;
+    }
+
+
+    public void Explode(Vector2 center, float magnitude)
+    {
+
+
+
+        foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>(true))
+        {
+            if (rb2d.name != gameObject.name)
+            {
+                rb2d.gameObject.SetActive(true);
+                rb2d.transform.parent = null;
+                Vector2 direction = rb2d.position - center;
+                direction.Normalize();
+                rb2d.AddForce(direction * magnitude, ForceMode2D.Impulse);
+                Destroy(rb2d.gameObject,3);
+            }
+
+        }
+
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        GetComponent<Rigidbody2D>().angularVelocity = 0;
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<ParticleSystem>().Play();
+
+        StartCoroutine(DelayedDestroy());
+    }
+
+    IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
     }
 }
