@@ -9,6 +9,7 @@ public class SkeletonBoss : MonoBehaviour
     public GameObject leftpoint;
     public GameObject rightpoint;
     public GameObject startpoint;
+    public GameObject AttackPoint;
     public float MoveSpeed;
     public float Health;
 
@@ -19,10 +20,13 @@ public class SkeletonBoss : MonoBehaviour
     public bool moveToleftPoint = true;
     public bool moveTorightPoint;
 
+    
     public Vector3 leftpointpos;
     public Vector3 rightpointpos;
     public Vector3 spawnPointLeftPos;
     public Vector3 spawnPointRightPos;
+    public Vector3 attackPointpos;
+    private Vector3 startpointpos;
 
     public GameObject skeletonPrefab;
 
@@ -30,6 +34,11 @@ public class SkeletonBoss : MonoBehaviour
 
     private float flyspawnCounter = 0f;
     private float skelspawnCounter = 0f;
+
+    public float AttackCounter = 10f;
+    public bool AttackDone = false;
+
+    private Animator anim;
 
     
     void Start()
@@ -39,8 +48,11 @@ public class SkeletonBoss : MonoBehaviour
         leftpointpos = leftpoint.transform.position;
         rightpointpos = rightpoint.transform.position;
 
+        startpointpos = startpoint.transform.position;
         spawnPointLeftPos = spawnPointLeft.transform.position;
         spawnPointRightPos = spawnPointRight.transform.position;
+        attackPointpos = AttackPoint.transform.position;
+        anim = this.GetComponent<Animator>();
 
     }
 
@@ -48,12 +60,54 @@ public class SkeletonBoss : MonoBehaviour
     void Update()
     {
         Movement();
-        Death();
+    
+        BaseAttack();
         Attack1();
         Attack2();
-      
 
-     }
+        if (AttackDone)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, startpointpos, 4f * Time.deltaTime);
+
+            if(Vector2.Distance(this.transform.position, startpointpos) < 1.5f)
+            {
+                AttackDone = false;
+            }
+
+        }
+        Death();
+
+    }
+
+    void BaseAttack()
+    {
+        AttackCounter = AttackCounter - Time.deltaTime;
+        if(AttackCounter <= 0)
+        {
+
+            this.transform.position = Vector2.MoveTowards(this.transform.position, attackPointpos, 4f * Time.deltaTime);
+
+            if(Vector2.Distance(this.transform.position, attackPointpos) < 1.5f)
+            {
+                anim.SetBool("Attack", true);
+                AttackCounter = 10f;
+            }
+                
+            
+        
+        }
+
+     
+    }
+
+    public void AttackOver()
+    {
+        Debug.Log("In here");
+
+      
+        AttackDone = true;
+        anim.SetBool("Attack", false);
+    }
 
 
     void Attack1()
@@ -145,6 +199,7 @@ public class SkeletonBoss : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
+            Debug.Log("Collided with player");
             collision.gameObject.SendMessage("applyDamage", 10f);
 
         }
