@@ -14,7 +14,7 @@ public class OrbitorManagerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        Player = transform.parent;
+        Player = GameObject.Find("Player").transform;
         Orbitors = new Transform[3];
 
         int i = 0;
@@ -36,7 +36,7 @@ public class OrbitorManagerScript : MonoBehaviour {
 // Throwing projectiles
         if ((Input.GetMouseButtonDown(0) || Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.7f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.7f) && ResetThrow == false)
         {
-            Vector3 offset = new Vector3(0.5f, 0, 0) * (Player.GetComponent<Movement2D>().facingRight ? 1 : -1);
+            Vector3 offset = new Vector3(0.5f, 0, 0) * (Input.GetAxis("RHorizontal") > 0 ? 1 : -1);
             Vector3 direction = new Vector3();
 
             if (Input.GetMouseButtonDown(0))

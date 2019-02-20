@@ -29,7 +29,7 @@ public class OrbitorScript : MonoBehaviour {
 
     void Start () {
 
-        Player = transform.parent.parent.gameObject;
+        Player = GameObject.Find("Player");
         //Trail = transform.GetChild(0).gameObject;
 
         Status = State.NoProjectile;
@@ -39,7 +39,7 @@ public class OrbitorScript : MonoBehaviour {
     void Update()
     {
 
-        if (Player.GetComponent<DemonModeScript>().DemonModeActive)
+        if (Player.GetComponent<DemonTransformScript>().DemonModeActive)
         {
 
             // Orbiting path

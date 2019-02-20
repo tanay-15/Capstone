@@ -188,12 +188,6 @@ public class PlayerStates : MonoBehaviour
                 {
                     PlayerAnimator.Play("Jump");
 
-                    //if (onStateStart)
-                    //{
-                    //    StartCoroutine(InAirTimeLimit());
-                    //    onStateStart = false;
-                    //}
-
                     if (vAxis < -0.5f && Input.GetButtonDown("PS4Jump"))
                         status = State.Stomp;
 
@@ -258,11 +252,13 @@ public class PlayerStates : MonoBehaviour
                         resetState = false;
                     }
 
-                    if (Input.GetButtonDown("Fire1") && resetState)
-                    {
-                        onStateStart = true;
-                        StopCoroutine(coroutine);
-                    }
+                    // Reset
+
+                    //if (Input.GetButtonDown("Fire1") && resetState)
+                    //{
+                    //    onStateStart = true;
+                    //    StopCoroutine(coroutine);
+                    //}
 
                     //transform.position = new Vector3(transform.position.x + 1 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y, transform.position.z);
 
@@ -394,6 +390,10 @@ public class PlayerStates : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        theScale = GameObject.Find("OrbitingSystem").transform.localScale;
+        theScale.x *= -1;
+        GameObject.Find("OrbitingSystem").transform.localScale = theScale;
     }
 
     IEnumerator MeleeAttack()
