@@ -54,7 +54,7 @@ public class PlayerStates : MonoBehaviour
     Collider2D hit;
     Collider2D hitback;
 
-
+    Object[] blocks;
 
 
 
@@ -227,7 +227,8 @@ public class PlayerStates : MonoBehaviour
                         FindObjectOfType<CameraFollow>().ShakeCamera();
                         DustParticles.Play();
 
-                        if (GetComponent<DemonTransformScript>().DemonModeActive)
+                        blocks = FindObjectsOfType<OrbitorObjectScript>();
+                        if (GetComponent<DemonTransformScript>().DemonModeActive && blocks.Length < 7)
                         {
                             Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
                             Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
