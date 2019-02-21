@@ -28,9 +28,8 @@ public class PuzzleProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
 
-        if(collision.gameObject.tag == "ground")
+        if (collision.gameObject.tag == "ground" || collision.gameObject.tag == "Player")
         {
             Destroy(this.gameObject);
         }
