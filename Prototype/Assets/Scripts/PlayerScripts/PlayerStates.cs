@@ -31,7 +31,7 @@ public class PlayerStates : MonoBehaviour
     public bool grounded = false;
     public bool invulnerable = false;
     public bool movable = true;
-    bool onStateStart = true;
+    public bool onStateStart = true;
     bool resetState = false;
     bool wallSliding = false;
 
@@ -42,6 +42,7 @@ public class PlayerStates : MonoBehaviour
 
     public GameObject Human;
     public GameObject Demon;
+    public GameObject StoneBlock;
     public Transform wallCheckpoint;
     public Transform wallCheckpoint1;
     public LayerMask wallLayerMask;
@@ -225,7 +226,15 @@ public class PlayerStates : MonoBehaviour
                         Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
                         FindObjectOfType<CameraFollow>().ShakeCamera();
                         DustParticles.Play();
-                        
+
+                        if (GetComponent<DemonTransformScript>().DemonModeActive)
+                        {
+                            Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                            Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                            Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                        }
+
+
                         status = State.Default;
                     }
 

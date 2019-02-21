@@ -87,6 +87,7 @@ public class PlayerLifeController : MonoBehaviour {
     {
         PlayerLife.sharedInstance.ResetLife();
         gameObject.SetActive(true);
+       
         rb.velocity = Vector3.zero;
         transform.position = respawnPosition;
         StartInvincibleBlink(respawnBlinkLoop);
@@ -96,8 +97,12 @@ public class PlayerLifeController : MonoBehaviour {
             GetComponent<PlayerStates>().RestartInAir();
         }
 
-        if (GetComponent<DemonModeScript>().DemonModeActive)
-        { GetComponent<DemonModeScript>().Transformation(); }
+        //if (GetComponent<DemonModeScript>().DemonModeActive)
+        //{ GetComponent<DemonModeScript>().Transformation(); }
+
+        GetComponent<PlayerStates>().status = PlayerStates.State.Default;
+        GetComponent<PlayerStates>().onStateStart = true;
+        GetComponent<PlayerStates>().movable = true;
     }
 
     //void ResetLevel()

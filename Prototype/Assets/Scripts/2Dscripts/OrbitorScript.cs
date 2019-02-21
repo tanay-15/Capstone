@@ -46,8 +46,11 @@ public class OrbitorScript : MonoBehaviour {
 
             theta += 2 * Time.deltaTime;
             transform.localPosition = new Vector3(radius * Mathf.Sin(theta) * rotDirection, radius * Mathf.Cos(theta), -1);
-           
 
+            if (Projectile == null)
+            {
+                Status = State.NoProjectile;
+            }
             
 
             switch (Status)
