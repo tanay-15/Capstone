@@ -46,7 +46,7 @@ public class RangeEnemy : Enemy {
                 if (!Thrown && rateofattack <= 0)
                 {
 
-                    Debug.Log("Found Target now attack him");
+
                     ThrowAxe();
                 }
 

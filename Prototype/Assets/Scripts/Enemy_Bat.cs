@@ -38,7 +38,7 @@ public class Enemy_Bat : BasicEnemy {
 
         pointA = waypoints[0].transform.position;
         pointB = waypoints[1].transform.position;
-        pointC = waypoints[2].transform.position;
+        //pointC = waypoints[2].transform.position;
         this.transform.position = pointA;
         moveA = true;
 	}
@@ -141,45 +141,45 @@ public class Enemy_Bat : BasicEnemy {
 
     public void Movement()
     {
-        if (moveA)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
-            if(Vector2.Distance(this.transform.position,pointB) < 0.3f){
-                moveA = false;
-                moveB = true;
-            }
-        }
+        //if (moveA)
+        //{
+        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
+        //    if(Vector2.Distance(this.transform.position,pointB) < 0.3f){
+        //        moveA = false;
+        //        moveB = true;
+        //    }
+        //}
 
-        if (moveB)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, pointC, movspeed * Time.deltaTime);
-            if (Vector2.Distance(this.transform.position, pointC )< 0.3f)
-            {
-                moveB = false;
-                moveC = true;
-            }
-        }
+        //if (moveB)
+        //{
+        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointC, movspeed * Time.deltaTime);
+        //    if (Vector2.Distance(this.transform.position, pointC )< 0.3f)
+        //    {
+        //        moveB = false;
+        //        moveC = true;
+        //    }
+        //}
 
-        if (moveC)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
-            if(Vector2.Distance(this.transform.position,pointB)< 0.3f)
-            {
-                moveC = false;
-                moveD = true;
+        //if (moveC)
+        //{
+        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
+        //    if(Vector2.Distance(this.transform.position,pointB)< 0.3f)
+        //    {
+        //        moveC = false;
+        //        moveD = true;
 
-            }
-        }
+        //    }
+        //}
 
-        if (moveD)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, pointA, movspeed * Time.deltaTime);
-            if (Vector2.Distance(this.transform.position, pointA) < 0.3f)
-            {
-                moveD = false;
-                moveA = true;
-            }
-        }
+        //if (moveD)
+        //{
+        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointA, movspeed * Time.deltaTime);
+        //    if (Vector2.Distance(this.transform.position, pointA) < 0.3f)
+        //    {
+        //        moveD = false;
+        //        moveA = true;
+        //    }
+        //}
 
     }
     

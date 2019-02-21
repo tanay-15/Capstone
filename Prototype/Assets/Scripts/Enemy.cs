@@ -37,9 +37,9 @@ public class Enemy : BasicEnemy {
     public bool AttackReady;
     public bool IsAlive ;
     bool IsPunched = false;
-    [HideInInspector]
+  
     public bool movway1 = true;
-    [HideInInspector]
+
     public bool movway2;
 
     public bool checkforAttackHit;
@@ -98,6 +98,8 @@ public class Enemy : BasicEnemy {
 
    protected GameObject[] compobones;
 
+
+
    public override Vector3 lifebarOffset
    {
        get
@@ -111,10 +113,14 @@ public class Enemy : BasicEnemy {
     void Start () {
 
         SetupValues();
+
+      
        
     }
 
-   public void SetupValues()
+ 
+
+    public void SetupValues()
     {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
@@ -163,6 +169,8 @@ public class Enemy : BasicEnemy {
 
     // Update is called once per frame
     void Update () {
+
+       
         if (health <= 0.0f)
         {
             IsAlive = false;
@@ -447,20 +455,20 @@ public class Enemy : BasicEnemy {
                         CheckJumpUp();
                     }
 
-                    if (hasgroundAhead)
-                    {
-                        this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
+                    //if (hasgroundAhead)
+                    //{
+                    this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
                        
-                    }
+                   // }
 
-                    else
-                    {
+                    //else
+                    //{
                       
 
-                        CheckJumpSide();
+                    //    CheckJumpSide();
                     
                    
-                    }
+                    //}
 
                    
 
@@ -477,9 +485,9 @@ public class Enemy : BasicEnemy {
         
         if(jump_up_hit = Physics2D.Raycast(jump_up_origin.transform.position, -transform.up, 4f, EnemyIgnoreMask))
         {
-            Debug.Log("JUump hit " + jump_up_hit.collider.gameObject.name);
+            
             jump_up_position = jump_up_hit.point;
-            Debug.Log("JUmp pos " + jump_up_position.y);
+
 
 
             if (jump_up_hit.collider.gameObject.tag == "ground")
