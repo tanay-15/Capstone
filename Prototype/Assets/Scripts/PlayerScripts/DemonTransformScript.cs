@@ -45,7 +45,15 @@ public class DemonTransformScript : MonoBehaviour
 
     IEnumerator DelayedTransform(bool toDemon)
     {
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSeconds(2.0f);
+
+        DemonSwitch[] DemonSwitches = FindObjectsOfType<DemonSwitch>();
+        foreach (DemonSwitch s in DemonSwitches)
+        {
+            s.Switch(toDemon);
+        }
+
+        yield return new WaitForSeconds(0.7f);
 
         DemonModeActive = toDemon;
         Demon.gameObject.SetActive(toDemon);

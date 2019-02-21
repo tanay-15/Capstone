@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class rageBar : MonoBehaviour {
@@ -22,6 +23,8 @@ public class rageBar : MonoBehaviour {
     private bool barColorFill;
     GradientScroll gradientScroll;
     DemonModeScript demonModeScript;
+
+    public UnityEvent OnRageBarFull;
 
     //public bool BarColorFill
     //{
@@ -115,6 +118,7 @@ public class rageBar : MonoBehaviour {
         {
             //filler.color = fillingColor;
             gradientScroll.EnableGradient(true);
+            OnRageBarFull.Invoke();
             filler.color = Color.red;
         }
         else if (RBar.fillAmount < 1f)
