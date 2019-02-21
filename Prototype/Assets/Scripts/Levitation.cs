@@ -9,6 +9,7 @@ public class Levitation : MonoBehaviour {
     public float moveSpeed = 6f;
     public Color nonHoverColor;
     public Color hoverColor;
+    public LayerMask wallLayer;
     Color nonHoverBaseColor;
     Color hoverBaseColor;
     public ParticleSystem particles;
@@ -270,7 +271,14 @@ public class Levitation : MonoBehaviour {
         {
             Vector3 distance = grabPosition - heldObject.transform.position;
             //heldObject.transform.position = grabPosition;
-            heldObject.GetComponent<Rigidbody2D>().velocity = distance * moveSpeed;
+            Vector2 newVelocity = distance * moveSpeed;
+            RaycastHit2D ray = Physics2D.Raycast(heldObject.transform.position, distance, distance.magnitude, wallLayer);
+            if (ray.collider != null && ray.distance < distance.magnitude)
+            {
+                newVelocity = Vector2.ClampMagnitude(newVelocity, ray.distance * moveSpeed);
+            }
+            
+            heldObject.GetComponent<Rigidbody2D>().velocity = newVelocity;
         }
     }
 

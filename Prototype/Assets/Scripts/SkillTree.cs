@@ -53,6 +53,11 @@ public class SkillTree : MonoBehaviour
     public Color humanNodeEdgeColor;
     public Color demonNodeEdgeColor;
 
+    int vAxisDirectionPressed;
+    int vAxisDirection;
+    int hAxisDirectionPressed;
+    int hAxisDirection;
+
     SkillTreeNodeEdge[] edges;
     int[,] neighborMatrix;
     SkillNodes[] requiredNodes;
@@ -210,12 +215,55 @@ public class SkillTree : MonoBehaviour
         }
     }
 
+    void CheckAxis()
+    {
+        if (Input.GetAxis("Vertical") == 1 && vAxisDirection != 1)
+        {
+            vAxisDirection = 1;
+            vAxisDirectionPressed = 1;
+        }
+        else if (Input.GetAxis("Vertical") == -1 && vAxisDirection != -1)
+        {
+            vAxisDirection = -1;
+            vAxisDirectionPressed = -1;
+        }
+        else if (Input.GetAxis("Vertical") == 0 && vAxisDirection != 0)
+        {
+            vAxisDirection = 0;
+            vAxisDirectionPressed = 0;
+        }
+
+        if (Input.GetAxis("Horizontal") == 1 && hAxisDirection != 1)
+        {
+            hAxisDirection = 1;
+            hAxisDirectionPressed = 1;
+        }
+        else if (Input.GetAxis("Horizontal") == -1 && hAxisDirection != -1)
+        {
+            hAxisDirection = -1;
+            hAxisDirectionPressed = -1;
+        }
+        else if (Input.GetAxis("Horizontal") == 0 && hAxisDirection != 0)
+        {
+            hAxisDirection = 0;
+            hAxisDirectionPressed = 0;
+        }
+    }
+
+    void ResetCheckAxis()
+    {
+        vAxisDirectionPressed = 0;
+        hAxisDirectionPressed = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        CheckAxis();
         CheckForArrowKeys();
         CheckForConfirm();
         CheckForBack();
+        ResetCheckAxis();
     }
 
     //Is it possible to do with a single enum?
@@ -230,22 +278,22 @@ public class SkillTree : MonoBehaviour
         {
             //TODO: Copy code from the Pause Menu and make an input manager
             //Left: 0, Up: 1, Right: 2, Down: 3
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && nodeIndex != neighborMatrix[nodeIndex, 0] && canMove(neighborMatrix[nodeIndex, 0]))
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || hAxisDirectionPressed == -1 ) && nodeIndex != neighborMatrix[nodeIndex, 0] && canMove(neighborMatrix[nodeIndex, 0]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 0];
                 MoveCursor();
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow) && nodeIndex != neighborMatrix[nodeIndex, 1] && canMove(neighborMatrix[nodeIndex, 1]))
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || vAxisDirectionPressed == 1) && nodeIndex != neighborMatrix[nodeIndex, 1] && canMove(neighborMatrix[nodeIndex, 1]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 1];
                 MoveCursor();
             }
-            if (Input.GetKeyDown(KeyCode.RightArrow) && nodeIndex != neighborMatrix[nodeIndex, 2] && canMove(neighborMatrix[nodeIndex, 2]))
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || hAxisDirectionPressed == 1) && nodeIndex != neighborMatrix[nodeIndex, 2] && canMove(neighborMatrix[nodeIndex, 2]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 2];
                 MoveCursor();
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow) && nodeIndex != neighborMatrix[nodeIndex, 3] && canMove(neighborMatrix[nodeIndex, 3]))
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || vAxisDirectionPressed == -1) && nodeIndex != neighborMatrix[nodeIndex, 3] && canMove(neighborMatrix[nodeIndex, 3]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 3];
                 MoveCursor();
@@ -253,7 +301,7 @@ public class SkillTree : MonoBehaviour
         }
         else if (state == MenuState.ConfirmWindow)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || hAxisDirectionPressed != 0)
             {
                 window.ChangeSelection();
             }
@@ -278,7 +326,7 @@ public class SkillTree : MonoBehaviour
 
     void CheckForConfirm()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump"))
         {
             if (state == MenuState.SkillTree)
             {
@@ -319,7 +367,7 @@ public class SkillTree : MonoBehaviour
 
     void CheckForBack()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("PS4CIRCLE"))
         {
             if (state == MenuState.SkillTree)
                 StartCoroutine(Transition(false));
