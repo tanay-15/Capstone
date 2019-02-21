@@ -176,12 +176,6 @@ Transform:
   m_Father: {fileID: 1411550093}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &104111445 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8320708836641676083, guid: bdddd7dca7f2f734c887d0d258a7b359,
-    type: 3}
-  m_PrefabInstance: {fileID: 676940308}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &108566399
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,26 +795,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8320708836436786175, guid: bdddd7dca7f2f734c887d0d258a7b359,
-        type: 3}
-      propertyPath: waypoints.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8320708836436786175, guid: bdddd7dca7f2f734c887d0d258a7b359,
-        type: 3}
-      propertyPath: waypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 104111445}
-    - target: {fileID: 8320708836436786172, guid: bdddd7dca7f2f734c887d0d258a7b359,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8320708836436786173, guid: bdddd7dca7f2f734c887d0d258a7b359,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdddd7dca7f2f734c887d0d258a7b359, type: 3}

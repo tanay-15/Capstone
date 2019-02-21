@@ -29,6 +29,9 @@ public class Enemy_Bat : BasicEnemy {
     public bool GetPlayerPost = false;
 
     private float AttackCounter = 0f;
+
+    private float health = 10f;
+
    
 
 	void Start () {
@@ -68,7 +71,11 @@ public class Enemy_Bat : BasicEnemy {
         AttackCounter = AttackCounter - Time.deltaTime;
 
       
-
+        if(health <= 0)
+        {
+            events.OnDeath.Invoke();
+            Destroy(this.gameObject);
+        }
 
 	}
 
@@ -182,15 +189,12 @@ public class Enemy_Bat : BasicEnemy {
         {
             //attack player
             collision.gameObject.SendMessage("GetHit", -15);
-           // events.OnDeath.Invoke();
-           // Destroy(this.gameObject);
-        }
-
-        if(collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
-        {
             events.OnDeath.Invoke();
             Destroy(this.gameObject);
+
         }
+
+      
     }
 
 
@@ -201,6 +205,17 @@ public class Enemy_Bat : BasicEnemy {
             Debug.Log("Player entered in range");
             player = collider.gameObject;
             Attack = true;
+        }
+
+      
+    }
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector2.Distance(collision.gameObject.transform.position, this.transform.position) < 1f)
+        {
+            events.OnDeath.Invoke();
+            Destroy(this.gameObject);
         }
     }
 

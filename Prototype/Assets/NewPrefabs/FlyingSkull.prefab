@@ -67,7 +67,6 @@ MonoBehaviour:
   movspeed: 3
   waypoints:
   - {fileID: 8320708836541503939}
-  - {fileID: 8320708837158109605}
   - {fileID: 8320708836641676083}
   pointA: {x: 0, y: 0, z: 0}
   pointB: {x: 0, y: 0, z: 0}
@@ -77,6 +76,7 @@ MonoBehaviour:
   moveC: 0
   moveD: 0
   Attack: 0
+  GetPlayerPost: 0
 --- !u!58 &8320708836436786172
 CircleCollider2D:
   m_ObjectHideFlags: 0
