@@ -23,6 +23,12 @@ public class Enemy_Bat : BasicEnemy {
     public bool moveD;
 
     public bool Attack;
+    private bool AttackDone = true;
+    private Vector3 targetposition;
+
+    public bool GetPlayerPost = false;
+
+    private float AttackCounter = 0f;
    
 
 	void Start () {
@@ -38,10 +44,10 @@ public class Enemy_Bat : BasicEnemy {
 	void Update () {
 		
 
-        if(player == null)
+        if(AttackDone || player == null)
         {
             //Keep moving around the fix path and detecting  the player 
-            Movement();
+            SkullMovement();
           
         }
 
@@ -51,12 +57,79 @@ public class Enemy_Bat : BasicEnemy {
             AttackBat();
         }
 
+        if (player)
+        {
+            if (AttackCounter <= 0f)
+            {
+                AttackDone = false;
+                AttackCounter = 8f;
+            }
+        }
+        AttackCounter = AttackCounter - Time.deltaTime;
+
+      
+
 
 	}
 
     public void AttackBat()
     {
-        this.transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, attackspeed * Time.deltaTime);
+        if (!AttackDone)
+        {
+
+
+            if (Attack)
+            {
+                if (!GetPlayerPost)
+                {
+                    targetposition = player.transform.position;
+                    GetPlayerPost = true;
+                }
+
+
+            }
+
+            if (GetPlayerPost)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, attackspeed * Time.deltaTime);
+
+                if (Vector2.Distance(this.transform.position, targetposition) < 0.4f)
+                {
+                    Attack = false;
+                    AttackDone = true;
+                    targetposition = Vector3.zero;
+                    GetPlayerPost = false;
+                }
+            }
+
+        }
+    }
+
+    public void SkullMovement()
+    {
+        
+   
+        if (moveA)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, pointA, movspeed * Time.deltaTime);
+            if(Vector2.Distance(this.transform.position,pointA) < 0.3f)
+            {
+                moveA = false;
+                moveB = true;
+            }
+        }
+
+        if (moveB)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
+            if(Vector2.Distance(this.transform.position,pointB) < 0.3f)
+            {
+                moveB = false;
+                moveA = true;
+            }
+        }
+
+        
     }
 
     public void Movement()
@@ -109,8 +182,8 @@ public class Enemy_Bat : BasicEnemy {
         {
             //attack player
             collision.gameObject.SendMessage("GetHit", -15);
-            events.OnDeath.Invoke();
-            Destroy(this.gameObject);
+           // events.OnDeath.Invoke();
+           // Destroy(this.gameObject);
         }
 
         if(collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable")
