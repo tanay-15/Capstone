@@ -52,6 +52,7 @@ public class DemonTransformScript : MonoBehaviour
         {
             s.Switch(toDemon);
         }
+        Levitation.sharedInstance.gameObject.SetActive(!toDemon);
 
         yield return new WaitForSeconds(0.7f);
 

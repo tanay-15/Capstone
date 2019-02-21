@@ -169,7 +169,8 @@ public class PlayerStates : MonoBehaviour
 
                     if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
                     {
-                        status = State.ChargingArrow;
+                        if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
+                            status = State.ChargingArrow;
                     }
 
                     if (Input.GetButtonDown("PS4CIRCLE"))
