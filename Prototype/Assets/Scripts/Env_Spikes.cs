@@ -22,5 +22,18 @@ public class Env_Spikes : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // modify player health
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerLifeController>().GetHit(-5);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // modify player health
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerLifeController>().GetHit(-5);
+        }
     }
 }
