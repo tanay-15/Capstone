@@ -28,9 +28,12 @@ public class PuzzleProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // collision with ground doesn't seem to work
+        // collision.gameObject.tag == "ground" || 
 
-        if (collision.gameObject.tag == "ground" || collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
+            collision.GetComponent<PlayerLifeController>().GetHit(-10);
             Destroy(this.gameObject);
         }
     }

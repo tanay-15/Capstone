@@ -16,6 +16,7 @@ public class OrbPuzzle_Start : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        orbPrefab.GetComponent<CircleCollider2D>().isTrigger = true;
 
         Instantiate(orbPrefab, this.transform);
         orbPresent = true;
@@ -27,6 +28,7 @@ public class OrbPuzzle_Start : MonoBehaviour
     {
         if(!orbPresent)
         {
+
             timer += Time.deltaTime;
             if (timeAlive < timer)
             {
@@ -46,6 +48,10 @@ public class OrbPuzzle_Start : MonoBehaviour
         if (collision.gameObject.name.Contains("Orb"))
         {
             orbPresent = false;
+            if (this.transform.childCount > 0)
+            {
+                this.transform.GetChild(0).GetComponent<CircleCollider2D>().isTrigger = false;
+            }
         }
     }
 }
