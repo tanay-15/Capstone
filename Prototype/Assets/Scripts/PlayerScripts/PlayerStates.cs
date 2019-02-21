@@ -274,13 +274,16 @@ public class PlayerStates : MonoBehaviour
                     {
                         PlayerAnimator.Play("Roll");
                         StartCoroutine("Roll");
+                        Physics2D.IgnoreLayerCollision(14,15);
                         onStateStart = false;
                     }
                         
                     movable = false;
                     invulnerable = true;
-                    
-                    transform.position = new Vector3(transform.position.x + 5*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
+
+                    hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
+                    if (hit == null)
+                        transform.position = new Vector3(transform.position.x + 5*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
 
                     break;
                 }
@@ -416,6 +419,7 @@ public class PlayerStates : MonoBehaviour
 
         invulnerable = false;
         movable = true;
+        Physics2D.IgnoreLayerCollision(14, 15,false);
         onStateStart = true;
         status = State.Default;
     }

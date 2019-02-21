@@ -194,7 +194,12 @@ public class Enemy_Bat : BasicEnemy {
 
         }
 
-      
+        //if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector2.Distance(collision.gameObject.transform.position, this.transform.position) < 2f)
+        //{
+        //    events.OnDeath.Invoke();
+        //    Destroy(this.gameObject);
+        //}
+
     }
 
 
@@ -207,16 +212,13 @@ public class Enemy_Bat : BasicEnemy {
             Attack = true;
         }
 
-      
+
+
     }
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector2.Distance(collision.gameObject.transform.position, this.transform.position) < 1f)
-        {
-            events.OnDeath.Invoke();
-            Destroy(this.gameObject);
-        }
+
     }
 
     public void OnTriggerExit2D(Collider2D collider)
@@ -232,5 +234,11 @@ public class Enemy_Bat : BasicEnemy {
     void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(this.transform.position, Range);
+    }
+
+    public void applyDamage()
+    {
+        events.OnDeath.Invoke();
+        Destroy(this.gameObject);
     }
 }

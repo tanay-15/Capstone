@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Anima2D;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -628,9 +629,9 @@ public class Enemy : BasicEnemy {
         this.health = this.health -  damage;
 
         events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
-      
-      
-      
+
+        StartCoroutine(FlashRed());
+
     }
 
     public void AttackHit()
@@ -716,6 +717,7 @@ public class Enemy : BasicEnemy {
 
             var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
+
         }
 
         if (collision.gameObject.tag == "Player")
@@ -796,8 +798,21 @@ public class Enemy : BasicEnemy {
 
     IEnumerator IsPunchedReset()
     {
-        yield return new WaitForSeconds(0.125f);
+        yield return new WaitForSeconds(0.25f);
         IsPunched = false;
+    }
+
+    IEnumerator FlashRed()
+    {
+        foreach (SpriteMeshInstance s in GetComponentsInChildren<SpriteMeshInstance>())
+        {
+            s.color = new Color(1,0,0,1);
+        }
+        yield return new WaitForSeconds(0.25f);
+        foreach (SpriteMeshInstance s in GetComponentsInChildren<SpriteMeshInstance>())
+        {
+            s.color = new Color(1, 1, 1, 1);
+        }
     }
   
 }
