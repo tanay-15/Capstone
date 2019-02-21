@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OrbitorObjectScript : MonoBehaviour {
 
     public bool isOrbiting = false;
     public bool hit = false;
     public GameObject impact;
+    public UnityEvent OnPickedUp;
 
 	// Use this for initialization
 	void Start () {

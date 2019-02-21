@@ -68,6 +68,8 @@ public class OrbitorScript : MonoBehaviour {
 
                                 Projectile.GetComponent<OrbitorObjectScript>().isOrbiting = true;
                                 Projectile.GetComponent<OrbitorObjectScript>().hit = false;
+                                //Not sure if it makes sense to call an object's event from another object
+                                Projectile.GetComponent<OrbitorObjectScript>().OnPickedUp.Invoke();
                                 Projectile.GetComponent<Collider2D>().enabled = false;
                                 Projectile.GetComponent<Rigidbody2D>().gravityScale = 0;
 
