@@ -280,7 +280,7 @@ public class PlayerStates : MonoBehaviour
                     movable = false;
                     invulnerable = true;
                     
-                    transform.position = new Vector3(transform.position.x + 8*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
+                    transform.position = new Vector3(transform.position.x + 5*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
 
                     break;
                 }

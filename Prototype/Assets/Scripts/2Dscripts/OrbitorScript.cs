@@ -147,7 +147,9 @@ public class OrbitorScript : MonoBehaviour {
             {
                 Status = State.NoProjectile;
             }
-            Trail.SetActive(false);
+
+            if (Trail!=null)
+                Trail.SetActive(false);
         }
 
 

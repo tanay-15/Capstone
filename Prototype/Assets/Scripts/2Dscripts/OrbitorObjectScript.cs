@@ -15,7 +15,7 @@ public class OrbitorObjectScript : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(11, 12);
 
         Physics2D.IgnoreLayerCollision(17, 14);
-        Physics2D.IgnoreLayerCollision(17, 15);
+        //Physics2D.IgnoreLayerCollision(17, 15);
 
     }
 	
