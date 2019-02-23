@@ -24,6 +24,7 @@ public class PlayerStates : MonoBehaviour
     public float forceY = 6.0f;
     public ArrowInfo shootingArrowInfo;
     int attackCounter = 0;
+    int groundCount = 0;
 
     // Bools
     [Header("Bools")]
@@ -151,6 +152,7 @@ public class PlayerStates : MonoBehaviour
         {
             case State.Default:
                 {
+                    groundCount = 0;
                     if (Mathf.Abs(hAxis) > 0.1f)
                         PlayerAnimator.Play("Run");
                     else
@@ -173,7 +175,7 @@ public class PlayerStates : MonoBehaviour
                             status = State.ChargingArrow;
                     }
 
-                    if (Input.GetButtonDown("PS4CIRCLE"))
+                    if (Input.GetButtonDown("PS4CIRCLE")|| (Input.GetAxis("Mouse ScrollWheel")>0f))
                     {
                         status = State.Roll;
                     }
@@ -188,9 +190,10 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.InAir:
                 {
+                    //PlayerAnimator.Play("WallJump");
                     PlayerAnimator.Play("Jump");
 
-                    if (vAxis < -0.5f && Input.GetButtonDown("PS4Jump"))
+                    if (vAxis < -0.5f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
                         status = State.Stomp;
 
                         
@@ -220,24 +223,27 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.Stomp:
                 {
-                    PlayerAnimator.Play("Stomp");
-                    Rb2d.velocity = Vector3.down *2* jumpSpeed;
-                    if (grounded == true)
+                    if (groundCount < 1)
                     {
-                        Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
-                        FindObjectOfType<CameraFollow>().ShakeCamera();
-                        DustParticles.Play();
-
-                        blocks = FindObjectsOfType<OrbitorObjectScript>();
-                        if (GetComponent<DemonTransformScript>().DemonModeActive && blocks.Length < 7)
+                        PlayerAnimator.Play("Stomp");
+                        Rb2d.velocity = Vector3.down * 2 * jumpSpeed;
+                        if (grounded == true)
                         {
-                            Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
-                            Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
-                            Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                            movable = false;
+                            Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                            FindObjectOfType<CameraFollow>().ShakeCamera();
+                            DustParticles.Play();
+                            blocks = FindObjectsOfType<OrbitorObjectScript>();
+                            if (GetComponent<DemonTransformScript>().DemonModeActive && blocks.Length < 7)
+                            {
+                                Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                                Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                                Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                            }
+                            StartCoroutine("Stomp");
+                            //status = State.Default;
+                            groundCount++;
                         }
-
-
-                        status = State.Default;
                     }
 
                     break;
@@ -310,11 +316,13 @@ public class PlayerStates : MonoBehaviour
                     {
                         flip();
                         movable = false;
+                        
                     }
                     
                     
                     if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
                     {
+                        PlayerAnimator.Play("WallSlide");
                         Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
                         hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
                         if (hitback == null)
@@ -331,6 +339,7 @@ public class PlayerStates : MonoBehaviour
 
                     else if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                     {
+                        
                         movable = false;
                         Rb2d.velocity = Vector2.zero;
                         if (facingRight)// && hAxis == 0f)
@@ -432,6 +441,12 @@ public class PlayerStates : MonoBehaviour
         movable = true;
         Physics2D.IgnoreLayerCollision(14, 15,false);
         onStateStart = true;
+        status = State.Default;
+    }
+
+    IEnumerator Stomp()
+    {
+        yield return new WaitForSeconds(1f);
         status = State.Default;
     }
 
