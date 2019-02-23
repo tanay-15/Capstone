@@ -225,7 +225,7 @@ public class PlayerStates : MonoBehaviour
                 {
                     if (groundCount < 1)
                     {
-                        PlayerAnimator.Play("Stomp");
+                        PlayerAnimator.Play("Jump");
                         Rb2d.velocity = Vector3.down * 2 * jumpSpeed;
                         if (grounded == true)
                         {
@@ -446,7 +446,8 @@ public class PlayerStates : MonoBehaviour
 
     IEnumerator Stomp()
     {
-        yield return new WaitForSeconds(1f);
+        PlayerAnimator.Play("Stomp");
+        yield return new WaitForSeconds(0.5f);
         status = State.Default;
     }
 

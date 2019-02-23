@@ -36,6 +36,7 @@ public class OrbitorObjectScript : MonoBehaviour {
             Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
             //hit = true;
             Explode(transform.position, 8);
+            hit = true;
         }
 
         if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.tag == "Wall")
