@@ -7,7 +7,7 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     public Transform BoneSystem;
     //public Transform BodyParts;
-    public GameObject IKSystem;
+    //public GameObject IKSystem;
     Collider2D[] playerColliders;
     Collider2D[] myColliders;
     SpriteMeshInstance[] mySprites;
@@ -27,22 +27,22 @@ public class SkeletonDeathScript : MonoBehaviour {
         myColliders = GetComponentsInChildren<Collider2D>();
         mySprites = GetComponentsInChildren<SpriteMeshInstance>();
 
-        IKSystem.SetActive(false);
+        //IKSystem.SetActive(false);
         SetChildrenKinematic(true);
-        IKSystem.SetActive(true);
+        //IKSystem.SetActive(true);
 
-        foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
-        {
-            t.gameObject.SetActive(false);
-            t.gameObject.SetActive(true);
-        }
+        //foreach (Transform t in IKSystem.GetComponentsInChildren<Transform>())
+        //{
+        //    t.gameObject.SetActive(false);
+        //    t.gameObject.SetActive(true);
+        //}
 
         //Audio = GetComponent<AudioSource>();
         //Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         if (kill)
             Die();
@@ -90,7 +90,7 @@ public class SkeletonDeathScript : MonoBehaviour {
             dead = true;
             GetComponent<Animator>().enabled = false;
             SetChildrenKinematic(false);
-            IKSystem.SetActive(false);
+            //IKSystem.SetActive(false);
 
             Explode(new Vector2(transform.position.x, transform.position.y-1), 5);
             StartCoroutine(DieRoutine());
