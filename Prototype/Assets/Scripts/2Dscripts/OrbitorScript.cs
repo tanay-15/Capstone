@@ -83,7 +83,8 @@ public class OrbitorScript : MonoBehaviour {
                             }
                         }
 
-                        Trail = Projectile.transform.GetChild(0).gameObject;
+                        if(Projectile!=null)
+                            Trail = Projectile.transform.GetChild(0).gameObject;
 
                         break;
                     }
