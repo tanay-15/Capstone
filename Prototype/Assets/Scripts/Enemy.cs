@@ -638,8 +638,8 @@ public class Enemy : BasicEnemy {
     {
         if (CollidedWithPlayer)
         {
-            target.gameObject.SendMessage("GetHit", -10f);
-            rateofattack = 2f;
+            //target.gameObject.SendMessage("GetHit", -10f);
+            rateofattack = 1f;
             if (PlayerLife.sharedInstance.currentLife <= 0)
             {
                 withinRange = false;

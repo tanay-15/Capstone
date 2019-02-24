@@ -44,10 +44,12 @@ public class PlayerStates : MonoBehaviour
     public GameObject Human;
     public GameObject Demon;
     public GameObject StoneBlock;
+    public GameObject ImpactAnim;
     public Transform wallCheckpoint;
     public Transform wallCheckpoint1;
     public LayerMask wallLayerMask;
     GameObject GroundTrigger;
+    //GameObject AttackTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
     Rigidbody2D Rb2d;
@@ -78,14 +80,6 @@ public class PlayerStates : MonoBehaviour
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
     }
-
-    public void RestartInAir()
-    {
-        grounded = false;
-        status = State.InAir;
-        GroundTrigger.GetComponent<GroundTriggerScript>().grounded = false;
-    }
-
 
 
 
@@ -273,6 +267,16 @@ public class PlayerStates : MonoBehaviour
                         resetState = false;
                     }
 
+
+                    if (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f))
+                    {
+                        movable = true;
+                        onStateStart = true;
+                        //AttackTrigger.GetComponent<BoxCollider2D>().enabled = false;
+                        StopCoroutine(coroutine);
+                        status = State.Roll;
+                    }
+
                     // Reset
 
                     //if (Input.GetButtonDown("Fire1") && resetState)
@@ -425,9 +429,7 @@ public class PlayerStates : MonoBehaviour
 
     IEnumerator MeleeAttack()
     {
-        yield return new WaitForSeconds(0.125f);
-        resetState = true;
-        yield return new WaitForSeconds(0.125f);
+        yield return new WaitForSeconds(0.25f);
 
         movable = true;
         onStateStart = true;
@@ -452,6 +454,22 @@ public class PlayerStates : MonoBehaviour
         status = State.Default;
     }
 
+    public void RestartInAir()
+    {
+        grounded = false;
+        status = State.InAir;
+        GroundTrigger.GetComponent<GroundTriggerScript>().grounded = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "AttackTrigger")
+        {
+            gameObject.SendMessage("GetHit", -10f);
+            var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
+            impact.gameObject.SetActive(true);
+        }
+    }
     //IEnumerator InAirTimeLimit()
     //{
     //    yield return new WaitForSeconds(4f);
@@ -551,4 +569,6 @@ public class ArrowInfo
         reticleHeight = 0f;
         chargeFlag = false;
     }
+
+
 }
