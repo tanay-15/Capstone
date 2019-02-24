@@ -200,10 +200,13 @@ public class SkeletonBoss : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             Debug.Log("Collided with player");
-            collision.gameObject.SendMessage("applyDamage", 10f);
+            collision.gameObject.SendMessage("GetHit", -10f);
+
+            
 
         }
 
+        
        
     }
 }

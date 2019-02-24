@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56330146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.36, y: 2.96, z: -0.07128906}
+  m_LocalPosition: {x: -6.57, y: 2.72, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399033681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.88, y: 2.24, z: -0.07128906}
+  m_LocalPosition: {x: 7.48, y: 2.72, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -144,7 +144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 959600582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.31, y: 2.15, z: -0.07128906}
+  m_LocalPosition: {x: -2.959, y: -0.3, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -174,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452372788}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.75, y: -1.49, z: -0.07128906}
+  m_LocalPosition: {x: -4.75, y: -2.53, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -204,7 +204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063141730}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.82, y: -1.27, z: -0.07128906}
+  m_LocalPosition: {x: 5.82, y: -2.6, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -611,7 +611,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3412089563585949220}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -694,9 +694,10 @@ GameObject:
   - component: {fileID: 7614677689543120679}
   - component: {fileID: 161850895862555419}
   - component: {fileID: 3412089563585949224}
+  - component: {fileID: 991767615}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Enemy
+  m_TagString: HookBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -764,6 +765,18 @@ PolygonCollider2D:
       - {x: 0.8815123, y: -3.6233761}
       - {x: 1.6387407, y: -1.9200333}
       - {x: 1.5690448, y: 0.1474083}
+--- !u!114 &991767615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3412089563585949221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b765292d04964468fe0cacacb955fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3773754521758374411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 2.1300492
+  m_Length: 2.1300495
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 7105912005309238129}
   m_AttachedIK: {fileID: 0}
