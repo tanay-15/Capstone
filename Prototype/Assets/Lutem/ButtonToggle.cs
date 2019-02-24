@@ -29,7 +29,7 @@ public class ButtonToggle : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag != "Wall" && collision.gameObject.tag != "projectile")
+        if(collision.gameObject.tag != "ground" && collision.gameObject.tag != "projectile")
         {
             colliders.Add(collision.gameObject);
         }
@@ -37,7 +37,7 @@ public class ButtonToggle : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != "Wall" && collision.gameObject.tag != "projectile")
+        if (collision.gameObject.tag != "ground" && collision.gameObject.tag != "projectile")
         {
             colliders.Remove(collision.gameObject);
         }
