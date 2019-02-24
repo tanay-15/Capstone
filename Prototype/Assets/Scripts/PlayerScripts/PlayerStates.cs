@@ -10,7 +10,7 @@ public class PlayerStates : MonoBehaviour
 // State
     public enum State
     {
-        Default, InAir, Melee, Roll, RangedAim, ChargingArrow,Stomp, WallJump
+        Default, InAir, Melee, Roll, RangedAim, ChargingArrow,Stomp, WallJump, WallSlide
     };
     [Header("State")]
     public State status;
@@ -33,6 +33,7 @@ public class PlayerStates : MonoBehaviour
     public bool invulnerable = false;
     public bool movable = true;
     public bool onStateStart = true;
+    public bool wallJump = false;
     bool resetState = false;
     bool wallSliding = false;
 
@@ -153,12 +154,12 @@ public class PlayerStates : MonoBehaviour
                         PlayerAnimator.Play("Idle");
 
 
-                    if (Input.GetButtonDown("Jump")|| Input.GetButtonDown("PS4Jump"))
+                    if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                     {
                         Rb2d.velocity = Vector3.up * jumpSpeed;
-                        
+
                     }
-                        
+
 
                     if (Input.GetButtonDown("Fire1"))
                         status = State.Melee;
@@ -169,7 +170,7 @@ public class PlayerStates : MonoBehaviour
                             status = State.ChargingArrow;
                     }
 
-                    if (Input.GetButtonDown("PS4CIRCLE")|| (Input.GetAxis("Mouse ScrollWheel")>0f))
+                    if (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f))
                     {
                         status = State.Roll;
                     }
@@ -190,7 +191,7 @@ public class PlayerStates : MonoBehaviour
                     if (vAxis < -0.5f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
                         status = State.Stomp;
 
-                        
+
 
                     if (grounded == true)
                         status = State.Default;
@@ -202,15 +203,16 @@ public class PlayerStates : MonoBehaviour
                     }
 
                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
-                    hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask); 
+                    hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
                     if ((hit && !grounded) || (hitback && !grounded))
                     {
                         if (hit != null)
                         {
                             status = State.WallJump;
+                            movable = true;
                         }
                     }
-                    if(hitback == null && !grounded)
+                    if (hitback == null && !grounded)
                     {
                         movable = true;
                     }
@@ -260,7 +262,7 @@ public class PlayerStates : MonoBehaviour
                             PlayerAnimator.Play("MeleeAttack2", -1, 0);
                             attackCounter = 0;
                         }
-                        
+
                         coroutine = MeleeAttack();
                         StartCoroutine(coroutine);
                         onStateStart = false;
@@ -296,16 +298,16 @@ public class PlayerStates : MonoBehaviour
                     {
                         PlayerAnimator.Play("Roll");
                         StartCoroutine("Roll");
-                        Physics2D.IgnoreLayerCollision(14,15);
+                        Physics2D.IgnoreLayerCollision(14, 15);
                         onStateStart = false;
                     }
-                        
+
                     movable = false;
                     invulnerable = true;
 
                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
                     if (hit == null)
-                        transform.position = new Vector3(transform.position.x + 5*Time.deltaTime*((facingRight)?1:-1), transform.position.y, transform.position.z);
+                        transform.position = new Vector3(transform.position.x + 5 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y, transform.position.z);
 
                     break;
                 }
@@ -317,25 +319,30 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.WallJump:
                 {
-                    if(movable)
+
+                    /*
+                    if (movable)
                     {
                         flip();
                         movable = false;
-                        
+
                     }
-                    
-                    
+
                     if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
                     {
-                        PlayerAnimator.Play("WallSlide");
-                        Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
                         hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
-                        if (hitback == null)
+                        if (hitback != null && !grounded)
+                        {
+                            PlayerAnimator.Play("WallSlide");
+                            Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
+                        }
+
+                        else if (hitback == null)
                         {
                             status = State.InAir;
                             movable = true;
                         }
-                        else if(hitback !=null && grounded)
+                        else if (hitback != null && grounded)
                         {
                             status = State.Default;
                             movable = true;
@@ -344,25 +351,70 @@ public class PlayerStates : MonoBehaviour
 
                     else if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
                     {
-                        
                         movable = false;
                         Rb2d.velocity = Vector2.zero;
-                        if (facingRight)// && hAxis == 0f)
-                        {
-                            Rb2d.velocity = new Vector2(forceX , forceY);
-                          
-                            status = State.InAir;
-    
-                        }
-                        else if(!facingRight)// && hAxis == 0f)
-                        {
-                            Rb2d.velocity = new Vector2(-forceX , forceY);
-                     
-                            status = State.InAir;                         
-                        }
+                        StartCoroutine("WallJump");
+                        //status = State.InAir;
                     }
 
                     if(grounded == true)
+                    {
+                        movable = true;
+                        status = State.Default;
+                    }
+                    */
+
+                    if (movable)
+                    {
+                        flip();
+                        movable = false;
+                    }
+
+                    if (!Input.GetButton("Jump") && !Input.GetButton("PS4Jump"))
+                    {
+                        hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
+                        if ((hitback != null && !grounded)) //|| movable == false)
+                        {
+                            status = State.WallSlide;
+                        }
+                        else if ((hitback != null && grounded) || grounded)
+                        {
+                            status = State.Default;
+                            movable = true;
+                        }
+                        else if (hitback == null)
+                        {
+                            //status = State.Default;
+                            PlayerAnimator.Play("Jump");
+                        }
+
+                    }
+                    break;
+                }
+
+            case State.WallSlide:
+                {
+                    hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
+                    if (hitback != null)
+                    {
+                        PlayerAnimator.Play("WallSlide");
+                        Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
+                    }
+                    else
+                    {
+                        status = State.InAir;
+                    }
+
+                    if ((Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")) && hitback)
+                    {
+                        movable = false;
+                        Rb2d.velocity = Vector2.zero;
+                        status = State.WallJump;
+                        StartCoroutine("WallJump");
+                        //status = State.InAir;
+                    }
+
+                    if (grounded == true)
                     {
                         movable = true;
                         status = State.Default;
@@ -452,6 +504,24 @@ public class PlayerStates : MonoBehaviour
         PlayerAnimator.Play("Stomp");
         yield return new WaitForSeconds(0.5f);
         status = State.Default;
+    }
+
+    IEnumerator WallJump()
+    {
+        PlayerAnimator.Play("WallJump");
+        if (facingRight)// && hAxis == 0f)
+        {
+            Rb2d.velocity = new Vector2(forceX, forceY);
+
+        }
+        else if (!facingRight)// && hAxis == 0f)
+        {
+            Rb2d.velocity = new Vector2(-forceX, forceY);
+        }
+        //if(FindObjectOfType<DemonTransformScript>().DemonModeActive)
+        yield return new WaitForSeconds(0.4f);
+        status = State.InAir;
+
     }
 
     public void RestartInAir()
