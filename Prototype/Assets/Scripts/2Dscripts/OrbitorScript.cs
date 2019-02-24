@@ -17,6 +17,8 @@ public class OrbitorScript : MonoBehaviour {
     public float fracJourney = 0;
     bool facingRight = true;
 
+    Collider2D[] playerColliders;
+
 
     public enum State
     {
@@ -33,6 +35,8 @@ public class OrbitorScript : MonoBehaviour {
         //Trail = transform.GetChild(0).gameObject;
 
         Status = State.NoProjectile;
+
+        playerColliders = Player.GetComponentsInChildren<Collider2D>();
     }
 
 
@@ -75,6 +79,9 @@ public class OrbitorScript : MonoBehaviour {
                                 Projectile.GetComponent<OrbitorObjectScript>().OnPickedUp.Invoke();
                                 Projectile.GetComponent<Collider2D>().enabled = false;
                                 Projectile.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+                                //playerColliders = Player.GetComponentsInChildren<Collider2D>();
+                                Projectile.GetComponent<OrbitorObjectScript>().IgnoreColliders(playerColliders, true);
 
                                 if (transform.childCount > 1)
                                 {

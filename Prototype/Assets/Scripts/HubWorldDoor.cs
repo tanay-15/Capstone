@@ -41,6 +41,7 @@ public class HubWorldDoor : MonoBehaviour {
                 loadingScreen.gameObject.SetActive(true);
             }
             SceneManager.LoadSceneAsync(levelName);
+            YinYangCheckpoint.checkpointIndex = -1;
         }
     }
 

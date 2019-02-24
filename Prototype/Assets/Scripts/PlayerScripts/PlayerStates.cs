@@ -203,7 +203,8 @@ public class PlayerStates : MonoBehaviour
 
                     if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
                     {
-                        status = State.ChargingArrow;
+                        if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
+                            status = State.ChargingArrow;
                     }
 
                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class YinYangCheckpoint : MonoBehaviour
 {
-    static int checkpointIndex;
+    public static int checkpointIndex;
     public GameObject flashPrefab;
     public int index;
     public GameObject sprite;

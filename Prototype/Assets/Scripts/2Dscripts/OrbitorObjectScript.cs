@@ -9,6 +9,8 @@ public class OrbitorObjectScript : MonoBehaviour {
     public bool hit = false;
     public GameObject impact;
     public UnityEvent OnPickedUp;
+    Collider2D[] myColliders;
+    public Collider2D[] ignoredColliders;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +19,7 @@ public class OrbitorObjectScript : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(17, 14);
         //Physics2D.IgnoreLayerCollision(17, 15);
 
+        myColliders = GetComponentsInChildren<Collider2D>();
     }
 	
 	// Update is called once per frame
@@ -37,6 +40,7 @@ public class OrbitorObjectScript : MonoBehaviour {
             //hit = true;
             Explode(transform.position, 8);
             hit = true;
+            IgnoreColliders(null, false);
         }
 
         if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.tag == "Wall")
@@ -44,6 +48,31 @@ public class OrbitorObjectScript : MonoBehaviour {
             hit = true;
         }
         
+    }
+
+    public void IgnoreColliders(Collider2D[] colliders, bool ignore)
+    {
+
+        if (ignore)
+        {
+            ignoredColliders = colliders;
+        }
+        SetIgnore(ignore);
+        if (!ignore)
+        {
+            ignoredColliders = null;
+        }
+    }
+
+    private void SetIgnore(bool ignore)
+    {
+        foreach (Collider2D myCol in myColliders)
+        {
+            foreach (Collider2D col in ignoredColliders)
+            {
+                Physics2D.IgnoreCollision(myCol, col, ignore);
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
