@@ -8,7 +8,7 @@
 		_Speed("Speed",Range(0,5.0)) = 0.5
 		_Size("Size",Range(1.0,30.0)) = 15.0
 		_Fade("Fade",Range(0.0,1.0)) = 1.0
-		_Contrast("Contrast",Range(0.0,50.0)) = 1.0
+		_Contrast("Contrast",Range(0.0,30.0)) = 1.0
     }
     SubShader
     {
@@ -27,14 +27,21 @@
 
             #include "UnityCG.cginc"
 
-			float4 permute(float4 x) {
+		float4 permute(float4 x) 
+		{
 			return (34.0* x * x + x) % 289.0;
 		}
 
-		float2 fade(float2 t) {
+		float2 fade(float2 t) 
+		
+		{
 			return t * t * t *(t*(t*6.0 - 15.0) + 10.0); // 6tpow(5) - 15tpow(4) - 10t(3)
 		}
 
+		float4 taylorInvSqrt(float4 r) 
+		{
+			return 1.79284291400159 - 0.85373472095314*r;
+		}
 		float PerlinNoise2D(float2 P) {
 			float4 Pi = floor(P.xyxy) +float4(0.0,0.0,1.0,1.0); 
 			float4 Pf = frac(P.xyxy) -float4(0.0, 0.0, 1.0, 1.0);
@@ -51,7 +58,7 @@
 			float2 g10 = float2(gx.y,gy.y);
 			float2 g01 = float2(gx.z,gy.z);
 			float2 g11 = float2(gx.w,gy.w);
-			float4 norm = float4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11));
+			float4 norm = taylorInvSqrt(float4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
 			g00 *= norm.x;
 			g01 *= norm.y;
 			g10 *= norm.z;
@@ -104,7 +111,7 @@
 			noisePos += -0.5;
 			noisePos *= _Size;
 			fixed val = PerlinNoise2D(float2(noisePos, _Time.y*_Speed))/2+ 0.5f;
-			val = _Contrast * (val - 0.5) + 0.5;
+			val = _Contrast * (val - 0.5) +0.5;
 			color.a *= lerp(val, val*i.uv.y,_Fade);  
 			color.a = clamp(color.a,0.0,1.0);
 			return color;
