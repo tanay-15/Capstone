@@ -13,6 +13,7 @@ public class Enemy_Bat : BasicEnemy {
     public float movspeed;
 
     public GameObject[] waypoints;
+    public GameObject particle;
     public Vector3 pointA;
     public Vector3 pointB;
     public Vector3 pointC;

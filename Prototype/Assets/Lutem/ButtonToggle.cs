@@ -7,6 +7,8 @@ public class ButtonToggle : MonoBehaviour {
     public bool pressed;
 
     List<GameObject> colliders;
+    //public GameObject particle;
+    public ParticleSystem particle;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,7 @@ public class ButtonToggle : MonoBehaviour {
         if (colliders.Count > 0)
         {
             pressed = true;
+            particle.Emit(1);
         }
         else
         {

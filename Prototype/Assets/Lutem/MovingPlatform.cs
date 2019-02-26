@@ -11,6 +11,7 @@ public class MovingPlatform : MonoBehaviour {
     int numDown;
 
     public float offset;
+    public float speed = 0.1f;
 
     Vector2 startPos;
     Vector2 midPos;
@@ -58,10 +59,10 @@ public class MovingPlatform : MonoBehaviour {
                 break;
         }
 
-        this.transform.position = Vector2.MoveTowards(this.transform.position, target, 0.05f);
+        this.transform.position = Vector2.MoveTowards(this.transform.position, target, speed);
         foreach(GameObject g in standingOn)
         {
-            g.transform.position = Vector2.MoveTowards(g.transform.position, new Vector2(g.transform.position.x, g.transform.position.y) + (target - new Vector2(this.transform.position.x, this.transform.position.y)), 0.05f);
+            g.transform.position = Vector2.MoveTowards(g.transform.position, new Vector2(g.transform.position.x, g.transform.position.y) + (target - new Vector2(this.transform.position.x, this.transform.position.y)), speed);
         }
     }
 
