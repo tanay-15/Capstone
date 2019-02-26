@@ -232,7 +232,7 @@ public class Levitation : MonoBehaviour {
                     PickUpObject(hoveringObject.gameObject);
             }
         }
-        else if ((Input.GetMouseButtonUp(1) || rightTriggerReleased) && active)
+        else if ((Input.GetMouseButtonUp(1) || rightTriggerReleased) && active && heldObject != null)
         {
             ReleaseObject();
         }

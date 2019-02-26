@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class OrbPuzzle_Start : MonoBehaviour
 {
-
+    public Transform endPoint;
     public GameObject orbPrefab;
     public float timeAlive;
 
@@ -47,6 +47,11 @@ public class OrbPuzzle_Start : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Orb"))
         {
+            if (orbPresent)
+            {
+                Timer.sharedInstance.Set(timeAlive);
+               ScreenPointer.sharedInstance.SetTarget(endPoint);
+            }
             orbPresent = false;
             if (this.transform.childCount > 0)
             {

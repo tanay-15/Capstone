@@ -30,6 +30,8 @@ public class OrbPuzzle_End : MonoBehaviour
 
             // destroy orb
             Destroy(collision.gameObject);
+            Timer.sharedInstance.Stop();
+            ScreenPointer.sharedInstance.RemoveTarget();
             triggered = true;
         }
     }
