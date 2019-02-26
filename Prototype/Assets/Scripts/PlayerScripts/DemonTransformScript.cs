@@ -6,6 +6,9 @@ public class DemonTransformScript : MonoBehaviour
 {
 
     public bool DemonModeActive = false;
+    public float HumanSpeed = 4f;
+    public float DemonSpeed = 6f;
+
     public GameObject bat;
     GameObject Human;
     GameObject Demon;
@@ -60,8 +63,8 @@ public class DemonTransformScript : MonoBehaviour
         Demon.gameObject.SetActive(toDemon);
         Human.gameObject.SetActive(!toDemon);
 
-        transform.GetComponent<PlayerStates>().PlayerAnimator = toDemon ? Demon.GetComponent<Animator>() : Human.GetComponent<Animator>();
-
+        GetComponent<PlayerStates>().PlayerAnimator = toDemon ? Demon.GetComponent<Animator>() : Human.GetComponent<Animator>();
+        GetComponent<PlayerStates>().speed = toDemon ? DemonSpeed : HumanSpeed;
         //Levitation.sharedInstance.SetActive(!toDemon);
 
     }

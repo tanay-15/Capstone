@@ -86,6 +86,7 @@ public class Enemy : BasicEnemy {
     private bool hasgroundAhead;
     private bool canJumpAhead;
     private bool m_HasPatrol;
+    bool onStateStart = false;
 
     //Jump positions
     private Vector3 jump_position;
@@ -115,8 +116,8 @@ public class Enemy : BasicEnemy {
 
         SetupValues();
 
-      
-       
+
+        Physics2D.IgnoreLayerCollision(15, 15);
     }
 
  
@@ -197,8 +198,15 @@ public class Enemy : BasicEnemy {
                     break;
 
                 case States.Attack:
-                    Attack();
-                    break;
+                    {
+                        if (onStateStart)
+                        {
+                            StartCoroutine(Attack());
+                            onStateStart = false;
+                        } 
+                        break;
+                    }
+
             }
         }
         
@@ -317,7 +325,7 @@ public class Enemy : BasicEnemy {
 
         else if (!withinRange)
         {
-            target = null;
+            //target = null;
             currentstate = States.Patrol;
             
         }
@@ -432,7 +440,7 @@ public class Enemy : BasicEnemy {
         {
             
         
-            if (target && !AttackReady)
+            if (target) //&& !AttackReady)
             {
                 m_HasPatrol = false;
                 currentstate = States.Pursuit;
@@ -444,7 +452,7 @@ public class Enemy : BasicEnemy {
                     
                 }
 
-                if(Vector2.Distance(this.transform.position, target.transform.position) < 1f)
+                if(Vector2.Distance(this.transform.position, target.transform.position) < 1.5f)
                 {
                     currentstate = States.Attack;
                     anim.SetBool("Attack", true);
@@ -596,26 +604,39 @@ public class Enemy : BasicEnemy {
     }
 
 
-    public virtual void Attack()
+    //public virtual void Attack()
+    //{
+    //    //Each type of enemy will have its seperate attack
+
+    //    if (AttackReady)
+    //    {
+    //        m_HasPatrol = false;
+    //        rateofattack -= Time.deltaTime;
+    //        if(rateofattack <= 0)
+    //        {
+    //            anim.SetBool("Attack", true);
+    //            currentstate = States.Attack;
+
+
+
+    //        }
+
+    //    }
+    //}
+
+    public IEnumerator Attack()
     {
-        //Each type of enemy will have its seperate attack
+        anim.SetBool("Attack", true);
+        currentstate = States.Attack;
 
-        if (AttackReady)
-        {
-            m_HasPatrol = false;
-            rateofattack -= Time.deltaTime;
-            if(rateofattack <= 0)
-            {
-                anim.SetBool("Attack", true);
-                currentstate = States.Attack;
-                
-         
-               
-            }
-           
-        }
+        yield return new WaitForSeconds(0.5f);
+
+        onStateStart = true;
+        anim.SetBool("Attack", false);
+        currentstate = States.Pursuit;
+        
+
     }
-
 
     private void OnDrawGizmosSelected()
     {
@@ -643,16 +664,16 @@ public class Enemy : BasicEnemy {
             if (PlayerLife.sharedInstance.currentLife <= 0)
             {
                 withinRange = false;
-                currentstate = States.Idle;
-                Patrol();
+                //currentstate = States.Idle;
+                //Patrol();
             }
 
-          
+
         }
 
         if (Vector2.Distance(this.transform.position, target.transform.position) > 1.5f)
         {
-            currentstate = States.Idle;
+            //currentstate = States.Idle;
             DetectingPlayer();
         }
 
@@ -708,7 +729,7 @@ public class Enemy : BasicEnemy {
             }
         }
 
-        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
+        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f && collision.gameObject.layer != 15)
         {
             applyDamage(3);
 
@@ -759,7 +780,7 @@ public class Enemy : BasicEnemy {
         {
             withinRange = false;
            
-            currentstate = States.Idle;
+            //currentstate = States.Idle;
            
         }
     }

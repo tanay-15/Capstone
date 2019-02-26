@@ -40,7 +40,7 @@ public class OrbitorObjectScript : MonoBehaviour {
             //hit = true;
             Explode(transform.position, 8);
             hit = true;
-            IgnoreColliders(null, false);
+            //IgnoreColliders(null, false);
         }
 
         if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.tag == "Wall")

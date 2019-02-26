@@ -81,7 +81,7 @@ public class OrbitorScript : MonoBehaviour {
                                 Projectile.GetComponent<Rigidbody2D>().gravityScale = 0;
 
                                 //playerColliders = Player.GetComponentsInChildren<Collider2D>();
-                                Projectile.GetComponent<OrbitorObjectScript>().IgnoreColliders(playerColliders, true);
+                                //Projectile.GetComponent<OrbitorObjectScript>().IgnoreColliders(playerColliders, true);
 
                                 if (transform.childCount > 1)
                                 {

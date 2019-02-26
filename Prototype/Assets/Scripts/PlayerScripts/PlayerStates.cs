@@ -518,7 +518,7 @@ public class PlayerStates : MonoBehaviour
         {
             Rb2d.velocity = new Vector2(-forceX, forceY);
         }
-        //if(FindObjectOfType<DemonTransformScript>().DemonModeActive)
+        if(FindObjectOfType<DemonTransformScript>().DemonModeActive==false)
         yield return new WaitForSeconds(0.4f);
         status = State.InAir;
 

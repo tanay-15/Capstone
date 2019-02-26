@@ -88,6 +88,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         if (!dead)
         {
             dead = true;
+            Physics2D.IgnoreLayerCollision(15, 15,false);
             GetComponent<Animator>().enabled = false;
             SetChildrenKinematic(false);
             //IKSystem.SetActive(false);
