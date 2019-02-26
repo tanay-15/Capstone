@@ -63,8 +63,8 @@ public class ChargedArrow : playerKnife2D {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 9)
-        {
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10)
+        { 
             //Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }

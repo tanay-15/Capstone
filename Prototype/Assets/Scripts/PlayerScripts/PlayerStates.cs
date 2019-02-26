@@ -164,7 +164,7 @@ public class PlayerStates : MonoBehaviour
                     if (Input.GetButtonDown("Fire1"))
                         status = State.Melee;
 
-                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
+                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows && Time.timeScale > 0)
                     {
                         if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
                             status = State.ChargingArrow;
@@ -196,7 +196,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
-                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows)
+                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows && Time.timeScale > 0)
                     {
                         if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
                             status = State.ChargingArrow;
@@ -438,7 +438,8 @@ public class PlayerStates : MonoBehaviour
     void ChargeArrow()
     {
         //shootingArrowInfo.Move(Input.GetAxisRaw("Vertical"));
-        shootingArrowInfo.MoveWithMouse();
+        if (Time.timeScale > 0f)
+            shootingArrowInfo.MoveWithMouse();
 
         shootingArrowInfo.chargeTime += Time.deltaTime;
         if (shootingArrowInfo.IsFullyCharged && !shootingArrowInfo.chargeFlag)
@@ -446,7 +447,7 @@ public class PlayerStates : MonoBehaviour
             shootingArrowInfo.chargeFlag = true;
             Instantiate(shootingArrowInfo.fullyChargeSparkPrefab, transform.position, Quaternion.identity);
         }
-        if (Input.GetButtonUp("Fire2"))
+        if (!Input.GetButton("Fire2") && Time.timeScale > 0f)
         {
             //Shoot an arrow
             Vector3 velocity;
