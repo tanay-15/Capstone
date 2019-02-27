@@ -207,7 +207,7 @@ public class Enemy_Bat : BasicEnemy
     {
         if (collider.gameObject.tag == "Player")
         {
-            Debug.Log("Player entered in range");
+            
             player = collider.gameObject;
 
         }
