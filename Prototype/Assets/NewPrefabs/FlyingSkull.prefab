@@ -342,7 +342,7 @@ MonoBehaviour:
         PublicKeyToken=null
   Range: 7
   player: {fileID: 0}
-  attackspeed: 4
+  attackspeed: 6
   movspeed: 3
   waypoints:
   - {fileID: 8320708836541503939}
@@ -355,6 +355,7 @@ MonoBehaviour:
   moveC: 0
   moveD: 0
   IsAttacking: 0
+  targetposition: {x: 0, y: 0, z: 0}
   GetPlayerPost: 0
   AttackCounter: 0
   health: 10

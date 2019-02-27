@@ -24,7 +24,8 @@ public class Enemy_Bat : BasicEnemy
     public bool moveD;
 
     public bool IsAttacking = false;
-    private Vector3 targetposition;
+    public Vector3 targetposition;
+    private bool hasTargetPos = false;
 
     public bool GetPlayerPost = false;
 
@@ -65,6 +66,7 @@ public class Enemy_Bat : BasicEnemy
         {
             //attack the player
             IsAttacking = true;
+            SettingTarget();
             AttackBat();
         }
 
@@ -86,40 +88,53 @@ public class Enemy_Bat : BasicEnemy
 
     }
 
+
+    public void SettingTarget()
+    {
+        if (!hasTargetPos)
+        {
+            targetposition = player.transform.position;
+            hasTargetPos = true;
+        }
+    }
     public void AttackBat()
     {
-        //if (!AttackDone)
-        //{
+
+      
+
+        if (IsAttacking)
+        {
+
+           {
+                if (!hasTargetPos)
+                {
+                    targetposition = player.transform.position;
+                    hasTargetPos = true;
+                }
 
 
-        //    if (Attack)
-        //    {
-        //        if (!GetPlayerPost)
-        //        {
-        //            targetposition = player.transform.position;
-        //            GetPlayerPost = true;
-        //        }
+            }
+
+            if (hasTargetPos)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, attackspeed * Time.deltaTime);
+
+                if (Vector2.Distance(this.transform.position, targetposition) < 1f)
+                {
+
+                    IsAttacking = false;
+                    AttackCounter = 8f;
+                    targetposition = Vector3.zero;
+                    hasTargetPos = false;
+                    moveA = true;
+                }
+            }
+        }
 
 
-        //    }
+     
 
-        //    if (GetPlayerPost)
-        //    {
-        //        this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, attackspeed * Time.deltaTime);
-
-        //        if (Vector2.Distance(this.transform.position, targetposition) < 0.4f)
-        //        {
-        //            Attack = false;
-        //            AttackDone = true;
-        //            targetposition = Vector3.zero;
-        //            GetPlayerPost = false;
-        //        }
-        //    }
-
-        //}
-
-
-        this.transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, attackspeed * Time.deltaTime);
+    
 
 
     }
@@ -163,6 +178,7 @@ public class Enemy_Bat : BasicEnemy
                 moveA = false;
                 moveB = true;
                 PlayerHit = false;
+                hasTargetPos = false;
             }
         }
 
@@ -174,6 +190,7 @@ public class Enemy_Bat : BasicEnemy
                 moveB = false;
                 moveA = true;
                 PlayerHit = false;
+                hasTargetPos = false;
             }
         }
 
@@ -187,19 +204,12 @@ public class Enemy_Bat : BasicEnemy
         {
             //attack player
             collision.gameObject.SendMessage("GetHit", -15);
-            //events.OnDeath.Invoke();
-            //Destroy(this.gameObject);
-
+          
             PlayerHit = true;
             IsAttacking = false;
         }
 
-        //if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector2.Distance(collision.gameObject.transform.position, this.transform.position) < 2f)
-        //{
-        //    events.OnDeath.Invoke();
-        //    Destroy(this.gameObject);
-        //}
-
+       
     }
 
 
