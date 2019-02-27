@@ -107,12 +107,12 @@
             fixed4 frag (v2f i) : SV_Target
             {
 			fixed4 color = lerp(_Color1,_Color2, 1-i.uv.y);
-			fixed noisePos = i.uv.x;
-			noisePos += -0.5;
-			noisePos *= _Size;
-			fixed val = PerlinNoise2D(float2(noisePos, _Time.y*_Speed))/2+ 0.5f;
-			val = _Contrast * (val - 0.5) +0.5;
-			color.a *= lerp(val, val*i.uv.y,_Fade);  
+			fixed nPosition = i.uv.x;
+			nPosition += -0.5;
+			nPosition *= _Size;
+			fixed value = PerlinNoise2D(float2(nPosition, _Time.y*_Speed))/2+ 0.5f;
+			value = _Contrast * (value - 0.5) +0.5;
+			color.a *= lerp(value, value*i.uv.y,_Fade);  
 			color.a = clamp(color.a,0.0,1.0);
 			return color;
             }
