@@ -8,6 +8,7 @@
 		_Speed("Speed",Range(0,5.0)) = 0.5
 		_Size("Size",Range(1.0,30.0)) = 15.0
 		_Fade("Fade",Range(0.0,1.0)) = 1.0
+		_Direction("Direction", Range(-1,1)) = 0
 		_Contrast("Contrast",Range(0.0,30.0)) = 1.0
     }
     SubShader
@@ -94,6 +95,7 @@
 			float _Size;
 			float _Fade;
 			float _Contrast;
+			float _Direction;
 
             v2f vert (appdata v)
             {
@@ -108,11 +110,12 @@
             {
 			fixed4 color = lerp(_Color1,_Color2, 1-i.uv.y);
 			fixed nPosition = i.uv.x;
-			nPosition += -0.5;
+			nPosition += 0.5;
 			nPosition *= _Size;
+			nPosition +=  i.uv.y*(_Size*_Direction);
 			fixed value = PerlinNoise2D(float2(nPosition, _Time.y*_Speed))/2+ 0.5f;
 			value = _Contrast * (value - 0.5) +0.5;
-			color.a *= lerp(value, value*i.uv.y,_Fade);  
+			color.a *= lerp(value, value*i.uv.y,_Fade + 1);  // lerp between uv.x or y depending on which axis you want fading in. 
 			color.a = clamp(color.a,0.0,1.0);
 			return color;
             }
