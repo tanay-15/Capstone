@@ -33,6 +33,7 @@ public class ButtonToggle : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player" || collision.gameObject.tag == "PuzzleElement")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.layer == LayerMask.NameToLayer("Puzzle"))
         {
             colliders.Add(collision.gameObject);
         }
@@ -40,7 +41,7 @@ public class ButtonToggle : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PuzzleElement")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.layer == LayerMask.NameToLayer("Puzzle"))
         {
             colliders.Remove(collision.gameObject);
         }

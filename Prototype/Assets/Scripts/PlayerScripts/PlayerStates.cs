@@ -520,7 +520,7 @@ public class PlayerStates : MonoBehaviour
             Rb2d.velocity = new Vector2(-forceX, forceY);
         }
         if(FindObjectOfType<DemonTransformScript>().DemonModeActive==false)
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         status = State.InAir;
 
     }
