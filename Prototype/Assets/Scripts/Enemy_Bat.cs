@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Bat : BasicEnemy {
+public class Enemy_Bat : BasicEnemy
+{
 
     // Use this for initialization
 
@@ -13,7 +14,6 @@ public class Enemy_Bat : BasicEnemy {
     public float movspeed;
 
     public GameObject[] waypoints;
-    public GameObject particle;
     public Vector3 pointA;
     public Vector3 pointB;
     public Vector3 pointC;
@@ -23,176 +23,175 @@ public class Enemy_Bat : BasicEnemy {
     public bool moveC;
     public bool moveD;
 
-    public bool Attack;
-    private bool AttackDone = true;
+    public bool IsAttacking = false;
     private Vector3 targetposition;
 
     public bool GetPlayerPost = false;
 
-    private float AttackCounter = 0f;
+    public float AttackCounter = 0f;
 
-    private float health = 10f;
+    public float health = 10f;
 
-   
+    public bool PlayerHit = false;
 
-	void Start () {
+
+
+
+    void Start()
+    {
 
         pointA = waypoints[0].transform.position;
         pointB = waypoints[1].transform.position;
         //pointC = waypoints[2].transform.position;
         this.transform.position = pointA;
         moveA = true;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+    }
 
-        if(AttackDone || player == null)
+    // Update is called once per frame
+    void Update()
+    {
+
+
+
+        if (!IsAttacking)
         {
-            //Keep moving around the fix path and detecting  the player 
-            SkullMovement();
-          
+            Movement();
         }
 
-        else if (player != null)
+
+
+
+        if (player != null && AttackCounter <= 0f && !PlayerHit)
         {
             //attack the player
+            IsAttacking = true;
             AttackBat();
         }
 
-        if (player)
-        {
-            if (AttackCounter <= 0f)
-            {
-                AttackDone = false;
-                AttackCounter = 8f;
-            }
-        }
+
         AttackCounter = AttackCounter - Time.deltaTime;
 
-      
-        if(health <= 0)
+        if (PlayerHit)
+        {
+            moveA = true;
+            moveB = false;
+            AttackCounter = 8f;
+        }
+
+        if (health <= 0)
         {
             events.OnDeath.Invoke();
             Destroy(this.gameObject);
         }
 
-	}
+    }
 
     public void AttackBat()
     {
-        if (!AttackDone)
-        {
+        //if (!AttackDone)
+        //{
 
 
-            if (Attack)
-            {
-                if (!GetPlayerPost)
-                {
-                    targetposition = player.transform.position;
-                    GetPlayerPost = true;
-                }
+        //    if (Attack)
+        //    {
+        //        if (!GetPlayerPost)
+        //        {
+        //            targetposition = player.transform.position;
+        //            GetPlayerPost = true;
+        //        }
 
 
-            }
+        //    }
 
-            if (GetPlayerPost)
-            {
-                this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, attackspeed * Time.deltaTime);
+        //    if (GetPlayerPost)
+        //    {
+        //        this.transform.position = Vector2.MoveTowards(this.transform.position, targetposition, attackspeed * Time.deltaTime);
 
-                if (Vector2.Distance(this.transform.position, targetposition) < 0.4f)
-                {
-                    Attack = false;
-                    AttackDone = true;
-                    targetposition = Vector3.zero;
-                    GetPlayerPost = false;
-                }
-            }
+        //        if (Vector2.Distance(this.transform.position, targetposition) < 0.4f)
+        //        {
+        //            Attack = false;
+        //            AttackDone = true;
+        //            targetposition = Vector3.zero;
+        //            GetPlayerPost = false;
+        //        }
+        //    }
 
-        }
+        //}
+
+
+        this.transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, attackspeed * Time.deltaTime);
+
+
     }
 
     public void SkullMovement()
     {
-        
-   
+
+
         if (moveA)
         {
             this.transform.position = Vector2.MoveTowards(this.transform.position, pointA, movspeed * Time.deltaTime);
-            if(Vector2.Distance(this.transform.position,pointA) < 0.3f)
+            if (Vector2.Distance(this.transform.position, pointA) < 0.3f)
             {
                 moveA = false;
                 moveB = true;
+                PlayerHit = false;
             }
         }
 
         if (moveB)
         {
             this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
-            if(Vector2.Distance(this.transform.position,pointB) < 0.3f)
+            if (Vector2.Distance(this.transform.position, pointB) < 0.3f)
             {
                 moveB = false;
                 moveA = true;
+                PlayerHit = false;
             }
         }
 
-        
+
     }
 
     public void Movement()
     {
-        //if (moveA)
-        //{
-        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
-        //    if(Vector2.Distance(this.transform.position,pointB) < 0.3f){
-        //        moveA = false;
-        //        moveB = true;
-        //    }
-        //}
+        if (moveA)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, pointA, movspeed * Time.deltaTime);
+            if (Vector2.Distance(this.transform.position, pointA) < 0.3f)
+            {
+                moveA = false;
+                moveB = true;
+                PlayerHit = false;
+            }
+        }
 
-        //if (moveB)
-        //{
-        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointC, movspeed * Time.deltaTime);
-        //    if (Vector2.Distance(this.transform.position, pointC )< 0.3f)
-        //    {
-        //        moveB = false;
-        //        moveC = true;
-        //    }
-        //}
+        if (moveB)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
+            if (Vector2.Distance(this.transform.position, pointB) < 0.3f)
+            {
+                moveB = false;
+                moveA = true;
+                PlayerHit = false;
+            }
+        }
 
-        //if (moveC)
-        //{
-        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointB, movspeed * Time.deltaTime);
-        //    if(Vector2.Distance(this.transform.position,pointB)< 0.3f)
-        //    {
-        //        moveC = false;
-        //        moveD = true;
 
-        //    }
-        //}
-
-        //if (moveD)
-        //{
-        //    this.transform.position = Vector2.MoveTowards(this.transform.position, pointA, movspeed * Time.deltaTime);
-        //    if (Vector2.Distance(this.transform.position, pointA) < 0.3f)
-        //    {
-        //        moveD = false;
-        //        moveA = true;
-        //    }
-        //}
 
     }
-    
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             //attack player
             collision.gameObject.SendMessage("GetHit", -15);
-            events.OnDeath.Invoke();
-            Destroy(this.gameObject);
+            //events.OnDeath.Invoke();
+            //Destroy(this.gameObject);
 
+            PlayerHit = true;
+            IsAttacking = false;
         }
 
         //if ((collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable") && Vector2.Distance(collision.gameObject.transform.position, this.transform.position) < 2f)
@@ -206,27 +205,33 @@ public class Enemy_Bat : BasicEnemy {
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player")
         {
             Debug.Log("Player entered in range");
             player = collider.gameObject;
-            Attack = true;
+
+        }
+
+        if ((collider.gameObject.tag == "projectile") && Vector2.Distance(collider.gameObject.transform.position, this.transform.position) < 1f)
+        {
+            this.health = this.health - 5f;
         }
 
 
 
     }
 
-    public void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collider)
     {
+
 
     }
 
     public void OnTriggerExit2D(Collider2D collider)
     {
-        if(collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player")
         {
-            Attack = false;
+
             player = null;
         }
     }
@@ -239,7 +244,7 @@ public class Enemy_Bat : BasicEnemy {
 
     public void applyDamage()
     {
-        events.OnDeath.Invoke();
-        Destroy(this.gameObject);
+        //events.OnDeath.Invoke();
+
     }
 }
