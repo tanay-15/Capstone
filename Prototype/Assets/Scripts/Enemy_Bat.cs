@@ -224,7 +224,7 @@ public class Enemy_Bat : BasicEnemy
 
         if ((collider.gameObject.tag == "projectile") && Vector2.Distance(collider.gameObject.transform.position, this.transform.position) < 1f)
         {
-            this.health = this.health - 5f;
+            applyDamage(5);
         }
 
 
@@ -252,9 +252,9 @@ public class Enemy_Bat : BasicEnemy
         Gizmos.DrawWireSphere(this.transform.position, Range);
     }
 
-    public void applyDamage()
+    public void applyDamage(float damage)
     {
         //events.OnDeath.Invoke();
-
+        this.health = this.health - damage;
     }
 }
