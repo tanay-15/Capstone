@@ -16,45 +16,21 @@ public class ThrowAxe : MonoBehaviour {
     
 	void Start () {
 
-        //moveVector = new Vector3(-8f * Time.deltaTime, 0, 0);
+      
         rigi = this.GetComponent<Rigidbody2D>();
-        player_target = GameObject.Find("Character");
+    
         startpoint = this.transform.position;
          moveVector = 4*Vector3.Normalize(GameObject.Find("Player").transform.position- transform.position);
-        //Physics2D.gravity = new Vector2(0, -9.8f);
-     
-
-    }
-
-    void AxeThrow()
-    {
        
-        Vector3 distance = startpoint - player_target.transform.position;
-        distance.z = 0f;
-        Vector2 distanceCalc = distance;
-        distanceCalc.y = 0f;
 
-        float Sy = distance.y;
-        float Sx = distanceCalc.magnitude;
-
-        float Vx = Sx / TimeToHit;
-        float Vy = Sy / TimeToHit + 0.5f * Mathf.Abs(Physics.gravity.y) * TimeToHit;
-
-        Vector2 result = distanceCalc.normalized;
-
-        result = result * Vx;
-        result.y = Vy;
-
-        moveVector = result;
-        
     }
+
+    
 	
 	// Update is called once per frame
 	void Update () {
 
-        //this.transform.Translate(moveVector);
-
-        //transform.rotation = Quaternion.LookRotation(moveVector);
+      
         rigi.velocity = moveVector;
 
     }

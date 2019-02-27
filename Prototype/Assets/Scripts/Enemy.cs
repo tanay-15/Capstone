@@ -779,6 +779,7 @@ public class Enemy : BasicEnemy {
         if(collider.gameObject.tag == "Player")
         {
             withinRange = false;
+            target = null;
            
             //currentstate = States.Idle;
            
