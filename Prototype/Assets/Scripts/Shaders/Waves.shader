@@ -11,13 +11,15 @@
     }
     SubShader
     {
+		Blend SrcAlpha OneMinusSrcAlpha
         //Tags { "RenderType"="Opaque" }
 		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
+		
         LOD 200
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Lambert vertex:vert
+        #pragma surface surf Lambert vertex:vert alpha
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -27,7 +29,6 @@
         struct Input
         {
             float2 uv_MainTex;
-			float3 vertColor; // Adding tint based on the vertices
         };
 
 		float4 _Tint;
@@ -42,24 +43,21 @@
 			float4 texcoord: TEXCOORD0;
 		};
 
-		void vert(inout appdata v, out Input o)
+		void vert(inout appdata_full v)
 		{
-			UNITY_INITIALIZE_OUTPUT(Input, o);
 			float t = _Time.x * _Speed;
 			float waveHeight = sin(t + v.vertex.x * _Freq) * _Amp;
 
 			v.vertex.y += waveHeight;
 			v.normal = normalize(float3(v.normal.x + waveHeight, v.normal.y, v.normal.z));
-			o.vertColor = waveHeight + 1;
-
+			
 		}
 		sampler2D _MainTex;
         void surf (Input IN, inout SurfaceOutput o)
         {
 			fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+			o.Albedo = c;
 			c.a *= _Fade;
-
-			o.Albedo = c * IN.vertColor.rgb;
 			o.Alpha = c.a;
         }
         ENDCG
