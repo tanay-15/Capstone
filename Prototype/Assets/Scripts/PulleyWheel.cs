@@ -23,6 +23,8 @@ public class PulleyWheel : MonoBehaviour
             // replace these with whatever keys/inputs we need
             if (Input.GetKeyDown(KeyCode.LeftControl) && GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().enabled)
             {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().Human.GetComponent<Animator>().Play("Idle");
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStates>().enabled = false;
                 grabbed = true;
             }
@@ -36,7 +38,7 @@ public class PulleyWheel : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                this.transform.Rotate(Vector3.forward * 360 * Time.deltaTime);
+                this.transform.Rotate(Vector3.forward * 180 * Time.deltaTime);
 
                 foreach(GameObject g in targets)
                 {
@@ -45,7 +47,7 @@ public class PulleyWheel : MonoBehaviour
             }
             if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                this.transform.Rotate(Vector3.forward * -360 * Time.deltaTime);
+                this.transform.Rotate(Vector3.forward * -180 * Time.deltaTime);
 
                 foreach (GameObject g in targets)
                 {

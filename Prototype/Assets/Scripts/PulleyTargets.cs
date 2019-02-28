@@ -6,6 +6,7 @@ public class PulleyTargets : MonoBehaviour
 {
     // 0 is horizontal, 1 is vertical
     public bool vert;
+    public bool reverse;
 
     public Vector2 maxDist;
     float minPos;
@@ -19,13 +20,28 @@ public class PulleyTargets : MonoBehaviour
     {
         if (vert)
         {
-            minPos = this.transform.position.y + maxDist.x;
-            maxPos = this.transform.position.y + maxDist.y;
+            if (!reverse)
+            {
+                minPos = this.transform.position.y + maxDist.x;
+                maxPos = this.transform.position.y + maxDist.y;
+            } else
+            {
+                maxPos = this.transform.position.y + maxDist.x;
+                minPos = this.transform.position.y + maxDist.y;
+            }
         }
         else
         {
-            minPos = this.transform.position.x + maxDist.x;
-            maxPos = this.transform.position.x + maxDist.y;
+            if (!reverse)
+            {
+                minPos = this.transform.position.x + maxDist.x;
+                maxPos = this.transform.position.x + maxDist.y;
+            }
+            else
+            {
+                maxPos = this.transform.position.x + maxDist.x;
+                minPos = this.transform.position.x + maxDist.y;
+            }
         }
     }
 
