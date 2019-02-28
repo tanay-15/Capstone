@@ -38,6 +38,15 @@ public class SkeletonBoss : MonoBehaviour
     public float AttackCounter = 10f;
     public bool AttackDone = false;
 
+    public enum BossStates
+    {
+        Idle,
+        AttackReady,
+        Attacking
+    }
+
+    public BossStates currentState;
+
     private Animator anim;
 
     
@@ -53,6 +62,7 @@ public class SkeletonBoss : MonoBehaviour
         spawnPointRightPos = spawnPointRight.transform.position;
         attackPointpos = AttackPoint.transform.position;
         anim = this.GetComponent<Animator>();
+        currentState = BossStates.Idle;
 
     }
 
@@ -85,10 +95,15 @@ public class SkeletonBoss : MonoBehaviour
         if(AttackCounter <= 0)
         {
 
+            currentState = BossStates.AttackReady;
+            anim.SetBool("AttackReady",true);
             this.transform.position = Vector2.MoveTowards(this.transform.position, attackPointpos, 4f * Time.deltaTime);
+          
+            if (Vector2.Distance(this.transform.position, attackPointpos) < 1.5f)
 
-            if(Vector2.Distance(this.transform.position, attackPointpos) < 1.5f)
             {
+                anim.SetBool("AttackReady", false);
+                currentState = BossStates.Attacking;
                 anim.SetBool("Attack", true);
                 AttackCounter = 10f;
             }
@@ -106,6 +121,7 @@ public class SkeletonBoss : MonoBehaviour
 
       
         AttackDone = true;
+        currentState = BossStates.Idle;
         anim.SetBool("Attack", false);
     }
 
@@ -139,8 +155,10 @@ public class SkeletonBoss : MonoBehaviour
 
     void Movement()
     {
+        
         if (moveToleftPoint)
         {
+            currentState = BossStates.Idle;
             this.transform.position = Vector2.MoveTowards(this.transform.position, leftpointpos, MoveSpeed * Time.deltaTime);
 
             if(Vector2.Distance(this.transform.position,leftpointpos) < 2f)
@@ -152,6 +170,7 @@ public class SkeletonBoss : MonoBehaviour
 
         if (moveTorightPoint)
         {
+            currentState = BossStates.Idle;
             this.transform.position = Vector2.MoveTowards(this.transform.position, rightpointpos, MoveSpeed * Time.deltaTime);
 
             if(Vector2.Distance(this.transform.position,rightpointpos) < 2f)
