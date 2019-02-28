@@ -34,10 +34,13 @@ public class ArrowPickup : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (canPickUp)
+        if (col.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
-            ArrowCounter.sharedInstance.SetMaxArrows();
+            if (canPickUp)
+            {
+                Destroy(gameObject);
+                ArrowCounter.sharedInstance.SetMaxArrows();
+            }
         }
     }
 }

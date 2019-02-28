@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour {
     int axisDirection;
     public bool disableReturnToHubWorld;
     public bool disableSkillTree;
+    public bool disableOptions;
 
     public static PauseMenu sharedInstance;
     [System.NonSerialized]
@@ -134,8 +135,9 @@ public class PauseMenu : MonoBehaviour {
         }
 
         //Skip return to Hub World if on a tutorial level
-        if ((disableReturnToHubWorld && selectIndex == PauseMenuOption.ReturnHubWorld) ||
-            (disableSkillTree && selectIndex == PauseMenuOption.SkillTree))
+        while ((disableReturnToHubWorld && selectIndex == PauseMenuOption.ReturnHubWorld) ||
+            (disableSkillTree && selectIndex == PauseMenuOption.SkillTree) ||
+            (disableOptions && selectIndex == PauseMenuOption.Options))
         {
             selectIndex += (prevIndex < selectIndex) ? 1 : -1;
         }
@@ -236,7 +238,8 @@ public class PauseMenu : MonoBehaviour {
     bool IsTextDisabled(int index)
     {
         return ((index == (int)PauseMenuOption.ReturnHubWorld && disableReturnToHubWorld) ||
-            (index == (int)PauseMenuOption.SkillTree && disableSkillTree));
+            (index == (int)PauseMenuOption.SkillTree && disableSkillTree) ||
+            (index == (int)PauseMenuOption.Options && disableOptions));
     }
 
     void InitializeText()
