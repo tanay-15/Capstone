@@ -63,6 +63,6 @@ public class EnemySoulGenerator : MonoBehaviour {
         Destroy(soul);
         Destroy(trail, 1f);
 
-        FindObjectOfType<rageBar>().AddRage(0.1f);
+        FindObjectOfType<rageBar>().AddRage(0.2f);
     }
 }

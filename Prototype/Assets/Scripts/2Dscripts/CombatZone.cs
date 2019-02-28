@@ -9,7 +9,8 @@ public class CombatZone : MonoBehaviour
     public GameObject Door2;
     public bool Door1Open = true;
     public bool Door2Open = false;
-    public float offset = 3f;
+    public Vector2 Door1Offset =new Vector2 (0f,3f);
+    public Vector2 Door2Offset = new Vector2(0f, 3f);
     Vector2 Door1InitPosition;
     Vector2 Door2InitPosition;
 
@@ -26,12 +27,12 @@ public class CombatZone : MonoBehaviour
     void Update()
     {
         if(Door1Open)
-            Door1.transform.position = Vector2.MoveTowards(Door1.transform.position, Door1InitPosition + new Vector2(0,offset), 0.2f);
+            Door1.transform.position = Vector2.MoveTowards(Door1.transform.position, Door1InitPosition +  Door1Offset, 0.2f);
         else
             Door1.transform.position = Vector2.MoveTowards(Door1.transform.position, Door1InitPosition , 0.1f);
 
         if (Door2Open)
-            Door2.transform.position = Vector2.MoveTowards(Door2.transform.position, Door2InitPosition + new Vector2(0, offset), 0.2f);
+            Door2.transform.position = Vector2.MoveTowards(Door2.transform.position, Door2InitPosition + Door2Offset, 0.2f);
         else
             Door2.transform.position = Vector2.MoveTowards(Door2.transform.position, Door2InitPosition, 0.1f);
 
@@ -51,6 +52,7 @@ public class CombatZone : MonoBehaviour
         }
         else
         {
+            Door1Open = true;
             Door2Open = true;
         }
     }

@@ -28,7 +28,7 @@ public class DemonTransformScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rageBar.sharedInstance.fillAmount >= 1f && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")) && !transitioning)
+        if (rageBar.sharedInstance.fillAmount >= 1f && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")) )
         {
             if (!DemonModeActive)
             {
@@ -43,7 +43,7 @@ public class DemonTransformScript : MonoBehaviour
         {
             if (rageBar.sharedInstance.fillAmount > 0f)
             {
-                rageBar.sharedInstance.AddRage(-Time.deltaTime * 0.4f);
+                rageBar.sharedInstance.AddRage(-Time.deltaTime * 0.04f);
             }
             if (rageBar.sharedInstance.fillAmount <= 0f && !transitioning)
             {
@@ -61,7 +61,7 @@ public class DemonTransformScript : MonoBehaviour
         }
     }
 
-    IEnumerator DelayedTransform(bool toDemon)
+    public IEnumerator DelayedTransform(bool toDemon)
     {
         GenerateBats();
         transitioning = true;

@@ -24,7 +24,7 @@ public class rageBar : MonoBehaviour {
     Color fillingColor;
     private bool barColorFill;
     GradientScroll gradientScroll;
-    DemonModeScript demonModeScript;
+    DemonTransformScript demonTransformScript;
 
     public UnityEvent OnRageBarFull;
 
@@ -47,7 +47,7 @@ public class rageBar : MonoBehaviour {
         RBar = GetComponent<rageBar>();
         rageBarFilled = false;
         gradientScroll = FindObjectOfType<GradientScroll>();
-        demonModeScript = GetComponent<DemonModeScript>();
+        demonTransformScript = GetComponent<DemonTransformScript>();
 
         normalColor = RBar.filler.color;
         fillingColor = normalColor;
@@ -70,24 +70,24 @@ public class rageBar : MonoBehaviour {
 
         //if(Input.GetKeyDown(KeyCode.Q))
         {
-            if (demonModeScript != null)
-                rageBarActive = demonModeScript.DemonModeActive && !GetComponent<DemonModeScript>().transitioning;
+            if (demonTransformScript != null)
+                rageBarActive = demonTransformScript.DemonModeActive;
         }
 
-        if (rageBarActive)
-        {
-            //Drain the rage bar while demon mode is active
-            if (RBar.fillAmount >= 0)
-                RBar.fillAmount -= 0.04f * Time.deltaTime;//0.07f * Time.deltaTime;
-            else
-            {
-                RBar.fillAmount = 0;
-                GetComponent<DemonModeScript>().Transformation();
-                rageBarActive = false;
+        //if (rageBarActive)
+        //{
+        //    //Drain the rage bar while demon mode is active
+        //    if (RBar.fillAmount > 0)
+        //        RBar.fillAmount -= 0.04f * Time.deltaTime;//0.07f * Time.deltaTime;
+        //    else if((RBar.fillAmount < 0))
+        //    {
+        //        RBar.fillAmount = 0;
+        //        StartCoroutine(GetComponent<DemonTransformScript>().DelayedTransform(false));
+        //        rageBarActive = false;
 
-                //BarColorFill = false;
-            }
-        }
+        //        //BarColorFill = false;
+        //    }
+        //}
 
 
         //Slowly fill the rage bar when in normal mode
