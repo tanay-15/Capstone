@@ -23,7 +23,6 @@ enum PauseMenuState
 }
 
 public class PauseMenu : MonoBehaviour {
-
     public GameObject pauseMenu;
 
     public Text[] menuText;

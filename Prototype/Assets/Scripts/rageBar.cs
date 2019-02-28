@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class rageBar : MonoBehaviour {
 
+    public static rageBar sharedInstance;
+
     [SerializeField]
     public float fillAmount;
     private bool rageBarActive;
@@ -51,6 +53,10 @@ public class rageBar : MonoBehaviour {
         fillingColor = normalColor;
         fillingColor.g = 0.5f;
         fillingColor.b = 0.5f;
+
+        if (sharedInstance != null)
+            Destroy(sharedInstance.gameObject);
+        sharedInstance = this;
     }
 
     public void AddRage(float amount)

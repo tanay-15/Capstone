@@ -15,6 +15,7 @@ public class UIIcons : MonoBehaviour {
 
     public static UIIcons sharedInstance;
     public GameObject[] icons;
+    //
     public Color activeColor;
     public Color inactiveColor;
     //public Image qButton;
@@ -54,7 +55,45 @@ public class UIIcons : MonoBehaviour {
 
         demonModeText.SetActive(false);
         SetDemonModeButtons(false);
+
+        icons[2].SetActive(false);
 	}
+
+    public void SwitchIcons(int index1, int index2, bool reverse)
+    {
+        UIIcon icon1 = icons[index1].GetComponent<UIIcon>();
+        UIIcon icon2 = icons[index2].GetComponent<UIIcon>();
+        StartCoroutine(SwitchIcons_(icon1, icon2, reverse));
+    }
+
+    IEnumerator SwitchIcons_(UIIcon icon1, UIIcon icon2, bool reverse)
+    {
+        Color newColor;
+        for (float i = 0f; i < 1f; i += Time.deltaTime * 2f)
+        {
+            newColor = Color.Lerp(Color.white, Color.black, i);
+            if (!reverse)
+                icon1.icon.color = newColor;
+            else
+                icon2.icon.color = newColor;
+            yield return 0;
+        }
+        icon1.icon.color = Color.black;
+        icon2.icon.color = Color.black;
+        icon1.gameObject.SetActive(reverse);
+        icon2.gameObject.SetActive(!reverse);
+        for (float i = 0f; i < 1f; i += Time.deltaTime * 2f)
+        {
+            newColor = Color.Lerp(Color.black, Color.white, i);
+            if (!reverse)
+                icon2.icon.color = newColor;
+            else
+                icon1.icon.color = newColor;
+            yield return 0;
+        }
+        icon1.icon.color = Color.white;
+        icon2.icon.color = Color.white;
+    }
 
     public void SetQButton(bool set)
     {

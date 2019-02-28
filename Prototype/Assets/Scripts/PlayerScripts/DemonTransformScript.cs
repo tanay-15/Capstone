@@ -8,6 +8,7 @@ public class DemonTransformScript : MonoBehaviour
     public bool DemonModeActive = false;
     public float HumanSpeed = 4f;
     public float DemonSpeed = 6f;
+    bool transitioning;
 
     public GameObject bat;
     GameObject Human;
@@ -21,12 +22,13 @@ public class DemonTransformScript : MonoBehaviour
         PlayerAnimator = transform.GetComponent<PlayerStates>().PlayerAnimator;
         Human = transform.GetComponent<PlayerStates>().Human;
         Demon = transform.GetComponent<PlayerStates>().Demon;
+        transitioning = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2"))
+        if (rageBar.sharedInstance.fillAmount >= 1f && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")) && !transitioning)
         {
             if (!DemonModeActive)
             {
@@ -36,18 +38,33 @@ public class DemonTransformScript : MonoBehaviour
             {
                 StartCoroutine(DelayedTransform(false));
             }
-
-            for (int i = 0; i < 50; i++)
+        }
+        if (DemonModeActive)
+        {
+            if (rageBar.sharedInstance.fillAmount > 0f)
             {
-                var Bat = Instantiate(bat, transform.position + new Vector3(0, 100, 0), Quaternion.identity);
-                Bat.GetComponent<BatScript>().player = gameObject;
+                rageBar.sharedInstance.AddRage(-Time.deltaTime * 0.4f);
             }
+            if (rageBar.sharedInstance.fillAmount <= 0f && !transitioning)
+            {
+                StartCoroutine(DelayedTransform(false));
+            }
+        }
+    }
 
+    void GenerateBats()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            var Bat = Instantiate(bat, transform.position + new Vector3(0, 100, 0), Quaternion.identity);
+            Bat.GetComponent<BatScript>().player = gameObject;
         }
     }
 
     IEnumerator DelayedTransform(bool toDemon)
     {
+        GenerateBats();
+        transitioning = true;
         yield return new WaitForSeconds(2.0f);
 
         DemonSwitch[] DemonSwitches = FindObjectsOfType<DemonSwitch>();
@@ -66,6 +83,13 @@ public class DemonTransformScript : MonoBehaviour
         GetComponent<PlayerStates>().PlayerAnimator = toDemon ? Demon.GetComponent<Animator>() : Human.GetComponent<Animator>();
         GetComponent<PlayerStates>().speed = toDemon ? DemonSpeed : HumanSpeed;
         //Levitation.sharedInstance.SetActive(!toDemon);
+
+        yield return new WaitForSeconds(0.5f);
+
+        //0 - Levitation icon
+        //2 - Orbit icon
+        UIIcons.sharedInstance.SwitchIcons(0, 2, !toDemon);
+        transitioning = false;
 
     }
 }
