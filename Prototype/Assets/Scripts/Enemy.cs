@@ -347,7 +347,7 @@ public class Enemy : BasicEnemy {
             if (vishit = Physics2D.Raycast(vision.transform.position, -transform.right, 0.1f,EnemyIgnoreMask))
             {
                 
-                if (vishit.collider.gameObject.layer == 9)
+                if (vishit.collider.gameObject.layer == 10)
                 {
 
                     movway2 = true;
@@ -364,7 +364,7 @@ public class Enemy : BasicEnemy {
             if (vishit = Physics2D.Raycast(vision.transform.position, transform.right, 0.1f,EnemyIgnoreMask))
             {
               
-                if (vishit.collider.gameObject.layer == 9)
+                if (vishit.collider.gameObject.layer == 10)
                 {
 
                     movway1 = true;
