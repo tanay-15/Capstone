@@ -38,6 +38,10 @@ public class SkeletonBoss : MonoBehaviour
     public float AttackCounter = 10f;
     public bool AttackDone = false;
 
+    public bool IsPunched;
+
+    public GameObject ImpactAnim;
+
     public enum BossStates
     {
         Idle,
@@ -225,7 +229,25 @@ public class SkeletonBoss : MonoBehaviour
 
         }
 
-        
-       
+        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f && collision.gameObject.layer != 15)
+        {
+            applyDamage(13);
+
+            IsPunched = true;
+            StartCoroutine(IsPunchedReset());
+
+            var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
+            impact.gameObject.SetActive(true);
+
+        }
+
+
+
+    }
+
+    IEnumerator IsPunchedReset()
+    {
+        yield return new WaitForSeconds(0.25f);
+        IsPunched = false;
     }
 }
