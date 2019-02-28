@@ -7,6 +7,7 @@ public class EnemySoulGenerator : MonoBehaviour {
     public GameObject rageBar;
     public GameObject soulPrefab;
     public GameObject trailPrefab;
+    public GameObject arrowPickupPrefab;
     public GameObject canvas;
 
     public AnimationCurve speedTo;
@@ -23,6 +24,11 @@ public class EnemySoulGenerator : MonoBehaviour {
     public void GenerateSoul(Vector2 enemyPos)
     {
         StartCoroutine(Soul(enemyPos));
+
+        //Drop arrows
+        //TODO: Chance of arrows generating should be handled by the individual enemies
+        if (Random.Range(0, 2) == 0)
+            Instantiate(arrowPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
     }
 
     IEnumerator Soul(Vector2 enemyPos)
