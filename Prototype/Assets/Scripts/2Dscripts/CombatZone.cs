@@ -14,6 +14,8 @@ public class CombatZone : MonoBehaviour
     Vector2 Door1InitPosition;
     Vector2 Door2InitPosition;
 
+    public float CameraPanSize = 7;
+
     public GameObject[] Enemies;
     int DeadEnemies = 0;
     // Start is called before the first frame update
@@ -63,7 +65,7 @@ public class CombatZone : MonoBehaviour
         {
             Door1Open = false;
             Camera.main.GetComponent<CameraFollow>().target = transform;
-            Camera.main.GetComponent<CameraFollow>().CameraPan(7,1);
+            Camera.main.GetComponent<CameraFollow>().CameraPan(CameraPanSize,1);
             StartCoroutine(Spawn());
         }
     }
