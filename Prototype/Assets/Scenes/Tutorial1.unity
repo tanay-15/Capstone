@@ -3072,6 +3072,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   text: {fileID: 0}
+  jumpText: {fileID: 0}
   messages:
   - Use WASD or arrow keys to move.\nUse Space to jump.
   - Hold Space while jumping to jump higher.
@@ -23289,6 +23290,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6.68593}
   m_EdgeRadius: 0
+--- !u!1 &2058054669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5622155544620220893, guid: 6af02681f19aa0343ac404a1848b2714,
+    type: 3}
+  m_PrefabInstance: {fileID: 5622155545336065488}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2058054672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058054669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb38b7002cad3b4bb51a5698218b2fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BecameVisible:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1778175918}
+        m_MethodName: OnObjectBecameVisible
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VisibleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  priority: 4
+  arrowOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2070383673
 GameObject:
   m_ObjectHideFlags: 0
@@ -23452,3 +23488,72 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6.68593}
   m_EdgeRadius: 0
+--- !u!1001 &5622155545336065488
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5622155545439998910, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_Name
+      value: Arrow pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 22.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622155545439998881, guid: 6af02681f19aa0343ac404a1848b2714,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6af02681f19aa0343ac404a1848b2714, type: 3}

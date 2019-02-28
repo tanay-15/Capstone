@@ -18,7 +18,7 @@ public class ArrowCounter : MonoBehaviour
 
     void Start()
     {
-        ArrowCount = 15;
+        ArrowCount = 0;
         UpdateText();
         if (sharedInstance != null)
             Destroy(sharedInstance.gameObject);
@@ -28,6 +28,12 @@ public class ArrowCounter : MonoBehaviour
     public void AddArrowCount(int amount)
     {
         ArrowCount += amount;
+        UpdateText();
+    }
+
+    public void SetMaxArrows()
+    {
+        ArrowCount = MaxArrows;
         UpdateText();
     }
 
