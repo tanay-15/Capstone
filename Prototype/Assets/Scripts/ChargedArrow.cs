@@ -82,7 +82,7 @@ public class ChargedArrow : playerKnife2D {
                 var impact = Instantiate(ImpactAnim, transform.position, Quaternion.identity);
                 impact.gameObject.SetActive(true);
 
-                collision.gameObject.SendMessageUpwards("applyDamage", (fullyCharged) ? 10 : 5);  //Normal arrow does 5
+                collision.gameObject.SendMessageUpwards("applyDamage", (fullyCharged) ? 6 : 3);  //10 : 5
                                                                              //StartCoroutine(DelayDestroy());
             }
         }

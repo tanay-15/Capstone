@@ -4235,6 +4235,7 @@ Transform:
   - {fileID: 114142329}
   - {fileID: 5003251897068655541}
   - {fileID: 4347613659418718610}
+  - {fileID: 9126802377438747617}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4276,6 +4277,7 @@ MonoBehaviour:
   onStateStart: 1
   wallJump: 0
   PlayerAnimator: {fileID: 0}
+  cameraFocus: {fileID: 9126802377438747617}
   Human: {fileID: 0}
   Demon: {fileID: 0}
   StoneBlock: {fileID: 1301533761414704, guid: c5c65a1bc42a9e94aa90dee5b87a54b6, type: 3}
@@ -7339,6 +7341,36 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.49243, y: -0.039332688, z: 0}
     m_Extent: {x: 1.0244784, y: 0.6060457, z: 0}
   m_DirtyAABB: 0
+--- !u!1 &8188300744465721537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9126802377438747617}
+  m_Layer: 14
+  m_Name: Camera Focus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9126802377438747617
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8188300744465721537}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2700114358183790576}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8284340250003310629
 GameObject:
   m_ObjectHideFlags: 0

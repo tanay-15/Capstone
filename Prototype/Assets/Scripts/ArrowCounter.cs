@@ -8,7 +8,7 @@ public class ArrowCounter : MonoBehaviour
     public static ArrowCounter sharedInstance;
     public Text text;
     public int ArrowCount { get; private set; }
-    public const int MaxArrows = 15;
+    public const int MaxArrows = 3;
     public bool HasMaxArrows {
         get
         {

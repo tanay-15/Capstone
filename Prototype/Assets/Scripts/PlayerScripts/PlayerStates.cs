@@ -10,7 +10,7 @@ public class PlayerStates : MonoBehaviour
 // State
     public enum State
     {
-        Default, InAir, Melee, Roll, RangedAim, ChargingArrow,Stomp, WallJump, WallSlide
+        Default, InAir, Melee, Roll, RangedAim, ChargingArrow,Stomp, WallJump, WallSlide, Panning
     };
     [Header("State")]
     public State status;
@@ -25,6 +25,11 @@ public class PlayerStates : MonoBehaviour
     public ArrowInfo shootingArrowInfo;
     int attackCounter = 0;
     int groundCount = 0;
+    float cameraPanSensitivity = 0.08f;
+    float maxPanRangeX = 9f;
+    float maxUpperPanRange = 3f;
+    float maxLowerPanRange = 7f;
+    Vector2 prevMousePosition;
 
     // Bools
     [Header("Bools")]
@@ -42,6 +47,7 @@ public class PlayerStates : MonoBehaviour
     [Header("References")]
     public Animator PlayerAnimator;
 
+    public Transform cameraFocus;
     public GameObject Human;
     public GameObject Demon;
     public GameObject StoneBlock;
@@ -180,6 +186,12 @@ public class PlayerStates : MonoBehaviour
 
                     if (grounded == true)
                         movable = true;
+
+                    if (Input.GetMouseButtonDown(2))
+                    {
+                        status = State.Panning;
+                        prevMousePosition = (Vector2)Input.mousePosition;
+                    }
 
                     break;
                 }
@@ -429,6 +441,16 @@ public class PlayerStates : MonoBehaviour
                     }
                     break;
                 }
+
+            case State.Panning:
+                if (Input.GetMouseButtonUp(2))
+                {
+                    status = (grounded) ? State.Default : State.InAir;
+                    cameraFocus.localPosition = Vector3.zero;
+                    break;
+                }
+                Pan();
+                break;
         }
     }
 
@@ -475,7 +497,20 @@ public class PlayerStates : MonoBehaviour
         }
     }
 
-
+    void Pan()
+    {
+        Vector2 newPos = (Vector2)cameraFocus.localPosition;
+        Vector2 dPos = ((Vector2)Input.mousePosition - prevMousePosition) * cameraPanSensitivity;
+        Vector2 joystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical")) * cameraPanSensitivity;
+        dPos += joystick;
+        dPos.x *= transform.localScale.x;
+        newPos += dPos;
+        newPos.x = Mathf.Clamp(newPos.x, -maxPanRangeX, maxPanRangeX);
+        newPos.y = Mathf.Clamp(newPos.y, -maxLowerPanRange, maxUpperPanRange);
+        cameraFocus.localPosition = newPos;
+        prevMousePosition = (Vector2)Input.mousePosition;
+        
+    }
 
     public void flip()
     {
@@ -487,6 +522,10 @@ public class PlayerStates : MonoBehaviour
         theScale = GameObject.Find("OrbitingSystem").transform.localScale;
         theScale.x *= -1;
         GameObject.Find("OrbitingSystem").transform.localScale = theScale;
+
+        Vector3 newFocusPos = cameraFocus.localPosition;
+        newFocusPos.x *= -1;
+        cameraFocus.localPosition = newFocusPos;
     }
 
     IEnumerator MeleeAttack()
