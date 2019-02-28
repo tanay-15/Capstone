@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 8320708836436786175}
   - component: {fileID: 8320708836436786173}
   - component: {fileID: 2045077917678696473}
+  - component: {fileID: 1205623908}
   m_Layer: 15
   m_Name: FlyingSkull
   m_TagString: Enemy
@@ -395,6 +396,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &1205623908
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320708836436786147}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &8320708836541503939
 GameObject:
   m_ObjectHideFlags: 0
