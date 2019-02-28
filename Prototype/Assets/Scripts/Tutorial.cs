@@ -18,6 +18,7 @@ public class Tutorial : MonoBehaviour {
     public AnimationCurve enterCurve2;
     public AnimationCurve moveCurve;
     public Text text;
+    public GameObject jumpText;
     public string[] messages;
     public int startPhase = 0;
     int phase = -1;
@@ -160,6 +161,11 @@ public class Tutorial : MonoBehaviour {
 
             case 4:
                 StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
+                break;
+
+            case 5:
+                if (jumpText != null)
+                    jumpText.SetActive(false);
                 break;
         }
     }

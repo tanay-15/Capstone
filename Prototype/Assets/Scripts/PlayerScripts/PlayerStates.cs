@@ -164,7 +164,7 @@ public class PlayerStates : MonoBehaviour
                     if (Input.GetButtonDown("Fire1"))
                         status = State.Melee;
 
-                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows && Time.timeScale > 0)
+                    if (Input.GetButtonDown("Fire2") && ArrowCounter.sharedInstance.ArrowCount > 0 && Time.timeScale > 0)
                     {
                         if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
                             status = State.ChargingArrow;
@@ -196,7 +196,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
-                    if (Input.GetButtonDown("Fire2") && ChargedArrow.arrowCount < ChargedArrow.maxArrows && Time.timeScale > 0)
+                    if (Input.GetButtonDown("Fire2") && ArrowCounter.sharedInstance.ArrowCount > 0 && Time.timeScale > 0)
                     {
                         if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
                             status = State.ChargingArrow;
@@ -455,6 +455,7 @@ public class PlayerStates : MonoBehaviour
             Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootDistance;
             velocity = (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootSpeed * chargeAmount;
             GameObject arrow = Instantiate(shootingArrowInfo.arrowPrefab, position, Quaternion.identity);
+            ArrowCounter.sharedInstance.AddArrowCount(-1);
             arrow.GetComponent<Rigidbody2D>().gravityScale = (shootingArrowInfo.IsFullyCharged) ? 0f : 1f;
             arrow.GetComponent<Rigidbody2D>().velocity = velocity;
             arrow.GetComponent<ChargedArrow>().fullyCharged = (shootingArrowInfo.IsFullyCharged);

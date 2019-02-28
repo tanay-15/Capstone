@@ -16,13 +16,6 @@ public class ChargedArrow : playerKnife2D {
     [System.NonSerialized]
     public bool fullyCharged;
 
-    public static int arrowCount;
-    public const int maxArrows = 3;
-
-    static ChargedArrow()
-    {
-        arrowCount = 0;
-    }
 	void Start () {
         hitObjects = new HashSet<GameObject>();
         rb = GetComponent<Rigidbody2D>();
@@ -33,7 +26,7 @@ public class ChargedArrow : playerKnife2D {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * 180f / Mathf.PI;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-        arrowCount++;
+        //arrowCount++;
 	}
 
     private void FixedUpdate()
@@ -102,6 +95,6 @@ public class ChargedArrow : playerKnife2D {
 
     private void OnDestroy()
     {
-        arrowCount--;
+        //arrowCount--;
     }
 }
