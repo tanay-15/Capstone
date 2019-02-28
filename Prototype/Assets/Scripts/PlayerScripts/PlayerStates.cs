@@ -58,7 +58,7 @@ public class PlayerStates : MonoBehaviour
     Collider2D hit;
     Collider2D hitback;
 
-    Object[] blocks;
+    GameObject[] blocks = { null,null,null };
 
 
 
@@ -220,26 +220,34 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.Stomp:
                 {
-                    if (groundCount < 1)
+                    //if (groundCount < 1)
                     {
                         PlayerAnimator.Play("Jump");
                         Rb2d.velocity = Vector3.down * 2 * jumpSpeed;
-                        if (grounded == true)
+                        if (grounded == true && onStateStart == true)
                         {
                             movable = false;
                             Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
                             FindObjectOfType<CameraFollow>().ShakeCamera();
                             DustParticles.Play();
-                            blocks = FindObjectsOfType<OrbitorObjectScript>();
-                            if (GetComponent<DemonTransformScript>().DemonModeActive && blocks.Length < 7)
+                            //blocks = FindObjectsOfType<OrbitorObjectScript>();
+                            if (GetComponent<DemonTransformScript>().DemonModeActive)
                             {
-                                Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
-                                Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
-                                Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    if (blocks[i] != null)
+                                    {
+                                        blocks[i].SendMessageUpwards("Explode", 8);
+                                    }
+                                    blocks[i] = Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
+                                }
                             }
+
+                            onStateStart = false;
                             StartCoroutine("Stomp");
+
                             //status = State.Default;
-                            groundCount++;
+                            //groundCount++;
                         }
                     }
 
@@ -505,6 +513,7 @@ public class PlayerStates : MonoBehaviour
     {
         PlayerAnimator.Play("Stomp");
         yield return new WaitForSeconds(0.5f);
+        onStateStart = true;
         status = State.Default;
     }
 

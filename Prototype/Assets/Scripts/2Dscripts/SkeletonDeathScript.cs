@@ -169,4 +169,9 @@ public class SkeletonDeathScript : MonoBehaviour {
         spawn = false;
         //GetComponent<Animator>().Play("SkelWalk");
     }
+
+    public void Spawn()
+    {
+        spawn = true;
+    }
 }

@@ -38,7 +38,7 @@ public class OrbitorObjectScript : MonoBehaviour {
             collision.gameObject.SendMessage("applyDamage", 15);
             Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
             //hit = true;
-            Explode(transform.position, 8);
+            Explode(8);
             hit = true;
             //IgnoreColliders(null, false);
         }
@@ -81,11 +81,9 @@ public class OrbitorObjectScript : MonoBehaviour {
     }
 
 
-    public void Explode(Vector2 center, float magnitude)
+    public void Explode(float magnitude = 8f)
     {
-
-
-
+        Vector2 center = transform.position;
         foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>(true))
         {
             if (rb2d.name != gameObject.name)

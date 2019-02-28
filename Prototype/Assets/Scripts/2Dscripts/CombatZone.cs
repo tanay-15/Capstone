@@ -62,6 +62,7 @@ public class CombatZone : MonoBehaviour
             Door1Open = false;
             Camera.main.GetComponent<CameraFollow>().target = transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(7,1);
+            StartCoroutine(Spawn());
         }
     }
 
@@ -71,6 +72,15 @@ public class CombatZone : MonoBehaviour
         {
             Camera.main.GetComponent<CameraFollow>().target = collision.gameObject.transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(6, 1);
+        }
+    }
+
+    IEnumerator Spawn()
+    {
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            Enemies[i].SendMessageUpwards("Spawn");
+            yield return new WaitForSeconds(1f);
         }
     }
 }
