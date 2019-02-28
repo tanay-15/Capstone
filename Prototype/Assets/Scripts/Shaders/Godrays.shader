@@ -24,7 +24,7 @@
             #pragma vertex vert
             #pragma fragment frag
             // make fog work
-            #pragma multi_compile_fog
+     /*       #pragma multi_compile_fog*/
 
             #include "UnityCG.cginc"
 
@@ -116,7 +116,7 @@
 			fixed value = PerlinNoise2D(float2(nPosition, _Time.y*_Speed))/2+ 0.5f;
 			value = _Contrast * (value - 0.5) +0.5;
 			color.a *= lerp(value, value*i.uv.y,_Fade + 1);  // lerp between uv.x or y depending on which axis you want fading in. 
-			color.a = saturate(color.a);	
+			color.a = saturate(color.a);	//clamping between 0 & 1.
 			return color;
             }
             ENDCG
