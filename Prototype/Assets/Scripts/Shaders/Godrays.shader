@@ -13,7 +13,7 @@
     }
     SubShader
     {
-        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
+        Tags { "Queue" = "Overlay" "RenderType" = "Transparent" }
 		LOD 100
 
 		ZWrite Off
@@ -116,7 +116,7 @@
 			fixed value = PerlinNoise2D(float2(nPosition, _Time.y*_Speed))/2+ 0.5f;
 			value = _Contrast * (value - 0.5) +0.5;
 			color.a *= lerp(value, value*i.uv.y,_Fade + 1);  // lerp between uv.x or y depending on which axis you want fading in. 
-			color.a = saturate(color.a);
+			color.a = saturate(color.a);	
 			return color;
             }
             ENDCG
