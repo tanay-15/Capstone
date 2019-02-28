@@ -6,14 +6,27 @@ public class PulleyTargets : MonoBehaviour
 {
     // 0 is horizontal, 1 is vertical
     public bool vert;
-    
+
+    public Vector2 maxDist;
+    float minPos;
+    float maxPos;
+
     // how fast the object moves
     public float speed;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (vert)
+        {
+            minPos = this.transform.position.y + maxDist.x;
+            maxPos = this.transform.position.y + maxDist.y;
+        }
+        else
+        {
+            minPos = this.transform.position.x + maxDist.x;
+            maxPos = this.transform.position.x + maxDist.y;
+        }
     }
 
     // Update is called once per frame
@@ -24,13 +37,31 @@ public class PulleyTargets : MonoBehaviour
 
     public void MoveTarget(float val)
     {
-            if (vert)
+        Vector3 target = this.transform.position;
+
+        if (vert)
+        {
+            if (val > 0)
             {
-                this.transform.position += new Vector3(0.0f, val * speed, 0.0f);
+                target.y = maxPos;
             }
             else
             {
-                this.transform.position += new Vector3(val * speed, 0.0f, 0.0f);
+                target.y = minPos;
             }
+        }
+        else
+        {
+            if (val > 0)
+            {
+                target.x = maxPos;
+            }
+            else
+            {
+                target.x = minPos;
+            }
+        }
+
+        this.transform.position = Vector3.MoveTowards(this.transform.position, target, speed * Time.deltaTime);
     }
 }
