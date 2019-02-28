@@ -671,7 +671,7 @@ public class Enemy : BasicEnemy {
 
         }
 
-        if (Vector2.Distance(this.transform.position, target.transform.position) > 1.5f)
+        if (target!= null && Vector2.Distance(this.transform.position, target.transform.position) > 1.5f)
         {
             //currentstate = States.Idle;
             DetectingPlayer();

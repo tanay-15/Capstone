@@ -427,6 +427,7 @@ MonoBehaviour:
   BonesBreak: []
   kill: 0
   dead: 0
+  spawn: 1
   mhealth: 0
 --- !u!95 &4521974395211325421
 Animator:
@@ -506,7 +507,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4521974395211325431}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e25dd5139c7530f48826ab1c7024b82a, type: 3}
   m_Name: 

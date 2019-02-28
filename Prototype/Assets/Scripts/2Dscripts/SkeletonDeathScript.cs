@@ -17,6 +17,7 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     public bool kill = false;
     public bool dead = false;
+    public bool spawn = true;
     //health death
     public int mhealth;
 
@@ -39,10 +40,21 @@ public class SkeletonDeathScript : MonoBehaviour {
 
         //Audio = GetComponent<AudioSource>();
         //Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
+
+        GetComponent<Animator>().Play("skeletonRigged_Assemble");
+        GetComponent<Animator>().speed = 0;
     }
 
     // Update is called once per frame
     void Update () {
+
+        if (spawn)
+        {
+            
+            GetComponent<Animator>().speed = 1;
+            StartCoroutine(Initialize());
+        }
+           
 
         if (kill)
             Die();
@@ -148,5 +160,13 @@ public class SkeletonDeathScript : MonoBehaviour {
 
         }
 
+    }
+
+    IEnumerator Initialize()
+    {
+        yield return new WaitForSeconds(1f);
+        GetComponent<Enemy>().enabled = true;
+        spawn = false;
+        //GetComponent<Animator>().Play("SkelWalk");
     }
 }
