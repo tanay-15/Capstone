@@ -27,7 +27,15 @@ public class PlayerLife : MonoBehaviour {
         sharedInstance = null;
     }
 
+    public void SetSkillMaxLife()
+    {
+        maxLife = 120;
+        UpdateWidth();
+    }
+
 	void Start () {
+        if ((SkillTree.info.nodesActivated & SkillNodes.H_1) == SkillNodes.H_1)
+            SetSkillMaxLife();
         lifebarRatio = 1f;
         cosColor = Color.black;
         if (sharedInstance != null)
@@ -71,7 +79,7 @@ public class PlayerLife : MonoBehaviour {
         }
 	}
 
-    void UpdateWidth()
+    public void UpdateWidth()
     {
         //barGraphic.transform.localScale = new Vector3(currentLife / maxLife, 1f, 1f);
         lifebarRatio = currentLife / maxLife;

@@ -14,7 +14,18 @@ public class DemonTransformScript : MonoBehaviour
     GameObject Human;
     GameObject Demon;
 
+    float rageDrainRateNormal = 0.04f;
+    float rageDrainRateSkill = 0.032f;
+
     Animator PlayerAnimator;
+
+    private float DrainRate
+    {
+        get
+        {
+            return ((SkillTree.info.nodesActivated & SkillNodes.D_1) == SkillNodes.D_1) ? rageDrainRateSkill : rageDrainRateNormal;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +54,7 @@ public class DemonTransformScript : MonoBehaviour
         {
             if (rageBar.sharedInstance.fillAmount > 0f)
             {
-                rageBar.sharedInstance.AddRage(-Time.deltaTime * 0.04f);
+                rageBar.sharedInstance.AddRage(-Time.deltaTime * DrainRate);
             }
             if (rageBar.sharedInstance.fillAmount <= 0f && !transitioning)
             {

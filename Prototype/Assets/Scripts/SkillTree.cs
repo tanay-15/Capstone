@@ -25,7 +25,7 @@ enum MenuState
     ConfirmWindow
 }
 
-struct SkillTreeInfo
+public struct SkillTreeInfo
 {
     public int skillPoints;
     public SkillNodes nodesActivated;
@@ -33,7 +33,7 @@ struct SkillTreeInfo
 
 public class SkillTree : MonoBehaviour
 {
-    static SkillTreeInfo info;
+    public static SkillTreeInfo info;
     static int nodeIndex;
 
     MenuState state;
@@ -84,7 +84,7 @@ public class SkillTree : MonoBehaviour
         info.skillPoints = 16;
         nodeIndex = 0;
     }
-    
+
     void Start()
     {
         state = MenuState.SkillTree;
@@ -190,7 +190,7 @@ public class SkillTree : MonoBehaviour
         for(int i = 0; i < lines.Length; i++)
         {
             string[] line = lines[i].Split(',');
-            nodeDescriptions[i] = line[0];
+            nodeDescriptions[i] = line[0].Replace("\\n","\n");
             skillCosts[i] = int.Parse(line[1]);
         }
 
@@ -352,6 +352,12 @@ public class SkillTree : MonoBehaviour
                 {
                     info.skillPoints -= skillCosts[nodeIndex];
                     info.nodesActivated |= nodes[nodeIndex].node;
+
+                    //Activating Human Node 1
+                    if ((nodes[nodeIndex].node & SkillNodes.H_1) == SkillNodes.H_1)
+                    {
+                        PlayerLife.sharedInstance.SetSkillMaxLife();
+                    }
                     //nodes[nodeIndex].SetState(SkillTreeNodeState.active);
                     UpdateNodes();
                     UpdateSkillPointCounter();

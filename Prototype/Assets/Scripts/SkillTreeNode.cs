@@ -12,7 +12,8 @@ public enum SkillTreeNodeState
 
 public class SkillTreeNode : MonoBehaviour
 {
-    Image img;
+    //Image img;
+    Image[] imgs;
     public SkillNodes node;
     public GameObject lockSprite;
     public Color activeColor;
@@ -25,7 +26,8 @@ public class SkillTreeNode : MonoBehaviour
 
     void Awake()
     {
-        img = GetComponent<Image>();
+        //img = GetComponent<Image>();
+        imgs = GetComponentsInChildren<Image>();
         SetState(SkillTreeNodeState.disabled);
     }
     public void SetState(SkillTreeNodeState newState)
@@ -35,18 +37,29 @@ public class SkillTreeNode : MonoBehaviour
         {
             case SkillTreeNodeState.disabled:
                 lockSprite.SetActive(true);
-                img.color = disabledColor;
+                //img.color = disabledColor;
+                SetColors(disabledColor);
                 break;
 
             case SkillTreeNodeState.inactive:
                 lockSprite.SetActive(false);
-                img.color = inactiveColor;
+                //img.color = inactiveColor;
+                SetColors(inactiveColor);
                 break;
 
             case SkillTreeNodeState.active:
                 lockSprite.SetActive(false);
-                img.color = activeColor;
+                //img.color = activeColor;
+                SetColors(activeColor);
                 break;
+        }
+    }
+
+    void SetColors(Color col)
+    {
+        foreach (Image img in imgs)
+        {
+            img.color = col;
         }
     }
 }
