@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 //Phases
 //0 - Jump
@@ -18,11 +19,13 @@ public class Tutorial : MonoBehaviour {
     public AnimationCurve enterCurve2;
     public AnimationCurve moveCurve;
     public Text text;
-    public GameObject jumpText;
+    //public GameObject jumpText;
     public string[] messages;
+    public GameObject[] images;
     public int startPhase = 0;
     int phase = -1;
     int textPhase = -1;
+    int phaseShown = -2;
     float transitionTextSpeed = 3f;
     float defaultIconEnterSpeed = 1.5f;
     
@@ -34,6 +37,9 @@ public class Tutorial : MonoBehaviour {
 
     public Transform canvasCenter;
     SortedList<int, VisibleTrigger> pointedObjects;
+    bool showingImage;
+    Grayscale grayscale;
+    int imageIndex;
 
 
     GameObject pointedObject;
@@ -61,6 +67,9 @@ public class Tutorial : MonoBehaviour {
     }
 
 	void Start () {
+        grayscale = FindObjectOfType<Grayscale>();
+        showingImage = false;
+        imageIndex = -1;
         objectVisible = false;
         if (sharedInstance != null)
             Destroy(sharedInstance);
@@ -72,6 +81,14 @@ public class Tutorial : MonoBehaviour {
 
         //DisableObjects();
 	}
+
+    private void OnEnable()
+    {
+        foreach (GameObject img in images)
+        {
+            img.SetActive(false);
+        }
+    }
 
     IEnumerator MoveArrow()
     {
@@ -137,7 +154,9 @@ public class Tutorial : MonoBehaviour {
 
     public void SetPhase(int newPhase)
     {
+        if (newPhase <= phaseShown) { return; }
         phase = newPhase;
+        phaseShown = phase;
         if (text != null)
             StartCoroutine(TransitionText(messages[++textPhase].Replace("\\n", "\n")));
 
@@ -151,27 +170,68 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 2:
+                ShowImages(0, 1);
                 StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 break;
 
             case 3:
+                ShowImages(2, 3);
                 levitationSystem.SetLevitationActive(true);
                 StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 break;
 
             case 4:
+                ShowImages(0);
                 StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
                 break;
 
             case 5:
-                if (jumpText != null)
-                    jumpText.SetActive(false);
+                //if (jumpText != null)
+                //    jumpText.SetActive(false);
+                ShowImages(1);
+                break;
+            case 6:
+                ShowImages(2, 3);
                 break;
         }
     }
 
+    IEnumerator ShowImages_(params int[] indexes)
+    {
+        Time.timeScale = 0f;
+        grayscale.enabled = true;
+        showingImage = true;
+        foreach(int index in indexes)
+        {
+            imageIndex = index;
+            images[index].SetActive(true);
+            yield return 0;
+            while (!(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump")))
+            {
+                yield return 0;
+            }
+            images[imageIndex].SetActive(false);
+        }
+        Time.timeScale = 1f;
+        grayscale.enabled = false;
+        showingImage = false;
+    }
+
+    void ShowImages(params int[] indexes)
+    {
+        StartCoroutine(ShowImages_(indexes));
+    }
+
+    void ShowImage(int index)
+    {
+        images[index].SetActive(true);
+        Time.timeScale = 0f;
+        grayscale.enabled = true;
+        showingImage = true;
+        imageIndex = index;
+    }
+
 	void Update () {
-		
 	}
 
     public void OnObjectBecameVisible(VisibleTrigger obj, bool visible, int priority)
