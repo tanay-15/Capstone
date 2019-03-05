@@ -36,6 +36,8 @@
 		float _Speed;
 		float _Amp;
 		float _Fade;
+
+		const float pi = 3.141592653589793238462;
 		struct appdata
 		{
 			float4 vertex : POSITION;
@@ -46,7 +48,7 @@
 		void vert(inout appdata_full v)
 		{
 			float t = _Time.x * _Speed;
-			float waveHeight = sin(t + v.vertex.x * _Freq) * _Amp +sin(t * 2 + v.vertex.x * _Freq * 2) * _Amp;
+			float waveHeight = sin(t + v.vertex.x * _Freq) * (_Amp/2) + sin(t *2 + v.vertex.x * _Freq*2) * (_Amp/2);
 			v.vertex.y += waveHeight;
 			
 			v.normal = normalize(float3(v.normal.x + waveHeight, v.normal.y, v.normal.z));
