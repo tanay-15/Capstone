@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkeletonBoss : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class SkeletonBoss : MonoBehaviour
 
     public GameObject ImpactAnim;
 
+    public Slider BossHealthBar;
+
     public enum BossStates
     {
         Idle,
@@ -70,6 +73,8 @@ public class SkeletonBoss : MonoBehaviour
 
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -79,6 +84,7 @@ public class SkeletonBoss : MonoBehaviour
         Attack1();
         Attack2();
 
+        HealthUpdate();
         if (AttackDone)
         {
             this.transform.position = Vector2.MoveTowards(this.transform.position, startpointpos, 4f * Time.deltaTime);
@@ -117,6 +123,16 @@ public class SkeletonBoss : MonoBehaviour
         }
 
      
+    }
+
+    void HealthUpdate()
+    {
+       
+        BossHealthBar.value = this.Health;
+        if(this.Health < 0)
+        {
+            Destroy(BossHealthBar);
+        }
     }
 
     public void AttackOver()
@@ -239,6 +255,22 @@ public class SkeletonBoss : MonoBehaviour
             var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
 
+        }
+
+        if(collision.gameObject.name == "projectile" && Vector3.Distance(collision.transform.position,this.transform.position) < 1.5f)
+        {
+            applyDamage(15);
+
+            var impact = Instantiate(ImpactAnim, new Vector2(this.transform.position.x, this.transform.position.y + 0.8f), Quaternion.identity);
+            impact.gameObject.SetActive(true);
+        }
+
+        if(collision.gameObject.name == "Grabbable" && Vector3.Distance(collision.transform.position,this.transform.position) < 1.5f)
+        {
+            applyDamage(15);
+
+            var impact = Instantiate(ImpactAnim, new Vector2(this.transform.position.x, this.transform.position.y + 0.8f), Quaternion.identity);
+            impact.gameObject.SetActive(true);
         }
 
 
