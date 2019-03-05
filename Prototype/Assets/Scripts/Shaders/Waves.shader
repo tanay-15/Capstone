@@ -4,7 +4,7 @@
     {
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_Tint("Colour Tint", Color) = (1,1,1,1)
-		_Freq("Frequency", Range(0,5)) = 3
+		_Freq("Frequency", Range(0,20)) = 10
 		_Speed("Speed", Range(0,100)) = 10
 		_Amp("Amplitude", Range(0,1)) = 0.5
 		_Fade("Fade",Range(0.0,1.0)) = 1.0
@@ -46,9 +46,9 @@
 		void vert(inout appdata_full v)
 		{
 			float t = _Time.x * _Speed;
-			float waveHeight = sin(t + v.vertex.x * _Freq) * _Amp;
-
+			float waveHeight = sin(t + v.vertex.x * _Freq) * _Amp +sin(t * 2 + v.vertex.x * _Freq * 2) * _Amp;
 			v.vertex.y += waveHeight;
+			
 			v.normal = normalize(float3(v.normal.x + waveHeight, v.normal.y, v.normal.z));
 			
 		}
