@@ -6,6 +6,7 @@ public class PuzzleButton_Target : MonoBehaviour
 {
     public Vector2 targetPosition;
 
+    [HideInInspector]
     public bool moving;
 
     // speed at which object moves
