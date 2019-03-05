@@ -257,7 +257,7 @@ public class SkeletonBoss : MonoBehaviour
 
         }
 
-        if(collision.gameObject.name == "projectile" && Vector3.Distance(collision.transform.position,this.transform.position) < 1.5f)
+        if(collision.gameObject.tag == "projectile" && Vector3.Distance(collision.transform.position,this.transform.position) < 1.5f)
         {
             applyDamage(15);
 
@@ -265,16 +265,21 @@ public class SkeletonBoss : MonoBehaviour
             impact.gameObject.SetActive(true);
         }
 
-        if(collision.gameObject.name == "Grabbable" && Vector3.Distance(collision.transform.position,this.transform.position) < 1.5f)
+       
+
+
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Grabbable")
         {
             applyDamage(15);
 
             var impact = Instantiate(ImpactAnim, new Vector2(this.transform.position.x, this.transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
         }
-
-
-
     }
 
     IEnumerator IsPunchedReset()
