@@ -7,8 +7,8 @@ using UnityStandardAssets.ImageEffects;
 
 enum PauseMenuOption
 {
-    Resume = 0,
-    SkillTree,
+    SkillTree = 0,
+    Resume,
     Options,
     ReturnHubWorld,
     ReturnMainMenu
@@ -61,7 +61,7 @@ public class PauseMenu : MonoBehaviour {
         selectIndex = PauseMenuOption.Resume;
         prevIndex = selectIndex;
         menuState = PauseMenuState.Main;
-        menuStrings = new string[] { "Resume", "Skill Tree", "Options", "Return to Hub World", "Return to Main Menu" };
+        menuStrings = new string[] { "Skill Tree", "Resume", "Options", "Return to Hub World", "Return to Main Menu" };
         transparentColor = new Color(1f, 1f, 1f, 0.5f);
         disabledColor = new Color(1f, 1f, 1f, 0.2f);
         //InitializeText();
@@ -93,7 +93,7 @@ public class PauseMenu : MonoBehaviour {
 
         if (GamePaused)
         {
-            selectIndex = PauseMenuOption.Resume;
+            selectIndex = (disableSkillTree) ? PauseMenuOption.Resume : PauseMenuOption.SkillTree;
             prevIndex = selectIndex;
             InitializeText();
         }
@@ -125,13 +125,17 @@ public class PauseMenu : MonoBehaviour {
 
     void CheckForArrowKeys()
     {
+        bool moveDown = false;
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || axisDirectionPressed == 1)
         {
             selectIndex--;
+            WrapAround();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || axisDirectionPressed == -1)
         {
             selectIndex++;
+            moveDown = true;
+            WrapAround();
         }
 
         //Skip return to Hub World if on a tutorial level
@@ -139,20 +143,24 @@ public class PauseMenu : MonoBehaviour {
             (disableSkillTree && selectIndex == PauseMenuOption.SkillTree) ||
             (disableOptions && selectIndex == PauseMenuOption.Options))
         {
-            selectIndex += (prevIndex < selectIndex) ? 1 : -1;
+            selectIndex += (moveDown) ? 1 : -1;
+            WrapAround();
         }
-
-        //Wrap around
-        if ((int)selectIndex > menuStrings.Length - 1)
-            selectIndex -= menuStrings.Length;
-        else if (selectIndex < 0)
-            selectIndex += menuStrings.Length;
 
         if (selectIndex != prevIndex)
         {
             UpdateMenu(selectIndex, prevIndex);
             prevIndex = selectIndex;
         }
+    }
+
+    void WrapAround()
+    {
+        //Wrap around
+        if ((int)selectIndex > menuStrings.Length - 1)
+            selectIndex -= menuStrings.Length;
+        else if (selectIndex < 0)
+            selectIndex += menuStrings.Length;
     }
 
     void UpdateMenu(PauseMenuOption newIndex, PauseMenuOption oldIndex)
