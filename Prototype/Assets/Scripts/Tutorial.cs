@@ -4,6 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
+/*
+//Triggers
+1 - Melee
+2 - Roll
+3 - Melee
+4 - Levitation
+5 - Stomp
+6 - Arrow
+7 - Button
+
+
+*/
 //Phases
 //0 - Jump
 //1 - Long jump
@@ -167,31 +179,50 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 1:
+                ShowImages(2);
                 break;
 
             case 2:
-                ShowImages(0, 1);
-                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
+                ShowImages(1);
                 break;
 
             case 3:
-                ShowImages(2, 3);
+                ShowImages(3);
                 levitationSystem.SetLevitationActive(true);
                 StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 break;
 
             case 4:
-                ShowImages(0);
-                StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
+                ShowImages(4);
+                //StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
                 break;
 
             case 5:
                 //if (jumpText != null)
                 //    jumpText.SetActive(false);
-                ShowImages(1);
+                StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
+                ShowImages(0);
                 break;
             case 6:
-                ShowImages(2, 3);
+                ShowImages(5);
+                break;
+            case 7:
+                ShowImages(0);
+                break;
+            case 8:
+                ShowImages(1);
+                break;
+            case 9:
+                ShowImages(2);
+                break;
+            case 10:
+                ShowImages(3);
+                break;
+            case 11:
+                ShowImages(5);
+                break;
+            case 12:
+                ShowImages(6);
                 break;
         }
     }
