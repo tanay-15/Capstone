@@ -26,6 +26,8 @@ public class PauseMenu : MonoBehaviour {
     public GameObject pauseMenu;
 
     public Text[] menuText;
+    public Image[] menuTextImages;
+    public GameObject cursor;
     public Image black;
     string[] menuStrings;
     PauseMenuOption selectIndex;
@@ -167,6 +169,8 @@ public class PauseMenu : MonoBehaviour {
     {
         menuText[(int)oldIndex].color = transparentColor;
         menuText[(int)newIndex].color = Color.white;
+
+        cursor.transform.position = menuTextImages[(int)newIndex].transform.position;
     }
 
     //Return from skill tree back to pause menu
@@ -250,6 +254,7 @@ public class PauseMenu : MonoBehaviour {
             (index == (int)PauseMenuOption.Options && disableOptions));
     }
 
+    //TODO: Remove old text GameObjects from menu
     void InitializeText()
     {
         for (int i = 0; i < menuStrings.Length; i++)
@@ -261,7 +266,13 @@ public class PauseMenu : MonoBehaviour {
                 menuText[i].color = IsTextDisabled(i) ? disabledColor : transparentColor;
             }
             else
+            {
                 menuText[i].color = Color.white;
+            }
+
+            menuTextImages[i].color = IsTextDisabled(i) ? disabledColor : Color.white;
         }
+
+        cursor.transform.position = menuTextImages[(int)selectIndex].transform.position;
     }
 }
