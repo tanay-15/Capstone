@@ -275,6 +275,7 @@ public class SkeletonBoss : MonoBehaviour
     {
         if (collision.gameObject.tag == "Grabbable")
         {
+            //this.Health = this.Health - 15;
             applyDamage(15);
 
             var impact = Instantiate(ImpactAnim, new Vector2(this.transform.position.x, this.transform.position.y + 0.8f), Quaternion.identity);
