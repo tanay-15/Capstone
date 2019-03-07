@@ -22,6 +22,7 @@ public class PlayerStates : MonoBehaviour
     public float jumpSpeed = 5.0f;
     public float forceX = 8.0f;
     public float forceY = 6.0f;
+    public float slideSpeed = 1.8f;
     public ArrowInfo shootingArrowInfo;
     int attackCounter = 0;
     int groundCount = 0;
@@ -442,7 +443,7 @@ public class PlayerStates : MonoBehaviour
                     if (hitback != null)
                     {
                         PlayerAnimator.Play("WallSlide");
-                        Rb2d.velocity = new Vector2(Rb2d.velocity.x, -0.8f);
+                        Rb2d.velocity = new Vector2(Rb2d.velocity.x, -slideSpeed);
                     }
                     else
                     {
