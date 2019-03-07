@@ -250,7 +250,7 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.Stomp:
                 {
-                    //if (groundCount < 1)
+                    if (groundCount < 1)
                     {
                         PlayerAnimator.Play("Jump");
                         Rb2d.velocity = Vector3.down * 2 * jumpSpeed;
@@ -277,7 +277,7 @@ public class PlayerStates : MonoBehaviour
                             StartCoroutine("Stomp");
 
                             //status = State.Default;
-                            //groundCount++;
+                            groundCount++;
                         }
                     }
 
