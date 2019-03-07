@@ -20,7 +20,7 @@ public class PuzzleButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerPresent && Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("PS4TRIANGLE"))
+        if(playerPresent && (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("PS4TRIANGLE")))
         {
             
             if (EmitPartciles == false)
