@@ -210,7 +210,11 @@ public class PlayerStates : MonoBehaviour
                     PlayerAnimator.Play("Jump");
 
                     if (vAxis < -0.5f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
+                    {
+                        Physics2D.IgnoreLayerCollision(14, 15);
                         status = State.Stomp;
+                    }
+                        
 
 
 
@@ -250,6 +254,7 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.Stomp:
                 {
+
                     if (groundCount < 1)
                     {
                         PlayerAnimator.Play("Jump");
@@ -274,6 +279,7 @@ public class PlayerStates : MonoBehaviour
                             }
 
                             onStateStart = false;
+                            Physics2D.IgnoreLayerCollision(14, 15,false);
                             StartCoroutine("Stomp");
 
                             //status = State.Default;
