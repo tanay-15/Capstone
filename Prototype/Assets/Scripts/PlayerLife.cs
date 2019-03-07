@@ -9,6 +9,8 @@ public class PlayerLife : MonoBehaviour {
     public float maxLife = 100f;
     [System.NonSerialized]
     public float currentLife;
+    public Image playerIcon;
+    public Image demonIcon;
     public Image barGraphic;
     public Image yellowBarGraphic;
     float time = 0f;
@@ -22,6 +24,8 @@ public class PlayerLife : MonoBehaviour {
     float lerpAmount = 0.08f;
     float lerpThreshold = 0.002f;
 
+    Color darkGray = new Color(0.25f, 0.25f, 0.25f, 1f);
+
     static PlayerLife()
     {
         sharedInstance = null;
@@ -31,6 +35,12 @@ public class PlayerLife : MonoBehaviour {
     {
         maxLife = 120;
         UpdateWidth();
+    }
+
+    public void SetDemonIcon(bool set)
+    {
+        playerIcon.color = (set) ? darkGray : Color.white;
+        demonIcon.color = (set) ? Color.white : darkGray;
     }
 
 	void Start () {
@@ -47,6 +57,8 @@ public class PlayerLife : MonoBehaviour {
 
         goodColor = barGraphic.color;
         badColor = Color.red;
+
+        SetDemonIcon(false);
 	}
 	
 	void Update () {

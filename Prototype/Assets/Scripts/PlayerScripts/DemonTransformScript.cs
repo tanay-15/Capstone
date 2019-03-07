@@ -100,6 +100,7 @@ public class DemonTransformScript : MonoBehaviour
         //0 - Levitation icon
         //2 - Orbit icon
         UIIcons.sharedInstance.SwitchIcons(0, 2, !toDemon);
+        PlayerLife.sharedInstance.SetDemonIcon(toDemon);
         transitioning = false;
 
     }
