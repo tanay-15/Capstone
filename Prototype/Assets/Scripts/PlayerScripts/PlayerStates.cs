@@ -170,10 +170,19 @@ public class PlayerStates : MonoBehaviour
                     if (Input.GetButtonDown("Fire1"))
                         status = State.Melee;
 
-                    if (Input.GetButtonDown("Fire2") && ArrowCounter.sharedInstance.ArrowCount > 0 && Time.timeScale > 0)
+                    if (Input.GetButtonDown("Fire2") && Time.timeScale > 0)
                     {
-                        if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
-                            status = State.ChargingArrow;
+                        if (ArrowCounter.sharedInstance.ArrowCount > 0)
+                        {
+                            if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
+                            {
+                                status = State.ChargingArrow;
+                            }
+                        }
+                        else
+                        {
+                            ArrowCounter.sharedInstance.Blink();
+                        }
                     }
 
                     if (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f))
@@ -208,10 +217,19 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
-                    if (Input.GetButtonDown("Fire2") && ArrowCounter.sharedInstance.ArrowCount > 0 && Time.timeScale > 0)
+                    if (Input.GetButtonDown("Fire2") && Time.timeScale > 0)
                     {
-                        if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
-                            status = State.ChargingArrow;
+                        if (ArrowCounter.sharedInstance.ArrowCount > 0)
+                        {
+                            if (FindObjectOfType<DemonTransformScript>() != null && !FindObjectOfType<DemonTransformScript>().DemonModeActive)
+                            {
+                                status = State.ChargingArrow;
+                            }
+                        }
+                        else
+                        {
+                            ArrowCounter.sharedInstance.Blink();
+                        }
                     }
 
                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
