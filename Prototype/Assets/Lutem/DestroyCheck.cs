@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DestroyCheck : MonoBehaviour {
 
+    public UnityEvent onDestroy;
 	List<GameObject> tiles;
 
 	// Use this for initialization
@@ -29,6 +31,7 @@ public class DestroyCheck : MonoBehaviour {
 		if (die) {
 			this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 			this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            onDestroy.Invoke();
 		}
 	}
 }
