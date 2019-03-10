@@ -15,7 +15,7 @@ public class Levitation : MonoBehaviour {
     public ParticleSystem particles;
     [System.NonSerialized]
     public GameObject heldObject;
-    public float mouseZPosition = 0f;
+    public float mouseZPosition = 0.0f;
     float minimumMagnitude = 0.15f;
     float joystickSpeed = 6f;
     bool rightTriggerDown;
@@ -132,7 +132,7 @@ public class Levitation : MonoBehaviour {
             Ray r = new Ray(PlayerPos, distance);
             grabPosition = r.GetPoint(maxGrabDistance);
         }
-        particles.gameObject.transform.position = grabPosition;
+        particles.gameObject.transform.position = grabPosition + new Vector3(0, 0, -2.0f);// ordering correction 
     }
 
     void CalculatePositionJoystick()
@@ -144,7 +144,7 @@ public class Levitation : MonoBehaviour {
 
         grabPosition = PlayerPos + (Vector3)baseJoystickPosition;
         
-        particles.gameObject.transform.position = grabPosition;
+        particles.gameObject.transform.position = grabPosition + new Vector3(0, 0, -2.0f);
     }
     
     void UpdateColorAndIcon()
