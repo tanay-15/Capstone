@@ -20,19 +20,19 @@ public class GroundTriggerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != 15)
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.layer == 11)
             grounded = true;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != 15 && !collision.gameObject.GetComponent<FallingPlatform>())
+        if ((collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.layer == 11) && !collision.gameObject.GetComponent<FallingPlatform>())
             grounded = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != 15)
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10 || collision.gameObject.layer == 11)
             grounded = false;
 
 
