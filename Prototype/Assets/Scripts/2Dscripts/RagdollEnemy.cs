@@ -82,7 +82,7 @@ public class RagdollEnemy : BasicEnemy {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable" || collision.gameObject.name == "AttackTrigger")
+        if (collision.gameObject.tag == "projectile" || collision.gameObject.tag == "Grabbable" || collision.gameObject.name == "AttackTrigger" || collision.gameObject.name == "StompTrigger")
         {
             if (fadeAfterDeath)
                 StartCoroutine(DieRoutine());
