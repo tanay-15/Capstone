@@ -56,6 +56,11 @@ public class SkeletonBoss : MonoBehaviour
 
     private Animator anim;
 
+    public List<GameObject> skeletons;
+    public GameObject flyskull1;
+    public GameObject skel1;
+    public GameObject skel2;
+
     
     void Start()
     {
@@ -154,6 +159,21 @@ public class SkeletonBoss : MonoBehaviour
             {
                 Attack_Resurect();
             }
+
+            if(skeletons.Count > 0)
+            {
+                if (skel1 == null)
+                {
+                    skeletons.Remove(skel1);
+                }
+
+                if (skel2 == null)
+                {
+                    skeletons.Remove(skel2);
+                }
+            }
+         
+
         }
 
         skelspawnCounter = skelspawnCounter - Time.deltaTime;
@@ -211,9 +231,16 @@ public class SkeletonBoss : MonoBehaviour
     void Attack_Resurect()
     {
         //Spawn 2 skeletons: one at left point, one at right point
+        //Need to check how many skeletons are there
+        if(skel1 == null && skel2 == null)
+        {
+            skel1 = Instantiate(skeletonPrefab, spawnPointLeftPos, Quaternion.identity);
+            skel2 = Instantiate(skeletonPrefab, spawnPointRightPos, Quaternion.identity);
+           skeletons.Add(skel1);
+            skeletons.Add(skel2);
+        }
 
-        Instantiate(skeletonPrefab, spawnPointLeftPos, Quaternion.identity);
-        Instantiate(skeletonPrefab, spawnPointRightPos, Quaternion.identity);
+      
 
         skelspawnCounter = 12f;
     }
@@ -221,7 +248,11 @@ public class SkeletonBoss : MonoBehaviour
 
     void Flying_Skull_Resurect()
     {
-        Instantiate(flyingSkullPrefab, skullspawnPoint.transform.position, Quaternion.identity);
+        if(flyskull1 == null)
+        {
+            flyskull1 = Instantiate(flyingSkullPrefab, skullspawnPoint.transform.position, Quaternion.identity);
+        }
+        
 
         flyspawnCounter = 14f;
     }
