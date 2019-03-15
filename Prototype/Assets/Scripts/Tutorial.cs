@@ -229,6 +229,7 @@ public class Tutorial : MonoBehaviour {
 
     IEnumerator ShowImages_(params int[] indexes)
     {
+        PauseMenu.sharedInstance.PauseMenuDisabled = true;
         Time.timeScale = 0f;
         grayscale.enabled = true;
         showingImage = true;
@@ -246,6 +247,7 @@ public class Tutorial : MonoBehaviour {
         Time.timeScale = 1f;
         grayscale.enabled = false;
         showingImage = false;
+        PauseMenu.sharedInstance.PauseMenuDisabled = false;
     }
 
     void ShowImages(params int[] indexes)

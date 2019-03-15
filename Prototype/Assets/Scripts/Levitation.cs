@@ -299,20 +299,22 @@ public class Levitation : MonoBehaviour {
     }
 	
 	void Update () {
-
-        CheckJoystickAndMouse();
-        if (useJoystick)
-            CalculatePositionJoystick();
-        else
-            CalculatePositionMouse();
-        DullParticles();
-        if (Active)
+        if (Time.deltaTime > 0)
         {
-            UpdateColorAndIcon();
-            CheckRightTrigger();
-            CheckForButtonPress();
-            ResetTriggerCheck();
-            MoveHeldObject();
+            CheckJoystickAndMouse();
+            if (useJoystick)
+                CalculatePositionJoystick();
+            else
+                CalculatePositionMouse();
+            DullParticles();
+            if (Active)
+            {
+                UpdateColorAndIcon();
+                CheckRightTrigger();
+                CheckForButtonPress();
+                ResetTriggerCheck();
+                MoveHeldObject();
+            }
         }
 	}
 }

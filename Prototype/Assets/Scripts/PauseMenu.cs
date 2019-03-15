@@ -45,6 +45,8 @@ public class PauseMenu : MonoBehaviour {
     public static PauseMenu sharedInstance;
     [System.NonSerialized]
     public bool GamePaused;
+    [System.NonSerialized]
+    public bool PauseMenuDisabled = false;
 
     Grayscale grayscale;
 
@@ -71,7 +73,7 @@ public class PauseMenu : MonoBehaviour {
     }
 	
 	void Update () {
-		if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options")) && (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options))
+		if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options")) && (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options) && !PauseMenuDisabled)
         {
             PauseUnpause();
         }

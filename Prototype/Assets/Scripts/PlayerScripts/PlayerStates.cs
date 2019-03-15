@@ -10,7 +10,7 @@ public class PlayerStates : MonoBehaviour
 // State
     public enum State
     {
-        Default, InAir, Melee, Roll, RangedAim, ChargingArrow,Stomp, WallJump, WallSlide, Panning
+        Default, InAir, Melee, Roll, RangedAim, ChargingArrow, Stomp, WallJump, WallSlide, Panning
     };
     [Header("State")]
     public State status;
@@ -161,17 +161,17 @@ public class PlayerStates : MonoBehaviour
                         PlayerAnimator.Play("Idle");
 
 
-                    if (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
+                    if (Time.timeScale > 0f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
                     {
                         Rb2d.velocity = Vector3.up * jumpSpeed;
 
                     }
 
 
-                    if (Input.GetButtonDown("Fire1"))
+                    if (Time.timeScale > 0f && Input.GetButtonDown("Fire1"))
                         status = State.Melee;
 
-                    if (Input.GetButtonDown("Fire2") && Time.timeScale > 0)
+                    if (Time.timeScale > 0f && Input.GetButtonDown("Fire2"))
                     {
                         if (ArrowCounter.sharedInstance.ArrowCount > 0)
                         {
@@ -186,7 +186,7 @@ public class PlayerStates : MonoBehaviour
                         }
                     }
 
-                    if (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f))
+                    if (Time.timeScale > 0f && (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f)))
                     {
                         status = State.Roll;
                     }
@@ -197,7 +197,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         movable = true;
 
-                    if (Input.GetMouseButtonDown(2))
+                    if (Time.timeScale > 0f && Input.GetMouseButtonDown(2))
                     {
                         status = State.Panning;
                         prevMousePosition = (Vector2)Input.mousePosition;
@@ -210,7 +210,7 @@ public class PlayerStates : MonoBehaviour
                     //PlayerAnimator.Play("WallJump");
                     PlayerAnimator.Play("Jump");
 
-                    if (vAxis < -0.5f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
+                    if (Time.timeScale > 0f && vAxis < -0.5f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
                     {
                         Physics2D.IgnoreLayerCollision(14, 15);
                         status = State.Stomp;
@@ -222,7 +222,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
-                    if (Input.GetButtonDown("Fire2") && Time.timeScale > 0)
+                    if (Time.timeScale > 0 && Input.GetButtonDown("Fire2"))
                     {
                         if (ArrowCounter.sharedInstance.ArrowCount > 0)
                         {
@@ -315,7 +315,7 @@ public class PlayerStates : MonoBehaviour
                     }
 
 
-                    if (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f))
+                    if (Time.timeScale > 0f && (Input.GetButtonDown("PS4CIRCLE") || (Input.GetAxis("Mouse ScrollWheel") > 0f)))
                     {
                         movable = true;
                         onStateStart = true;
@@ -450,7 +450,7 @@ public class PlayerStates : MonoBehaviour
                         status = State.InAir;
                     }
 
-                    if ((Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")) && hitback)
+                    if (Time.timeScale > 0f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")) && hitback)
                     {
                         movable = false;
                         Rb2d.velocity = Vector2.zero;

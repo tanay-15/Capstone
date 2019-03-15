@@ -39,7 +39,7 @@ public class DemonTransformScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")))
+        if (Time.timeScale > 0f && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")))
         {
             if (!DemonModeActive)
             {
