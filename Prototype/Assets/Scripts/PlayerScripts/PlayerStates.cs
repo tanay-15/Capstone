@@ -98,8 +98,8 @@ public class PlayerStates : MonoBehaviour
 
         //// Movement ////
 
-        float hAxis = Input.GetAxis("Horizontal");
-        float vAxis = Input.GetAxis("Vertical");
+        float hAxis = (Time.timeScale > 0f) ? Input.GetAxis("Horizontal") : 0f;
+        float vAxis = (Time.timeScale > 0f) ? Input.GetAxis("Vertical") : 0f;
 
         if (movable)
         {
@@ -197,7 +197,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         movable = true;
 
-                    if (Time.timeScale > 0f && Input.GetMouseButtonDown(2))
+                    if (Time.timeScale > 0f && (Input.GetMouseButtonDown(2) || Input.GetButtonDown("LeftTrigger1")))
                     {
                         status = State.Panning;
                         prevMousePosition = (Vector2)Input.mousePosition;
@@ -468,7 +468,7 @@ public class PlayerStates : MonoBehaviour
                 }
 
             case State.Panning:
-                if (Input.GetMouseButtonUp(2))
+                if (Input.GetMouseButtonUp(2) || Input.GetButtonUp("LeftTrigger1"))
                 {
                     status = (grounded) ? State.Default : State.InAir;
                     cameraFocus.localPosition = Vector3.zero;
