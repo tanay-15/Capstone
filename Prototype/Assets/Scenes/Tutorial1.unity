@@ -648,7 +648,7 @@ PrefabInstance:
     - target: {fileID: 5003251897068655541, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.079
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 4347613659418718610, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
@@ -658,7 +658,7 @@ PrefabInstance:
     - target: {fileID: 4347613659418718610, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.016
+      value: 0.45299998
       objectReference: {fileID: 0}
     - target: {fileID: 2700114356260428792, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
@@ -1255,7 +1255,7 @@ PrefabInstance:
     - target: {fileID: 7027166449216545933, guid: 7737ee4d17b21ab4ca84f59e23c67039,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6
+      value: 2.45
       objectReference: {fileID: 0}
     - target: {fileID: 7027166449216545933, guid: 7737ee4d17b21ab4ca84f59e23c67039,
         type: 3}
@@ -2621,8 +2621,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344991410}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.24, y: 5.23, z: 0}
-  m_LocalScale: {x: -0.099999994, y: 0.099999994, z: 1}
+  m_LocalPosition: {x: 3.44, y: 0.87, z: 0}
+  m_LocalScale: {x: -0.05, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 1637191312}
   m_RootOrder: 2
@@ -4109,7 +4109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 0}
-  levelDisplayText: {fileID: 1705562570}
+  levelDisplayText: {fileID: 1344991412}
   levelName: Tutorial2
   levelDisplayName: Next
   locked: 0
@@ -4239,12 +4239,6 @@ MonoBehaviour:
     m_TypeName: VisibleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   priority: 3
   arrowOffset: {x: 0, y: 0, z: 0}
---- !u!102 &1705562570 stripped
-TextMesh:
-  m_CorrespondingSourceObject: {fileID: 102713148575371082, guid: b4f003e3f2cf58c44a5dec481e9f3fad,
-    type: 3}
-  m_PrefabInstance: {fileID: 1797637612}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1712802819
 GameObject:
   m_ObjectHideFlags: 0
