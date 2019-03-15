@@ -25,7 +25,7 @@
 		Blend One OneMinusSrcAlpha
 
 		CGPROGRAM
-#pragma surface surf Lambert vertex:vert nofog alpha:fade
+#pragma surface surf Lambert vertex:vert alpha
 #pragma multi_compile _ PIXELSNAP_ON
 //#include "UnitySprites.cginc"
 
