@@ -207,7 +207,7 @@ public class Tutorial : MonoBehaviour {
                 ShowImages(5);
                 break;
             case 7:
-                ShowImages(0);
+                ShowImages(7);
                 break;
             case 8:
                 ShowImages(1);
@@ -216,7 +216,7 @@ public class Tutorial : MonoBehaviour {
                 ShowImages(2);
                 break;
             case 10:
-                ShowImages(3);
+                ShowImages(3,0);
                 break;
             case 11:
                 ShowImages(5);

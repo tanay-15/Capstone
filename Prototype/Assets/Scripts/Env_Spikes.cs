@@ -26,6 +26,8 @@ public class Env_Spikes : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerLifeController>().GetHit(-5);
         }
+        if (collision.gameObject.layer == 15)
+            Destroy(collision.gameObject);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
