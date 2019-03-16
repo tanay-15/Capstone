@@ -98,8 +98,8 @@ public class PlayerStates : MonoBehaviour
 
         //// Movement ////
 
-        float hAxis = (Time.timeScale > 0f) ? Input.GetAxis("Horizontal") : 0f;
-        float vAxis = (Time.timeScale > 0f) ? Input.GetAxis("Vertical") : 0f;
+        float hAxis = Input.GetAxis("Horizontal") : 0f;
+        float vAxis = Input.GetAxis("Vertical") : 0f;
 
         if (movable)
         {
@@ -118,9 +118,9 @@ public class PlayerStates : MonoBehaviour
 
         if ((status != State.ChargingArrow || status!=State.InAir || status != State.WallJump)&& movable)
         {
-            if (hAxis > 0 && !facingRight)
+            if (hAxis > 0 && !facingRight && Time.timeScale > 0f)
                 flip();
-            else if (hAxis < 0 && facingRight)
+            else if (hAxis < 0 && facingRight && Time.timeScale > 0f)
                 flip();
         }
 
@@ -155,10 +155,12 @@ public class PlayerStates : MonoBehaviour
             case State.Default:
                 {
                     groundCount = 0;
-                    if (Mathf.Abs(hAxis) > 0.1f)
-                        PlayerAnimator.Play("Run");
-                    else
-                        PlayerAnimator.Play("Idle");
+                    if (Time.timeScale > 0f){
+                        if (Mathf.Abs(hAxis) > 0.1f)
+                            PlayerAnimator.Play("Run");
+                        else
+                            PlayerAnimator.Play("Idle");
+                    }
 
 
                     if (Time.timeScale > 0f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
