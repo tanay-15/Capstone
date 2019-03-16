@@ -37,17 +37,18 @@ public class MainMenuBasic : MonoBehaviour {
 
     void CheckAxis()
     {
-        if (Input.GetAxis("Vertical") >= minAxis && axisDirection != 1)
+        //For some reason a bug happens in this script if GetAxis is used, but not any other script
+        if (Input.GetAxisRaw("Vertical") >= minAxis && axisDirection != 1)
         {
             axisDirection = 1;
             axisDirectionPressed = 1;
         }
-        else if (Input.GetAxis("Vertical") <= -minAxis && axisDirection != -1)
+        else if (Input.GetAxisRaw("Vertical") <= -minAxis && axisDirection != -1)
         {
             axisDirection = -1;
             axisDirectionPressed = -1;
         }
-        else if (Input.GetAxis("Vertical") == 0 && axisDirection != 0)
+        else if (Input.GetAxisRaw("Vertical") == 0 && axisDirection != 0)
         {
             axisDirection = 0;
             axisDirectionPressed = 0;
@@ -77,11 +78,11 @@ public class MainMenuBasic : MonoBehaviour {
 
     void CheckForArrowKeys()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("PS4DPadY") == 1 || axisDirectionPressed == 1)
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || axisDirectionPressed == 1)
         {
             selectIndex--;
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("PS4DPadY") == -1 || axisDirectionPressed == -1)
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || axisDirectionPressed == -1)
         {
             selectIndex++;
         }

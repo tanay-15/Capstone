@@ -131,12 +131,12 @@ public class PauseMenu : MonoBehaviour {
     void CheckForArrowKeys()
     {
         bool moveDown = false;
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("PS4DPadY") == 1 || axisDirectionPressed == 1)
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || axisDirectionPressed == 1)
         {
             selectIndex--;
             WrapAround();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("PS4DPadY") == -1 || axisDirectionPressed == -1)
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || axisDirectionPressed == -1)
         {
             selectIndex++;
             moveDown = true;

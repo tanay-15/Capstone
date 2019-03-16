@@ -279,22 +279,22 @@ public class SkillTree : MonoBehaviour
         {
             //TODO: Copy code from the Pause Menu and make an input manager
             //Left: 0, Up: 1, Right: 2, Down: 3
-            if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("PS4DPadX") == -1 || hAxisDirectionPressed == -1) && nodeIndex != neighborMatrix[nodeIndex, 0] && canMove(neighborMatrix[nodeIndex, 0]))
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || hAxisDirectionPressed == -1) && nodeIndex != neighborMatrix[nodeIndex, 0] && canMove(neighborMatrix[nodeIndex, 0]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 0];
                 MoveCursor();
             }
-            if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxis("PS4DPadY") == 1 || vAxisDirectionPressed == 1) && nodeIndex != neighborMatrix[nodeIndex, 1] && canMove(neighborMatrix[nodeIndex, 1]))
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || vAxisDirectionPressed == 1) && nodeIndex != neighborMatrix[nodeIndex, 1] && canMove(neighborMatrix[nodeIndex, 1]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 1];
                 MoveCursor();
             }
-            if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("PS4DPadX") == 1 || hAxisDirectionPressed == 1) && nodeIndex != neighborMatrix[nodeIndex, 2] && canMove(neighborMatrix[nodeIndex, 2]))
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || hAxisDirectionPressed == 1) && nodeIndex != neighborMatrix[nodeIndex, 2] && canMove(neighborMatrix[nodeIndex, 2]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 2];
                 MoveCursor();
             }
-            if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxis("PS4DPadY") == -1 || vAxisDirectionPressed == -1) && nodeIndex != neighborMatrix[nodeIndex, 3] && canMove(neighborMatrix[nodeIndex, 3]))
+            if ((Input.GetKeyDown(KeyCode.DownArrow) ||  vAxisDirectionPressed == -1) && nodeIndex != neighborMatrix[nodeIndex, 3] && canMove(neighborMatrix[nodeIndex, 3]))
             {
                 nodeIndex = neighborMatrix[nodeIndex, 3];
                 MoveCursor();
