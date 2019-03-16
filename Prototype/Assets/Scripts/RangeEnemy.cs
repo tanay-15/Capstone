@@ -92,16 +92,6 @@ public class RangeEnemy : Enemy {
         }
     }
 
-    public override void applyDamage(int damage)
-    {
-
-        this.health = this.health - damage;
-
-        events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
-
-
-
-    }
 
     public void ThrowAxe()
     {
@@ -149,7 +139,6 @@ public class RangeEnemy : Enemy {
 
                 var impact = Instantiate(ImpactAnim, collision.transform.position, Quaternion.identity);
                 impact.gameObject.SetActive(true);
-                Destroy(collision.gameObject);
             }
 
 

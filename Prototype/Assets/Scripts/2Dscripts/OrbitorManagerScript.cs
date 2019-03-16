@@ -36,18 +36,21 @@ public class OrbitorManagerScript : MonoBehaviour {
 // Throwing projectiles
         if ((Input.GetMouseButtonDown(0) || Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.7f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.7f) && ResetThrow == false)
         {
-            Vector3 offset = new Vector3(0.5f, 0, 0) * (Input.GetAxis("RHorizontal") > 0 ? 1 : -1);
+            Vector3 offset = new Vector3(0,0,0);
             Vector3 direction = new Vector3();
 
             if (Input.GetMouseButtonDown(0))
-            {
+            {              
                 Vector3 mouseClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - transform.position - offset);
+                direction = Vector3.Normalize(new Vector3(mouseClick.x, mouseClick.y, 0) - transform.position);
+                offset = new Vector3(0.5f, 0, 0) * (direction.x > 0 ? 1 : -1);
             }
             if ((Mathf.Abs(Input.GetAxis("RHorizontal")) > 0.7f || Mathf.Abs(Input.GetAxis("RVertical")) > 0.7f))
             {
+               
                 direction = Vector3.Normalize(new Vector3(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical"), 0));
                 ResetThrow = true;
+                offset = new Vector3(0.5f, 0, 0) * (Input.GetAxis("RHorizontal") > 0 ? 1 : -1);
             }
                 
 
