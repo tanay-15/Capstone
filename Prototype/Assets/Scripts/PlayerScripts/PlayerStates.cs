@@ -100,8 +100,8 @@ public class PlayerStates : MonoBehaviour
 
         //// Movement ////
 
-        float hAxis = Input.GetAxis("Horizontal") : 0f;
-        float vAxis = Input.GetAxis("Vertical") : 0f;
+        float hAxis = Input.GetAxis("Horizontal");
+        float vAxis = Input.GetAxis("Vertical");
 
         if (movable)
         {
