@@ -497,6 +497,7 @@ public class PlayerStates : MonoBehaviour
 
     void ChargeArrow()
     {
+        PlayerAnimator.Play("Bow");
         //shootingArrowInfo.Move(Input.GetAxisRaw("Vertical"));
         if (Time.timeScale > 0f)
             shootingArrowInfo.MoveWithMouse();
@@ -504,11 +505,14 @@ public class PlayerStates : MonoBehaviour
         shootingArrowInfo.chargeTime += Time.deltaTime;
         if (shootingArrowInfo.IsFullyCharged && !shootingArrowInfo.chargeFlag)
         {
+            //PlayerAnimator.Play("ArrowCharged");
             shootingArrowInfo.chargeFlag = true;
             Instantiate(shootingArrowInfo.fullyChargeSparkPrefab, transform.position, Quaternion.identity);
         }
+            
         if (!Input.GetButton("Fire2") && Time.timeScale > 0f)
         {
+
             //Shoot an arrow
             Vector3 velocity;
             float chargeAmount = (0.2f + shootingArrowInfo.ChargeAmount * 0.8f);
