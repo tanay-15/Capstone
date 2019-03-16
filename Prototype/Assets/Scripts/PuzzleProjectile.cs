@@ -36,5 +36,7 @@ public class PuzzleProjectile : MonoBehaviour
             collision.GetComponent<PlayerLifeController>().GetHit(-10);
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.layer == 18 || collision.gameObject.layer == 11)
+            Destroy(this.gameObject);
     }
 }

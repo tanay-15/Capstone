@@ -55,6 +55,7 @@ public class PlayerStates : MonoBehaviour
     public GameObject ImpactAnim;
     public Transform wallCheckpoint;
     public Transform wallCheckpoint1;
+    public Transform JumpCheckPoint;
     public LayerMask wallLayerMask;
     GameObject GroundTrigger;
     //GameObject AttackTrigger;
@@ -64,6 +65,7 @@ public class PlayerStates : MonoBehaviour
     private IEnumerator coroutine;
     Collider2D hit;
     Collider2D hitback;
+    Collider2D jumpHit;
 
     GameObject[] blocks = { null,null,null };
 
@@ -241,9 +243,10 @@ public class PlayerStates : MonoBehaviour
 
                     hit = Physics2D.OverlapCircle(wallCheckpoint.position, 0.05f, wallLayerMask);
                     hitback = Physics2D.OverlapCircle(wallCheckpoint1.position, 0.05f, wallLayerMask);
+                    jumpHit = Physics2D.OverlapCircle(JumpCheckPoint.position, 0.05f, wallLayerMask);
                     if ((hit && !grounded) || (hitback && !grounded))
                     {
-                        if (hit != null)
+                        if (hit != null && jumpHit!= null)
                         {
                             status = State.WallJump;
                             movable = true;
