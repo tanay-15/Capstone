@@ -23,6 +23,7 @@ using UnityStandardAssets.ImageEffects;
 //3 - Levitate/Toggle switches
 //4 - Demon mode
 
+//TODO: Remove Tutorial popup segments of cude and use InfoPopups object instead
 public class Tutorial : MonoBehaviour {
 
     public static Tutorial sharedInstance;
@@ -254,7 +255,8 @@ public class Tutorial : MonoBehaviour {
     {
         StartCoroutine(ShowImages_(indexes));
     }
-
+    
+    //Unused?
     void ShowImage(int index)
     {
         images[index].SetActive(true);
