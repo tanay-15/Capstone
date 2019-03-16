@@ -39,6 +39,7 @@ public class RagdollEnemy : BasicEnemy {
             {
                 rb2d.isKinematic = state;
                 rb2d.GetComponent<Collider2D>().enabled = !state;
+                rb2d.AddForce(Vector2.up * 5,ForceMode2D.Impulse);
                 //Debug.Log(rb2d.name);
             }
                 
@@ -98,9 +99,6 @@ public class RagdollEnemy : BasicEnemy {
             if (GetComponent<AudioSource>())
                 GetComponent<AudioSource>().Play();
         }
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.SendMessage("GetHit", -15);
-        }
+
     }
 }
