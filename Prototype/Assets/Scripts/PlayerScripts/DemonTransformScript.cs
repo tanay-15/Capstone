@@ -39,13 +39,13 @@ public class DemonTransformScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale > 0f && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")))
+        if (!transitioning && Time.timeScale > 0f && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LeftTrigger2")))
         {
-            if (!DemonModeActive)
+            if (!DemonModeActive && rageBar.sharedInstance.fillAmount >= 1f)
             {
                 StartCoroutine(DelayedTransform(true));
             }
-            else
+            else if (DemonModeActive && rageBar.sharedInstance.fillAmount >= 0f)
             {
                 StartCoroutine(DelayedTransform(false));
             }
