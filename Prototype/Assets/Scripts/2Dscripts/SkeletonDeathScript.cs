@@ -18,12 +18,17 @@ public class SkeletonDeathScript : MonoBehaviour {
     public bool kill = false;
     public bool dead = false;
     public bool spawn = true;
+    public Vector4 color;
     //health death
     public int mhealth;
 
     // Use this for initialization
     void Start () {
 
+        foreach (SpriteMeshInstance s in GetComponentsInChildren<SpriteMeshInstance>())
+        {
+            s.color = color;
+        }
 
         myColliders = GetComponentsInChildren<Collider2D>();
         mySprites = GetComponentsInChildren<SpriteMeshInstance>();
@@ -82,7 +87,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         yield return new WaitForSeconds(2f);
 
         float speed = 2.5f;
-        Color newColor = Color.white;
+        Color newColor = color;
         for (float i = 0f; i < 1f; i += Time.deltaTime * speed)
         {
             foreach (SpriteMeshInstance s in mySprites)

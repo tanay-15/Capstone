@@ -27,7 +27,7 @@ public class Enemy : BasicEnemy {
     public float movspeed;
     public float chaseSpeed;
     public bool withinRange;
-    
+
  
     private float losrange;
     public GameObject ImpactAnim;
@@ -167,6 +167,7 @@ public class Enemy : BasicEnemy {
                 jump_up_origin = child.gameObject;
             }
         }
+
     }
 
     // Update is called once per frame
@@ -804,16 +805,19 @@ public class Enemy : BasicEnemy {
 
   
     
-  public  void flip()
+    public  void flip()
     {
 
         LookingLeft = !LookingLeft;
 
         this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
-      
-
-      
         
+    }
+
+
+    void KnockBack()
+    {
+
     }
 
 
@@ -833,7 +837,7 @@ public class Enemy : BasicEnemy {
         yield return new WaitForSeconds(0.25f);
         foreach (SpriteMeshInstance s in GetComponentsInChildren<SpriteMeshInstance>())
         {
-            s.color = new Color(1, 1, 1, 1);
+            s.color = GetComponent<SkeletonDeathScript>().color;
         }
     }
   
