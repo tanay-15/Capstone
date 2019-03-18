@@ -33,6 +33,7 @@ public class ThrowAxe : MonoBehaviour {
       
         rigi.velocity = moveVector;
 
+        transform.Rotate(0,0,300 *Time.deltaTime);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

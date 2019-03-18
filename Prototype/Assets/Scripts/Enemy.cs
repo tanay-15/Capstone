@@ -37,7 +37,7 @@ public class Enemy : BasicEnemy {
     protected Vector3 targetpos;
     public bool AttackReady;
     public bool IsAlive ;
-    bool IsPunched = false;
+    public bool IsPunched = false;
   
     public bool movway1 = true;
 

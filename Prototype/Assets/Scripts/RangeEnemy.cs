@@ -9,7 +9,7 @@ public class RangeEnemy : Enemy {
     public GameObject shurikenprefab;
     public GameObject shuriloct;
     private GameObject go;
-    private bool IsPunched;
+    //private bool IsPunched;
     private bool Thrown = false;
 
     

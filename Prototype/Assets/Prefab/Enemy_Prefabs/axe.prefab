@@ -31,8 +31,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900246247028210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.5995, y: 3.5811, z: 0}
-  m_LocalScale: {x: 0.026087599, y: 0.031672, z: 1}
+  m_LocalPosition: {x: 22.5706, y: 3.5955, z: 0}
+  m_LocalScale: {x: 0.029953782, y: 0.029800186, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SpriteMesh: {fileID: 11400000, guid: f46b2457c4ac2f044b00276e21ab28c0, type: 2}
-  m_Color: {r: 0.3, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.93044674, g: 0.9716981, b: 0.9716981, a: 1}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
@@ -207,7 +207,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
@@ -217,9 +217,18 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.39999962
+        value: 0
         inSlope: 0
         outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.028523982
+        value: 0.2546373
+        inSlope: -0.061905358
+        outSlope: -0.061905358
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
