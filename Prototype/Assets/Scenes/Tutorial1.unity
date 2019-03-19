@@ -1460,6 +1460,30 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 2696690107096695562, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 83.400024
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696690107096695562, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.3999634
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046332637, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857938466508641518, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 62.600006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857938466508641518, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.3999634
+      objectReference: {fileID: 0}
     - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 3}
       propertyPath: disableReturnToHubWorld
@@ -2879,7 +2903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344991410}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.44, y: 0.87, z: 0}
+  m_LocalPosition: {x: 1.58, y: 0.68, z: 0}
   m_LocalScale: {x: -0.05, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 1637191312}
@@ -2903,7 +2927,7 @@ TextMesh:
   m_FontSize: 72
   m_FontStyle: 1
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 533655402d3f43c4a8751d8db7eec156, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -2924,7 +2948,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 533655402d3f43c4a8751d8db7eec156, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
