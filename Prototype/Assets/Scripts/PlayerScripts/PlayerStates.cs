@@ -507,7 +507,7 @@ public class PlayerStates : MonoBehaviour
         {
             //PlayerAnimator.Play("ArrowCharged");
             shootingArrowInfo.chargeFlag = true;
-            Instantiate(shootingArrowInfo.fullyChargeSparkPrefab, transform.position, Quaternion.identity);
+            Instantiate(shootingArrowInfo.fullyChargeSparkPrefab, wallCheckpoint.transform.position, Quaternion.identity);
         }
             
         if (!Input.GetButton("Fire2") && Time.timeScale > 0f)
