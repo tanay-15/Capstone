@@ -102,6 +102,8 @@ public class Enemy : BasicEnemy {
 
 
 
+
+
    public override Vector3 lifebarOffset
    {
        get
@@ -509,7 +511,8 @@ public class Enemy : BasicEnemy {
 
 
 
-                    StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
+                 StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
+                   
                 }
                 
 
@@ -536,7 +539,8 @@ public class Enemy : BasicEnemy {
             if (Mathf.Approximately((int)jump_position.y, (int)target.transform.position.y))
             {
 
-                StartCoroutine(TeleportEnemy(jump_position, 1f));
+               StartCoroutine(TeleportEnemy(jump_position, 1f));
+             
             }
       
                    
@@ -630,7 +634,7 @@ public class Enemy : BasicEnemy {
         anim.SetBool("Attack", true);
         currentstate = States.Attack;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         onStateStart = true;
         anim.SetBool("Attack", false);
@@ -820,6 +824,9 @@ public class Enemy : BasicEnemy {
 
     }
 
+
+
+   
 
 
     IEnumerator IsPunchedReset()

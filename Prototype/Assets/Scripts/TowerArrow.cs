@@ -15,7 +15,7 @@ public class TowerArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rigi.velocity = new Vector2(-4f, 0f);
+        rigi.velocity = new Vector2(-7f, -1f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

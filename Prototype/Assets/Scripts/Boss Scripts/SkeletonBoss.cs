@@ -120,7 +120,7 @@ public class SkeletonBoss : MonoBehaviour
                 anim.SetBool("AttackReady", false);
                 currentState = BossStates.Attacking;
                 anim.SetBool("Attack", true);
-                AttackCounter = 10f;
+                AttackCounter = 6f;
             }
                 
             

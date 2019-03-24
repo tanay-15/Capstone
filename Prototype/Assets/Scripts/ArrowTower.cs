@@ -39,7 +39,7 @@ public class ArrowTower : MonoBehaviour
         if (attackCounter <= 0f && InRange)
         {
             Attack();
-            attackCounter = 6f;
+            attackCounter = 3f;
         }
     }
 
