@@ -138,10 +138,10 @@ public class PlayerStates : MonoBehaviour
 
         //Audio//
 
-        if(grounded && Rb2d.velocity.magnitude > 2f)
-        {
-           audioManager.Play("FootStep");
-        }
+        //if(grounded && Rb2d.velocity.magnitude > 2f)
+        //{
+        //   audioManager.Play("FootStep");
+        //}
 
       
 
@@ -167,7 +167,11 @@ public class PlayerStates : MonoBehaviour
 
                     if (Time.timeScale > 0f){
                         if (Mathf.Abs(hAxis) > 0.1f)
+                        {
                             PlayerAnimator.Play("Run");
+                            audioManager.Play("FootStep");
+                        }
+                            
                         else
                             PlayerAnimator.Play("Idle");
                     }

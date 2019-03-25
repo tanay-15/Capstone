@@ -111,6 +111,7 @@ public class SkeletonDeathScript : MonoBehaviour {
             //IKSystem.SetActive(false);
 
             Explode(new Vector2(transform.position.x, transform.position.y-1), 5);
+            FindObjectOfType<AudioManager>().Play("BoneBreaks");
             StartCoroutine(DieRoutine());
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
