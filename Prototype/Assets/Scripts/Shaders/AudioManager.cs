@@ -7,14 +7,26 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
+
+    public static AudioManager Instance;
     // Start is called before the first frame update
     void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.volume = s.pitch;
+            s.source.loop = s.loop;
             s.source.playOnAwake = false;
 
         }
@@ -26,8 +38,8 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, sound => sound.name == name); // In array sounds, we are looking for a sound with name passed in function
         if(!s.source.isPlaying)
         {
-            s.volume = UnityEngine.Random.Range(0.3f, 0.6f);
-            s.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
+            s.source.volume = UnityEngine.Random.Range(0.2f, 0.24f);
+            s.source.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
             s.source.Play();
         }
         
