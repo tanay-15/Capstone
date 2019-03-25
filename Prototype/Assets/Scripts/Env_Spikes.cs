@@ -35,7 +35,7 @@ public class Env_Spikes : MonoBehaviour
         // modify player health
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerLifeController>().GetHit(-5);
+            collision.gameObject.GetComponent<PlayerLifeController>().GetHit(-25);
         }
     }
 }
