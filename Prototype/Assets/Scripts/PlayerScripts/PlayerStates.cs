@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Audio;
 
 
 public class PlayerStates : MonoBehaviour
@@ -47,7 +47,7 @@ public class PlayerStates : MonoBehaviour
 
     [Header("References")]
     public Animator PlayerAnimator;
-
+    AudioManager audioManager;
     public Transform cameraFocus;
     public GameObject Human;
     public GameObject Demon;
@@ -90,6 +90,7 @@ public class PlayerStates : MonoBehaviour
         PlayerAnimator = Human.GetComponent<Animator>();
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
 
@@ -135,7 +136,12 @@ public class PlayerStates : MonoBehaviour
         else
             grounded = true;
 
-        /////Wall Jump////
+        //Audio//
+
+        if(grounded && Rb2d.velocity.magnitude > 2f)
+        {
+           audioManager.Play("FootStep");
+        }
 
       
 
@@ -158,6 +164,7 @@ public class PlayerStates : MonoBehaviour
             case State.Default:
                 {
                     groundCount = 0;
+
                     if (Time.timeScale > 0f){
                         if (Mathf.Abs(hAxis) > 0.1f)
                             PlayerAnimator.Play("Run");
