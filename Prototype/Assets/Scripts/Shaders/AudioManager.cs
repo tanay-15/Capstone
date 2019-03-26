@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
 using System;
-
+using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
+    string sceneName;
 
     public static AudioManager Instance;
     // Start is called before the first frame update
@@ -28,6 +29,47 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.pitch;
             s.source.loop = s.loop;
             s.source.playOnAwake = false;
+
+        }
+       
+    }
+
+    private void Start()
+    {
+        if ((SceneManager.GetSceneByName("NewLevel1").isLoaded))
+        {
+
+        }
+
+        else if ((SceneManager.GetSceneByName("Tutorial1").isLoaded))
+        {
+            PlayMusic("TutorialMusic");
+        }
+
+        else if ((SceneManager.GetSceneByName("Tutorial2").isLoaded))
+        {
+           
+            PlayMusic("TutorialMusic");
+        }
+
+        else if ((SceneManager.GetSceneByName("MainMenuBasic").isLoaded))
+        {
+
+        }
+
+        else if ((SceneManager.GetSceneByName("HubWorld").isLoaded))
+        {
+
+        }
+    }
+
+    public void PlayMusic(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if(!s.source.isPlaying)
+        {
+            s.source.loop = true;
+            s.source.Play();
 
         }
     }

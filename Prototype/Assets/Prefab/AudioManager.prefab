@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758296133595967501}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -45,13 +45,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: FootStep
-    clip: {fileID: 8300000, guid: b4d8e8b6a468ea04c824b6be861e3ce2, type: 3}
+    clip: {fileID: 8300000, guid: ac54f36c9f7ddab45adbab3ccbae2d50, type: 3}
     volume: 1
     pitch: 0.5
     loop: 0
     source: {fileID: 0}
   - name: BoneBreaks
     clip: {fileID: 8300000, guid: dca131babd8c136468acfd72c889066b, type: 3}
+    volume: 1
+    pitch: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Punch
+    clip: {fileID: 8300000, guid: f655dde2d40205944a38602ceae460b6, type: 3}
+    volume: 1
+    pitch: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: ShootArrow
+    clip: {fileID: 8300000, guid: aa5856fad9376854e990a515cf2c3c00, type: 3}
+    volume: 1
+    pitch: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Stomp
+    clip: {fileID: 8300000, guid: 88d5aec6ca6898940abd92289c21ae86, type: 3}
+    volume: 1
+    pitch: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: TutorialMusic
+    clip: {fileID: 8300000, guid: b42bb8e69d5e72842b6f6799ccf23f0b, type: 3}
     volume: 1
     pitch: 0.5
     loop: 0
