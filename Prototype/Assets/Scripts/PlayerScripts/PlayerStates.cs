@@ -229,6 +229,7 @@ public class PlayerStates : MonoBehaviour
                 {
                     //PlayerAnimator.Play("WallJump");
                     PlayerAnimator.Play("Jump");
+                    //audioManager.Play("Jump");
 
                     if (Time.timeScale > 0f && vAxis < -0.5f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
                     {
@@ -285,6 +286,7 @@ public class PlayerStates : MonoBehaviour
                         {
                             movable = false;
                             Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                            audioManager.Play("Stomp");
                             FindObjectOfType<CameraFollow>().ShakeCamera();
                             DustParticles.Play();
                             //blocks = FindObjectsOfType<OrbitorObjectScript>();
@@ -321,11 +323,13 @@ public class PlayerStates : MonoBehaviour
                         if (attackCounter == 0)
                         {
                             PlayerAnimator.Play("MeleeAttack1", -1, 0);
+                            audioManager.Play("Punch");
                             attackCounter++;
                         }
                         else if (attackCounter == 1)
                         {
                             PlayerAnimator.Play("MeleeAttack2", -1, 0);
+                            audioManager.Play("Punch");
                             attackCounter = 0;
                         }
 
@@ -584,6 +588,7 @@ public class PlayerStates : MonoBehaviour
             //PlayerAnimator.Play("ArrowCharged");
             shootingArrowInfo.chargeFlag = true;
             Instantiate(shootingArrowInfo.fullyChargeSparkPrefab, wallCheckpoint.transform.position, Quaternion.identity);
+            
         }
             
         if (!Input.GetButton("Fire2") && Time.timeScale > 0f)
@@ -595,12 +600,14 @@ public class PlayerStates : MonoBehaviour
             Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootDistance;
             velocity = (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootSpeed * chargeAmount;
             GameObject arrow = Instantiate(shootingArrowInfo.arrowPrefab, position, Quaternion.identity);
+            
             ArrowCounter.sharedInstance.AddArrowCount(-1);
             arrow.GetComponent<Rigidbody2D>().gravityScale = (shootingArrowInfo.IsFullyCharged) ? 0f : 1f;
             arrow.GetComponent<Rigidbody2D>().velocity = velocity;
             arrow.GetComponent<ChargedArrow>().fullyCharged = (shootingArrowInfo.IsFullyCharged);
 
             //Gravity scale formerly 0.4
+            audioManager.Play("ShootArrow");
             shootingArrowInfo.End();
             status = (grounded) ? State.Default : State.InAir;
             //movable = true;
@@ -819,6 +826,7 @@ public class ArrowInfo
 
     public void End()
     {
+
         chargeTime = 0f;
         reticle.SetActive(false);
         reticlePosition = new Vector2(reticleDistance, 0f);
