@@ -76,7 +76,7 @@ public class DemonTransformScript : MonoBehaviour
     {
         GenerateBats();
         transitioning = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.3f);  //2.0
 
         DemonSwitch[] DemonSwitches = FindObjectsOfType<DemonSwitch>();
         foreach (DemonSwitch s in DemonSwitches)

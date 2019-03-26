@@ -7,6 +7,7 @@ public class BatScript : MonoBehaviour
     float theta = 0;
     float radius = 0;
     int direction = 1;
+    float dRadius = 10; //6
 
     Vector3 offset;
 
@@ -81,7 +82,7 @@ public class BatScript : MonoBehaviour
 
             // Decrementing to create spiral path
             theta += 3 * Time.deltaTime * direction;
-            radius -= 6 * Time.deltaTime * direction;
+            radius -= dRadius * Time.deltaTime * direction;
 
             if (radius < 0)
             {
