@@ -17,12 +17,15 @@ public class CombatZone : MonoBehaviour
     public float CameraPanSize = 7;
 
     public GameObject[] Enemies;
+    Transform originalTarget;
     int DeadEnemies = 0;
     // Start is called before the first frame update
     void Start()
     {
         Door1InitPosition = Door1.transform.position;
         Door2InitPosition = Door2.transform.position;
+
+        originalTarget = Camera.main.GetComponent<CameraFollow>().target;
     }
 
     // Update is called once per frame
@@ -74,7 +77,7 @@ public class CombatZone : MonoBehaviour
     {
         if (collision.gameObject.name == "Player" && DeadEnemies == Enemies.Length)
         {
-            Camera.main.GetComponent<CameraFollow>().target = collision.gameObject.transform;
+            Camera.main.GetComponent<CameraFollow>().target = originalTarget;//collision.gameObject.transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(6, 1);
         }
     }

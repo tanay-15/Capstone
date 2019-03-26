@@ -237,6 +237,7 @@ public class PauseMenu : MonoBehaviour {
                     {
                         Time.timeScale = 1f;
                         SceneManager.LoadScene("HubWorld");
+                        YinYangCheckpoint.checkpointIndex = -1;
                     }
                     break;
 
@@ -244,9 +245,16 @@ public class PauseMenu : MonoBehaviour {
                 case PauseMenuOption.ReturnMainMenu:
                     Time.timeScale = 1f;
                     SceneManager.LoadScene("MainMenuBasic");
+                    ResetAllGameProgress();
                     break;
             }
         }
+    }
+
+    void ResetAllGameProgress()
+    {
+        YinYangCheckpoint.checkpointIndex = -1;
+        SkillTree.info.nodesActivated = SkillNodes.None;
     }
 
     //Used by InitializeText() to check if Skill Tree and/or Hub World menu options are disabled or not
