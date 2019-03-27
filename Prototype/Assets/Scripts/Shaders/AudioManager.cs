@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
     {
         if ((SceneManager.GetSceneByName("NewLevel1").isLoaded))
         {
-
+            PlayMusic("Level1Music");
         }
 
         else if ((SceneManager.GetSceneByName("Tutorial1").isLoaded))
