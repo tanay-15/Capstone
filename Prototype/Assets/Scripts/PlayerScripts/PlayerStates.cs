@@ -520,7 +520,7 @@ public class PlayerStates : MonoBehaviour
                             StartCoroutine("WallJump");
                             //status = State.InAir;
                         }
-                        else if(Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump"))
+                        else if(Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump") && hit!=null)
                         {
                             movable = false;
                             Rb2d.velocity = Vector2.zero;
@@ -709,11 +709,17 @@ public class PlayerStates : MonoBehaviour
     {
         Debug.Log("Inside Crawl coroutine");
         PlayerAnimator.Play("Crawl");
-        transform.position = new Vector3(transform.position.x - 20 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y + 50 * Time.deltaTime, transform.position.z);
-        yield return new WaitForSeconds(0.25f);
-        transform.position = new Vector3(transform.position.x + 23 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y + 50 * Time.deltaTime, transform.position.z);
-        yield return new WaitForSeconds(0.25f);
-       // transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        //transform.position = new Vector3(transform.position.x - 20 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y + 50 * Time.deltaTime, transform.position.z);
+        Rb2d.velocity = Vector2.zero;
+        float tempForceX = (((facingRight) ? 1.0f : -1.0f)* forceX);
+        Rb2d.velocity = new Vector2(-tempForceX, forceY*2);
+        yield return new WaitForSeconds(0.1f);
+        Rb2d.velocity = Vector2.zero;
+        //transform.position = new Vector3(transform.position.x + 23 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y + 50 * Time.deltaTime, transform.position.z);
+        Rb2d.velocity = new Vector2(tempForceX*1.5f, forceY*2);
+        yield return new WaitForSeconds(0.1f);
+        // transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        Rb2d.velocity = Vector2.zero;
         status = State.WallSlide;
     }
 
