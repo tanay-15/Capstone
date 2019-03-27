@@ -66,6 +66,7 @@ public class Enemy : BasicEnemy {
         Attack,
         Jumping,
         GetHit,
+        KnockBack,
         Dead
     }
     [Header("States")]
@@ -210,6 +211,23 @@ public class Enemy : BasicEnemy {
                         break;
                     }
 
+                case States.KnockBack:
+                    {
+                        
+                        if (GetComponent<Rigidbody2D>().velocity.y == 0)
+                        {                         
+                            if (target)
+                                currentstate = States.Pursuit;
+                            else
+                                currentstate = States.Patrol;
+
+                            GetComponent<Animator>().Play("skeletonRiggedV3_Idle");
+                        }
+                        GetComponent<Animator>().Play("skeletonRigged_Knockback");
+                        //transform.rotation = Quaternion.Euler(0,0,Vector2.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity.normalized));
+                        transform.eulerAngles = -new Vector3(0, 0, Vector2.SignedAngle(GetComponent<Rigidbody2D>().velocity, new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0)));
+                        break;
+                    }
             }
         }
         
@@ -744,6 +762,8 @@ public class Enemy : BasicEnemy {
             var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
 
+            KnockBack();
+
         }
 
         if (collision.gameObject.tag == "Player")
@@ -819,14 +839,13 @@ public class Enemy : BasicEnemy {
     }
 
 
-    void KnockBack()
+
+    public void KnockBack()
     {
-
+        float direction = target.transform.position.x - transform.position.x < 0 ? 1 : -1;
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(direction, 1) * 5000, ForceMode2D.Impulse);
+        currentstate = States.KnockBack;
     }
-
-
-
-   
 
 
     IEnumerator IsPunchedReset()
