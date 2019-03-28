@@ -30,6 +30,7 @@ public class PlayerStates : MonoBehaviour
     float maxPanRangeX = 9f;
     float maxUpperPanRange = 3f;
     float maxLowerPanRange = 7f;
+    float minAnalogJumpSpeed = 3f;
     Vector2 prevMousePosition;
 
     // Bools
@@ -99,6 +100,8 @@ public class PlayerStates : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(status);
+
 
         //// Movement ////
 
@@ -184,7 +187,11 @@ public class PlayerStates : MonoBehaviour
                     if (Time.timeScale > 0f && (Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")))
                     {
                         Rb2d.velocity = Vector3.up * jumpSpeed;
-
+                    }
+                    //Analog jumping
+                    if (Time.timeScale > 0f && Rb2d.velocity.y > minAnalogJumpSpeed && (Input.GetButtonUp("Jump") || Input.GetButtonUp("PS4Jump")))
+                    {
+                        Rb2d.velocity = new Vector2(Rb2d.velocity.x, minAnalogJumpSpeed);
                     }
 
 
@@ -227,6 +234,11 @@ public class PlayerStates : MonoBehaviour
                 }
             case State.InAir:
                 {
+                    //Analog jumping
+                    if (Time.timeScale > 0f && Rb2d.velocity.y > minAnalogJumpSpeed && (Input.GetButtonUp("Jump") || Input.GetButtonUp("PS4Jump")))
+                    {
+                        Rb2d.velocity = new Vector2(Rb2d.velocity.x, minAnalogJumpSpeed);
+                    }
                     //PlayerAnimator.Play("WallJump");
                     PlayerAnimator.Play("Jump");
                     //audioManager.Play("Jump");
