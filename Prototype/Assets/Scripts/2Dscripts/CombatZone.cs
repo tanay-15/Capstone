@@ -13,7 +13,7 @@ public class CombatZone : MonoBehaviour
     public Vector2 Door2Offset = new Vector2(0f, 3f);
     Vector2 Door1InitPosition;
     Vector2 Door2InitPosition;
-
+    AudioManager audioManager;
     public float CameraPanSize = 7;
 
     public GameObject[] Enemies;
@@ -22,6 +22,7 @@ public class CombatZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         Door1InitPosition = Door1.transform.position;
         Door2InitPosition = Door2.transform.position;
 
@@ -66,17 +67,36 @@ public class CombatZone : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
+
+            if(this.gameObject.tag == "CombatZone")
+            {
+                audioManager.PauseMusic("Level1Music");
+                audioManager.PlayMusic("FightMusic");
+            }
+            else if(this.gameObject.name == "BossZone")
+            {
+                audioManager.PauseMusic("Level1Music");
+                audioManager.PlayMusic("BossBattleMusic");
+            }
             Door1Open = false;
             Camera.main.GetComponent<CameraFollow>().target = transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(CameraPanSize,1);
             StartCoroutine(Spawn());
         }
+
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player" && DeadEnemies == Enemies.Length)
         {
+
+            if (this.gameObject.tag == "CombatZone")
+            {
+                audioManager.PauseMusic("FightMusic");
+                audioManager.PlayMusic("Level1Music");
+            }
             Camera.main.GetComponent<CameraFollow>().target = originalTarget;//collision.gameObject.transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(6, 1);
         }

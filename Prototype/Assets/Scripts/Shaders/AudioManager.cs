@@ -8,6 +8,11 @@ public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
     string sceneName;
+    bool keepFadingIn = false;
+    bool keepFadingOut = false;
+    float maxVolume = 1;
+    float minVolume = 0;
+    float speed = 0.1f;
 
     public static AudioManager Instance;
     // Start is called before the first frame update
@@ -70,7 +75,59 @@ public class AudioManager : MonoBehaviour
         {
             s.source.loop = true;
             s.source.Play();
+            StartCoroutine(FadeIn(s.source));
 
+        }
+    }
+
+    public void StopMusic(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.isPlaying)
+        {
+            StartCoroutine(FadeOut(s.source));
+            s.source.Stop();
+        }
+    }
+
+    public void PauseMusic(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.isPlaying)
+        {
+            StartCoroutine(FadeOut(s.source));
+            s.source.Pause();
+        }
+    }
+
+
+
+    IEnumerator FadeIn(AudioSource source)
+    {
+        source.volume = 0;
+        keepFadingIn = true;
+        keepFadingOut = false;
+        float audioVolume = source.volume;
+        while (source.volume < maxVolume && keepFadingIn)
+        {
+            audioVolume += speed * Time.deltaTime;
+            source.volume = audioVolume;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+
+    }
+
+    IEnumerator FadeOut(AudioSource source)
+    {
+        keepFadingIn = false;
+        keepFadingOut = true;
+        float audioVolume = source.volume;
+        while (source.volume >= minVolume && keepFadingOut)
+        {
+            audioVolume -= speed * Time.deltaTime;
+            source.volume = audioVolume;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
