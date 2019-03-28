@@ -100,9 +100,6 @@ public class PlayerStates : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(status);
-
-
         //// Movement ////
 
         float hAxis = Input.GetAxis("Horizontal");

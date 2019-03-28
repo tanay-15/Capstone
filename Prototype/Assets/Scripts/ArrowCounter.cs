@@ -10,7 +10,7 @@ public class ArrowCounter : MonoBehaviour
     public Image darkMask;
     public Text text;
     public int ArrowCount { get; private set; }
-    public const int MaxArrows = 9;
+    public const int MaxArrows = 5;
     public float regenTimer;
     float regenTime = 5f;
 

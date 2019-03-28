@@ -27,6 +27,16 @@ public class CombatZone : MonoBehaviour
         Door2InitPosition = Door2.transform.position;
 
         originalTarget = Camera.main.GetComponent<CameraFollow>().target;
+
+        SetEnemiesActive(false);
+    }
+
+    void SetEnemiesActive(bool active)
+    {
+        foreach (GameObject enm in Enemies)
+        {
+            enm.SendMessageUpwards("EnableLifebar", active);
+        }
     }
 
     // Update is called once per frame
@@ -104,10 +114,12 @@ public class CombatZone : MonoBehaviour
 
     IEnumerator Spawn()
     {
+        //SetEnemiesActive(true);
         for (int i = 0; i < Enemies.Length; i++)
         {
             Enemies[i].SendMessageUpwards("Spawn");
             yield return new WaitForSeconds(1f);
+            Enemies[i].SendMessageUpwards("EnableLifebar", true);
         }
     }
 }

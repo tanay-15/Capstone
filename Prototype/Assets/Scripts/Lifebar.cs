@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Lifebar : MonoBehaviour {
 
+    public GameObject sprites;
     public GameObject redScalingSprite;
     public GameObject yellowScalingSprite;
     BasicEnemy myEnemy;
@@ -15,6 +16,7 @@ public class Lifebar : MonoBehaviour {
 
     Vector3 normalScale;
     Vector3 flipScale;
+    Vector3 offset;
 
     void Start()
     {
@@ -22,7 +24,7 @@ public class Lifebar : MonoBehaviour {
         flipScale = normalScale;
         flipScale.x *= -1f;
         yOffset = transform.localPosition.y;
-        Debug.Log(yOffset);
+        offset = new Vector3(0f, yOffset, -5f);
     }
 
 	public void AssignEnemy(BasicEnemy enemy)
@@ -50,6 +52,7 @@ public class Lifebar : MonoBehaviour {
 
     void LateUpdate()
     {
+        sprites.SetActive(myEnemy.enableLifebar);
         if (yellowScale > targetScale)
             yellowScale -= Time.deltaTime * drainSpeed;
         yellowScalingSprite.transform.localScale = new Vector3(yellowScale, 1f, 1f);
@@ -58,6 +61,6 @@ public class Lifebar : MonoBehaviour {
 
         //Keep lifebars upright on the enemy
         transform.rotation = Quaternion.identity;
-        transform.position = transform.parent.position + Vector3.up * transform.parent.localScale.y * yOffset;
+        transform.position = transform.parent.position + transform.parent.localScale.y * offset;
     }
 }

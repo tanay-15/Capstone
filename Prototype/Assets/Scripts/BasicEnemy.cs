@@ -18,6 +18,8 @@ public class EnemyEvents
 
 public class BasicEnemy : MonoBehaviour {
     public virtual Vector3 lifebarOffset { get { return new Vector3(0f, 1f, 0f); } }
+    [System.NonSerialized]
+    public bool enableLifebar = true;
     public virtual void applyDamage(int amount) { }
     public EnemyEvents events;
 }

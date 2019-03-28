@@ -123,6 +123,11 @@ public class Enemy : BasicEnemy {
         Physics2D.IgnoreLayerCollision(15, 15);
     }
 
+    public void EnableLifebar(bool enable)
+    {
+        enableLifebar = enable;
+    }
+
  
 
     public void SetupValues()
