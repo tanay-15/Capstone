@@ -12,6 +12,7 @@
 
 		SubShader
 	{
+
 		Tags
 		{
 			"Queue" = "Transparent"
@@ -28,6 +29,7 @@
 		Pass
 		{
 			ZTest Always
+			//ZTest Less
 
 			CGPROGRAM
 			#pragma vertex vert

@@ -79,6 +79,8 @@ public class Enemy : BasicEnemy {
     public GameObject groundAhead;
     [HideInInspector]
     public GameObject jumpAhead;
+    [HideInInspector]
+    public GameObject groundTrigger;
     private RaycastHit eyehit;
     [HideInInspector]
     public RaycastHit2D vishit;
@@ -174,6 +176,11 @@ public class Enemy : BasicEnemy {
             {
                 jump_up_origin = child.gameObject;
             }
+            if (child.name == "GroundTrigger")
+            {
+                groundTrigger = child.gameObject;
+            }
+                
         }
 
     }
@@ -218,7 +225,12 @@ public class Enemy : BasicEnemy {
 
                 case States.KnockBack:
                     {
-                        
+                        GetComponent<Animator>().Play("skeletonRigged_Knockback");
+                        //transform.rotation = Quaternion.Euler(0,0,Vector2.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity.normalized));
+                        transform.eulerAngles = -new Vector3(0, 0, Vector2.SignedAngle(GetComponent<Rigidbody2D>().velocity, new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0)));
+                        GetComponent<BoxCollider2D>().enabled = false;
+
+
                         if (GetComponent<Rigidbody2D>().velocity.y == 0)
                         {                         
                             if (target)
@@ -227,10 +239,9 @@ public class Enemy : BasicEnemy {
                                 currentstate = States.Patrol;
 
                             GetComponent<Animator>().Play("skeletonRiggedV3_Idle");
+                            GetComponent<BoxCollider2D>().enabled = true;
                         }
-                        GetComponent<Animator>().Play("skeletonRigged_Knockback");
-                        //transform.rotation = Quaternion.Euler(0,0,Vector2.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity.normalized));
-                        transform.eulerAngles = -new Vector3(0, 0, Vector2.SignedAngle(GetComponent<Rigidbody2D>().velocity, new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0)));
+                       
                         break;
                     }
             }
@@ -716,6 +727,12 @@ public class Enemy : BasicEnemy {
            CollidedWithPlayer = true;
           AttackReady = true;
         }
+
+        if (collision.gameObject.layer == 10 && currentstate == States.KnockBack && groundTrigger.GetComponent<GroundTriggerScript>().grounded == false)
+        {
+            KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? -1 : 1, 1) * 1000 * Random.Range(2, 3));
+            flip();
+        }
     }
 
  
@@ -767,7 +784,7 @@ public class Enemy : BasicEnemy {
             var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
 
-            KnockBack();
+            KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? 1 : -1, 1) * 1000 * Random.Range(5, 6));
 
         }
 
@@ -845,10 +862,11 @@ public class Enemy : BasicEnemy {
 
 
 
-    public void KnockBack()
+    public void KnockBack(Vector2 force)
     {
-        float direction = target.transform.position.x - transform.position.x < 0 ? 1 : -1;
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(direction, 1) * 5000, ForceMode2D.Impulse);
+        //float direction = target.transform.position.x - transform.position.x < 0 ? 1 : -1;
+        //GetComponent<Rigidbody2D>().AddForce(new Vector2(direction, 1) * 1000 * Random.Range(5,6), ForceMode2D.Impulse);
+        GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
         currentstate = States.KnockBack;
     }
 
