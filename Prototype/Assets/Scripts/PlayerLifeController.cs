@@ -103,6 +103,9 @@ public class PlayerLifeController : MonoBehaviour {
         GetComponent<PlayerStates>().status = PlayerStates.State.Default;
         GetComponent<PlayerStates>().onStateStart = true;
         GetComponent<PlayerStates>().movable = true;
+
+        GetComponent<PlayerStates>().Human.GetComponent<Animator>().WriteDefaultValues();
+        GetComponent<PlayerStates>().Demon.GetComponent<Animator>().WriteDefaultValues();
     }
 
     //void ResetLevel()
