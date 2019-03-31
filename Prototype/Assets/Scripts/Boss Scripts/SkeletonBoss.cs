@@ -11,6 +11,7 @@ public class SkeletonBoss : MonoBehaviour
     public GameObject rightpoint;
     public GameObject startpoint;
     public GameObject AttackPoint;
+    public GameObject middlePoint;
     public float MoveSpeed;
     public float Health;
 
@@ -20,10 +21,12 @@ public class SkeletonBoss : MonoBehaviour
 
     public bool moveToleftPoint = true;
     public bool moveTorightPoint;
+    public bool moveToMiddlePoint;
 
     
     public Vector3 leftpointpos;
     public Vector3 rightpointpos;
+    public Vector3 middlePointpos;
     public Vector3 spawnPointLeftPos;
     public Vector3 spawnPointRightPos;
     public Vector3 attackPointpos;
@@ -68,6 +71,8 @@ public class SkeletonBoss : MonoBehaviour
 
         leftpointpos = leftpoint.transform.position;
         rightpointpos = rightpoint.transform.position;
+        middlePointpos = middlePoint.transform.position;
+
 
         startpointpos = startpoint.transform.position;
         spawnPointLeftPos = spawnPointLeft.transform.position;
@@ -205,6 +210,7 @@ public class SkeletonBoss : MonoBehaviour
             {
                 moveToleftPoint = false;
                 moveTorightPoint = true;
+                moveToMiddlePoint = false;
             }
         }
 
@@ -215,10 +221,24 @@ public class SkeletonBoss : MonoBehaviour
 
             if(Vector2.Distance(this.transform.position,rightpointpos) < 2f)
             {
-                moveToleftPoint = true;
+                moveToleftPoint = false;
                 moveTorightPoint = false;
+                moveToMiddlePoint = true;
             }
 
+        }
+
+        if (moveToMiddlePoint)
+        {
+            currentState = BossStates.Idle;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, middlePointpos, MoveSpeed * Time.deltaTime);
+
+            if(Vector2.Distance(this.transform.position, middlePointpos) < 1f)
+            {
+                moveToleftPoint = true;
+                moveToMiddlePoint = false;
+                moveTorightPoint = false;
+            }
         }
     }
 
