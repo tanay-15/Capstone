@@ -225,7 +225,7 @@ public class Enemy : BasicEnemy {
 
                 case States.KnockBack:
                     {
-                        GetComponent<Animator>().Play("skeletonRigged_Knockback");
+                        GetComponent<Animator>().Play("Knockback");
                         //transform.rotation = Quaternion.Euler(0,0,Vector2.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity.normalized));
                         transform.eulerAngles = -new Vector3(0, 0, Vector2.SignedAngle(GetComponent<Rigidbody2D>().velocity, new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0)));
                         GetComponent<BoxCollider2D>().enabled = false;
@@ -238,7 +238,7 @@ public class Enemy : BasicEnemy {
                             else
                                 currentstate = States.Patrol;
 
-                            GetComponent<Animator>().Play("skeletonRiggedV3_Idle");
+                            GetComponent<Animator>().Play("Idle");
                             GetComponent<BoxCollider2D>().enabled = true;
                         }
                        
@@ -295,7 +295,7 @@ public class Enemy : BasicEnemy {
     #endregion
    
 
-    public void Death()
+    public virtual void Death()
     {
 
 
@@ -732,6 +732,7 @@ public class Enemy : BasicEnemy {
         {
             KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? -1 : 1, 1) * 1000 * Random.Range(2, 3));
             flip();
+            applyDamage(3);
         }
     }
 

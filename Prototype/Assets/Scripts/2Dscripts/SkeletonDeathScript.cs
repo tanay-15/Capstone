@@ -46,7 +46,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         //Audio = GetComponent<AudioSource>();
         //Audio.clip = BonesBreak[Random.Range(0, BonesBreak.Length - 1)];
 
-        GetComponent<Animator>().Play("skeletonRigged_Assemble");
+        GetComponent<Animator>().Play("Assemble");
         GetComponent<Animator>().speed = 0;
     }
 
@@ -65,7 +65,8 @@ public class SkeletonDeathScript : MonoBehaviour {
             Die();
 
         mhealth = this.gameObject.GetComponent<Enemy>().GetHealth();
-	}
+
+    }
 
     void TurnOffCollisions()
     {
