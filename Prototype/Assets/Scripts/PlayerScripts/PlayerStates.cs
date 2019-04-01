@@ -54,12 +54,14 @@ public class PlayerStates : MonoBehaviour
     public GameObject Demon;
     public GameObject StoneBlock;
     public GameObject ImpactAnim;
+    public GameObject RockPiece;
     public Transform wallCheckpoint;
     public Transform wallCheckpoint1;
     public Transform JumpCheckPoint;
     public LayerMask wallLayerMask;
     GameObject GroundTrigger;
     GameObject Smoke;
+    GameObject SmokeOverlay;
     //GameObject AttackTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
@@ -89,6 +91,8 @@ public class PlayerStates : MonoBehaviour
                 GroundTrigger = child.gameObject;
             else if (child.name == "Smoke")
                 Smoke = child.gameObject;
+            else if (child.name == "SmokeOverlay")
+                SmokeOverlay = child.gameObject;
         }
 
         PlayerAnimator = Human.GetComponent<Animator>();
@@ -314,6 +318,8 @@ public class PlayerStates : MonoBehaviour
                                     blocks[i] = Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
                                 }
                             }
+
+  
 
                             onStateStart = false;
                             Physics2D.IgnoreLayerCollision(14, 15,false);
@@ -689,9 +695,27 @@ public class PlayerStates : MonoBehaviour
     IEnumerator Stomp()
     {
         PlayerAnimator.Play("Stomp");
-        yield return new WaitForSeconds(0.1f);
-        DustParticles.Play();
-        yield return new WaitForSeconds(0.4f);
+
+        yield return new WaitForSeconds(0.05f);
+
+        Smoke.GetComponent<ParticleSystem>().Play();
+        SmokeOverlay.GetComponent<ParticleSystem>().Play();
+        Vector2 center = Smoke.transform.position;
+        var RockPiece1 = Instantiate(RockPiece, center + new Vector2(0.3f, 0.6f), Quaternion.identity);
+        var RockPiece2 = Instantiate(RockPiece, center + new Vector2(-0.3f, 0.6f), Quaternion.identity);
+
+        Vector2 direction = new Vector2(RockPiece1.gameObject.transform.position.x, RockPiece1.gameObject.transform.position.y) - center;
+        direction.Normalize();
+        RockPiece1.GetComponent<Rigidbody2D>().AddForce(direction * Random.Range(5, 7), ForceMode2D.Impulse);
+        Destroy(RockPiece1, 3);
+
+        direction = new Vector2(RockPiece2.gameObject.transform.position.x, RockPiece2.gameObject.transform.position.y) - center;
+        direction.Normalize();
+        RockPiece2.GetComponent<Rigidbody2D>().AddForce(direction * Random.Range(5, 7), ForceMode2D.Impulse);
+        Destroy(RockPiece2, 3);
+
+        yield return new WaitForSeconds(0.45f);
+
         onStateStart = true;
         status = State.Default;
     }

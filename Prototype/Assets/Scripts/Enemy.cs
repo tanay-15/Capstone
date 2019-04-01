@@ -788,7 +788,9 @@ public class Enemy : BasicEnemy {
             var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
 
-            if(collision.gameObject.name == "AttackTrigger" && collision.transform.parent.parent.gameObject.GetComponent<PlayerStates>().attackCounter == 2)
+            if((collision.gameObject.name == "AttackTrigger" && collision.transform.parent.parent.gameObject.GetComponent<PlayerStates>().attackCounter == 2) || 
+                    (target.GetComponent<DemonTransformScript>().DemonModeActive)||
+                    collision.gameObject.name == "StompTrigger")
                 KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? 1 : -1, 1) * 1000 * Random.Range(5, 6));
 
         }
