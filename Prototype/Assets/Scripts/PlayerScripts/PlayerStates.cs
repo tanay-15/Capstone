@@ -24,7 +24,7 @@ public class PlayerStates : MonoBehaviour
     public float forceY = 6.0f;
     public float slideSpeed = 1.8f;
     public ArrowInfo shootingArrowInfo;
-    int attackCounter = 0;
+    public int attackCounter = 0;
     int groundCount = 0;
     float cameraPanSensitivity = 0.08f;
     float maxPanRangeX = 9f;
@@ -338,6 +338,12 @@ public class PlayerStates : MonoBehaviour
                         else if (attackCounter == 1)
                         {
                             PlayerAnimator.Play("MeleeAttack2", -1, 0);
+                            audioManager.Play("Punch");
+                            attackCounter++;
+                        }
+                        else if (attackCounter == 2)
+                        {
+                            PlayerAnimator.Play("MeleeAttack1", -1, 0);
                             audioManager.Play("Punch");
                             attackCounter = 0;
                         }

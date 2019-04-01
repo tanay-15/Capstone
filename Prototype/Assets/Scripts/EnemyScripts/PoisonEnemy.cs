@@ -25,7 +25,7 @@ public class PoisonEnemy : Enemy
 
         }
 
-        Physics2D.IgnoreLayerCollision(11,15);
+        //Physics2D.IgnoreLayerCollision(11,15);
     }
 
     // Update is called once per frame
@@ -68,9 +68,20 @@ public class PoisonEnemy : Enemy
 
                     if (attackResetTimer >= 2.0f)
                     {
-                        var projectile = Instantiate(PoisonProjectile,transform.position + new Vector3(0,1,0), Quaternion.identity);
-                        projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1,1)*5, ForceMode2D.Impulse);
                         attackResetTimer = 0.0f;
+
+                        var projectile = Instantiate(PoisonProjectile,transform.position + new Vector3(0,1,0), Quaternion.identity);
+
+                        //float time = 2.5f;
+                        float distanceX = target.transform.position.x - transform.position.x;
+                        float distanceY = target.transform.position.y - transform.position.y - 1.0f;
+
+                        float velocityX = distanceX ;
+                        float velocityY = (distanceY ) - 0.5f  * (Physics2D.gravity.y);
+
+                        projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX,velocityY);
+
+                        Physics2D.IgnoreCollision(projectile.GetComponent<CircleCollider2D>(), target.GetComponent<CapsuleCollider2D>());
                     }
 
                     if (!withinRange)
