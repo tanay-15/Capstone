@@ -1,7 +1,8 @@
-﻿using Anima2D;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Anima2D;
 
 public class Enemy : BasicEnemy {
 
@@ -241,7 +242,9 @@ public class Enemy : BasicEnemy {
                             GetComponent<Animator>().Play("Idle");
                             GetComponent<BoxCollider2D>().enabled = true;
                         }
-                       
+
+
+
                         break;
                     }
             }
@@ -732,7 +735,7 @@ public class Enemy : BasicEnemy {
         {
             KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? -1 : 1, 1) * 1000 * Random.Range(2, 3));
             flip();
-            applyDamage(3);
+            applyDamage(5);
         }
     }
 

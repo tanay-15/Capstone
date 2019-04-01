@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Anima2D;
 
 public class PlayerLifeController : MonoBehaviour {
 
@@ -146,9 +147,9 @@ public class PlayerLifeController : MonoBehaviour {
 
     void SetRendererColors(Color col)
     {
-        foreach (SpriteRenderer r in renderers)
+        foreach (SpriteMeshInstance s in GetComponentsInChildren<SpriteMeshInstance>())
         {
-            r.color = col;
+            s.color = col;
         }
     }
 

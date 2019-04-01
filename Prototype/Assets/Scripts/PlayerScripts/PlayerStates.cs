@@ -59,6 +59,7 @@ public class PlayerStates : MonoBehaviour
     public Transform JumpCheckPoint;
     public LayerMask wallLayerMask;
     GameObject GroundTrigger;
+    GameObject Smoke;
     //GameObject AttackTrigger;
     [SerializeField]
     ParticleSystem DustParticles;
@@ -86,12 +87,15 @@ public class PlayerStates : MonoBehaviour
                 Demon = child.gameObject;
             else if (child.name == "GroundTrigger")
                 GroundTrigger = child.gameObject;
+            else if (child.name == "Smoke")
+                Smoke = child.gameObject;
         }
 
         PlayerAnimator = Human.GetComponent<Animator>();
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
         audioManager = FindObjectOfType<AudioManager>();
+        DustParticles = Smoke.GetComponent<ParticleSystem>();
     }
 
 
@@ -294,10 +298,10 @@ public class PlayerStates : MonoBehaviour
                         if (grounded == true && onStateStart == true)
                         {
                             movable = false;
-                            Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
+                            //Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
                             audioManager.Play("Stomp");
                             FindObjectOfType<CameraFollow>().ShakeCamera();
-                            DustParticles.Play();
+                            //DustParticles.Play();
                             //blocks = FindObjectsOfType<OrbitorObjectScript>();
                             if (GetComponent<DemonTransformScript>().DemonModeActive)
                             {
@@ -660,6 +664,8 @@ public class PlayerStates : MonoBehaviour
         cameraFocus.localPosition = newFocusPos;
     }
 
+
+
     IEnumerator MeleeAttack()
     {
         yield return new WaitForSeconds(0.25f);
@@ -683,7 +689,9 @@ public class PlayerStates : MonoBehaviour
     IEnumerator Stomp()
     {
         PlayerAnimator.Play("Stomp");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
+        DustParticles.Play();
+        yield return new WaitForSeconds(0.4f);
         onStateStart = true;
         status = State.Default;
     }
@@ -718,6 +726,7 @@ public class PlayerStates : MonoBehaviour
         status = State.InAir;
 
     }
+
 
     //Demon Wall Crawl
     IEnumerator WallCrawl()

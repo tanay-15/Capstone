@@ -66,7 +66,7 @@ public class PoisonEnemy : Enemy
             {
                     attackResetTimer += Time.deltaTime;
 
-                    if (attackResetTimer >= 2.0f)
+                    if (attackResetTimer >= 2.0f && target)
                     {
                         attackResetTimer = 0.0f;
 
