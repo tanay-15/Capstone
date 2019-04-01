@@ -217,7 +217,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 1.8}
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 25
 --- !u!1 &843907010903079431
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +901,7 @@ MonoBehaviour:
   vision: {fileID: 0}
   groundAhead: {fileID: 0}
   jumpAhead: {fileID: 0}
+  groundTrigger: {fileID: 0}
   shurikenprefab: {fileID: 1900246247028210, guid: 776f1c1a87e374e42b697134504ba5ea,
     type: 3}
   shuriloct: {fileID: 2290953071641630103}

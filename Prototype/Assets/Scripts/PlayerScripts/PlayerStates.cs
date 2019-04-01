@@ -353,7 +353,7 @@ public class PlayerStates : MonoBehaviour
                         }
                         else if (attackCounter == 2)
                         {
-                            PlayerAnimator.Play("MeleeAttack1", -1, 0);
+                            PlayerAnimator.Play("MeleeAttack3", -1, 0);
                             audioManager.Play("Punch");
                             attackCounter = 0;
                         }
