@@ -36,7 +36,7 @@ public class PulleyWheel : MonoBehaviour
         }
         if (grabbed)
         {
-            if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical") > 0)
+            if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical") > 0 || Input.GetAxis("Horizontal") > 0)
             {
                 this.transform.Rotate(Vector3.forward * 180 * Time.deltaTime);
 
@@ -45,7 +45,7 @@ public class PulleyWheel : MonoBehaviour
                     g.GetComponent<PulleyTargets>().MoveTarget(1);
                 }
             }
-            if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical") < 0)
+            if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical") < 0 || Input.GetAxis("Horizontal") < 0)
             {
                 this.transform.Rotate(Vector3.forward * -180 * Time.deltaTime);
 

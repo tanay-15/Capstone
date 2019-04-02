@@ -50,13 +50,25 @@ public class OrbPuzzle_Start : MonoBehaviour
             if (orbPresent)
             {
                 Timer.sharedInstance.Set(timeAlive);
-               ScreenPointer.sharedInstance.SetTarget(endPoint);
+                ScreenPointer.sharedInstance.SetTarget(endPoint);
             }
             orbPresent = false;
             if (this.transform.childCount > 0)
             {
                 this.transform.GetChild(0).GetComponent<CircleCollider2D>().isTrigger = false;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.name.Contains("Orb") && !orbPresent)
+        {
+            Destroy(this.transform.GetChild(0).gameObject);
+            Instantiate(orbPrefab, this.transform);
+            Timer.sharedInstance.Stop();
+            ScreenPointer.sharedInstance.RemoveTarget();
+            orbPresent = true;
         }
     }
 }
