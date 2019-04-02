@@ -723,12 +723,14 @@ public class PlayerStates : MonoBehaviour
         Vector2 direction = new Vector2(RockPiece1.gameObject.transform.position.x, RockPiece1.gameObject.transform.position.y) - center;
         direction.Normalize();
         RockPiece1.GetComponent<Rigidbody2D>().AddForce(direction * Random.Range(5, 7), ForceMode2D.Impulse);
-        Destroy(RockPiece1, 3);
+        
 
         direction = new Vector2(RockPiece2.gameObject.transform.position.x, RockPiece2.gameObject.transform.position.y) - center;
         direction.Normalize();
         RockPiece2.GetComponent<Rigidbody2D>().AddForce(direction * Random.Range(5, 7), ForceMode2D.Impulse);
-        Destroy(RockPiece2, 3);
+
+        Destroy(RockPiece1, 1.5f);
+        Destroy(RockPiece2, 1.5f);
 
         yield return new WaitForSeconds(0.45f);
 
