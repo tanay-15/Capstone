@@ -21,6 +21,16 @@ public class ActionIndicator : MonoBehaviour {
         //UIIcons.sharedInstance.SetIconActive(UIIcon.Interact, false);
     }
 
+    private void LateUpdate()
+    {
+        if (indicator.transform.parent != null)
+        {
+            Vector3 newScale = indicator.transform.localScale;
+            newScale.x = (Mathf.Sign(indicator.transform.parent.localScale.x) != Mathf.Sign(indicator.transform.localScale.x)) ? -newScale.x : newScale.x;
+            indicator.transform.localScale = newScale;
+        }
+    }
+
     IEnumerator Scale(bool show)
     {
         for (float i = 0f; i < 1f; i += Time.deltaTime * speed)

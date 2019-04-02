@@ -116,7 +116,6 @@ public class PlayerStates : MonoBehaviour
             float right = facingRight ? 0f : 180f;
             float rotation = Mathf.Atan2(shootingArrowInfo.GetShootingDirectionToMouse(bicep.position, facingRight).y, shootingArrowInfo.GetShootingDirectionToMouse(bicep.position, facingRight).x) * 180 / Mathf.PI;
             bicep.rotation = Quaternion.Euler(0f, 0f, rotation + ((facingRight) ? -initialBicepRotation : initialBicepRotation) + right);
-            bow.parent = bicep;
         }
     }
 
