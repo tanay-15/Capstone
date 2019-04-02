@@ -29,6 +29,7 @@ public class SkillPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            SkillTree.info.skillPoints++;
             Destroy(gameObject);
         }
     }

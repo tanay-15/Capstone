@@ -74,6 +74,11 @@ public class PlayerStates : MonoBehaviour
 
     GameObject[] blocks = { null,null,null };
 
+    //Bow and arrow objects
+    public Transform bow;
+    public Transform bicep;
+    float initialBicepRotation = 25.82f;
+
 
 
 
@@ -103,7 +108,17 @@ public class PlayerStates : MonoBehaviour
     }
 
 
-
+    private void LateUpdate()
+    {
+        //Rotate the arm for aiming arrows
+        if (status == State.ChargingArrow)
+        {
+            float right = facingRight ? 0f : 180f;
+            float rotation = Mathf.Atan2(shootingArrowInfo.GetShootingDirectionToMouse(bicep.position, facingRight).y, shootingArrowInfo.GetShootingDirectionToMouse(bicep.position, facingRight).x) * 180 / Mathf.PI;
+            bicep.rotation = Quaternion.Euler(0f, 0f, rotation + ((facingRight) ? -initialBicepRotation : initialBicepRotation) + right);
+            bow.parent = bicep;
+        }
+    }
 
 
     void Update()
@@ -179,9 +194,11 @@ public class PlayerStates : MonoBehaviour
                             PlayerAnimator.Play("Run");
                             audioManager.Play("FootStep");
                         }
-                            
+
                         else
+                        {
                             PlayerAnimator.Play("Idle");
+                        }
                     }
 
                     if (playerSwitch == true)

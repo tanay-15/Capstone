@@ -82,7 +82,7 @@ public class SkillTree : MonoBehaviour
     static SkillTree()
     {
         info.nodesActivated = SkillNodes.None;
-        info.skillPoints = 16;
+        info.skillPoints = 0;   //Max: 16
         nodeIndex = 0;
     }
 
