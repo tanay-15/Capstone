@@ -71,7 +71,7 @@
 			float2 fade_xy = fade(Pf.xy);
 			float2 n_x = lerp(float2(n00, n01),float2(n10, n11),fade_xy.x);
 			float n_xy = lerp(n_x.x,n_x.y,fade_xy.y);
-			return 2.3*n_xy;
+			return 2.32*n_xy;
 		}
             struct appdata
             {
@@ -112,10 +112,10 @@
 			fixed nPosition = i.uv.x;
 			nPosition += 0.5;
 			nPosition *= _Size;
-			nPosition +=  i.uv.y*(_Size*_Direction);
+			nPosition += i.uv.y *(_Size*_Direction);
 			fixed value = PerlinNoise2D(float2(nPosition, _Time.y*_Speed))/2+ 0.5f;
-			value = _Contrast * (value - 0.5) +0.5;
-			color.a *= lerp(value, value*i.uv.y,_Fade + 1);  // lerp between uv.x or y depending on which axis you want fading in. 
+			value = _Contrast * (value);
+			color.a *= lerp(value, value*i.uv.y,_Fade +1);  // lerp between uv.x or y depending on which axis you want fading in. 
 			color.a = saturate(color.a);	//clamping between 0 & 1.
 			return color;
             }
