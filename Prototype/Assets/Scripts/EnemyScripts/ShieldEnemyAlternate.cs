@@ -16,11 +16,14 @@ public class ShieldEnemyAlternate : Enemy
     IEnumerator Charge()
     {
         //play running animation
-       anim.Play("Run");
+        anim.Play("AltShield_AttackReady");
         var dir = target.transform.position - this.transform.position;
         var dis = dir.magnitude;
         finalDirection = dir / dis;
         yield return new WaitForSeconds(0.25f);
+
+        anim.Play("AltShield_Attack");
+
         transform.GetComponent<Rigidbody2D>().velocity = finalDirection.normalized * speed;
         //Debug.Log("Dir " + finalDirection);
         //transform.GetComponent<Rigidbody2D>().AddRelativeForce(finalDirection * speed);//, ForceMode2D.Force);
@@ -35,30 +38,31 @@ public class ShieldEnemyAlternate : Enemy
         {
             case States.Idle:
                 {
-                    anim.Play("Idle");
+                    anim.Play("AltShieldIdle");
+                    elapsedTime += Time.deltaTime;
                     //hit = Physics2D.OverlapCircle(this.transform.position, 8f, PlayerMask);
-
-                    if (target && withinRange)
+                    if (elapsedTime > 3.0f && target && withinRange)
                     {
+                        elapsedTime = 0f;
                         currentstate = States.Attack;
+                        //if (target && withinRange)
+                        //{
+                        //    currentstate = States.Attack;
+                        //}
                     }
-
                     break;
                 }
             case States.Attack:
                 {
-                    elapsedTime += Time.deltaTime;
-                    if (elapsedTime >12.0f && target)
+                                                            
+                    StartCoroutine("Charge");
+                    if ((target.transform.position - transform.position).magnitude < 2f)
                     {
-                        
-                        StartCoroutine("Charge");
-                        if ((target.transform.position - transform.position).magnitude < 2f)
-                        {
                             Debug.Log("velocity " + transform.GetComponent<Rigidbody2D>().velocity);
                             currentstate = States.KnockBack;
-                        }
-                        elapsedTime = 0f;
-                    } 
+                    }
+                   
+                    
                     else if (!withinRange)
                     {
                         currentstate = States.Idle;
