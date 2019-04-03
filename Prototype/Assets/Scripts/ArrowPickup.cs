@@ -20,7 +20,7 @@ public class ArrowPickup : MonoBehaviour
     void Update()
     {
         count += Time.deltaTime;
-        scale = 1f + (0.3f * Mathf.Sin(count * 4f));
+        scale = 1f+ (0.2f * Mathf.Sin(count * 4f));
         sprites.transform.localScale = Vector3.one * scale;
     }
 
@@ -38,8 +38,23 @@ public class ArrowPickup : MonoBehaviour
         {
             if (canPickUp)
             {
-                Destroy(gameObject);
-                ArrowCounter.sharedInstance.SetMaxArrows();
+                
+                if (gameObject.name.Substring(0, 5) == "Arrow")
+                {
+                    ArrowCounter.sharedInstance.SetMaxArrows();
+                    Destroy(gameObject);
+                }
+                else if(gameObject.name.Substring(0, 6) == "Health")
+                {
+                    //Debug.Log(gameObject.name.Substring(0, 6));
+                    col.gameObject.SendMessage("GetHit", 10f);
+                    Destroy(gameObject);
+                }
+        
+            }
+            else
+            {
+                Physics2D.IgnoreCollision(GetComponent<CircleCollider2D>(),col.gameObject.GetComponent<CapsuleCollider2D>());
             }
         }
     }

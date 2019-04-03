@@ -8,6 +8,7 @@ public class EnemySoulGenerator : MonoBehaviour {
     public GameObject soulPrefab;
     public GameObject trailPrefab;
     public GameObject arrowPickupPrefab;
+    public GameObject healthPickupPrefab;
     public GameObject canvas;
 
     public AnimationCurve speedTo;
@@ -16,9 +17,11 @@ public class EnemySoulGenerator : MonoBehaviour {
     public static EnemySoulGenerator sharedInstance;
 
 	void Start () {
+
         if (sharedInstance != null)
             Destroy(sharedInstance);
         sharedInstance = this;
+        Physics2D.IgnoreLayerCollision(19,15);
 	}
 
     public void GenerateSoul(Vector2 enemyPos)
@@ -27,8 +30,18 @@ public class EnemySoulGenerator : MonoBehaviour {
 
         //Drop arrows
         //TODO: Chance of arrows generating should be handled by the individual enemies
-        if (Random.Range(0, 2) == 0)
-            Instantiate(arrowPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
+        if (Random.Range(0, 3) == 0)
+        { 
+            var arrow = Instantiate(arrowPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
+            arrow.GetComponent<Rigidbody2D>().AddForce(Vector2.up*5,ForceMode2D.Impulse);
+        }
+
+        if (Random.Range(0, 3) == 1)
+        {
+            var potion = Instantiate(healthPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
+            potion.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        }
+
     }
 
     IEnumerator Soul(Vector2 enemyPos)

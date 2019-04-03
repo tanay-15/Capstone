@@ -117,11 +117,25 @@ public class PlayerLifeController : MonoBehaviour {
     public void GetHit(int addLife)
     {
         if (invincible || transform.GetComponent<PlayerStates>().invulnerable) return;
-        StartInvincibleBlink(2);
-        PlayerLife.sharedInstance.AddLife(addLife);
-        FindObjectOfType<CameraFollow>().ShakeCamera();
-        BlinkRed(true);
-        Invoke("Unblink", 0.1f);
+        
+        
+
+        if (addLife < 0)
+        {
+            PlayerLife.sharedInstance.AddLife(addLife);
+            StartInvincibleBlink(2);
+            FindObjectOfType<CameraFollow>().ShakeCamera();
+            BlinkRed(true);
+            Invoke("Unblink", 0.1f);            
+        }
+        else
+        {
+            if (PlayerLife.sharedInstance.currentLife < PlayerLife.sharedInstance.maxLife)
+            {
+                PlayerLife.sharedInstance.AddLife(addLife);
+            }
+        }
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
