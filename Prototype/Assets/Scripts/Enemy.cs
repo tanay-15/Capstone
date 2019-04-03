@@ -68,6 +68,7 @@ public class Enemy : BasicEnemy {
         Jumping,
         GetHit,
         KnockBack,
+        Teleport,
         Dead
     }
     [Header("States")]
@@ -97,7 +98,11 @@ public class Enemy : BasicEnemy {
     private GameObject jump_up_origin;
     private Vector3 jump_up_position;
     private RaycastHit2D jump_up_hit;
- 
+
+
+    private float teleportResetTimer = 0f;
+    private float teleportTime = 1.0f;
+    private Vector3 teleportTarget;
 
     protected bool CollidedWithPlayer;
     Component[] bones;
@@ -212,6 +217,7 @@ public class Enemy : BasicEnemy {
                     DetectingPlayer();
                     CheckForGroundAhead();
                     Pursuit();
+                    
                     break;
 
                 case States.Attack:
@@ -233,7 +239,7 @@ public class Enemy : BasicEnemy {
 
 
                         if (GetComponent<Rigidbody2D>().velocity.y == 0)
-                        {                         
+                        {
                             if (target)
                                 currentstate = States.Pursuit;
                             else
@@ -242,9 +248,32 @@ public class Enemy : BasicEnemy {
                             GetComponent<Animator>().Play("Idle");
                             GetComponent<BoxCollider2D>().enabled = true;
                         }
+                        break;
+                    }
+
+                  case States.Teleport:
+                    {
+                        
+
+                        if (teleportResetTimer == 0)
+                        {
+                            teleportTarget = target.transform.position - new Vector3(0,0.6f,0);
+                            GetComponent<Rigidbody2D>().isKinematic = true;
+                        }
+
+                        teleportResetTimer += Time.deltaTime;
+
+                        if (teleportResetTimer >= teleportTime)
+                        {
+                            currentstate = States.Pursuit;
+                            GetComponent<Rigidbody2D>().isKinematic = false;
+                        }
+                        
 
 
-
+                        transform.position = new Vector2( Mathf.SmoothStep(transform.position.x, teleportTarget.x, teleportResetTimer/ teleportTime),
+                            Mathf.SmoothStep(transform.position.y, teleportTarget.y, teleportResetTimer/ teleportTime));
+                        
                         break;
                     }
             }
@@ -497,108 +526,53 @@ public class Enemy : BasicEnemy {
                     currentstate = States.Attack;
                     anim.SetBool("Attack", true);
                 }
+                else if ((Mathf.Abs(target.transform.position.y -this.transform.position.y) > 1.5f) && target.GetComponent<PlayerStates>().status != PlayerStates.State.InAir)
+                {
+
+                        teleportResetTimer = 0;
+                        currentstate = States.Teleport;
+                            //StartCoroutine(TeleportEnemy(target.transform.position,1));
+                
+                }
                 else
-                {
-                    if ((int)target.transform.position.y > (int)this.transform.position.y)
-                    {
-                        CheckJumpUp();
-                    }
-
-                    //if (hasgroundAhead)
-                    //{
                     this.transform.position = Vector2.MoveTowards(this.transform.position, target.transform.position, movspeed * Time.deltaTime);
-                       
-                   // }
-
-                    //else
-                    //{
-                      
-
-                    //    CheckJumpSide();
-                    
-                   
-                    //}
-
-                   
-
-                   
-                }
                
             }
         }
     }
 
-    void CheckJumpUp()
-    {
-        Debug.DrawRay(jump_up_origin.transform.position, -transform.up);
-        
-        if(jump_up_hit = Physics2D.Raycast(jump_up_origin.transform.position, -transform.up, 4f, EnemyIgnoreMask))
-        {
-            
-            jump_up_position = jump_up_hit.point;
+    //void CheckJumpUp()
+    //{
+
+    //    this.transform.position = target.transform.position;
 
 
 
-            if (jump_up_hit.collider.gameObject.tag == "ground")
-            {
+    //}
 
-
-                if (Mathf.Approximately((int)target.transform.position.y, (int)jump_up_position.y))
-                {
+    //void CheckJumpSide()
+    //{
 
 
 
-                 StartCoroutine(TeleportEnemy(jump_up_position, 1.5f));
-                   
-                }
-                
-
-            }
-
-            else
-            {
-
-            }
-        }
-    }
-
-    void CheckJumpSide()
-    {
-       
-        if(jumpsideHit = Physics2D.Raycast(jumpAhead.transform.position, -transform.up,12f,EnemyIgnoreMask))
-        {
+    //           StartCoroutine(TeleportEnemy(jump_position, 1f));
 
 
-               
-                jump_position = jumpsideHit.point;
-        
 
-            if (Mathf.Approximately((int)jump_position.y, (int)target.transform.position.y))
-            {
+    //}
 
-               StartCoroutine(TeleportEnemy(jump_position, 1f));
-             
-            }
-      
-                   
-                    
+    //IEnumerator TeleportEnemy(Vector3 _position, float _delayTime)
+    //{
+    //    yield return new WaitForSeconds(_delayTime);
+    //    Mathf.SmoothStep(transform.position.x, _position.x, (teleportResetTimer / _delayTime));
+    //    Mathf.SmoothStep(transform.position.y, _position.y, (teleportResetTimer / _delayTime));
 
-                   
-                
-              
-                
-            }
-        
-    }
-
-    IEnumerator TeleportEnemy(Vector3 _jumpPosition,float _delayTime)
-    {
-        yield return new WaitForSeconds(_delayTime);
-        this.transform.position = _jumpPosition;
-    }
+    //    teleportResetTimer = 0;
+    //    this.transform.position = _position;
+    //}
 
 
-   
+
 
     public void CheckForFlip(Vector3 _targetpos)
     {

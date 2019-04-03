@@ -36,7 +36,7 @@ public class EnemySoulGenerator : MonoBehaviour {
             arrow.GetComponent<Rigidbody2D>().AddForce(Vector2.up*5,ForceMode2D.Impulse);
         }
 
-        if (Random.Range(0, 3) == 1)
+        if (Random.Range(0, 4) == 2)
         {
             var potion = Instantiate(healthPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
             potion.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 5, ForceMode2D.Impulse);
