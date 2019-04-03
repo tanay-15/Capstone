@@ -46,6 +46,8 @@
 		#if defined(PIXELSNAP_ON) 
 				v.vertex = UnityPixelSnap(v.vertex);
 		#endif
+
+				v.tangent = float4(-1, 0, 0, 1);
 				UNITY_INITIALIZE_OUTPUT(Input, o);
 				o.color = v.color;
 			}
