@@ -3,7 +3,6 @@
     Properties
     {
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_Tint("Colour Tint", Color) = (1,1,1,1)
 		_Freq("Frequency", Range(0,20)) = 10
 		_Speed("Speed", Range(0,100)) = 10
 		_Amp("Amplitude", Range(0,1)) = 0.5
@@ -31,7 +30,7 @@
             float2 uv_MainTex;
         };
 
-		float4 _Tint;
+
 		float _Freq;
 		float _Speed;
 		float _Amp;
@@ -45,7 +44,7 @@
 			float4 texcoord: TEXCOORD0;
 		};
 
-		void vert(inout appdata_full v)
+		void vert(inout appdata v)
 		{
 			float t = _Time.x * _Speed;
 			float waveHeight = sin(t + v.vertex.x * _Freq) * (_Amp/2) + sin(t *2 + v.vertex.x * _Freq*2) * (_Amp/2);

@@ -108,7 +108,7 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-			fixed4 color = lerp(_Color1,_Color2, 1-i.uv.y);
+			fixed4 color = lerp(_Color1,_Color2, 0.25);
 			fixed nPosition = i.uv.x;
 			nPosition += 0.5;
 			nPosition *= _Size;
