@@ -261,15 +261,15 @@ public class Enemy : BasicEnemy {
                             GetComponent<Rigidbody2D>().isKinematic = true;
                         }
 
-                        teleportResetTimer += Time.deltaTime;
+                        
 
-                        if (teleportResetTimer >= teleportTime)
+                        if (teleportResetTimer >= 0.7f* teleportTime)
                         {
                             currentstate = States.Pursuit;
                             GetComponent<Rigidbody2D>().isKinematic = false;
                         }
-                        
 
+                        teleportResetTimer += 0.5f * Time.deltaTime;
 
                         transform.position = new Vector2( Mathf.SmoothStep(transform.position.x, teleportTarget.x, teleportResetTimer/ teleportTime),
                             Mathf.SmoothStep(transform.position.y, teleportTarget.y, teleportResetTimer/ teleportTime));
@@ -515,7 +515,7 @@ public class Enemy : BasicEnemy {
                 currentstate = States.Pursuit;
                 CheckForFlip(target.transform.position);
                 anim.SetBool("ShouldPursuit", true);
-                if(Mathf.Abs(this.transform.position.y - target.transform.position.y) > 3f)
+                if(Mathf.Abs(this.transform.position.y - target.transform.position.y) > 2.5f)
                 {
                     currentstate = States.Patrol;
                     
@@ -526,7 +526,7 @@ public class Enemy : BasicEnemy {
                     currentstate = States.Attack;
                     anim.SetBool("Attack", true);
                 }
-                else if ((Mathf.Abs(target.transform.position.y -this.transform.position.y) > 1.5f) && target.GetComponent<PlayerStates>().status != PlayerStates.State.InAir)
+                else if ((Mathf.Abs(target.transform.position.y -this.transform.position.y) > 1.5f) && target.GetComponent<PlayerStates>().grounded)
                 {
 
                         teleportResetTimer = 0;
