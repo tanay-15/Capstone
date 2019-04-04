@@ -7,12 +7,14 @@ public class ShieldEnemyAlternate : Enemy
     public float speed;
     Vector2 finalDirection;
     float elapsedTime = 0;
+    IEnumerator routine;
     // Start is called before the first frame update
     void Start()
     {
         LookingLeft = true;
         currentstate = States.Idle;
         anim = GetComponent<Animator>();
+        routine = null;
     }
     IEnumerator Charge()
     {
@@ -49,12 +51,16 @@ public class ShieldEnemyAlternate : Enemy
         {
             case States.Idle:
                 {
+                    if (routine != null)
+                        StopCoroutine(routine);
                     anim.Play("AltShieldIdle");
                     elapsedTime += Time.deltaTime;
-                    if (elapsedTime > 3.0f && target && withinRange)
+                    if (elapsedTime > 3.0f && target && withinRange && routine == null)
                     {
                         elapsedTime = 0f;
-                        StartCoroutine("Charge");
+                        //StartCoroutine("Charge");
+                        routine = Charge();
+                        StartCoroutine(routine);
 
                         currentstate = States.Attack;
                     }
@@ -62,6 +68,8 @@ public class ShieldEnemyAlternate : Enemy
                 }
             case States.Attack:
                 {
+                    if (routine != null)
+                        StopCoroutine(routine);
                     transform.GetComponent<Rigidbody2D>().velocity = new Vector2(finalDirection.x, 0).normalized * speed;
                     Debug.Log("velocity " + transform.GetComponent<Rigidbody2D>().velocity);
                     if (!withinRange)
@@ -72,8 +80,9 @@ public class ShieldEnemyAlternate : Enemy
                 }
             case States.KnockBack:
                 {
-                 
-                  transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+                    if (routine != null)
+                        StopCoroutine(routine);
+                    transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
                   Debug.Log("velocity " + transform.GetComponent<Rigidbody2D>().velocity);
                   target.GetComponent<Rigidbody2D>().AddForce(finalDirection * 2f, ForceMode2D.Impulse);
                   
