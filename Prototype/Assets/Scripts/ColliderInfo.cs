@@ -16,8 +16,13 @@ public class ColliderInfo : MonoBehaviour
         
     }
 
-    public void OnTriggerStay2D(Collider2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-        GetComponentInParent<ShieldEnemyAlternate>().handleTriggerEvent(collision);    
+        if (collision.gameObject.tag == "Player")
+        {
+
+            FindObjectOfType<ShieldEnemyAlternate>().handleTriggerEvent(collision);
+        }
+           
     }
 }

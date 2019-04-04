@@ -20,16 +20,12 @@ public class ShieldEnemyAlternate : Enemy
         var dir = target.transform.position - this.transform.position;
         var dis = dir.magnitude;
         finalDirection = dir / dis;
-        yield return new WaitForSeconds(0.25f);
-
+        yield return new WaitForSeconds(2f);       
         anim.Play("AltShield_Attack");
-
-        transform.GetComponent<Rigidbody2D>().velocity = finalDirection.normalized * speed;
-        //Debug.Log("Dir " + finalDirection);
-        //transform.GetComponent<Rigidbody2D>().AddRelativeForce(finalDirection * speed);//, ForceMode2D.Force);
-        //transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-        
-
+        //transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 0.25f);
+        //transform.GetComponent<Rigidbody2D>().velocity =  new Vector2(finalDirection.x, 0).normalized * speed;
+        //transform.GetComponent<Rigidbody2D>().AddForce(new Vector2(finalDirection.x, 0).normalized * speed, ForceMode2D.Impulse);
+        Debug.Log("velocity : " + transform.GetComponent<Rigidbody2D>().velocity);
     }
     // Update is called once per frame
     void Update()
@@ -40,54 +36,60 @@ public class ShieldEnemyAlternate : Enemy
                 {
                     anim.Play("AltShieldIdle");
                     elapsedTime += Time.deltaTime;
-                    //hit = Physics2D.OverlapCircle(this.transform.position, 8f, PlayerMask);
                     if (elapsedTime > 3.0f && target && withinRange)
                     {
                         elapsedTime = 0f;
+
+                        StartCoroutine("Charge");
                         currentstate = States.Attack;
-                        //if (target && withinRange)
-                        //{
-                        //    currentstate = States.Attack;
-                        //}
                     }
                     break;
                 }
             case States.Attack:
                 {
-                                                            
-                    StartCoroutine("Charge");
-                    if ((target.transform.position - transform.position).magnitude < 2f)
-                    {
-                            Debug.Log("velocity " + transform.GetComponent<Rigidbody2D>().velocity);
-                            currentstate = States.KnockBack;
-                    }
-                   
-                    
-                    else if (!withinRange)
+
+
+
+                    transform.GetComponent<Rigidbody2D>().velocity = new Vector2(finalDirection.x, 0).normalized * speed;
+                    //if ((target.transform.position - transform.position).magnitude < 0.5f)
+                    //{
+
+                    //    currentstate = States.KnockBack;
+                    //}
+
+
+                    if (!withinRange)
                     {
                         currentstate = States.Idle;
                     }
+                    
+
+
                     break;
                 }
             case States.KnockBack:
                 {
+                    
                     transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
                     Debug.Log("velocity " + transform.GetComponent<Rigidbody2D>().velocity);
-                    Debug.Log(" Its here");
                     target.GetComponent<Rigidbody2D>().AddForce(finalDirection * 2f, ForceMode2D.Impulse);
-                    //currentstate = States.Idle;
+                    
+                    currentstate = States.Idle;
+
+
+                   
+
                     break;
                 }
                 
         }
     }
 
-  public void handleTriggerEvent(Collider2D collider)
+  public void handleTriggerEvent(Collision2D collider)
     {
         if(collider.gameObject.tag == "Player")
         {
-            currentstate = States.KnockBack;
-            
+            currentstate = States.KnockBack;            
         }
     }
 }
