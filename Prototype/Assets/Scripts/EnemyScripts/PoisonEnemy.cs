@@ -82,7 +82,7 @@ public class PoisonEnemy : Enemy
                         float velocityY = (distanceY ) - 0.5f  * (Physics2D.gravity.y);
 
                         projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX,velocityY);
-
+                        projectile.GetComponent<PoisonProjectile>().targetPos = new Vector2(target.transform.position.x, target.transform.position.y);
                         Physics2D.IgnoreCollision(projectile.GetComponent<CircleCollider2D>(), target.GetComponent<CapsuleCollider2D>());
                     }
 
