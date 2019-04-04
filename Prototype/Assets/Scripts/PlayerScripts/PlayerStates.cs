@@ -10,7 +10,18 @@ public class PlayerStates : MonoBehaviour
 // State
     public enum State
     {
-        Default, InAir, Melee, Roll, RangedAim, ChargingArrow, Stomp, WallJump, WallSlide, Panning, WallCrawl, PlayerSwitch
+        Default,
+        InAir,
+        Melee,
+        Roll,
+        RangedAim,
+        ChargingArrow,
+        Stomp,
+        WallJump,
+        WallSlide,
+        Panning,
+        WallCrawl,
+        PlayerSwitch
     };
     [Header("State")]
     public State status;

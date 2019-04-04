@@ -61,10 +61,6 @@ public class SkeletonDeathScript : MonoBehaviour {
 
             
         }
-           
-
-        if (kill)
-            Die();
 
         mhealth = this.gameObject.GetComponent<Enemy>().GetHealth();
 
