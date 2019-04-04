@@ -25,6 +25,8 @@ public class PoisonEnemy : Enemy
 
         }
 
+        this.maxHealth = this.health;
+
         //Physics2D.IgnoreLayerCollision(11,15);
     }
 
