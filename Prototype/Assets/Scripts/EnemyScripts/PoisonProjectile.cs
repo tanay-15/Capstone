@@ -30,7 +30,7 @@ public class PoisonProjectile : MonoBehaviour
     {
         if (collision.gameObject.layer == 14)
         {
-            collision.gameObject.SendMessage("GetHit", -5.0f);
+            collision.gameObject.SendMessageUpwards("GetHit", -5.0f);
         }
     }
 

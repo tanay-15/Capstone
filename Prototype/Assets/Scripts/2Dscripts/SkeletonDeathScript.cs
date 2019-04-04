@@ -58,6 +58,8 @@ public class SkeletonDeathScript : MonoBehaviour {
             
             GetComponent<Animator>().speed = 1;
             StartCoroutine(Initialize());
+
+            
         }
            
 
@@ -174,6 +176,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         GetComponent<Enemy>().enabled = true;
         spawn = false;
+        gameObject.SendMessage("EnableLifebar", true);
         //GetComponent<Animator>().Play("SkelWalk");
     }
 
