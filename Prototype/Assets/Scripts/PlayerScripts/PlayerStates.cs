@@ -269,8 +269,9 @@ public class PlayerStates : MonoBehaviour
                         Physics2D.IgnoreLayerCollision(14, 15);
                         status = State.Stomp;
                     }
-                        
 
+                    if (Time.timeScale > 0f && Input.GetButtonDown("Fire1"))
+                        status = State.Melee;
 
 
                     if (grounded == true)

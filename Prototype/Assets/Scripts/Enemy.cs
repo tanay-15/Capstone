@@ -257,7 +257,7 @@ public class Enemy : BasicEnemy {
 
                         if (teleportResetTimer == 0)
                         {
-                            teleportTarget = target.transform.position - new Vector3(0,0.6f,0);
+                            teleportTarget = target.transform.position - new Vector3(0,0.7f,0);
                             GetComponent<Rigidbody2D>().isKinematic = true;
                         }
 

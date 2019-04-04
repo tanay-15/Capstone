@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182471081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.36, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8320708836436786146}
@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b0c2a01ac03ec4dad2df8c9c1ad5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredTag: 
   TriggerEnter:
     m_PersistentCalls:
       m_Calls:
@@ -151,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3316792417821088208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.53, y: -0.221, z: 0}
+  m_LocalPosition: {x: 0.09, y: -0.326, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5867504728095849654}
@@ -287,9 +288,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8320708836436786146}
   - component: {fileID: 8320708836436786175}
-  - component: {fileID: 8320708836436786173}
   - component: {fileID: 2045077917678696473}
   - component: {fileID: 1205623908}
+  - component: {fileID: 8607297591678198261}
   m_Layer: 15
   m_Name: FlyingSkull
   m_TagString: Enemy
@@ -359,24 +360,9 @@ MonoBehaviour:
   targetposition: {x: 0, y: 0, z: 0}
   GetPlayerPost: 0
   AttackCounter: 0
-  health: 10
+  health: 20
   PlayerHit: 0
---- !u!58 &8320708836436786173
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8320708836436786147}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.49, y: 0.21}
-  serializedVersion: 2
-  m_Radius: 0.95
+  spawn: 1
 --- !u!95 &2045077917678696473
 Animator:
   serializedVersion: 3
@@ -417,6 +403,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &8607297591678198261
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320708836436786147}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.88
 --- !u!1 &8320708836541503939
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8320708837812494415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8320708836436786146}
@@ -576,7 +578,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8ee688063164ab24da763b4fc21d7d35, type: 3}
-  m_Color: {r: 0.46226418, g: 0.15045391, b: 0.15045391, a: 0.627451}
+  m_Color: {r: 0.46226418, g: 0.15045391, b: 0.15045391, a: 0.69803923}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

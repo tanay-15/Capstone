@@ -31,10 +31,11 @@ public class Enemy_Bat : BasicEnemy
 
     public float AttackCounter = 0f;
 
-    public float health = 10f;
+    public int health = 10;
+    protected int maxHealth;
 
     public bool PlayerHit = false;
-
+    public bool spawn = true;
 
 
 
@@ -46,6 +47,7 @@ public class Enemy_Bat : BasicEnemy
         //pointC = waypoints[2].transform.position;
         this.transform.position = pointA;
         moveA = true;
+        this.maxHealth = this.health;
     }
 
     // Update is called once per frame
@@ -222,10 +224,10 @@ public class Enemy_Bat : BasicEnemy
 
         }
 
-        if ((collider.gameObject.tag == "projectile") && Vector2.Distance(collider.gameObject.transform.position, this.transform.position) < 1f)
-        {
-            applyDamage(5);
-        }
+        //if ((collider.gameObject.tag == "projectile") && Vector2.Distance(collider.gameObject.transform.position, this.transform.position) < 1f)
+        //{
+        //    applyDamage(5);
+        //}
 
 
 
@@ -252,9 +254,20 @@ public class Enemy_Bat : BasicEnemy
         Gizmos.DrawWireSphere(this.transform.position, Range);
     }
 
-    public void applyDamage(float damage)
+    public void applyDamage(int damage)
     {
         //events.OnDeath.Invoke();
         this.health = this.health - damage;
+    }
+
+
+    public void EnableLifebar(bool enable)
+    {
+        enableLifebar = enable;
+    }
+
+    public void Spawn()
+    {
+        spawn = true;
     }
 }
