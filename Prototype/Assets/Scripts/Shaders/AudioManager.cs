@@ -24,10 +24,14 @@ public class AudioManager : MonoBehaviour
             return;
         }           
         else
-        Instance = this;
+        {
+            Instance = this;
+        }  
+    }
 
-        DontDestroyOnLoad(gameObject);
-        foreach(Sound s in sounds)
+    private void Start()
+    {
+        foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -36,10 +40,8 @@ public class AudioManager : MonoBehaviour
             s.source.playOnAwake = false;
 
         }
-       
     }
-
-    private void Start()
+    private void Update()
     {
         if ((SceneManager.GetSceneByName("NewLevel1").isLoaded))
         {
@@ -53,7 +55,7 @@ public class AudioManager : MonoBehaviour
 
         else if ((SceneManager.GetSceneByName("Tutorial2").isLoaded))
         {
-           
+
             PlayMusic("TutorialMusic");
         }
 

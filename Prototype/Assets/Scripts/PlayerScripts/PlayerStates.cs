@@ -114,8 +114,10 @@ public class PlayerStates : MonoBehaviour
         PlayerAnimator = Human.GetComponent<Animator>();
         Rb2d = GetComponent<Rigidbody2D>();
         shootingArrowInfo.Initialize();
-        audioManager = FindObjectOfType<AudioManager>();
+        //audioManager = FindObjectOfType<AudioManager>();
+        
         DustParticles = Smoke.GetComponent<ParticleSystem>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
 
