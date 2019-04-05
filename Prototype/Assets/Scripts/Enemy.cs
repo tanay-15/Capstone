@@ -585,7 +585,7 @@ public class Enemy : BasicEnemy {
                 currentstate = States.Pursuit;
                 CheckForFlip(target.transform.position);
                 anim.SetBool("ShouldPursuit", true);
-                if(Mathf.Abs(this.transform.position.y - target.transform.position.y) > 2.5f)
+                if(Mathf.Abs(this.transform.position.y - target.transform.position.y) > 3.0f)
                 {
                     currentstate = States.Patrol;
                     

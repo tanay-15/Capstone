@@ -90,6 +90,7 @@ public class CombatZone : MonoBehaviour
                 audioManager.PlayMusic("BossBattleMusic");
             }
             Door1Open = false;
+            //Door2Open = false;
             Camera.main.GetComponent<CameraFollow>().target = transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(CameraPanSize,1);
             StartCoroutine(Spawn());
