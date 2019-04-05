@@ -91,6 +91,8 @@ public class PoisonEnemy : Enemy
                         currentstate = States.Idle;
                     }
 
+                    CheckForPlayerPosition();
+
                     break;
             }
         }
@@ -108,5 +110,39 @@ public class PoisonEnemy : Enemy
         events.OnDeath.Invoke();
 
         //PoisonEffect1.GetComponent<ParticleSystem>().= false;
+    }
+
+    public void CheckForPlayerPosition()
+    {
+        if (target.transform.position.x > this.transform.position.x)
+        {
+            //check where it is looking
+            //look left
+            if (LookingLeft)
+            {
+                //ignore
+            }
+            if (!LookingLeft)
+            {
+                flip();
+            }
+
+        }
+
+        if (target.transform.position.x < this.transform.position.x)
+        {
+            //check where it is looking
+            //Look right
+
+            if (LookingLeft)
+            {
+                flip();
+            }
+
+            if (!LookingLeft)
+            {
+                //ignore
+            }
+        }
     }
 }

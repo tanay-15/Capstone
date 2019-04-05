@@ -67,7 +67,7 @@ public class ChargedArrow : playerKnife2D {
             Destroy(collision.gameObject);
             //Destroy(gameObject);
         }
-        if (collision.gameObject.tag == "Enemy")
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 15) && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
         {
             //Don't hit the same object more than once
             if (!hitObjects.Contains(collision.gameObject))
