@@ -22,7 +22,8 @@ public class CombatZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        //audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         Door1InitPosition = Door1.transform.position;
         Door2InitPosition = Door2.transform.position;
 

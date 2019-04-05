@@ -40,9 +40,7 @@ public class AudioManager : MonoBehaviour
             s.source.playOnAwake = false;
 
         }
-    }
-    private void Update()
-    {
+
         if ((SceneManager.GetSceneByName("NewLevel1").isLoaded))
         {
             PlayMusic("Level1Music");
@@ -68,6 +66,10 @@ public class AudioManager : MonoBehaviour
         {
 
         }
+    }
+    private void Update()
+    {
+        
     }
 
     public void PlayMusic(string name)
