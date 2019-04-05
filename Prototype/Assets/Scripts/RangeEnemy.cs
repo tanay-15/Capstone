@@ -181,7 +181,7 @@ public class RangeEnemy : Enemy {
             }
         }
 
-        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
+        if (((collision.gameObject.name == "AttackTrigger") || (collision.gameObject.name == "StompTrigger")) && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
         {
             applyDamage(5);
 
