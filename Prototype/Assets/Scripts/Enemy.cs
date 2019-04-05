@@ -732,6 +732,7 @@ public class Enemy : BasicEnemy {
     }
     public virtual void applyDamage(int damage)
     {
+        
         this.health = this.health -  damage;
 
         events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);

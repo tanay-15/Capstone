@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class SwitchingBackground : DemonSwitch
 {
-    public GameObject normalBackground;
-    public GameObject demonBackground;
+    public SpriteRenderer normalBackground;
+    public SpriteRenderer demonBackground;
     float deltaTime = 0.5f;
     public AnimationCurve curve;
-
-    SpriteRenderer[] normalRenderers;
-    SpriteRenderer[] demonRenderers;
 
     Color normalStart;
     Color demonStart;
@@ -19,29 +16,16 @@ public class SwitchingBackground : DemonSwitch
     Color normal;
     Color demon;
 
-    void SetColors(SpriteRenderer[] renderers, Color color)
-    {
-        foreach (SpriteRenderer r in renderers)
-        {
-            r.color = color;
-        }
-    }
-
     void Start()
     {
-        normalRenderers = normalBackground.GetComponentsInChildren<SpriteRenderer>();
-        demonRenderers = demonBackground.GetComponentsInChildren<SpriteRenderer>();
-        //normalStart = normalBackground.color;
-        //demonStart = demonBackground.color;
-        //normal = normalStart;
-        //demon = demonStart;
-        normal = Color.white;
-        demon = Color.white;
+        normalStart = normalBackground.color;
+        demonStart = demonBackground.color;
+        normal = normalStart;
+        demon = demonStart;
 
         demon.a = 0f;
         //transparent = new Color(0f, 0f, 0f, 0f);
-        //demonBackground.color = demon;
-        SetColors(demonRenderers, demon);
+        demonBackground.color = demon;
     }
 
     public override void Switch(bool toDemon)
@@ -62,19 +46,14 @@ public class SwitchingBackground : DemonSwitch
             normal.a = Mathf.Lerp(0f, 1f, toDemon ? normalT : demonT);
             demon.a = Mathf.Lerp(0f, 1f, toDemon ? demonT : normalT);
 
-            SetColors(normalRenderers, normal);
-            SetColors(demonRenderers, demon);
-            //normalBackground.color = normal;
-            //demonBackground.color = demon;
+            normalBackground.color = normal;
+            demonBackground.color = demon;
             yield return 0;
         }
         normal.a = (toDemon) ? 0f : 1f;
         demon.a = (toDemon) ? 1f : 0f;
-
-        SetColors(normalRenderers, normal);
-        SetColors(demonRenderers, demon);
-        //normalBackground.color = normal;
-        //demonBackground.color = demon;
+        normalBackground.color = normal;
+        demonBackground.color = demon;
     }
 
     //For testing purposes
