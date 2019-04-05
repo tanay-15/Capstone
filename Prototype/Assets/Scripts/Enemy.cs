@@ -34,6 +34,7 @@ public class Enemy : BasicEnemy {
     public GameObject ImpactAnim;
 
     [Header("Brain")]
+    public GameObject BoneSystem;
     public GameObject target;
     protected Vector3 targetpos;
     public bool AttackReady;
@@ -103,6 +104,7 @@ public class Enemy : BasicEnemy {
     private float teleportResetTimer = 0f;
     private float teleportTime = 1.0f;
     private Vector3 teleportTarget;
+    private Vector3 teleportOrigin;
 
     protected bool CollidedWithPlayer;
     Component[] bones;
@@ -110,7 +112,7 @@ public class Enemy : BasicEnemy {
    protected GameObject[] compobones;
 
 
-
+    Vector3[] BoneOffsets;
 
 
    public override Vector3 lifebarOffset
@@ -189,6 +191,20 @@ public class Enemy : BasicEnemy {
                 
         }
 
+
+        BoneOffsets = new Vector3[BoneSystem.GetComponentsInChildren<Rigidbody2D>().Length];
+        //int i = 0;
+
+        //foreach (Rigidbody2D rb2d in BoneSystem.GetComponentsInChildren<Rigidbody2D>())
+        //{
+
+        //    if (rb2d.name != gameObject.name)
+        //    {
+        //        BoneOffsets[i] = rb2d.transform.position - transform.position;
+        //        i++;
+        //    }
+
+        //}
     }
 
     // Update is called once per frame
@@ -255,24 +271,78 @@ public class Enemy : BasicEnemy {
                     {
                         
 
-                        if (teleportResetTimer == 0)
+                    if (teleportResetTimer == 0.0f)
                         {
-                            teleportTarget = target.transform.position - new Vector3(0,0.7f,0);
+
+                            teleportTarget = target.transform.position - new Vector3(0,0.6f,0);
+                            teleportOrigin = transform.position;
                             GetComponent<Rigidbody2D>().isKinematic = true;
+                            GetComponent<Animator>().enabled = false;
+
+
+                            GetComponents<BoxCollider2D>()[0].enabled = false;
+                            GetComponents<CircleCollider2D>()[0].enabled = false;
+
+                            int j = 0;
+                            foreach (Rigidbody2D rb2d in BoneSystem.GetComponentsInChildren<Rigidbody2D>())
+                            {
+
+                                if (rb2d.name != gameObject.name)
+                                {
+                                    BoneOffsets[j] = rb2d.transform.position - transform.position;
+                                    j++;
+                                }
+
+                            }
                         }
 
-                        
 
-                        if (teleportResetTimer >= 0.7f* teleportTime)
+
+                        if (teleportResetTimer >= teleportTime)
                         {
+                            transform.position = teleportTarget;
+                            int j = 0;
+                            foreach (Rigidbody2D rb2d in BoneSystem.GetComponentsInChildren<Rigidbody2D>())
+                            {
+
+                                if (rb2d.name != gameObject.name)
+                                {
+                                    rb2d.transform.position = BoneOffsets[j] + teleportTarget;
+                                    j++;
+                                }
+
+                            }
+
                             currentstate = States.Pursuit;
                             GetComponent<Rigidbody2D>().isKinematic = false;
+                            GetComponent<Animator>().enabled = true;
+
+                            GetComponents<BoxCollider2D>()[0].enabled = true;
+                            GetComponents<CircleCollider2D>()[0].enabled = true;
                         }
 
                         teleportResetTimer += 0.5f * Time.deltaTime;
 
-                        transform.position = new Vector2( Mathf.SmoothStep(transform.position.x, teleportTarget.x, teleportResetTimer/ teleportTime),
-                            Mathf.SmoothStep(transform.position.y, teleportTarget.y, teleportResetTimer/ teleportTime));
+                        float timeOffset = 0;
+                        int i = 0;
+                        foreach (Rigidbody2D rb2d in BoneSystem.GetComponentsInChildren<Rigidbody2D>())
+                        {
+                            //transform.position = 
+
+
+                            if (rb2d.name != gameObject.name)
+                            {
+                                
+                                rb2d.transform.position = new Vector3(Mathf.SmoothStep(transform.position.x, teleportTarget.x, Mathf.Clamp((teleportResetTimer-timeOffset) / (teleportTime/2),0,1)),
+                                                                 Mathf.SmoothStep(transform.position.y, teleportTarget.y, Mathf.Clamp((teleportResetTimer-timeOffset) / (teleportTime/2), 0, 1)))
+                                                                 +BoneOffsets[i];
+                                i++;
+                                timeOffset += (teleportTime/2)/BoneOffsets.Length;
+                            }
+
+                        }
+                        //transform.position = new Vector2( Mathf.SmoothStep(transform.position.x, teleportTarget.x, (teleportResetTimer) / teleportTime),
+                        //    Mathf.SmoothStep(transform.position.y, teleportTarget.y, (teleportResetTimer) / teleportTime));
                         
                         break;
                     }
