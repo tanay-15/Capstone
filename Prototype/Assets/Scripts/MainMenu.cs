@@ -231,8 +231,8 @@ public class MainMenu : MonoBehaviour
                 SceneManager.LoadScene(newGameLevel);
 
             //Options
-            else if (CurrentSelectIndex == 2)
-                ChangeState(MainMenuState.Options);
+            else if (CurrentSelectIndex == 2){}
+                //ChangeState(MainMenuState.Options);
 
             //Quit
             else if (CurrentSelectIndex == 3)
