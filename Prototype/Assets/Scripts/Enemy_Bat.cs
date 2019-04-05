@@ -258,6 +258,7 @@ public class Enemy_Bat : BasicEnemy
     {
         //events.OnDeath.Invoke();
         this.health = this.health - damage;
+        events.OnTakeDamage.Invoke((float)this.health / (float)maxHealth);
     }
 
 

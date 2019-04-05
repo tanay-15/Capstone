@@ -58,14 +58,11 @@ public class ChargedArrow : playerKnife2D {
     {
         if (collision.gameObject.layer == 9 || collision.gameObject.layer == 10)
         { 
-            //Debug.Log(collision.gameObject.name);
             Destroy(gameObject);
         }
         if (collision.gameObject.tag == "ArrowDestroy")
         {
-            //Debug.Log(collision.gameObject.name);
             Destroy(collision.gameObject);
-            //Destroy(gameObject);
         }
         if ((collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 15) && Vector3.Distance(collision.transform.position, transform.position) < 1.5f)
         {
@@ -83,7 +80,6 @@ public class ChargedArrow : playerKnife2D {
                 impact.gameObject.SetActive(true);
 
                 collision.gameObject.SendMessageUpwards("applyDamage", (fullyCharged) ? 6 : 3);  //10 : 5
-                                                                             //StartCoroutine(DelayDestroy());
             }
         }
     }
