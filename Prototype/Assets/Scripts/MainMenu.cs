@@ -33,10 +33,12 @@ public class MainMenu : MonoBehaviour
     public string newGameLevel;
     public Text pressAnyButtonText;
     public Text[] menuText;
+    public Text[] menuText2;
     public AnimationCurve[] curves;
     MainMenuState state = MainMenuState.None;
     MainMenuButtons buttonsPressed = MainMenuButtons.None;
     string[][] menuStrings;
+    bool[] alignLeft;
     int listCount;
     int[] selectIndices;
     float[] transitionSpeeds = { 4.0f, 1.3f };
@@ -65,6 +67,10 @@ public class MainMenu : MonoBehaviour
         baseTextScale = menuText[0].gameObject.transform.localScale.x;
         Initialize();
         ChangeState(MainMenuState.PressAnyButton);
+
+        //Not sure if setting targetFrameRate actually works if vSyncCount is 1
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
     }
 
     //Initialize arrays, and make all menu option text invisible
@@ -77,11 +83,12 @@ public class MainMenu : MonoBehaviour
             new string[] { "New Game", "Continue", "Options", "Quit" },
 
             //FileSelect
-            new string[] { "File 1", "File 2", "File 3" },
+            new string[] { "File 1", "File 2", "File 3", "Back" },
 
             //Options
-            new string[] {"Resolution:", "Joystick sensitivity:", "Back"}
+            new string[] {"Resolution: 1920x1080 60fps", "VSync: On", "Joystick sensitivity: 50%", "Back" }
         };
+        alignLeft = new bool[] { false, false, true };
         selectIndices = new int[] { 0, 0, 0 };
         foreach (Text t in menuText)
         {
@@ -106,9 +113,11 @@ public class MainMenu : MonoBehaviour
                 break;
 
             case MainMenuState.FileSelect:
+                OnFileSelect();
                 break;
 
             case MainMenuState.Options:
+                OnOptionsMenu();
                 break;
         }
 
@@ -155,7 +164,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    //Called every frame if on the main menu
+    //Called every of the Main Menu
     void OnMainMenu()
     {
         HandleMenuNavigation();
@@ -166,6 +175,10 @@ public class MainMenu : MonoBehaviour
             if (CurrentSelectIndex == 0)
                 SceneManager.LoadScene(newGameLevel);
 
+            //Continue
+            else if (CurrentSelectIndex == 1)
+                ChangeState(MainMenuState.FileSelect);
+
             //Options
             else if (CurrentSelectIndex == 2)
                 ChangeState(MainMenuState.Options);
@@ -175,13 +188,65 @@ public class MainMenu : MonoBehaviour
                 Application.Quit();
         }
     }
+
+    //Called every frame of the File Select Menu
+    void OnFileSelect()
+    {
+        HandleMenuNavigation();
+
+        if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
+        {
+            //Back
+            if (CurrentSelectIndex == 3)
+                ChangeState(MainMenuState.Main);
+        }
+
+        if ((buttonsPressed & MainMenuButtons.Back) == MainMenuButtons.Back)
+        {
+            ChangeState(MainMenuState.Main);
+        }
+    }
+
+    //Called every frame of the Options Menu
+    void OnOptionsMenu()
+    {
+        HandleMenuNavigation();
+
+        if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
+        {
+            //Back
+            if (CurrentSelectIndex == 3)
+                ChangeState(MainMenuState.Main);
+        }
+
+        if ((buttonsPressed & MainMenuButtons.Back) == MainMenuButtons.Back)
+        {
+            ChangeState(MainMenuState.Main);
+        }
+    }
     #endregion
 
     void SetText(int index, int listSize)
     {
         for (int i = 0; i < listSize; i++)
         {
+            //Set the string
             menuText[i].text = menuStrings[index][i];
+            //Adjust if on file select menu
+            //(May be more practical to calculate text in the ChangeState option, then pass it as parameters in the Transition coroutines rather than set here)
+            if ((MainMenuState)index == MainMenuState.FileSelect)
+            {
+                //TODO: Handle multiple files
+                if (i < 3)
+                {
+                    menuText[i].text += " -Empty-";
+                    menuText[i].color = Color.gray;
+                }
+            }
+            else
+                menuText[i].color = Color.white;
+            //Align the text
+            menuText[i].alignment = alignLeft[index] ? TextAnchor.MiddleLeft : TextAnchor.MiddleCenter;
         }
     }
 
@@ -254,12 +319,12 @@ public class MainMenu : MonoBehaviour
         }
 
         //Set values for new menu
+        if ((int)oldState >= 0)
+            menuText[selectIndices[(int)oldState]].color = Color.white;
         listCount = menuStrings[(int)newState].Length;
         SetText((int)newState, listCount);
 
         //Activate or deactivate text
-        if ((int)oldState >= 0)
-            menuText[selectIndices[(int)oldState]].color = Color.white;
         for (int i = 0; i < menuText.Length; i++)
         {
             menuText[i].gameObject.SetActive(i < listCount);
