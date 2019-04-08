@@ -39,8 +39,8 @@ public class MainMenu : MonoBehaviour
     string[][] menuStrings;
     int listCount;
     int[] selectIndices;
-    float[] transitionSpeeds = { 2.0f, 1.3f };
-    float delayBetweenLinesTransitioning = 0.1f;
+    float[] transitionSpeeds = { 4.0f, 1.3f };
+    float[] delayBetweenLinesTransitioning = { 0.05f, 0.1f };
     float baseTextScale;
     float count;
 
@@ -126,34 +126,6 @@ public class MainMenu : MonoBehaviour
     {
         if (newState == state) return;
 
-        //Called once when changing from old state
-        //switch (state)
-        //{
-        //    case MainMenuState.PressAnyButton:
-        //        pressAnyButtonText.gameObject.SetActive(false);
-        //        StartCoroutine(Transition(newState, curves[1], transitionSpeeds[1], true));
-        //        break;
-
-        //    case MainMenuState.Main:
-        //        break;
-        //}
-
-        //Called once when changing to new state
-        //switch (newState)
-        //{
-        //    case MainMenuState.PressAnyButton:
-        //        pressAnyButtonText.gameObject.SetActive(true);
-        //        state = newState;
-        //        break;
-
-        //    case MainMenuState.Main:
-        //        break;
-
-        //    default:
-        //        StartCoroutine(Transition(newState, curves[0], transitionSpeeds[0], false));
-        //        break;
-        //}
-
         if (newState == MainMenuState.PressAnyButton)
         {
             pressAnyButtonText.gameObject.SetActive(true);
@@ -161,25 +133,15 @@ public class MainMenu : MonoBehaviour
         }
         else if (state == MainMenuState.PressAnyButton && newState == MainMenuState.Main)
         {
-            StartCoroutine(Transition(newState, curves[1], transitionSpeeds[1], true));
-            pressAnyButtonText.gameObject.SetActive(false);
+            StartCoroutine(FadeOutText(pressAnyButtonText, Transition(newState, curves[1], transitionSpeeds[1], delayBetweenLinesTransitioning[1], true)));
         }
         else
         {
-            StartCoroutine(Transition(newState, curves[0], transitionSpeeds[0], false));
+            StartCoroutine(Transition(newState, curves[0], transitionSpeeds[0], delayBetweenLinesTransitioning[0], false));
         }
-
-        //Use Transition coroutine only if past the Press Any Button Screen
-        //if (newState >= MainMenuState.Main)
-        //{
-        //    StartCoroutine(Transition(newState, curves[1], transitionSpeeds[1], true));
-        //}
-        //else
-        //{
-        //    state = newState;
-        //}
     }
 
+    #region Menu states
     void OnPressAnyButton()
     {
         count += Time.deltaTime;
@@ -196,33 +158,7 @@ public class MainMenu : MonoBehaviour
     //Called every frame if on the main menu
     void OnMainMenu()
     {
-        //Check for input
-        if ((buttonsPressed & MainMenuButtons.Left) == MainMenuButtons.Left ||
-            (buttonsPressed & MainMenuButtons.Up) == MainMenuButtons.Up)
-        {
-            CurrentSelectIndex--;
-        }
-
-        if ((buttonsPressed & MainMenuButtons.Right) == MainMenuButtons.Right ||
-                    (buttonsPressed & MainMenuButtons.Down) == MainMenuButtons.Down)
-        {
-            CurrentSelectIndex++;
-        }
-
-        //Wrap around
-        if (CurrentSelectIndex >= listCount)
-            CurrentSelectIndex -= listCount;
-        else if (CurrentSelectIndex < 0)
-            CurrentSelectIndex += listCount;
-
-        //Highlight option menu
-        for (int i = 0; i < listCount; i++)
-        {
-            if (i == CurrentSelectIndex)
-                menuText[i].color = Color.yellow;
-            else
-                menuText[i].color = Color.white;
-        }
+        HandleMenuNavigation();
 
         if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
         {
@@ -231,14 +167,15 @@ public class MainMenu : MonoBehaviour
                 SceneManager.LoadScene(newGameLevel);
 
             //Options
-            else if (CurrentSelectIndex == 2){}
-                //ChangeState(MainMenuState.Options);
+            else if (CurrentSelectIndex == 2)
+                ChangeState(MainMenuState.Options);
 
             //Quit
             else if (CurrentSelectIndex == 3)
                 Application.Quit();
         }
     }
+    #endregion
 
     void SetText(int index, int listSize)
     {
@@ -248,24 +185,50 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    IEnumerator TransitionText(int index, AnimationCurve curve, float transitionSpeed)
+    #region Transition coroutines
+    IEnumerator FadeOutText(Text text, IEnumerator next)
+    {
+        state = MainMenuState.Transitioning;
+        float baseScale = text.gameObject.transform.localScale.x;
+        float dScale = 2f;
+        float speed = 3f;
+        float newScale;
+        float alpha;
+        for (float i = 0f; i < 1f; i += Time.deltaTime * speed)
+        {
+            newScale = (1f + i * dScale) * baseScale;
+            alpha = Mathf.Lerp(1f, 0f, i);
+            text.gameObject.transform.localScale = new Vector3(newScale, newScale, 1f);
+            text.color = new Color(1f, 1f, 1f, alpha);
+            yield return 0;
+        }
+        text.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        yield return next;
+    }
+
+    IEnumerator TransitionText(int index, AnimationCurve curve, float transitionSpeed, bool inverse)
     {
         for (float i = 0f; i < 1f; i += Time.deltaTime * transitionSpeed)
         {
+            float j = inverse ? (1f - i) : i;
             //float scale = moveInCurve.Evaluate(i);
-            float yscale = curve.Evaluate(i);
+            float yscale = curve.Evaluate(j);
             float xscale = 2 - yscale;
             Vector3 scale = new Vector3(xscale, yscale, 1f);
             menuText[index].gameObject.transform.localScale = scale * baseTextScale;
             yield return 0;
         }
-        menuText[index].gameObject.transform.localScale = Vector3.one * baseTextScale;
+        menuText[index].gameObject.transform.localScale = inverse ? Vector3.zero : Vector3.one * baseTextScale;
     }
 
-    IEnumerator Transition(MainMenuState newState, AnimationCurve curve, float transitionSpeed, bool skipTransitionFromScreen)
+    IEnumerator Transition(MainMenuState newState, AnimationCurve curve, float transitionSpeed, float delayBetweenLinesTransitioning, bool skipTransitionFromScreen)
     {
         //Fade out current screen to go to the new screen
         //Skip transition from the current screen
+        MainMenuState oldState = state;
+        state = MainMenuState.Transitioning;
+
         if (skipTransitionFromScreen)
         {
             foreach (Text t in menuText)
@@ -275,27 +238,49 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
+            //Transition from old screen
+            for (int i = 0; i < listCount; i++)
+            {
+                if (i < listCount - 1)
+                {
+                    StartCoroutine(TransitionText(i, curve, transitionSpeed, true));
+                    yield return new WaitForSeconds(delayBetweenLinesTransitioning);
+                }
+                else
+                {
+                    yield return TransitionText(i, curve, transitionSpeed, true);
+                }
+            }
+        }
 
+        //Set values for new menu
+        listCount = menuStrings[(int)newState].Length;
+        SetText((int)newState, listCount);
+
+        //Activate or deactivate text
+        if ((int)oldState >= 0)
+            menuText[selectIndices[(int)oldState]].color = Color.white;
+        for (int i = 0; i < menuText.Length; i++)
+        {
+            menuText[i].gameObject.SetActive(i < listCount);
         }
 
         //Transition to new screen
-        state = MainMenuState.Transitioning;
-        listCount = menuStrings[(int)newState].Length;
-        SetText((int)newState, listCount);
         for (int i = 0; i < listCount; i++)
         {
             if (i < listCount - 1)
             {
-                StartCoroutine(TransitionText(i, curve, transitionSpeed));
+                StartCoroutine(TransitionText(i, curve, transitionSpeed, false));
                 yield return new WaitForSeconds(delayBetweenLinesTransitioning);
             }
             else
             {
-                yield return TransitionText(i, curve, transitionSpeed);
+                yield return TransitionText(i, curve, transitionSpeed, false);
             }
         }
         state = newState;
     }
+    #endregion
 
     #region Input checkers
     void CheckAxis()
@@ -360,6 +345,38 @@ public class MainMenu : MonoBehaviour
     {
         axisDirectionPressed = 0;
         buttonsPressed = MainMenuButtons.None;
+    }
+
+    //For moving up and down menus
+    void HandleMenuNavigation()
+    {
+        //Check for input
+        if ((buttonsPressed & MainMenuButtons.Left) == MainMenuButtons.Left ||
+            (buttonsPressed & MainMenuButtons.Up) == MainMenuButtons.Up)
+        {
+            CurrentSelectIndex--;
+        }
+
+        if ((buttonsPressed & MainMenuButtons.Right) == MainMenuButtons.Right ||
+                    (buttonsPressed & MainMenuButtons.Down) == MainMenuButtons.Down)
+        {
+            CurrentSelectIndex++;
+        }
+
+        //Wrap around
+        if (CurrentSelectIndex >= listCount)
+            CurrentSelectIndex -= listCount;
+        else if (CurrentSelectIndex < 0)
+            CurrentSelectIndex += listCount;
+
+        //Highlight currently selected text
+        for (int i = 0; i < listCount; i++)
+        {
+            if (i == CurrentSelectIndex)
+                menuText[i].color = Color.yellow;
+            else
+                menuText[i].color = Color.white;
+        }
     }
     #endregion
 
