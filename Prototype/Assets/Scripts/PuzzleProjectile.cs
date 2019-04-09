@@ -6,6 +6,7 @@ public class PuzzleProjectile : MonoBehaviour
 {
     // speed at travel
     public float speed;
+    public float distance;
 
     Vector3 target;
 
@@ -13,7 +14,7 @@ public class PuzzleProjectile : MonoBehaviour
     void Start()
     {
         // set target 10 units in direction
-        target = this.transform.position + (transform.up * 10.0f);
+        target = this.transform.position + (transform.up * distance);
     }
 
     // Update is called once per frame
