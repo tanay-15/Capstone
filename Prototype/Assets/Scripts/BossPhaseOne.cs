@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Anima2D;
+using UnityEngine.UI;
 
 public class BossPhaseOne : BasicEnemy
 {
@@ -57,6 +58,8 @@ public class BossPhaseOne : BasicEnemy
     [HideInInspector]
     public LayerMask EnemyIgnoreMask;
     private LayerMask groundMask;
+
+    public Slider BossHealth;
 
     public enum States
     {
@@ -199,7 +202,7 @@ public class BossPhaseOne : BasicEnemy
     // Update is called once per frame
     void Update()
     {
-
+        BossHealth.value = this.health;
 
         if (health <= 0.0f)
         {
@@ -861,7 +864,7 @@ public class BossPhaseOne : BasicEnemy
     }
 
 
-
+   
     public void flip()
     {
 
