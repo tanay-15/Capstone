@@ -39,7 +39,7 @@ public class CameraFollow : MonoBehaviour {
     IEnumerator ShakeRoutine()
     {
         float time = 0.2f;
-        float ampl = 0.15f;
+        float ampl = 0.35f;
         for (float i = time; time > 0; time -= Time.deltaTime)
         {
             shakeOffset = Random.insideUnitCircle * (time / 0.2f) * ampl;

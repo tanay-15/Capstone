@@ -7,6 +7,7 @@ public class BloodWellScript : MonoBehaviour {
 
     bool contactPlayer;
     rageBar rb;
+    float damageTimer = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +37,20 @@ public class BloodWellScript : MonoBehaviour {
         {
             contactPlayer = true;
             //rb.BarColorFill = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && damageTimer > 1.0f)
+        {
+            collision.gameObject.SendMessage("GetHit", -5);
+            damageTimer = 0.0f;
+
+        }
+        else if(damageTimer < 1.0f)
+        {
+            damageTimer += Time.deltaTime;
         }
     }
 
