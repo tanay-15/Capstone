@@ -567,7 +567,7 @@ public class PlayerStates : MonoBehaviour
                             PlayerAnimator.Play("WallSlide");
                             Rb2d.velocity = new Vector2(0, -slideSpeed);
                         }
-                        if (Time.timeScale > 0f && ((Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")) && (Mathf.Abs(hAxis) > 0.1f)))
+                        if (Time.timeScale > 0f && ((Input.GetButtonDown("Jump") || Input.GetButtonDown("PS4Jump")) && (Mathf.Abs(hAxis) > 0.5f)))
                         {
                             movable = false;
                             Rb2d.velocity = Vector2.zero;
