@@ -8,6 +8,7 @@ public class BloodWellScript : MonoBehaviour {
     bool contactPlayer;
     rageBar rb;
     float damageTimer = 0.0f;
+    public int scale = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -44,7 +45,7 @@ public class BloodWellScript : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player" && damageTimer > 1.0f)
         {
-            collision.gameObject.SendMessage("GetHit", -5);
+            collision.gameObject.SendMessage("GetHit", -5 * scale);
             damageTimer = 0.0f;
 
         }

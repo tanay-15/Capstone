@@ -106,7 +106,7 @@ public class SkeletonBoss : MonoBehaviour
 
         }
         Death();
-
+        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -2.0f);
     }
 
     void BaseAttack()
@@ -240,6 +240,8 @@ public class SkeletonBoss : MonoBehaviour
                 moveTorightPoint = false;
             }
         }
+
+       
     }
 
     void applyDamage(int amount)
