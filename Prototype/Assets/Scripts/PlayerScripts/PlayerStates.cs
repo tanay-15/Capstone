@@ -673,7 +673,7 @@ public class PlayerStates : MonoBehaviour
     {
         Vector2 newPos = (Vector2)cameraFocus.localPosition;
         Vector2 dPos = ((Vector2)Input.mousePosition - prevMousePosition) * cameraPanSensitivity;
-        Vector2 joystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical")) * cameraPanSensitivity;
+        Vector2 joystick = new Vector2(Input.GetAxis("RHorizontal"), Input.GetAxis("RVertical")) * cameraPanSensitivity * 3f;   //Multiply by 3f to increase joystick pan sensitivity
         dPos += joystick;
         dPos.x *= transform.localScale.x;
         newPos += dPos;

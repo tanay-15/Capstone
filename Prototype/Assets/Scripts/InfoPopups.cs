@@ -26,7 +26,7 @@ public class InfoPopups : MonoBehaviour
             imageIndex = index;
             popups[index].SetActive(true);
             yield return 0;
-            while (!(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump")))
+            while (!(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4TRIANGLE")))
             {
                 yield return 0;
             }
