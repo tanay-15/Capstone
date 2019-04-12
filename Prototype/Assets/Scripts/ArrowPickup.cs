@@ -47,7 +47,7 @@ public class ArrowPickup : MonoBehaviour
                 else if(gameObject.name.Substring(0, 6) == "Health")
                 {
                     //Debug.Log(gameObject.name.Substring(0, 6));
-                    col.gameObject.SendMessage("GetHit", 10f);
+                    col.gameObject.SendMessage("GetHit", 40f);  //10
                     Destroy(gameObject);
                 }
         
