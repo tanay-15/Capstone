@@ -47,9 +47,23 @@ public class MainMenu : MonoBehaviour
     float baseTextScale;
     float count;
 
+    int resolutionIndex;
+
     int axisDirectionPressed;
     int axisDirection;
     float minAxis = 0.5f;
+
+    Resolution[] resolutions;
+
+    bool SameResolution(Resolution a, Resolution b)
+    {
+        return (a.width == b.width && a.height == b.height && a.refreshRate == b.refreshRate);
+    }
+
+    bool SameResolution(Resolution r, int width, int height, int refreshRate)
+    {
+        return (r.width == width && r.height == height && r.refreshRate == refreshRate);
+    }
 
     int CurrentSelectIndex
     {
@@ -65,13 +79,27 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        //Not sure if setting targetFrameRate actually works if vSyncCount is 1
+        //QualitySettings.vSyncCount = 0;
+        //Application.targetFrameRate = 60;
+
+        GetResolutions();
         baseTextScale = menuText[0].gameObject.transform.localScale.x;
         Initialize();
         ChangeState(MainMenuState.PressAnyButton);
+    }
 
-        //Not sure if setting targetFrameRate actually works if vSyncCount is 1
-        QualitySettings.vSyncCount = 1;
-        Application.targetFrameRate = 60;
+    void GetResolutions()
+    {
+        resolutions = Screen.resolutions;
+        for(int i = 0; i < resolutions.Length; i++)
+        {
+            if (SameResolution(resolutions[i], Screen.width, Screen.height, Application.targetFrameRate))
+            {
+                resolutionIndex = i;
+                break;
+            }
+        }
     }
 
     //Initialize arrays, and make all menu option text invisible
@@ -87,14 +115,15 @@ public class MainMenu : MonoBehaviour
             new string[] { "File 1", "File 2", "File 3", "Back" },
 
             //Options
-            new string[] {"Resolution: 1920x1080 60fps", "VSync: On", "Joystick sensitivity: 50%", "Back" }
+            new string[] {"Resolution:", "Full Screen:", "VSync:", "Joystick sensitivity:", "Back" }
         };
         alignLeft = new bool[] { false, false, true };
-        menuTextColors = new Color[] { Color.white, Color.white, Color.white, Color.white };
+        menuTextColors = new Color[] { Color.white, Color.white, Color.white, Color.white, Color.white };
         selectIndices = new int[] { 0, 0, 0 };
-        foreach (Text t in menuText)
+        for (int i = 0; i < menuText.Length; i++)
         {
-            t.gameObject.transform.localScale = Vector3.zero;
+            menuText[i].gameObject.transform.localScale = Vector3.zero;
+            menuText2[i].gameObject.transform.localScale = Vector3.zero;
         }
     }
 
@@ -124,13 +153,6 @@ public class MainMenu : MonoBehaviour
         }
 
         ResetButtonCheck();
-
-        //string debug = "";
-        //foreach (int index in selectIndices)
-        //{
-        //    debug += index.ToString();
-        //}
-        //Debug.Log(debug);
     }
 
     void ChangeState(MainMenuState newState)
@@ -214,10 +236,71 @@ public class MainMenu : MonoBehaviour
     {
         HandleMenuNavigation();
 
+        if ((buttonsPressed & MainMenuButtons.Left) == MainMenuButtons.Left)
+        {   //Resolution
+            if (CurrentSelectIndex == 0)
+            {
+                resolutionIndex--;
+                if (resolutionIndex < 0)
+                    resolutionIndex += resolutions.Length;
+
+                //Set resolution
+                Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen, resolutions[resolutionIndex].refreshRate);
+                Application.targetFrameRate = resolutions[resolutionIndex].refreshRate;
+                //Resolution text
+                menuText2[0].text = resolutions[resolutionIndex].ToString();
+            }
+
+            //Full Screen
+            else if (CurrentSelectIndex == 1)
+            {
+                menuText2[1].text = Screen.fullScreen ? "Off" : "On";
+                Screen.fullScreen = !Screen.fullScreen;
+            }
+
+            //Vsync
+            else if (CurrentSelectIndex == 2)
+            {
+                QualitySettings.vSyncCount = (QualitySettings.vSyncCount == 1) ? 0 : 1;
+                menuText2[2].text = (QualitySettings.vSyncCount == 1) ? "On" : "Off";
+            }
+        }
+
+        if ((buttonsPressed & MainMenuButtons.Right) == MainMenuButtons.Right)
+        {
+            //Resolution
+            if (CurrentSelectIndex == 0)
+            {
+                resolutionIndex++;
+                if (resolutionIndex >= resolutions.Length)
+                    resolutionIndex -= resolutions.Length;
+
+                //Set resolution
+                Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen, resolutions[resolutionIndex].refreshRate);
+                Application.targetFrameRate = resolutions[resolutionIndex].refreshRate;
+                //Resolution text
+                menuText2[0].text = resolutions[resolutionIndex].ToString();
+            }
+
+            //Full Screen
+            else if (CurrentSelectIndex == 1)
+            {
+                menuText2[1].text = Screen.fullScreen ? "Off" : "On";
+                Screen.fullScreen = !Screen.fullScreen;
+            }
+
+            //Vsync
+            else if (CurrentSelectIndex == 2)
+            {
+                QualitySettings.vSyncCount = (QualitySettings.vSyncCount == 1) ? 0 : 1;
+                menuText2[2].text = (QualitySettings.vSyncCount == 1) ? "On" : "Off";
+            }
+        }
+
         if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
         {
             //Back
-            if (CurrentSelectIndex == 3)
+            if (CurrentSelectIndex == 4)
                 ChangeState(MainMenuState.Main);
         }
 
@@ -232,6 +315,8 @@ public class MainMenu : MonoBehaviour
     {
         for (int i = 0; i < listSize; i++)
         {
+            Vector3 pos = menuText[i].rectTransform.anchoredPosition;
+            Vector3 pos2 = menuText2[i].rectTransform.anchoredPosition;
             //Set the string
             menuText[i].text = menuStrings[index][i];
             //Adjust if on file select menu
@@ -248,11 +333,51 @@ public class MainMenu : MonoBehaviour
                 else
                     menuTextColors[i] = Color.white;
             }
+            else if ((MainMenuState)index == MainMenuState.Options)
+            {
+                pos.x = -150;
+                pos2.x = 150;
+                menuText[i].rectTransform.anchoredPosition = pos;
+                menuText2[i].rectTransform.anchoredPosition = pos2;
+
+                string text = "";
+                switch (i)
+                {
+                    //Screen resolution
+                    case 0:
+                        text = resolutions[resolutionIndex].ToString();
+                        break;
+
+                    //Full Screen
+                    case 1:
+                        text = Screen.fullScreen ? "On" : "Off";
+                        break;
+
+                    //Vsync
+                    case 2:
+                        text = (QualitySettings.vSyncCount == 1) ? "On" : "Off";
+                        break;
+
+                    //Joystick Sensitivity
+                    case 3:
+                        break;
+                }
+                menuText2[i].text = text;
+            }
             else
+            {
+                pos.x = 0;
+                pos2.x = 0;
+                menuText2[i].text = "";
                 menuTextColors[i] = Color.white;
+            }
             //Align the text
+            menuText[i].rectTransform.anchoredPosition = pos;
             menuText[i].color = menuTextColors[i];
             menuText[i].alignment = alignLeft[index] ? TextAnchor.MiddleLeft : TextAnchor.MiddleCenter;
+            menuText2[i].rectTransform.anchoredPosition = pos2;
+            menuText2[i].color = menuTextColors[i];
+            menuText2[i].alignment = alignLeft[index] ? TextAnchor.MiddleRight : TextAnchor.MiddleCenter;
         }
     }
 
@@ -288,9 +413,11 @@ public class MainMenu : MonoBehaviour
             float xscale = 2 - yscale;
             Vector3 scale = new Vector3(xscale, yscale, 1f);
             menuText[index].gameObject.transform.localScale = scale * baseTextScale;
+            menuText2[index].gameObject.transform.localScale = scale * baseTextScale;
             yield return 0;
         }
         menuText[index].gameObject.transform.localScale = inverse ? Vector3.zero : Vector3.one * baseTextScale;
+        menuText2[index].gameObject.transform.localScale = inverse ? Vector3.zero : Vector3.one * baseTextScale;
     }
 
     IEnumerator Transition(MainMenuState newState, AnimationCurve curve, float transitionSpeed, float delayBetweenLinesTransitioning, bool skipTransitionFromScreen)
@@ -302,9 +429,10 @@ public class MainMenu : MonoBehaviour
 
         if (skipTransitionFromScreen)
         {
-            foreach (Text t in menuText)
+            for(int i = 0; i < menuText.Length; i++)
             {
-                t.gameObject.transform.localScale = Vector3.zero;
+                menuText[i].gameObject.transform.localScale = Vector3.zero;
+                menuText2[i].gameObject.transform.localScale = Vector3.zero;
             }
         }
         else
@@ -326,7 +454,10 @@ public class MainMenu : MonoBehaviour
 
         //Set values for new menu
         if ((int)oldState >= 0)
+        {
             menuText[selectIndices[(int)oldState]].color = Color.white;
+            menuText2[selectIndices[(int)oldState]].color = Color.white;
+        }
         listCount = menuStrings[(int)newState].Length;
         SetText((int)newState, listCount);
 
@@ -334,6 +465,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < menuText.Length; i++)
         {
             menuText[i].gameObject.SetActive(i < listCount);
+            menuText2[i].gameObject.SetActive(i < listCount);
         }
 
         //Transition to new screen
@@ -422,14 +554,12 @@ public class MainMenu : MonoBehaviour
     void HandleMenuNavigation()
     {
         //Check for input
-        if ((buttonsPressed & MainMenuButtons.Left) == MainMenuButtons.Left ||
-            (buttonsPressed & MainMenuButtons.Up) == MainMenuButtons.Up)
+        if ((buttonsPressed & MainMenuButtons.Up) == MainMenuButtons.Up)
         {
             CurrentSelectIndex--;
         }
 
-        if ((buttonsPressed & MainMenuButtons.Right) == MainMenuButtons.Right ||
-                    (buttonsPressed & MainMenuButtons.Down) == MainMenuButtons.Down)
+        if ((buttonsPressed & MainMenuButtons.Down) == MainMenuButtons.Down)
         {
             CurrentSelectIndex++;
         }
@@ -444,9 +574,15 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < listCount; i++)
         {
             if (i == CurrentSelectIndex)
+            {
                 menuText[i].color = Color.yellow;
+                menuText2[i].color = Color.yellow;
+            }
             else
+            {
                 menuText[i].color = menuTextColors[i];
+                menuText2[i].color = menuTextColors[i];
+            }
         }
     }
     #endregion
