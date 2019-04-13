@@ -34,6 +34,7 @@ public class MainMenu : MonoBehaviour
     public Text pressAnyButtonText;
     public Text[] menuText;
     public Text[] menuText2;
+    public Color[] menuTextColors;
     public AnimationCurve[] curves;
     MainMenuState state = MainMenuState.None;
     MainMenuButtons buttonsPressed = MainMenuButtons.None;
@@ -89,6 +90,7 @@ public class MainMenu : MonoBehaviour
             new string[] {"Resolution: 1920x1080 60fps", "VSync: On", "Joystick sensitivity: 50%", "Back" }
         };
         alignLeft = new bool[] { false, false, true };
+        menuTextColors = new Color[] { Color.white, Color.white, Color.white, Color.white };
         selectIndices = new int[] { 0, 0, 0 };
         foreach (Text t in menuText)
         {
@@ -240,12 +242,16 @@ public class MainMenu : MonoBehaviour
                 if (i < 3)
                 {
                     menuText[i].text += " -Empty-";
-                    menuText[i].color = Color.gray;
+                    //menuText[i].color = Color.gray;
+                    menuTextColors[i] = Color.gray;
                 }
+                else
+                    menuTextColors[i] = Color.white;
             }
             else
-                menuText[i].color = Color.white;
+                menuTextColors[i] = Color.white;
             //Align the text
+            menuText[i].color = menuTextColors[i];
             menuText[i].alignment = alignLeft[index] ? TextAnchor.MiddleLeft : TextAnchor.MiddleCenter;
         }
     }
@@ -440,7 +446,7 @@ public class MainMenu : MonoBehaviour
             if (i == CurrentSelectIndex)
                 menuText[i].color = Color.yellow;
             else
-                menuText[i].color = Color.white;
+                menuText[i].color = menuTextColors[i];
         }
     }
     #endregion
