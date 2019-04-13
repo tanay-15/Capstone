@@ -48,6 +48,9 @@ public class SkeletonBoss : MonoBehaviour
 
     public Slider BossHealthBar;
 
+
+    public GameObject player;
+
     public enum BossStates
     {
         Idle,
@@ -67,6 +70,8 @@ public class SkeletonBoss : MonoBehaviour
     
     void Start()
     {
+
+        player = GameObject.FindGameObjectWithTag("Player");
         this.transform.position = startpoint.transform.position;
 
         leftpointpos = leftpoint.transform.position;
