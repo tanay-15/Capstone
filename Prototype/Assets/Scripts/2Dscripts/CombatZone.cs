@@ -93,7 +93,7 @@ public class CombatZone : MonoBehaviour
             //Door2Open = false;
             Camera.main.GetComponent<CameraFollow>().target = transform;
             Camera.main.GetComponent<CameraFollow>().CameraPan(CameraPanSize,1);
-            StartCoroutine(Spawn());
+            StartCoroutine(SpawnMinions());
         }
 
 
@@ -114,7 +114,7 @@ public class CombatZone : MonoBehaviour
         }
     }
 
-    IEnumerator Spawn()
+    IEnumerator SpawnMinions()
     {
         //SetEnemiesActive(true);
         for (int i = 0; i < Enemies.Length; i++)

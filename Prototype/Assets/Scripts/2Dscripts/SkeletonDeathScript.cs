@@ -17,7 +17,7 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     public bool kill = false;
     public bool dead = false;
-    public bool spawn = true;
+    //public bool spawn = true;
     public Vector4 color;
     //health death
     public int mhealth;
@@ -53,18 +53,27 @@ public class SkeletonDeathScript : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (spawn)
-        {
+        //if (spawn)
+        //{
             
-            GetComponent<Animator>().speed = 1;
-            StartCoroutine(Initialize());
+        //    GetComponent<Animator>().speed = 1;
+        //    StartCoroutine(Initialize());
 
             
-        }
+        //}
 
         mhealth = this.gameObject.GetComponent<Enemy>().GetHealth();
 
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == 14)
+    //    {
+    //        //Debug.Log("Spawnz");
+    //        Spawn();
+    //    }
+    //}
 
     void TurnOffCollisions()
     {
@@ -169,15 +178,18 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     IEnumerator Initialize()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
         GetComponent<Enemy>().enabled = true;
-        spawn = false;
-        gameObject.SendMessage("EnableLifebar", true);
+        yield return new WaitForSeconds(0.3f);
+        //spawn = false;
+        gameObject.SendMessageUpwards("EnableLifebar", true);
         //GetComponent<Animator>().Play("SkelWalk");
     }
 
     public void Spawn()
     {
-        spawn = true;
+        //spawn = true;
+        GetComponent<Animator>().speed = 1;
+        StartCoroutine(Initialize());
     }
 }

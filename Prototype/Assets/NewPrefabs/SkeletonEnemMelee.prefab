@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 255599577354110770}
   - component: {fileID: 6683038107931601430}
   - component: {fileID: 6401251930586880904}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: GroundTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,6 @@ MonoBehaviour:
   BonesBreak: []
   kill: 0
   dead: 0
-  spawn: 1
   color: {x: 1, y: 1, z: 1, w: 1}
   mhealth: 0
 --- !u!95 &4521974395211325421
@@ -3863,7 +3862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b0c2a01ac03ec4dad2df8c9c1ad5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredTag: 
+  requiredTag: Player
   TriggerEnter:
     m_PersistentCalls:
       m_Calls:
