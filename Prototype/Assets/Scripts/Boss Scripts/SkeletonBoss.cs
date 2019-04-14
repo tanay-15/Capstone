@@ -67,6 +67,10 @@ public class SkeletonBoss : MonoBehaviour
     public GameObject skel1;
     public GameObject skel2;
 
+    public bool IsInDemonMode = false;
+    public bool IsInHumanMode = false;
+    public bool PlayerMode = false;
+
     
     void Start()
     {
@@ -93,6 +97,7 @@ public class SkeletonBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DeterminingPlayerMode();
         Movement();
     
         BaseAttack();
@@ -102,7 +107,7 @@ public class SkeletonBoss : MonoBehaviour
         HealthUpdate();
         if (AttackDone)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, startpointpos, 4f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, startpointpos, (MoveSpeed + 2.5f) * Time.deltaTime);
 
             if(Vector2.Distance(this.transform.position, startpointpos) < 1.5f)
             {
@@ -114,6 +119,27 @@ public class SkeletonBoss : MonoBehaviour
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -2.0f);
     }
 
+
+    void DeterminingPlayerMode()
+    {
+        if(player != null)
+        {
+            PlayerMode = player.transform.Find("Human").gameObject.activeSelf;
+
+            if (PlayerMode)
+            {
+                IsInHumanMode = true;
+                IsInDemonMode = false;
+            }
+
+            else
+            {
+                IsInDemonMode = true;
+                IsInHumanMode = false;
+            }
+        }
+    }
+
     void BaseAttack()
     {
         AttackCounter = AttackCounter - Time.deltaTime;
@@ -122,7 +148,7 @@ public class SkeletonBoss : MonoBehaviour
 
             currentState = BossStates.AttackReady;
             anim.SetBool("AttackReady",true);
-            this.transform.position = Vector2.MoveTowards(this.transform.position, attackPointpos, 4f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, attackPointpos, (MoveSpeed + 1.5f) * Time.deltaTime);
           
             if (Vector2.Distance(this.transform.position, attackPointpos) < 1.5f)
 
@@ -130,7 +156,21 @@ public class SkeletonBoss : MonoBehaviour
                 anim.SetBool("AttackReady", false);
                 currentState = BossStates.Attacking;
                 anim.SetBool("Attack", true);
-                AttackCounter = 6f;
+
+                if (IsInHumanMode)
+                {
+                    AttackCounter = 6f;
+                    //Original MoveSpeed is 3
+                    MoveSpeed = 3f;
+                }
+
+                if (IsInDemonMode)
+                {
+                    AttackCounter = 4f;
+
+                    MoveSpeed = 4.5f;
+                }
+               
             }
                 
             
@@ -168,6 +208,13 @@ public class SkeletonBoss : MonoBehaviour
             if(skelspawnCounter <= 0)
             {
                 Attack_Resurect();
+
+                if (IsInDemonMode)
+                {
+                    //Will spawn an extra skeleton warrior
+
+                    Instantiate(skeletonPrefab, new Vector3(spawnPointLeftPos.x + 5f, spawnPointLeftPos.y, spawnPointLeftPos.z), Quaternion.identity);
+                }
             }
 
             if(skeletons.Count > 0)
