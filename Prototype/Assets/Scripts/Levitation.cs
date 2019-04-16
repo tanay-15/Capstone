@@ -17,7 +17,7 @@ public class Levitation : MonoBehaviour {
     public GameObject heldObject;
     public float mouseZPosition = 0.0f;
     float minimumMagnitude = 0.15f;
-    float joystickSpeed = 6f;
+    //float joystickSpeed = 10f;
     bool rightTriggerDown;
     bool rightTriggerPressed;
     bool rightTriggerReleased;
@@ -138,7 +138,7 @@ public class Levitation : MonoBehaviour {
     void CalculatePositionJoystick()
     {
         if (dJoystick.magnitude > minimumMagnitude)
-            baseJoystickPosition += dJoystick * Time.deltaTime * joystickSpeed;
+            baseJoystickPosition += dJoystick * Time.deltaTime * Settings.sharedInstance.levitationJoystickSensitivity;
         if (baseJoystickPosition.magnitude > maxGrabDistance)
             baseJoystickPosition = baseJoystickPosition.normalized * maxGrabDistance;
 

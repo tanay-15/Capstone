@@ -34,6 +34,9 @@ public class MainMenu : MonoBehaviour
     public Text pressAnyButtonText;
     public Text[] menuText;
     public Text[] menuText2;
+    public GameObject cursor;
+    Color nonSelectedColor = Color.yellow;// new Color(0.25f, 0.25f, 0.25f, 1f);
+    Color selectedColor = Color.red;
     public Color[] menuTextColors;
     public AnimationCurve[] curves;
     MainMenuState state = MainMenuState.None;
@@ -48,6 +51,8 @@ public class MainMenu : MonoBehaviour
     float count;
 
     int resolutionIndex;
+    float cursorRotation;
+    float cursorRotationSpeed = -40f;
 
     int axisDirectionPressed;
     int axisDirection;
@@ -85,21 +90,27 @@ public class MainMenu : MonoBehaviour
 
         GetResolutions();
         baseTextScale = menuText[0].gameObject.transform.localScale.x;
+        cursorRotation = 0f;
         Initialize();
         ChangeState(MainMenuState.PressAnyButton);
     }
 
     void GetResolutions()
     {
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
+        bool found = false;
         resolutions = Screen.resolutions;
         for(int i = 0; i < resolutions.Length; i++)
         {
             if (SameResolution(resolutions[i], Screen.width, Screen.height, Application.targetFrameRate))
             {
                 resolutionIndex = i;
+                found = true;
                 break;
             }
         }
+        //Debug.Log(Screen.width + " " + Screen.height + " " + Application.targetFrameRate);
     }
 
     //Initialize arrays, and make all menu option text invisible
@@ -115,10 +126,10 @@ public class MainMenu : MonoBehaviour
             new string[] { "File 1", "File 2", "File 3", "Back" },
 
             //Options
-            new string[] {"Resolution:", "Full Screen:", "VSync:", "Joystick sensitivity:", "Back" }
+            new string[] {"Resolution:", "Full Screen:", "VSync:", "Joystick sensitivity for Levitation:", "Back" }
         };
         alignLeft = new bool[] { false, false, true };
-        menuTextColors = new Color[] { Color.white, Color.white, Color.white, Color.white, Color.white };
+        menuTextColors = new Color[] { nonSelectedColor, nonSelectedColor, nonSelectedColor, nonSelectedColor, nonSelectedColor };
         selectIndices = new int[] { 0, 0, 0 };
         for (int i = 0; i < menuText.Length; i++)
         {
@@ -153,6 +164,19 @@ public class MainMenu : MonoBehaviour
         }
 
         ResetButtonCheck();
+        MoveCursor();
+    }
+
+    void MoveCursor()
+    {
+        if (state == MainMenuState.Main)
+        {
+            cursorRotation += Time.deltaTime * cursorRotationSpeed;
+            Vector3 position = menuText[CurrentSelectIndex].gameObject.transform.position;
+            position.x -= (menuText[CurrentSelectIndex].preferredWidth / 2f);
+            cursor.transform.rotation = Quaternion.Euler(0f, 0f, cursorRotation);
+            cursor.transform.position = position;
+        }
     }
 
     void ChangeState(MainMenuState newState)
@@ -192,6 +216,10 @@ public class MainMenu : MonoBehaviour
     void OnMainMenu()
     {
         HandleMenuNavigation();
+        foreach(Text t in menuText)
+        {
+            Debug.Log(t.preferredWidth);
+        }
 
         if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
         {
@@ -264,6 +292,13 @@ public class MainMenu : MonoBehaviour
                 QualitySettings.vSyncCount = (QualitySettings.vSyncCount == 1) ? 0 : 1;
                 menuText2[2].text = (QualitySettings.vSyncCount == 1) ? "On" : "Off";
             }
+
+            //Joystick sensitivity
+            else if (CurrentSelectIndex == 3)
+            {
+                Settings.sharedInstance.levitationJoystickSensitivity = Mathf.Max(Settings.minJoystick, Settings.sharedInstance.levitationJoystickSensitivity - 1);
+                menuText2[3].text = Settings.sharedInstance.levitationJoystickSensitivity.ToString();
+            }
         }
 
         if ((buttonsPressed & MainMenuButtons.Right) == MainMenuButtons.Right)
@@ -294,6 +329,13 @@ public class MainMenu : MonoBehaviour
             {
                 QualitySettings.vSyncCount = (QualitySettings.vSyncCount == 1) ? 0 : 1;
                 menuText2[2].text = (QualitySettings.vSyncCount == 1) ? "On" : "Off";
+            }
+
+            //Joystick sensitivity
+            else if (CurrentSelectIndex == 3)
+            {
+                Settings.sharedInstance.levitationJoystickSensitivity = Mathf.Min(Settings.maxJoystick, Settings.sharedInstance.levitationJoystickSensitivity + 1);
+                menuText2[3].text = Settings.sharedInstance.levitationJoystickSensitivity.ToString();
             }
         }
 
@@ -331,7 +373,7 @@ public class MainMenu : MonoBehaviour
                     menuTextColors[i] = Color.gray;
                 }
                 else
-                    menuTextColors[i] = Color.white;
+                    menuTextColors[i] = nonSelectedColor;
             }
             else if ((MainMenuState)index == MainMenuState.Options)
             {
@@ -360,6 +402,7 @@ public class MainMenu : MonoBehaviour
 
                     //Joystick Sensitivity
                     case 3:
+                        text = Settings.sharedInstance.levitationJoystickSensitivity.ToString();
                         break;
                 }
                 menuText2[i].text = text;
@@ -369,7 +412,7 @@ public class MainMenu : MonoBehaviour
                 pos.x = 0;
                 pos2.x = 0;
                 menuText2[i].text = "";
-                menuTextColors[i] = Color.white;
+                menuTextColors[i] = nonSelectedColor;
             }
             //Align the text
             menuText[i].rectTransform.anchoredPosition = pos;
@@ -455,8 +498,8 @@ public class MainMenu : MonoBehaviour
         //Set values for new menu
         if ((int)oldState >= 0)
         {
-            menuText[selectIndices[(int)oldState]].color = Color.white;
-            menuText2[selectIndices[(int)oldState]].color = Color.white;
+            menuText[selectIndices[(int)oldState]].color = nonSelectedColor;
+            menuText2[selectIndices[(int)oldState]].color = nonSelectedColor;
         }
         listCount = menuStrings[(int)newState].Length;
         SetText((int)newState, listCount);
@@ -575,8 +618,8 @@ public class MainMenu : MonoBehaviour
         {
             if (i == CurrentSelectIndex)
             {
-                menuText[i].color = Color.yellow;
-                menuText2[i].color = Color.yellow;
+                menuText[i].color = selectedColor;
+                menuText2[i].color = selectedColor;
             }
             else
             {

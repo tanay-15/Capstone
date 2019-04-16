@@ -21,7 +21,6 @@ public class TriggerEvent : MonoBehaviour
     {
         if (collision.gameObject.layer == 14)
         {
-            Debug.Log(collision.gameObject.name);
             if (transform.parent.GetComponent<Enemy>().enabled == false)
                 transform.parent.SendMessageUpwards("Spawn");
 
