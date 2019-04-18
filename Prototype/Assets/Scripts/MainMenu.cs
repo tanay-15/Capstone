@@ -169,7 +169,9 @@ public class MainMenu : MonoBehaviour
 
     void MoveCursor()
     {
-        if (state == MainMenuState.Main)
+        if (state == MainMenuState.Main ||
+            state == MainMenuState.FileSelect ||
+            state == MainMenuState.Options)
         {
             cursorRotation += Time.deltaTime * cursorRotationSpeed;
             Vector3 position = menuText[CurrentSelectIndex].gameObject.transform.position;
