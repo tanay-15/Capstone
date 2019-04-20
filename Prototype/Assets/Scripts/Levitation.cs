@@ -22,7 +22,7 @@ public class Levitation : MonoBehaviour {
     bool rightTriggerPressed;
     bool rightTriggerReleased;
     ActionIndicator action;
-    PlayerStates player;
+    public GameObject player;
     [System.NonSerialized]
     public bool Active;
 
@@ -85,7 +85,8 @@ public class Levitation : MonoBehaviour {
 
 	void Start () {
         Active = true;
-        player = FindObjectOfType<PlayerStates>();
+        if (player == null)
+            player = FindObjectOfType<PlayerStates>().gameObject;
         rightTriggerDown = false;
         rightTriggerPressed = false;
         rightTriggerReleased = false;

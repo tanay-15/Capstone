@@ -39,6 +39,7 @@ public class MainMenu : MonoBehaviour
     Color selectedColor = Color.red;
     public Color[] menuTextColors;
     public AnimationCurve[] curves;
+    public GameObject levitationTesting;
     MainMenuState state = MainMenuState.None;
     MainMenuButtons buttonsPressed = MainMenuButtons.None;
     string[][] menuStrings;
@@ -174,10 +175,11 @@ public class MainMenu : MonoBehaviour
             state == MainMenuState.Options)
         {
             cursorRotation += Time.deltaTime * cursorRotationSpeed;
-            Vector3 position = menuText[CurrentSelectIndex].gameObject.transform.position;
-            position.x -= (menuText[CurrentSelectIndex].preferredWidth / 2f);
+            Vector3 position = menuText[CurrentSelectIndex].rectTransform.position;
+            //position.x -= ((menuText[CurrentSelectIndex].preferredWidth / 2f) * menuText[CurrentSelectIndex].rectTransform.lossyScale.x) + 40f;
+            position.x -= 40f;
             cursor.transform.rotation = Quaternion.Euler(0f, 0f, cursorRotation);
-            cursor.transform.position = position;
+            cursor.GetComponent<RectTransform>().position = position;
         }
     }
 
@@ -187,6 +189,8 @@ public class MainMenu : MonoBehaviour
 
         if (newState == MainMenuState.PressAnyButton)
         {
+            levitationTesting.SetActive(false);
+            cursor.SetActive(false);
             pressAnyButtonText.gameObject.SetActive(true);
             state = newState;
         }
@@ -218,10 +222,6 @@ public class MainMenu : MonoBehaviour
     void OnMainMenu()
     {
         HandleMenuNavigation();
-        foreach(Text t in menuText)
-        {
-            Debug.Log(t.preferredWidth);
-        }
 
         if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
         {
@@ -355,12 +355,22 @@ public class MainMenu : MonoBehaviour
     }
     #endregion
 
+    //Called in the middle of transitioning from menus
     void SetText(int index, int listSize)
     {
+        //Enable or disable levitation testing for Options menu
+        if ((MainMenuState)index == MainMenuState.Options)
+        {
+            levitationTesting.SetActive(true);
+        }
+        else
+        {
+            levitationTesting.SetActive(false);
+        }
         for (int i = 0; i < listSize; i++)
         {
-            Vector3 pos = menuText[i].rectTransform.anchoredPosition;
-            Vector3 pos2 = menuText2[i].rectTransform.anchoredPosition;
+            //Vector3 pos = menuText[i].rectTransform.anchoredPosition;
+            //Vector3 pos2 = menuText2[i].rectTransform.anchoredPosition;
             //Set the string
             menuText[i].text = menuStrings[index][i];
             //Adjust if on file select menu
@@ -379,10 +389,10 @@ public class MainMenu : MonoBehaviour
             }
             else if ((MainMenuState)index == MainMenuState.Options)
             {
-                pos.x = -150;
-                pos2.x = 150;
-                menuText[i].rectTransform.anchoredPosition = pos;
-                menuText2[i].rectTransform.anchoredPosition = pos2;
+                //pos.x = -150;
+                //pos2.x = 150;
+                //menuText[i].rectTransform.anchoredPosition = pos;
+                //menuText2[i].rectTransform.anchoredPosition = pos2;
 
                 string text = "";
                 switch (i)
@@ -411,18 +421,19 @@ public class MainMenu : MonoBehaviour
             }
             else
             {
-                pos.x = 0;
-                pos2.x = 0;
+                //pos.x = 0;
+                //pos2.x = 0;
                 menuText2[i].text = "";
                 menuTextColors[i] = nonSelectedColor;
             }
             //Align the text
-            menuText[i].rectTransform.anchoredPosition = pos;
+            //menuText[i].rectTransform.anchoredPosition = pos;
             menuText[i].color = menuTextColors[i];
-            menuText[i].alignment = alignLeft[index] ? TextAnchor.MiddleLeft : TextAnchor.MiddleCenter;
-            menuText2[i].rectTransform.anchoredPosition = pos2;
+            //menuText[i].alignment = alignLeft[index] ? TextAnchor.MiddleLeft : TextAnchor.MiddleCenter;
+            //menuText2[i].rectTransform.anchoredPosition = pos2;
             menuText2[i].color = menuTextColors[i];
-            menuText2[i].alignment = alignLeft[index] ? TextAnchor.MiddleRight : TextAnchor.MiddleCenter;
+            //menuText2[i].alignment = alignLeft[index] ? TextAnchor.MiddleRight : TextAnchor.MiddleCenter;
+            //Might not need alignment and anchored position variables anymore
         }
     }
 
@@ -467,6 +478,7 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator Transition(MainMenuState newState, AnimationCurve curve, float transitionSpeed, float delayBetweenLinesTransitioning, bool skipTransitionFromScreen)
     {
+        cursor.SetActive(false);
         //Fade out current screen to go to the new screen
         //Skip transition from the current screen
         MainMenuState oldState = state;
@@ -527,6 +539,8 @@ public class MainMenu : MonoBehaviour
             }
         }
         state = newState;
+        cursor.SetActive(true);
+        MoveCursor();
     }
     #endregion
 
