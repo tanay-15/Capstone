@@ -19,9 +19,9 @@ public class BossHook : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player" && Boss.GetComponent<SkeletonBoss>().currentState != SkeletonBoss.BossStates.Idle)
+        if(collision.gameObject.tag == "Player" /*&& Boss.GetComponent<SkeletonBoss>().currentState != SkeletonBoss.BossStates.Idle*/)
         {
-            Debug.Log("Hook hits player");
+            
 
             collision.gameObject.SendMessage("GetHit", -12f);
         }

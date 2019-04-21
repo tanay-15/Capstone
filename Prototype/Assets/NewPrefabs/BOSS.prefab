@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56330146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.45, y: 1.7, z: -0.07128906}
+  m_LocalPosition: {x: -13.11, y: 1.14, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399033681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.39, y: 1.11, z: -0.07128906}
+  m_LocalPosition: {x: 12.97, y: 1, z: -0.07128906}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
   m_Children: []
   m_Father: {fileID: 3412089563585949225}
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 3.0400016
+  m_Length: 3.0400002
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 1459797242627750312}
   m_AttachedIK: {fileID: 0}
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b765292d04964468fe0cacacb955fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boss: {fileID: 0}
+  Boss: {fileID: 3412089563585949220}
 --- !u!1 &3349950642381664958
 GameObject:
   m_ObjectHideFlags: 0
@@ -5449,7 +5449,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3412089563585949220}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -5522,16 +5522,20 @@ MonoBehaviour:
     type: 3}
   flyingSkullPrefab: {fileID: 8320708836436786147, guid: bdddd7dca7f2f734c887d0d258a7b359,
     type: 3}
-  AttackCounter: 10
+  AttackCounter: 6
   AttackDone: 0
   IsPunched: 0
   ImpactAnim: {fileID: 1057236091574462, guid: d1c3572964dd309439c9a1e438dffc0e, type: 3}
   BossHealthBar: {fileID: 0}
+  player: {fileID: 0}
   currentState: 0
   skeletons: []
   flyskull1: {fileID: 0}
   skel1: {fileID: 0}
   skel2: {fileID: 0}
+  IsInDemonMode: 0
+  IsInHumanMode: 0
+  PlayerMode: 0
 --- !u!61 &3412089563585949221
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5545,7 +5549,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2.67}
+  m_Offset: {x: 0.05, y: 2.67}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5556,7 +5560,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 5.08, y: 5.09}
   m_EdgeRadius: 0
 --- !u!1 &3773754521758374411
 GameObject:
@@ -5998,7 +6002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 2.130047
+  m_Length: 2.1300492
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 7105912005309238129}
   m_AttachedIK: {fileID: 0}
