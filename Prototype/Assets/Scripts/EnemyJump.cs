@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyJump : MonoBehaviour
+public class EnemyJump : Enemy
 {
     // Start is called before the first frame update
 
@@ -17,18 +17,28 @@ public class EnemyJump : MonoBehaviour
     public int JumpCount = 0;
     public bool JumpComplete = false;
 
-    public bool LookingLeft = true;
+ 
     void Start()
     {
         JumpComplete = false;
+        IsAlive = true;
         FinalJumpPosition = AttackPoint.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        AttackBehaviour();
-     
+        if (IsAlive)
+        {
+
+            AttackBehaviour();
+        }
+
+        if (health <= 0)
+        {
+            Death();
+        }
+
     }
 
 
@@ -46,7 +56,7 @@ public class EnemyJump : MonoBehaviour
 
         if(Vector3.Distance(this.transform.position,FinalJumpPosition) < 2f)
         {
-            Debug.Log("Made my jump!");
+         
             JumpCount = JumpCount + 1;
             if (JumpCount >= 3)
             {
@@ -99,20 +109,33 @@ public class EnemyJump : MonoBehaviour
         this.GetComponent<Rigidbody2D>().velocity = CalculateLaunchVelocity(_JumpPosition);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public override void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
+
+            CollidedWithPlayer = true;
+            AttackReady = true;
+            collision.gameObject.SendMessageUpwards("GetHit", -10f);
+            AttackHit();
         }
+
+        if (collision.gameObject.layer == 10 && currentstate == States.KnockBack && groundTrigger.GetComponent<GroundTriggerScript>().grounded == false)
+        {
+            KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? -1 : 1, 1) * 1000 * Random.Range(2, 3));
+            flip();
+            applyDamage(5);
+        }
+
+
     }
 
-    public void flip()
-    {
+    //public void flip()
+    //{
 
-        LookingLeft = !LookingLeft;
+    //    LookingLeft = !LookingLeft;
 
-        this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
+    //    this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
 
-    }
+    //}
 }

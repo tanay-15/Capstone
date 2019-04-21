@@ -26,6 +26,14 @@ public class TriggerEvent : MonoBehaviour
 
             TriggerEnter.Invoke(collision);
         }
+
+        if(collision.gameObject.layer == 20)
+        {
+            if (transform.parent.GetComponent<BossPhaseOne>().enabled == false)
+                transform.parent.SendMessageUpwards("Spawn");
+
+            TriggerEnter.Invoke(collision);
+        }
             
     }
 
@@ -33,11 +41,17 @@ public class TriggerEvent : MonoBehaviour
     {
         if (collision.gameObject.layer == 14)
             TriggerStay.Invoke(collision);
+
+        if (collision.gameObject.layer == 20)
+            TriggerStay.Invoke(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 14)
+            TriggerExit.Invoke(collision);
+
+        if (collision.gameObject.layer == 20)
             TriggerExit.Invoke(collision);
     }
 }

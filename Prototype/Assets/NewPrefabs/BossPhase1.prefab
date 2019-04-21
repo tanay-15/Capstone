@@ -149,9 +149,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4521974395211325411}
-  - component: {fileID: 4521974395211325410}
   - component: {fileID: 4521974395211325421}
   - component: {fileID: 4521974395211325422}
+  - component: {fileID: 3774634570287494601}
   - component: {fileID: 4521974395211325416}
   - component: {fileID: 5310761432044271219}
   - component: {fileID: 1423372028}
@@ -187,25 +187,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4521974395211325410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423372027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 314a327a8bbf5284f8b922333eaa5b17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoneSystem: {fileID: 4521974395932228796}
-  BonesBreak: []
-  kill: 0
-  dead: 0
-  spawn: 1
-  color: {x: 1, y: 1, z: 1, w: 1}
-  mhealth: 0
 --- !u!95 &4521974395211325421
 Animator:
   serializedVersion: 3
@@ -251,6 +232,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.02, y: 3.87}
   m_EdgeRadius: 0
+--- !u!114 &3774634570287494601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423372027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9072bd68f1b234aab0c07d97f078a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoneSystem: {fileID: 4521974395932228796}
+  BonesBreak: []
+  kill: 0
+  dead: 0
+  color: {x: 0, y: 0, z: 0, w: 0}
+  mhealth: 0
 --- !u!50 &4521974395211325416
 Rigidbody2D:
   serializedVersion: 4
@@ -335,6 +334,7 @@ MonoBehaviour:
   EnemyIgnoreMask:
     serializedVersion: 2
     m_Bits: 0
+  BossHealth: {fileID: 0}
   currentstate: 0
   vision: {fileID: 0}
   groundAhead: {fileID: 0}

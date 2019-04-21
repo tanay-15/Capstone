@@ -1,5 +1,114 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &433491381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433491382}
+  - component: {fileID: 433491384}
+  - component: {fileID: 433491383}
+  m_Layer: 15
+  m_Name: Detect Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &433491382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433491381}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.95, y: 0.106798, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3931908327308418584}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433491384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433491381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b0c2a01ac03ec4dad2df8c9c1ad5ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredTag: Player
+  TriggerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 708470839}
+        m_MethodName: TriggerEnter2D
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEventCollider2D, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  TriggerStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 708470839}
+        m_MethodName: OnTriggerStay2D
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEventCollider2D, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  TriggerExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 708470839}
+        m_MethodName: TriggerExit2D
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEventCollider2D, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!58 &433491383
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433491381}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.8}
+  serializedVersion: 2
+  m_Radius: 20
 --- !u!1 &1961904538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,6 +1841,7 @@ Transform:
   - {fileID: 6569177914209617389}
   - {fileID: 8053947408164144040}
   - {fileID: 1961904539}
+  - {fileID: 433491382}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1751,7 +1861,6 @@ MonoBehaviour:
   BonesBreak: []
   kill: 0
   dead: 0
-  spawn: 1
   color: {x: 1, y: 1, z: 1, w: 1}
   mhealth: 0
 --- !u!95 &2998031081823129815
@@ -1827,18 +1936,57 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8124879178770261638}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c04981748ce9cb4eb895639d2470e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  events:
+    OnDeath:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnTakeDamage:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityFloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  LookingLeft: 1
+  health: 5
+  rateofattack: 2
+  range: 0
+  damage: 0
+  movspeed: 0
+  chaseSpeed: 0
+  withinRange: 0
+  ImpactAnim: {fileID: 1057236091574462, guid: d1c3572964dd309439c9a1e438dffc0e, type: 3}
+  BoneSystem: {fileID: 6300364937103837401}
+  target: {fileID: 0}
+  AttackReady: 0
+  IsAlive: 0
+  IsPunched: 0
+  movway1: 1
+  movway2: 0
+  checkforAttackHit: 0
+  MovePoint1: {fileID: 0}
+  MovePoint2: {fileID: 0}
+  waypoint1: {x: 0, y: 0, z: 0}
+  waypoint2: {x: 0, y: 0, z: 0}
+  EnemyIgnoreMask:
+    serializedVersion: 2
+    m_Bits: 0
+  currentstate: 0
+  vision: {fileID: 0}
+  groundAhead: {fileID: 0}
+  jumpAhead: {fileID: 0}
+  groundTrigger: {fileID: 0}
   gravity: -18
   h: 2
   ShouldJump: 0
   AttackPoint: {fileID: 1961904538}
   JumpCount: 0
   JumpComplete: 0
-  LookingLeft: 1
 --- !u!1 &8305904912169780443
 GameObject:
   m_ObjectHideFlags: 0
