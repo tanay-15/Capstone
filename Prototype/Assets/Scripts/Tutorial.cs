@@ -273,11 +273,13 @@ public class Tutorial : MonoBehaviour {
     {
         if (visible)
         {
-            pointedObjects.Add(-obj.priority, obj);
+            if (!pointedObjects.ContainsKey(-obj.priority))
+                pointedObjects.Add(-obj.priority, obj);
         }
         else
         {
-            pointedObjects.Remove(-obj.priority);
+            if (pointedObjects.ContainsKey(-obj.priority))
+                pointedObjects.Remove(-obj.priority);
         }
         objectVisible = (pointedObjects.Count > 0);
         pointedObject = objectVisible ? pointedObjects.Values[0].gameObject : null;
