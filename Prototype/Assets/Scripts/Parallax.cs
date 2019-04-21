@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
 public class ParallaxObject {
     public GameObject background;
     public Vector3 cameraStartPosition { get; private set; }
     public float followAmount;
 
+
     Vector3 startPosition;
 
     public void Start(Vector3 startPos)
     {
+
         cameraStartPosition = startPos;
         startPosition = background.transform.position;
     }
@@ -28,7 +31,9 @@ public class Parallax : MonoBehaviour {
 
     public ParallaxObject[] objects;
 
-	void Start () {
+
+    void Start () {
+
         foreach (ParallaxObject obj in objects)
         {
             obj.Start(transform.position);

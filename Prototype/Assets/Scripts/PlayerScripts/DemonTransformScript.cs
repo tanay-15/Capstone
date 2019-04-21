@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class DemonTransformScript : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DemonTransformScript : MonoBehaviour
     public GameObject bat;
     GameObject Human;
     GameObject Demon;
+    AudioManager audioManager;
 
     float rageDrainRateNormal = 0.04f;
     float rageDrainRateSkill = 0.032f;
@@ -34,6 +36,7 @@ public class DemonTransformScript : MonoBehaviour
         Human = transform.GetComponent<PlayerStates>().Human;
         Demon = transform.GetComponent<PlayerStates>().Demon;
         transitioning = false;
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -74,6 +77,7 @@ public class DemonTransformScript : MonoBehaviour
 
     public IEnumerator DelayedTransform(bool toDemon)
     {
+        audioManager.Play("Evil");
         GenerateBats();
         transitioning = true;
         yield return new WaitForSeconds(1.3f);  //2.0

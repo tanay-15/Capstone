@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class RainEnable : MonoBehaviour
 {
     bool lightning;
     float timer;
     float delay;
+    AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +16,8 @@ public class RainEnable : MonoBehaviour
         lightning = false;
         timer = 0.0f;
         delay = 0.0f;
+
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -32,12 +36,14 @@ public class RainEnable : MonoBehaviour
                     light.GetComponent<SpriteRenderer>().enabled = false;
                     light.GetComponent<SpriteRenderer>().color = new Color(light.GetComponent<SpriteRenderer>().color.r, light.GetComponent<SpriteRenderer>().color.g,
                     light.GetComponent<SpriteRenderer>().color.b, 0.5f);
+
                 }
             }
             else
             {
                 if (timer > delay)
                 {
+                    audioManager.Play("Thunder");
                     light.GetComponent<SpriteRenderer>().enabled = true;
                     delay = Random.value * 7.0f + 3.0f;
                     timer = 0.0f;
@@ -51,7 +57,8 @@ public class RainEnable : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Camera.main.transform.GetChild(1).gameObject.SetActive(true);
-            lightning = true; 
+            lightning = true;
+            audioManager.Play("Rain");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CameraFollow : MonoBehaviour {
     public Transform target;
@@ -9,6 +10,7 @@ public class CameraFollow : MonoBehaviour {
 
     public Transform lowerLeftBound;
     public Transform upperRightBound;
+    AudioManager audioManager;
 
     float panSize = 1;
     float currentSize = 1;
@@ -22,6 +24,8 @@ public class CameraFollow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager.Play("Fire");
         shakeOffset = Vector3.zero;
         rawTransformPos = transform.position;
         shakeRoutine = null;
