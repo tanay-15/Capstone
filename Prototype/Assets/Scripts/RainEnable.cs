@@ -51,7 +51,7 @@ public class RainEnable : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Camera.main.transform.GetChild(1).gameObject.SetActive(true);
-            lightning = true;
+            lightning = true; 
         }
     }
 }
