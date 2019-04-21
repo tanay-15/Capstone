@@ -4544,6 +4544,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2700114358183790588, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2700114358183790576, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10006,7 +10011,7 @@ GameObject:
   - component: {fileID: 1832795266}
   - component: {fileID: 1832795265}
   - component: {fileID: 1832795264}
-  - component: {fileID: 1832795267}
+  - component: {fileID: 1832795268}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10078,7 +10083,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1832795267
+--- !u!114 &1832795268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10087,14 +10092,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832795263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14f12a95281385e4c8043bbd7e8acac4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d24e4e268b49c4479c1e0af5efed3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 0.075
-  offset: {x: 0, y: 0, z: -10}
-  lowerLeftBound: {fileID: 0}
-  upperRightBound: {fileID: 0}
+  material: {fileID: 2100000, guid: 9c9fc9bfd5c916449bb28ab514a389ff, type: 2}
+  speed: 1.16
 --- !u!1 &1857566877
 GameObject:
   m_ObjectHideFlags: 0
@@ -11470,6 +11472,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plane
       objectReference: {fileID: 0}
+    - target: {fileID: 7482756043806457947, guid: 9ac2fda579868cf4691d3e713024a6ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7482756043806457951, guid: 9ac2fda579868cf4691d3e713024a6ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11534,6 +11541,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.737
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677493161596746824, guid: 9ac2fda579868cf4691d3e713024a6ad,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ac2fda579868cf4691d3e713024a6ad, type: 3}
