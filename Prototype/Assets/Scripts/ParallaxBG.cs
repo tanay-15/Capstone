@@ -24,6 +24,7 @@ public class ParallaxBG : MonoBehaviour
         float distY = (Cam.transform.position.y * parallaxAmount);
 
         transform.position = new Vector3(startPosX + distX, transform.position.y, transform.position.z);
+        //transform.position = new Vector3(startPosX + distX, startPosY + distY, transform.position.z);
         if (temp > startPosX + length) startPosX += length;
         else if (temp < startPosX - length) startPosX -= length;
     }

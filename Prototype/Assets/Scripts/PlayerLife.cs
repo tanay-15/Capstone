@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerLife : MonoBehaviour {
 
     public static PlayerLife sharedInstance;
+    public bool lifebarVisible = true;
     public float maxLife = 100f;
     [System.NonSerialized]
     public float currentLife;
@@ -55,39 +56,45 @@ public class PlayerLife : MonoBehaviour {
         sharedInstance = this;
         currentLife = maxLife;
 
-        goodColor = barGraphic.color;
-        badColor = Color.red;
+        if (lifebarVisible)
+        {
+            goodColor = barGraphic.color;
+            badColor = Color.red;
 
-        SetDemonIcon(false);
+            SetDemonIcon(false);
+        }
 	}
 	
 	void Update () {
-        time += Time.deltaTime;
-        cosColor.r = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
-        cosColor.g = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
-        cosColor.b = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
-        if (lifebarRatio <= 0.25f)
+        if (lifebarVisible)
         {
-            barGraphic.color = badColor + cosColor;
-        }
-        else
-        {
-            barGraphic.color = goodColor;
-        }
+            time += Time.deltaTime;
+            cosColor.r = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
+            cosColor.g = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
+            cosColor.b = -0.2f - Mathf.Cos(time * 15f) * 0.2f;
+            if (lifebarRatio <= 0.25f)
+            {
+                barGraphic.color = badColor + cosColor;
+            }
+            else
+            {
+                barGraphic.color = goodColor;
+            }
 
-        //Testing purposes
-        //if (Input.GetKeyDown(KeyCode.H))
-        //{
-        //    AddLife(-10);
-        //}
+            //Testing purposes
+            //if (Input.GetKeyDown(KeyCode.H))
+            //{
+            //    AddLife(-10);
+            //}
 
-        if (yellowBarGraphic.fillAmount - barGraphic.fillAmount <= lerpThreshold)
-        {
-            yellowBarGraphic.fillAmount = barGraphic.fillAmount;
-        }
-        else
-        {
-            yellowBarGraphic.fillAmount = Mathf.Lerp(yellowBarGraphic.fillAmount, barGraphic.fillAmount, lerpAmount);
+            if (yellowBarGraphic.fillAmount - barGraphic.fillAmount <= lerpThreshold)
+            {
+                yellowBarGraphic.fillAmount = barGraphic.fillAmount;
+            }
+            else
+            {
+                yellowBarGraphic.fillAmount = Mathf.Lerp(yellowBarGraphic.fillAmount, barGraphic.fillAmount, lerpAmount);
+            }
         }
 	}
 

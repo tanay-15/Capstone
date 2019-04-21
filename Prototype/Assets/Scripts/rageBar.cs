@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class rageBar : MonoBehaviour {
 
     public static rageBar sharedInstance;
+    public bool rageBarVisible = true;
 
     [SerializeField]
     public float fillAmount;
@@ -49,10 +50,13 @@ public class rageBar : MonoBehaviour {
         gradientScroll = FindObjectOfType<GradientScroll>();
         demonTransformScript = GetComponent<DemonTransformScript>();
 
-        normalColor = RBar.filler.color;
-        fillingColor = normalColor;
-        fillingColor.g = 0.5f;
-        fillingColor.b = 0.5f;
+        if (rageBarVisible)
+        {
+            normalColor = RBar.filler.color;
+            fillingColor = normalColor;
+            fillingColor.g = 0.5f;
+            fillingColor.b = 0.5f;
+        }
 
         if (sharedInstance != null)
             Destroy(sharedInstance.gameObject);

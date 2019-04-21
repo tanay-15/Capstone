@@ -35,6 +35,7 @@ public class MainMenu : MonoBehaviour
     public Text[] menuText;
     public Text[] menuText2;
     public GameObject cursor;
+    public Transform[] cameraFocus;
     Color nonSelectedColor = Color.yellow;// new Color(0.25f, 0.25f, 0.25f, 1f);
     Color selectedColor = Color.red;
     public Color[] menuTextColors;
@@ -59,6 +60,7 @@ public class MainMenu : MonoBehaviour
     int axisDirection;
     float minAxis = 0.5f;
 
+    CameraFollow cameraFollow;
     Resolution[] resolutions;
 
     bool SameResolution(Resolution a, Resolution b)
@@ -91,6 +93,7 @@ public class MainMenu : MonoBehaviour
 
         GetResolutions();
         baseTextScale = menuText[0].gameObject.transform.localScale.x;
+        cameraFollow = Camera.main.GetComponent<CameraFollow>();
         cursorRotation = 0f;
         Initialize();
         ChangeState(MainMenuState.PressAnyButton);
@@ -362,10 +365,12 @@ public class MainMenu : MonoBehaviour
         if ((MainMenuState)index == MainMenuState.Options)
         {
             levitationTesting.SetActive(true);
+            cameraFollow.target = cameraFocus[1];
         }
         else
         {
             levitationTesting.SetActive(false);
+            cameraFollow.target = cameraFocus[0];
         }
         for (int i = 0; i < listSize; i++)
         {

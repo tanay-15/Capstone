@@ -23,6 +23,7 @@ public class PlayerStates : MonoBehaviour
         WallCrawl,
         PlayerSwitch
     };
+    public bool controlsEnabled = true;
     [Header("State")]
     public State status;
     public State prevState;
@@ -135,6 +136,7 @@ public class PlayerStates : MonoBehaviour
 
     void Update()
     {
+        if (!controlsEnabled) return;
         //// Movement ////
 
         float hAxis = Input.GetAxis("Horizontal");
