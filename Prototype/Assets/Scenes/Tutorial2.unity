@@ -84281,10 +84281,11 @@ GameObject:
   - component: {fileID: 239682104}
   - component: {fileID: 239682106}
   - component: {fileID: 239682107}
+  - component: {fileID: 239682109}
   - component: {fileID: 239682108}
   - component: {fileID: 239682103}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84404,6 +84405,20 @@ MonoBehaviour:
   objects:
   - background: {fileID: 278770351}
     followAmount: 0.1
+--- !u!114 &239682109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239682102}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d24e4e268b49c4479c1e0af5efed3c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 9c9fc9bfd5c916449bb28ab514a389ff, type: 2}
+  speed: 1.25
 --- !u!1 &257703582
 GameObject:
   m_ObjectHideFlags: 0
