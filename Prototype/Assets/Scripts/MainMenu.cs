@@ -17,7 +17,7 @@ enum MainMenuState
 }
 
 [System.Flags]
-enum MainMenuButtons
+public enum MenuButtons
 {
     None    = 0,
     Left    = 1,
@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
     public AnimationCurve[] curves;
     public GameObject levitationTesting;
     MainMenuState state = MainMenuState.None;
-    MainMenuButtons buttonsPressed = MainMenuButtons.None;
+    MenuButtons buttonsPressed = MenuButtons.None;
     string[][] menuStrings;
     bool[] alignLeft;
     int listCount;
@@ -226,7 +226,7 @@ public class MainMenu : MonoBehaviour
     {
         HandleMenuNavigation();
 
-        if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
+        if ((buttonsPressed & MenuButtons.Confirm) == MenuButtons.Confirm)
         {
             //Highlighted over "New Game"
             if (CurrentSelectIndex == 0)
@@ -251,14 +251,14 @@ public class MainMenu : MonoBehaviour
     {
         HandleMenuNavigation();
 
-        if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
+        if ((buttonsPressed & MenuButtons.Confirm) == MenuButtons.Confirm)
         {
             //Back
             if (CurrentSelectIndex == 3)
                 ChangeState(MainMenuState.Main);
         }
 
-        if ((buttonsPressed & MainMenuButtons.Back) == MainMenuButtons.Back)
+        if ((buttonsPressed & MenuButtons.Back) == MenuButtons.Back)
         {
             ChangeState(MainMenuState.Main);
         }
@@ -269,7 +269,7 @@ public class MainMenu : MonoBehaviour
     {
         HandleMenuNavigation();
 
-        if ((buttonsPressed & MainMenuButtons.Left) == MainMenuButtons.Left)
+        if ((buttonsPressed & MenuButtons.Left) == MenuButtons.Left)
         {   //Resolution
             if (CurrentSelectIndex == 0)
             {
@@ -306,7 +306,7 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        if ((buttonsPressed & MainMenuButtons.Right) == MainMenuButtons.Right)
+        if ((buttonsPressed & MenuButtons.Right) == MenuButtons.Right)
         {
             //Resolution
             if (CurrentSelectIndex == 0)
@@ -344,14 +344,14 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        if ((buttonsPressed & MainMenuButtons.Confirm) == MainMenuButtons.Confirm)
+        if ((buttonsPressed & MenuButtons.Confirm) == MenuButtons.Confirm)
         {
             //Back
             if (CurrentSelectIndex == 4)
                 ChangeState(MainMenuState.Main);
         }
 
-        if ((buttonsPressed & MainMenuButtons.Back) == MainMenuButtons.Back)
+        if ((buttonsPressed & MenuButtons.Back) == MenuButtons.Back)
         {
             ChangeState(MainMenuState.Main);
         }
@@ -575,22 +575,22 @@ public class MainMenu : MonoBehaviour
         //Left
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            buttonsPressed |= MainMenuButtons.Left;
+            buttonsPressed |= MenuButtons.Left;
         }
         //Up
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || axisDirectionPressed == 1)
         {
-            buttonsPressed |= MainMenuButtons.Up;
+            buttonsPressed |= MenuButtons.Up;
         }
         //Right
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            buttonsPressed |= MainMenuButtons.Right;
+            buttonsPressed |= MenuButtons.Right;
         }
         //Down
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || axisDirectionPressed == -1)
         {
-            buttonsPressed |= MainMenuButtons.Down;
+            buttonsPressed |= MenuButtons.Down;
         }
     }
 
@@ -599,31 +599,31 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump"))
         {
             //Confirm pressed
-            buttonsPressed |= MainMenuButtons.Confirm;
+            buttonsPressed |= MenuButtons.Confirm;
         }
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("PS4CIRCLE"))
         {
             //Back pressed
-            buttonsPressed |= MainMenuButtons.Back;
+            buttonsPressed |= MenuButtons.Back;
         }
     }
 
     void ResetButtonCheck()
     {
         axisDirectionPressed = 0;
-        buttonsPressed = MainMenuButtons.None;
+        buttonsPressed = MenuButtons.None;
     }
 
     //For moving up and down menus
     void HandleMenuNavigation()
     {
         //Check for input
-        if ((buttonsPressed & MainMenuButtons.Up) == MainMenuButtons.Up)
+        if ((buttonsPressed & MenuButtons.Up) == MenuButtons.Up)
         {
             CurrentSelectIndex--;
         }
 
-        if ((buttonsPressed & MainMenuButtons.Down) == MainMenuButtons.Down)
+        if ((buttonsPressed & MenuButtons.Down) == MenuButtons.Down)
         {
             CurrentSelectIndex++;
         }

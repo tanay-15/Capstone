@@ -21,16 +21,22 @@ public class TriggerEvent : MonoBehaviour
     {
         if (collision.gameObject.layer == 14)
         {
-            if (transform.parent.GetComponent<Enemy>().enabled == false)
-                transform.parent.SendMessageUpwards("Spawn");
+            if (transform.parent.GetComponent<Enemy>() != null)
+            {
+                if (transform.parent.GetComponent<Enemy>().enabled == false)
+                    transform.parent.SendMessageUpwards("Spawn");
+            }
 
             TriggerEnter.Invoke(collision);
         }
 
         if(collision.gameObject.layer == 20)
         {
-            if (transform.parent.GetComponent<BossPhaseOne>().enabled == false)
-                transform.parent.SendMessageUpwards("Spawn");
+            if (transform.parent.GetComponent<Enemy>() != null)
+            {
+                if (transform.parent.GetComponent<BossPhaseOne>().enabled == false)
+                    transform.parent.SendMessageUpwards("Spawn");
+            }
 
             TriggerEnter.Invoke(collision);
         }
