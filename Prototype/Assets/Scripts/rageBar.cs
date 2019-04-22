@@ -26,6 +26,7 @@ public class rageBar : MonoBehaviour {
     private bool barColorFill;
     GradientScroll gradientScroll;
     DemonTransformScript demonTransformScript;
+    PostProcess cameraEffect;
 
     public UnityEvent OnRageBarFull;
 
@@ -49,6 +50,7 @@ public class rageBar : MonoBehaviour {
         rageBarFilled = false;
         gradientScroll = FindObjectOfType<GradientScroll>();
         demonTransformScript = GetComponent<DemonTransformScript>();
+        cameraEffect = GameObject.Find("Camera").GetComponent<PostProcess>();
 
         if (rageBarVisible)
         {
@@ -103,6 +105,7 @@ public class rageBar : MonoBehaviour {
         //Call one time once the bar fills
         if (RBar.fillAmount >= 1f && !rageBarFilled && !rageBarActive)
         {
+            
             rageBarFilled = true;
             UIIcons.sharedInstance.SetQButton(true);
         }
@@ -110,6 +113,7 @@ public class rageBar : MonoBehaviour {
         //Probably not necessary unless the rage bar drains without entering demon mode
         else if (RBar.fillAmount < 1f && rageBarFilled && !rageBarActive)
         {
+            
             rageBarFilled = false;
             UIIcons.sharedInstance.SetQButton(false);
         }
@@ -126,6 +130,7 @@ public class rageBar : MonoBehaviour {
         //Debug.Log(RBar.fillAmount);
         if (RBar.fillAmount >= 1f)
         {
+            cameraEffect.enabled = true;
             //filler.color = fillingColor;
             gradientScroll.EnableGradient(true);
             OnRageBarFull.Invoke();
@@ -133,6 +138,7 @@ public class rageBar : MonoBehaviour {
         }
         else if (RBar.fillAmount < 1f)
         {
+            cameraEffect.enabled = false;
             gradientScroll.EnableGradient(false);
             filler.color = Color.yellow;
         }
