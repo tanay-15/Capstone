@@ -9,7 +9,9 @@ enum PauseMenuOption
 {
     SkillTree = 0,
     Resume,
+    Manual,
     Options,
+    RestartFromCheckpoint,
     ReturnHubWorld,
     ReturnMainMenu
 }
@@ -18,6 +20,7 @@ enum PauseMenuState
 {
     None = 0,
     Main,
+    Manual,
     Options,
     SkillTree
 }
@@ -25,11 +28,9 @@ enum PauseMenuState
 public class PauseMenu : MonoBehaviour {
     public GameObject pauseMenu;
 
-    public Text[] menuText;
     public Image[] menuTextImages;
     public GameObject cursor;
     public Image black;
-    string[] menuStrings;
     PauseMenuOption selectIndex;
     PauseMenuOption prevIndex;
     PauseMenuState menuState;
@@ -66,7 +67,6 @@ public class PauseMenu : MonoBehaviour {
         selectIndex = PauseMenuOption.Resume;
         prevIndex = selectIndex;
         menuState = PauseMenuState.Main;
-        menuStrings = new string[] { "Skill Tree", "Resume", "Options", "Return to Hub World", "Return to Main Menu" };
         transparentColor = new Color(1f, 1f, 1f, 0.5f);
         disabledColor = new Color(1f, 1f, 1f, 0.2f);
         //InitializeText();
@@ -162,16 +162,16 @@ public class PauseMenu : MonoBehaviour {
     void WrapAround()
     {
         //Wrap around
-        if ((int)selectIndex > menuStrings.Length - 1)
-            selectIndex -= menuStrings.Length;
+        if ((int)selectIndex > menuTextImages.Length - 1)
+            selectIndex -= menuTextImages.Length;
         else if (selectIndex < 0)
-            selectIndex += menuStrings.Length;
+            selectIndex += menuTextImages.Length;
     }
 
     void UpdateMenu(PauseMenuOption newIndex, PauseMenuOption oldIndex)
     {
-        menuText[(int)oldIndex].color = transparentColor;
-        menuText[(int)newIndex].color = Color.white;
+        //menuText[(int)oldIndex].color = transparentColor;
+        //menuText[(int)newIndex].color = Color.white;
 
         cursor.transform.position = menuTextImages[(int)newIndex].transform.position;
     }
@@ -180,30 +180,31 @@ public class PauseMenu : MonoBehaviour {
     //Function called from skill tree
     public void ReturnToPauseMenu()
     {
-        StartCoroutine(TransitionToOrFromSkillTree(false));
+        StartCoroutine(TransitionScene(false));
         menuState = PauseMenuState.None;
     }
 
     //Because Time.scale is 0, Coroutines will not be framerate-independent
-    IEnumerator TransitionToOrFromSkillTree(bool toTree)
+    //Use last 2 parameters only if toNewScene is true
+    IEnumerator TransitionScene(bool toNewScene, string sceneName = "", PauseMenuState newState = PauseMenuState.None)
     {
-        if (!toTree)
-            SceneManager.UnloadSceneAsync("SkillTree");
+        if (!toNewScene)
+            SceneManager.UnloadSceneAsync(sceneName);
         Color col = Color.black;
         for (float i = 0; i < 1f; i += 0.05f)
         {
-            col.a = (toTree) ? i : (1 - i);
+            col.a = (toNewScene) ? i : (1 - i);
             black.color = col;
             yield return 0;
         }
-        if (toTree)
-            SceneManager.LoadScene("SkillTree", LoadSceneMode.Additive);
+        if (toNewScene)
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         else
         {
             col.a = 0f;
             black.color = col;
         }
-        menuState = (toTree) ? PauseMenuState.SkillTree : PauseMenuState.Main;
+        menuState = (toNewScene) ? newState : PauseMenuState.Main;
     }
 
     void CheckForConfirmButton()
@@ -212,23 +213,35 @@ public class PauseMenu : MonoBehaviour {
         {
             switch (selectIndex)
             {
+                //Skill Tree
+                case PauseMenuOption.SkillTree:
+                    if (!disableSkillTree)
+                    {
+                        StartCoroutine(TransitionScene(true, "SkillTree", PauseMenuState.SkillTree));
+                        menuState = PauseMenuState.None;
+                    }
+                    break;
+
                 //Resume
                 case PauseMenuOption.Resume:
                     PauseUnpause();
                     break;
 
-                //Skill Tree
-                case PauseMenuOption.SkillTree:
-                    if (!disableSkillTree)
-                    {
-                        StartCoroutine(TransitionToOrFromSkillTree(true));
-                        menuState = PauseMenuState.None;
-                    }
+                //Manual
+                case PauseMenuOption.Manual:
+                    //Uncomment this out when the Manual scene is ready
+                    //StartCoroutine(TransitionScene(true, "Manual", PauseMenuState.Manual));
+                    //menuState = PauseMenuState.None;
                     break;
 
                 //Options
                 case PauseMenuOption.Options:
                     //menuState = MenuState.Options;
+                    break;
+
+                //Restart from Checkpoint
+                case PauseMenuOption.RestartFromCheckpoint:
+
                     break;
 
                 //Return to Hub World
@@ -265,21 +278,20 @@ public class PauseMenu : MonoBehaviour {
             (index == (int)PauseMenuOption.Options && disableOptions));
     }
 
-    //TODO: Remove old text GameObjects from menu
     void InitializeText()
     {
-        for (int i = 0; i < menuStrings.Length; i++)
+        for (int i = 0; i < menuTextImages.Length; i++)
         {
-            menuText[i].text = menuStrings[i];
+            //menuText[i].text = menuStrings[i];
 
-            if (i != (int)selectIndex)
-            {
-                menuText[i].color = IsTextDisabled(i) ? disabledColor : transparentColor;
-            }
-            else
-            {
-                menuText[i].color = Color.white;
-            }
+            //if (i != (int)selectIndex)
+            //{
+            //    menuText[i].color = IsTextDisabled(i) ? disabledColor : transparentColor;
+            //}
+            //else
+            //{
+            //    menuText[i].color = Color.white;
+            //}
 
             menuTextImages[i].color = IsTextDisabled(i) ? disabledColor : Color.white;
         }
