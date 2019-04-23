@@ -53,7 +53,15 @@ public class Levitation : MonoBehaviour {
     Vector2 baseJoystickPosition;
     Vector2 dJoystick;
     float grabRadius = 0.1f;
+    float GetMaxGrabDistance
+    {
+        get
+        {
+            return (SkillTree.info.nodesActivated & SkillNodes.H_2) == SkillNodes.H_2 ? maxGrabDistance2 : maxGrabDistance;
+        }
+    }
     float maxGrabDistance = 4f;
+    float maxGrabDistance2 = 6f;
     [System.NonSerialized]
     public Vector3 grabPosition;
     IEnumerable<Collider2D> collidingObjects;
@@ -128,10 +136,10 @@ public class Levitation : MonoBehaviour {
 
         //Tether the grab area to the player
         Vector3 distance = grabPosition - PlayerPos;
-        if (distance.magnitude > maxGrabDistance)
+        if (distance.magnitude > GetMaxGrabDistance)
         {
             Ray r = new Ray(PlayerPos, distance);
-            grabPosition = r.GetPoint(maxGrabDistance);
+            grabPosition = r.GetPoint(GetMaxGrabDistance);
         }
         particles.gameObject.transform.position = grabPosition + new Vector3(0, 0, -2.0f);// ordering correction 
     }
@@ -140,8 +148,8 @@ public class Levitation : MonoBehaviour {
     {
         if (dJoystick.magnitude > minimumMagnitude)
             baseJoystickPosition += dJoystick * Time.deltaTime * Settings.sharedInstance.levitationJoystickSensitivity;
-        if (baseJoystickPosition.magnitude > maxGrabDistance)
-            baseJoystickPosition = baseJoystickPosition.normalized * maxGrabDistance;
+        if (baseJoystickPosition.magnitude > GetMaxGrabDistance)
+            baseJoystickPosition = baseJoystickPosition.normalized * GetMaxGrabDistance;
 
         grabPosition = PlayerPos + (Vector3)baseJoystickPosition;
         

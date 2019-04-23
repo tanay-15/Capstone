@@ -180,7 +180,7 @@ public class PauseMenu : MonoBehaviour {
     //Function called from skill tree
     public void ReturnToPauseMenu()
     {
-        StartCoroutine(TransitionScene(false));
+        StartCoroutine(TransitionScene(false, "SkillTree"));
         menuState = PauseMenuState.None;
     }
 
