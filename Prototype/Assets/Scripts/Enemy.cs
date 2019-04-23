@@ -838,7 +838,15 @@ public class Enemy : BasicEnemy {
             if((collision.gameObject.name == "AttackTrigger" && collision.transform.parent.parent.gameObject.GetComponent<PlayerStates>().attackCounter == 0) || 
                     (collision.gameObject.name == "StompTrigger")||
                     (target.GetComponent<DemonTransformScript>().DemonModeActive))
-                KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? 1 : -1, 1) * 1000 * Random.Range(5, 6));
+            {
+
+            
+                if(this.gameObject.name != "BossSub1")
+                {
+                    KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? 1 : -1, 1) * 1000 * Random.Range(5, 6));
+                }
+
+            }
 
 
             if ((SkillTree.info.nodesActivated & SkillNodes.D_4) == SkillNodes.D_4)

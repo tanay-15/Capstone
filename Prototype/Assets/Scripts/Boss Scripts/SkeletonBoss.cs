@@ -341,18 +341,11 @@ public class SkeletonBoss : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if(collision.gameObject.tag == "Player")
-        //{
-        //    Debug.Log("Collided with player");
-        //    collision.gameObject.SendMessage("GetHit", -10f);
+      
 
-            
-
-        //}
-
-        if (collision.gameObject.name == "AttackTrigger" && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 2.2f && collision.gameObject.layer != 15)
+        if (collision.gameObject.name == "AttackTrigger" && !IsPunched /*&& Vector3.Distance(collision.transform.position, transform.position) < 2.2f*/ && collision.gameObject.layer != 15)
         {
-            applyDamage(13);
+            applyDamage(3);
 
             IsPunched = true;
             StartCoroutine(IsPunchedReset());
@@ -362,9 +355,9 @@ public class SkeletonBoss : MonoBehaviour
 
         }
 
-        if(collision.gameObject.tag == "projectile" && Vector3.Distance(collision.transform.position,this.transform.position) < 2.2f)
+        if(collision.gameObject.tag == "projectile" /*&& Vector3.Distance(collision.transform.position,this.transform.position) < 2.2f*/)
         {
-            applyDamage(15);
+            applyDamage(5);
 
             var impact = Instantiate(ImpactAnim, new Vector2(this.transform.position.x, this.transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
