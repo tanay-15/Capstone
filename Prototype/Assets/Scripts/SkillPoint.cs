@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SkillPoint : MonoBehaviour
 {
+    public GameObject particlesPrefab;
     public SpriteRenderer white;
     public Light myLight;
     float count;
@@ -32,5 +33,11 @@ public class SkillPoint : MonoBehaviour
             SkillTree.info.skillPoints++;
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject particles = Instantiate(particlesPrefab, transform.position, transform.rotation);
+        Destroy(particles, 2f);
     }
 }

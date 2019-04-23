@@ -88,8 +88,10 @@ public class PlayerStates : MonoBehaviour
 
     //Bow and arrow objects
     public Transform bow;
-    public Transform bicep;
-    float initialBicepRotation = 25.82f;
+    public Transform frontBicep;
+    public Transform backBicep;
+    float initialFrontBicepRotation = 25.82f;
+    float initialBackBicepRotation;
 
 
 
@@ -128,8 +130,8 @@ public class PlayerStates : MonoBehaviour
         if (status == State.ChargingArrow)
         {
             float right = facingRight ? 0f : 180f;
-            float rotation = Mathf.Atan2(shootingArrowInfo.GetShootingDirectionToMouse(bicep.position, facingRight).y, shootingArrowInfo.GetShootingDirectionToMouse(bicep.position, facingRight).x) * 180 / Mathf.PI;
-            bicep.rotation = Quaternion.Euler(0f, 0f, rotation + ((facingRight) ? -initialBicepRotation : initialBicepRotation) + right);
+            float rotation = Mathf.Atan2(shootingArrowInfo.GetShootingDirectionToMouse(frontBicep.position, facingRight).y, shootingArrowInfo.GetShootingDirectionToMouse(frontBicep.position, facingRight).x) * 180 / Mathf.PI;
+            frontBicep.rotation = Quaternion.Euler(0f, 0f, rotation + ((facingRight) ? -initialFrontBicepRotation : initialFrontBicepRotation) + right);
         }
     }
 

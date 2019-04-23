@@ -59,11 +59,12 @@ public class YinYangCheckpoint : MonoBehaviour
         GameObject flash = Instantiate(flashPrefab, transform.position, transform.rotation);
         SpriteRenderer sr = flash.GetComponent<SpriteRenderer>();
         Color col = Color.white;
-        float scale = 0.1f;
+        float initialScale = flash.transform.localScale.x;
+        float scale = initialScale;
 
         for (float i = Time.deltaTime; i < 1f; i += Time.deltaTime * 4f)
         {
-            scale = 0.1f + (i * 0.3f);
+            scale = initialScale + (i * 0.7f); // * 0.3f
             col.a = 1f - i;
             sr.color = col;
             flash.transform.localScale = Vector3.one * scale;
