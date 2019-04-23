@@ -407,7 +407,7 @@ public class Enemy : BasicEnemy {
         currentstate = States.Dead;
         GetComponent<SkeletonDeathScript>().Die();
         events.OnDeath.Invoke();
-        anim.SetTrigger("Death");
+        //anim.SetTrigger("Death");
         
 
 

@@ -28,15 +28,18 @@ public class EnemyJump : Enemy
     // Update is called once per frame
     void Update()
     {
-        if (IsAlive)
-        {
 
-            AttackBehaviour();
-        }
 
         if (health <= 0)
         {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             Death();
+        }
+
+        else if (IsAlive)
+        {
+
+            AttackBehaviour();
         }
 
     }

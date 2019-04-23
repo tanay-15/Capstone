@@ -125,7 +125,8 @@ public class SkeletonDeathScript : MonoBehaviour {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponents<BoxCollider2D>()[0].enabled = false;
-            GetComponents<CircleCollider2D>()[0].enabled = false;
+            if(GetComponents<CircleCollider2D>()[0])
+                GetComponents<CircleCollider2D>()[0].enabled = false;
 
 
             TurnOffCollisions();
