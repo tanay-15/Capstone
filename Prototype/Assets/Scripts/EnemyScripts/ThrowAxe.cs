@@ -13,6 +13,8 @@ public class ThrowAxe : MonoBehaviour {
     private GameObject player_target;
     private Vector3 startpoint;
     private float TimeToHit = 2f;
+
+
     
 	void Start () {
 
@@ -22,7 +24,7 @@ public class ThrowAxe : MonoBehaviour {
         startpoint = this.transform.position;
          moveVector = 4*Vector3.Normalize(GameObject.Find("Player").transform.position- transform.position);
        
-
+        
     }
 
     
@@ -34,6 +36,8 @@ public class ThrowAxe : MonoBehaviour {
         rigi.velocity = moveVector;
 
         transform.Rotate(0,0,300 *Time.deltaTime);
+
+        Invoke("Death", 6f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -52,5 +56,10 @@ public class ThrowAxe : MonoBehaviour {
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
         }
         
+    }
+
+    public void Death()
+    {
+        Destroy(this.gameObject);
     }
 }
