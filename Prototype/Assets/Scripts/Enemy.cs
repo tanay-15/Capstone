@@ -836,6 +836,10 @@ public class Enemy : BasicEnemy {
                     (target.GetComponent<DemonTransformScript>().DemonModeActive))
                 KnockBack(new Vector2(target.transform.position.x - transform.position.x < 0 ? 1 : -1, 1) * 1000 * Random.Range(5, 6));
 
+
+            if ((SkillTree.info.nodesActivated & SkillNodes.D_4) == SkillNodes.D_4)
+                collision.transform.parent.parent.gameObject.SendMessage("GetHit", 3);
+
         }
 
         if (collision.gameObject.tag == "Player")

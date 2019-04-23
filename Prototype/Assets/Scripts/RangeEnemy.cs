@@ -190,6 +190,9 @@ public class RangeEnemy : Enemy {
 
             var impact = Instantiate(ImpactAnim, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity);
             impact.gameObject.SetActive(true);
+
+            if ((SkillTree.info.nodesActivated & SkillNodes.D_4) == SkillNodes.D_4)
+                collision.transform.parent.parent.gameObject.SendMessage("GetHit", 3);
         }
 
         if (collision.gameObject.tag == "Player")
