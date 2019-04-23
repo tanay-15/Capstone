@@ -161,9 +161,11 @@ public class rageBar : MonoBehaviour {
         //updatedValue = Mathf.Lerp(RBar.fillAmount, newValue, Time.deltaTime * speedtoDecrease);
         //RBar.fillAmount = updatedValue;
 
-        
-            RBar.fillAmount -= 0.03f* Time.deltaTime;
-     }
+        if ((SkillTree.info.nodesActivated & SkillNodes.D_1) == SkillNodes.D_1)
+            RBar.fillAmount -= 0.024f* Time.deltaTime;
+        else
+            RBar.fillAmount -= 0.03f * Time.deltaTime;
+    }
 
     private void  rageBarRegen()
     {

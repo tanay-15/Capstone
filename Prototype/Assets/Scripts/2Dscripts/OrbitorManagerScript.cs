@@ -74,6 +74,8 @@ public class OrbitorManagerScript : MonoBehaviour {
                 
             }
 
+            //Player.GetComponent<PlayerStates>().PlayerAnimator.Play("MeleeAttack3");
+
             
         }
 
