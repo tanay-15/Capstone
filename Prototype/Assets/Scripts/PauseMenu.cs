@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour {
     public bool disableReturnToHubWorld;
     public bool disableSkillTree;
     public bool disableOptions;
+    bool disableRestartFromCheckpoint;
 
     public static PauseMenu sharedInstance;
     [System.NonSerialized]
@@ -69,6 +70,7 @@ public class PauseMenu : MonoBehaviour {
         menuState = PauseMenuState.Main;
         transparentColor = new Color(1f, 1f, 1f, 0.5f);
         disabledColor = new Color(1f, 1f, 1f, 0.2f);
+        disableRestartFromCheckpoint = (YinYangCheckpoint.checkpointIndex == -1);
         //InitializeText();
     }
 	
@@ -98,6 +100,7 @@ public class PauseMenu : MonoBehaviour {
 
         if (GamePaused)
         {
+            disableRestartFromCheckpoint = (YinYangCheckpoint.checkpointIndex == -1);
             selectIndex = (disableSkillTree) ? PauseMenuOption.Resume : PauseMenuOption.SkillTree;
             prevIndex = selectIndex;
             InitializeText();
@@ -146,7 +149,8 @@ public class PauseMenu : MonoBehaviour {
         //Skip return to Hub World if on a tutorial level
         while ((disableReturnToHubWorld && selectIndex == PauseMenuOption.ReturnHubWorld) ||
             (disableSkillTree && selectIndex == PauseMenuOption.SkillTree) ||
-            (disableOptions && selectIndex == PauseMenuOption.Options))
+            (disableOptions && selectIndex == PauseMenuOption.Options) ||
+            (disableRestartFromCheckpoint && selectIndex == PauseMenuOption.RestartFromCheckpoint))
         {
             selectIndex += (moveDown) ? 1 : -1;
             WrapAround();
@@ -241,7 +245,8 @@ public class PauseMenu : MonoBehaviour {
 
                 //Restart from Checkpoint
                 case PauseMenuOption.RestartFromCheckpoint:
-
+                    FindObjectOfType<PlayerLifeController>().Respawn();
+                    PauseUnpause();
                     break;
 
                 //Return to Hub World
@@ -275,7 +280,8 @@ public class PauseMenu : MonoBehaviour {
     {
         return ((index == (int)PauseMenuOption.ReturnHubWorld && disableReturnToHubWorld) ||
             (index == (int)PauseMenuOption.SkillTree && disableSkillTree) ||
-            (index == (int)PauseMenuOption.Options && disableOptions));
+            (index == (int)PauseMenuOption.Options && disableOptions) ||
+            (index == (int)PauseMenuOption.RestartFromCheckpoint && disableRestartFromCheckpoint));
     }
 
     void InitializeText()
