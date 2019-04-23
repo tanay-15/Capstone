@@ -823,7 +823,11 @@ public class Enemy : BasicEnemy {
 
         if (((collision.gameObject.name == "AttackTrigger") || (collision.gameObject.name == "StompTrigger")) && !IsPunched && Vector3.Distance(collision.transform.position, transform.position) < 1.5f && collision.gameObject.layer != 15)
         {
-            applyDamage(3);
+            if ((SkillTree.info.nodesActivated & SkillNodes.D_2) == SkillNodes.D_2 && target.GetComponent<DemonTransformScript>().DemonModeActive)
+                applyDamage(10);
+            else
+                applyDamage(3);
+
 
             IsPunched = true;
             StartCoroutine(IsPunchedReset());

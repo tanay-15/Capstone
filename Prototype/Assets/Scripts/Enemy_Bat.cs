@@ -48,6 +48,15 @@ public class Enemy_Bat : BasicEnemy
         this.transform.position = pointA;
         moveA = true;
         this.maxHealth = this.health;
+
+        foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>())
+        {
+            if (rb2d.name != name)
+            {
+                rb2d.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+
+            }
+        }
     }
 
     // Update is called once per frame
@@ -84,6 +93,22 @@ public class Enemy_Bat : BasicEnemy
 
         if (health <= 0)
         {
+            foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>())
+            {
+                if (rb2d.name != name)
+                {
+                    rb2d.gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+                    rb2d.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                    rb2d.transform.parent = null;
+                    Vector2 direction = rb2d.position - (Vector2)transform.position;
+                    direction.Normalize();
+                    rb2d.AddForce(direction * 5.0f, ForceMode2D.Impulse);
+                    Physics2D.IgnoreCollision(rb2d.gameObject.GetComponent<PolygonCollider2D>(),player.GetComponent<CapsuleCollider2D>());
+                    Destroy(rb2d.gameObject,5.0f);
+  
+                }
+            }
+
             events.OnDeath.Invoke();
             Destroy(this.gameObject);
         }
