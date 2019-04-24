@@ -28,6 +28,7 @@ public class RangeEnemy : Enemy {
         maxHealth = health;
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
+        
     }
 	
 	// Update is called once per frame
@@ -39,9 +40,10 @@ public class RangeEnemy : Enemy {
             {
                 rateofattack = rateofattack - Time.deltaTime;
                 CheckForPlayerPosition();
-                if (rateofattack <= 1f)
+                if (rateofattack <= 2.0f)
                 {
                     Thrown = false;
+                    
                 }
                 if (!Thrown && rateofattack <= 0)
                 {
@@ -96,7 +98,7 @@ public class RangeEnemy : Enemy {
     public void ThrowAxe()
     {
         Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
-        rateofattack = 3f;
+        rateofattack = 2f;
         Thrown = true;
     }
 
@@ -151,7 +153,6 @@ public class RangeEnemy : Enemy {
             anim.SetBool("Attack", true);
             currentstate = States.Attack;
             AttackReady = true;
-            Debug.Log("Enemy attack ready");
         }
     }
 
@@ -201,10 +202,13 @@ public class RangeEnemy : Enemy {
         if (collision.gameObject.tag == "Player")
         {
 
-            
             target = collision.gameObject;
-
-
+            targetpos = collision.gameObject.transform.position;
+            anim.SetBool("Attack", true);
+            currentstate = States.Attack;
+            AttackReady = true;
+            anim.speed = 1.0f;
+           
         }
     }
 

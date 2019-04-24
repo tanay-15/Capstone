@@ -35,7 +35,7 @@ public class ThrowAxe : MonoBehaviour {
       
         rigi.velocity = moveVector;
 
-        transform.Rotate(0,0,300 *Time.deltaTime);
+        transform.Rotate(0,0,-300 *Time.deltaTime);
 
         Invoke("Death", 6f);
     }

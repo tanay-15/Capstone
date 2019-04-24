@@ -40,6 +40,7 @@ public class RagdollEnemy : BasicEnemy {
                 rb2d.isKinematic = state;
                 rb2d.GetComponent<Collider2D>().enabled = !state;
                 rb2d.AddForce(Vector2.up * 5,ForceMode2D.Impulse);
+                rb2d.AddTorque(-15);
                 //Debug.Log(rb2d.name);
             }
                 

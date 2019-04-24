@@ -102,10 +102,12 @@ public class Enemy_Bat : BasicEnemy
                     rb2d.transform.parent = null;
                     Vector2 direction = rb2d.position - (Vector2)transform.position;
                     direction.Normalize();
-                    rb2d.AddForce(direction * 5.0f, ForceMode2D.Impulse);
-                    Physics2D.IgnoreCollision(rb2d.gameObject.GetComponent<PolygonCollider2D>(),player.GetComponent<CapsuleCollider2D>());
+                    rb2d.AddForce(direction * 8.0f, ForceMode2D.Impulse);
+                    
                     Destroy(rb2d.gameObject,5.0f);
-  
+                    if(player && rb2d.gameObject.GetComponent<PolygonCollider2D>())
+                        Physics2D.IgnoreCollision(rb2d.gameObject.GetComponent<PolygonCollider2D>(),player.GetComponent<CapsuleCollider2D>());
+
                 }
             }
 
