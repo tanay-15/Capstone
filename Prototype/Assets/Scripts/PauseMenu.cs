@@ -182,9 +182,9 @@ public class PauseMenu : MonoBehaviour {
 
     //Return from skill tree back to pause menu
     //Function called from skill tree
-    public void ReturnToPauseMenu()
+    public void ReturnToPauseMenu(string currentScene)
     {
-        StartCoroutine(TransitionScene(false, "SkillTree"));
+        StartCoroutine(TransitionScene(false, currentScene));
         menuState = PauseMenuState.None;
     }
 
@@ -233,9 +233,8 @@ public class PauseMenu : MonoBehaviour {
 
                 //Manual
                 case PauseMenuOption.Manual:
-                    //Uncomment this out when the Manual scene is ready
-                    //StartCoroutine(TransitionScene(true, "Manual", PauseMenuState.Manual));
-                    //menuState = PauseMenuState.None;
+                    StartCoroutine(TransitionScene(true, "Manual", PauseMenuState.Manual));
+                    menuState = PauseMenuState.None;
                     break;
 
                 //Options

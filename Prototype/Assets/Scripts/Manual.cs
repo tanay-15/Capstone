@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Manual : MonoBehaviour
 {
     public Text[] textObjects;
+    public GameObject[] popups;
+    public Image black;
     Color nonSelectedColor = Color.yellow;
     Color selectedColor = Color.red;
     int axisDirectionPressed;
@@ -17,9 +19,33 @@ public class Manual : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(Transition(true));
         InitializeText();
         CurrentSelectIndex = 0;
         listCount = textObjects.Length;
+    }
+
+    IEnumerator Transition(bool fadeIn)
+    {
+        Color col = Color.black;
+        for (float i = 0; i < 1f; i += 0.05f)
+        {
+            col.a = (fadeIn) ? (1 - i) : i;
+            black.color = col;
+            yield return 0;
+        }
+        if (!fadeIn)
+            ReturnToPauseMenu();
+        else
+        {
+            col.a = 0f;
+            black.color = col;
+        }
+    }
+
+    void ReturnToPauseMenu()
+    {
+        PauseMenu.sharedInstance.ReturnToPauseMenu("Manual");
     }
 
     void InitializeText()
@@ -100,7 +126,7 @@ public class Manual : MonoBehaviour
     //For moving up and down menus
     void HandleMenuNavigation()
     {
-        //Check for input
+        //Check for up and down input
         if ((buttonsPressed & MenuButtons.Up) == MenuButtons.Up)
         {
             CurrentSelectIndex--;
@@ -130,6 +156,12 @@ public class Manual : MonoBehaviour
                 textObjects[i].color = nonSelectedColor;
                 //menuText2[i].color = menuTextColors[i];
             }
+        }
+
+        //Check for back button pressed
+        if ((buttonsPressed & MenuButtons.Back) == MenuButtons.Back)
+        {
+            StartCoroutine(Transition(false));
         }
     }
     #endregion

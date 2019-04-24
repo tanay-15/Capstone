@@ -392,6 +392,6 @@ public class SkillTree : MonoBehaviour
 
     void ReturnToPauseMenu()
     {
-        PauseMenu.sharedInstance.ReturnToPauseMenu();
+        PauseMenu.sharedInstance.ReturnToPauseMenu("SkillTree");
     }
 }
