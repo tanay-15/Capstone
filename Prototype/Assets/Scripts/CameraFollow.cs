@@ -26,6 +26,7 @@ public class CameraFollow : MonoBehaviour {
 	void Start () {
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         audioManager.Play("Fire");
+        audioManager.Play("Drops");
         shakeOffset = Vector3.zero;
         rawTransformPos = transform.position;
         shakeRoutine = null;

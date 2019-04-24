@@ -337,12 +337,13 @@ public class PlayerStates : MonoBehaviour
                         {
                             movable = false;
                             //Destroy(Instantiate(DustParticles.gameObject, GroundTrigger.transform.position, Quaternion.identity), 2f);
-                            audioManager.Play("Stomp");
+
                             FindObjectOfType<CameraFollow>().ShakeCamera();
                             //DustParticles.Play();
                             //blocks = FindObjectsOfType<OrbitorObjectScript>();
                             if (GetComponent<DemonTransformScript>().DemonModeActive)
                             {
+                                audioManager.Play("DStomp");
                                 for (int i = 0; i < 3; i++)
                                 {
                                     if (blocks[i] != null)
@@ -351,6 +352,10 @@ public class PlayerStates : MonoBehaviour
                                     }
                                     blocks[i] = Instantiate(StoneBlock, GroundTrigger.transform.position, Quaternion.identity);
                                 }
+                            }
+                            else
+                            {
+                                audioManager.Play("Stomp");
                             }
 
   
@@ -559,6 +564,7 @@ public class PlayerStates : MonoBehaviour
                             Rb2d.velocity = Vector2.zero;
                             status = State.WallJump;
                             StartCoroutine("WallJump");
+                            audioManager.Play("WJump");
                             //status = State.InAir;
                         }
 
@@ -585,6 +591,7 @@ public class PlayerStates : MonoBehaviour
                             Rb2d.velocity = Vector2.zero;
                             status = State.WallCrawl;
                             StartCoroutine("WallCrawl");
+                            audioManager.Play("WCrawl");
                         }
                     }
 

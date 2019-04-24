@@ -81,12 +81,12 @@ public class CombatZone : MonoBehaviour
 
             if(this.gameObject.tag == "CombatZone")
             {
-                audioManager.PauseMusic("Level1Music");
+                audioManager.StopMusic("Level1Music");
                 audioManager.PlayMusic("FightMusic");
             }
             else if(this.gameObject.name == "BossZone")
             {
-                audioManager.PauseMusic("Level1Music");
+                audioManager.StopMusic("Level1Music");
                 audioManager.PlayMusic("BossBattleMusic");
             }
             Door1Open = false;
@@ -106,7 +106,7 @@ public class CombatZone : MonoBehaviour
 
             if (this.gameObject.tag == "CombatZone")
             {
-                audioManager.PauseMusic("FightMusic");
+                audioManager.StopMusic("FightMusic");
                 audioManager.PlayMusic("Level1Music");
             }
             Camera.main.GetComponent<CameraFollow>().target = originalTarget;//collision.gameObject.transform;
