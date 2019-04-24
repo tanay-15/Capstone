@@ -28,7 +28,8 @@ public class RangeEnemy : Enemy {
         maxHealth = health;
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
-        
+
+        Physics2D.IgnoreLayerCollision(10,16);
     }
 	
 	// Update is called once per frame
@@ -38,20 +39,22 @@ public class RangeEnemy : Enemy {
         {
             if (target != null)
             {
-                rateofattack = rateofattack - Time.deltaTime;
+                
                 CheckForPlayerPosition();
-                if (rateofattack <= 2.0f)
-                {
-                    Thrown = false;
-                    
-                }
-                if (!Thrown && rateofattack <= 0)
+
+                if (!Thrown && rateofattack <= 0.2f)
                 {
 
 
                     ThrowAxe();
                 }
+                if (rateofattack <= 0)
+                {
+                    rateofattack = 2f;
+                    Thrown = false;
+                }
 
+                rateofattack = rateofattack - Time.deltaTime;
             }
         }
         if(health <=0)
@@ -98,7 +101,7 @@ public class RangeEnemy : Enemy {
     public void ThrowAxe()
     {
         Instantiate(shurikenprefab, shuriloct.transform.position, shurikenprefab.transform.rotation);
-        rateofattack = 2f;
+        //rateofattack = 2f;
         Thrown = true;
     }
 
@@ -208,7 +211,7 @@ public class RangeEnemy : Enemy {
             currentstate = States.Attack;
             AttackReady = true;
             anim.speed = 1.0f;
-           
+            rateofattack = 2.0f;
         }
     }
 
