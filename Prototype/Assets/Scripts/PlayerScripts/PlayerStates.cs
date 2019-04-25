@@ -21,7 +21,8 @@ public class PlayerStates : MonoBehaviour
         WallSlide,
         Panning,
         WallCrawl,
-        PlayerSwitch
+        PlayerSwitch,
+        Sleeping
     };
     public bool controlsEnabled = true;
     [Header("State")]
@@ -138,7 +139,11 @@ public class PlayerStates : MonoBehaviour
 
     void Update()
     {
-        if (!controlsEnabled) return;
+        if (!controlsEnabled)
+        {
+            PlayerAnimator.Play("Sleep");
+            return;
+        }
         //// Movement ////
 
         float hAxis = Input.GetAxis("Horizontal");
@@ -626,6 +631,10 @@ public class PlayerStates : MonoBehaviour
 
             case State.PlayerSwitch:
                 StartCoroutine("PlayerSwitch");
+                break;
+
+            case State.Sleeping:
+                PlayerAnimator.Play("Sleep");
                 break;
         }
     }
