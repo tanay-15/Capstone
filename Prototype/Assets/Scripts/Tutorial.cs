@@ -225,6 +225,9 @@ public class Tutorial : MonoBehaviour {
             case 12:
                 ShowImages(6);
                 break;
+            case 13:
+                ShowImages(9, 10);
+                break;
         }
     }
 

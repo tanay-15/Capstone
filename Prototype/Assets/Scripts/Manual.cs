@@ -21,11 +21,19 @@ public class Manual : MonoBehaviour
     float cursorRotation;
     float cursorRotationSpeed = -40f;
 
+    static int savedIndex;
+
+    static Manual()
+    {
+        savedIndex = 0;
+    }
+
     void Start()
     {
+        CurrentSelectIndex = savedIndex;
         StartCoroutine(Transition(true));
         InitializeText();
-        CurrentSelectIndex = 0;
+        InitializePopups();
         cursorRotation = 0f;
         listCount = textObjects.Length;
     }
@@ -62,6 +70,13 @@ public class Manual : MonoBehaviour
         }
     }
 
+    void InitializePopups()
+    {
+        for (int i = 0; i < popups.Length; i++)
+        {
+            popups[i].SetActive(i == CurrentSelectIndex);
+        }
+    }
 
     #region Input checkers
     void CheckAxis()
@@ -131,6 +146,7 @@ public class Manual : MonoBehaviour
     //For moving up and down menus
     void HandleMenuNavigation()
     {
+        int oldSelectIndex = CurrentSelectIndex;
         //Check for up and down input
         if ((buttonsPressed & MenuButtons.Up) == MenuButtons.Up)
         {
@@ -147,6 +163,10 @@ public class Manual : MonoBehaviour
             CurrentSelectIndex -= listCount;
         else if (CurrentSelectIndex < 0)
             CurrentSelectIndex += listCount;
+
+        //Set the current popup active
+        popups[oldSelectIndex].SetActive(false);
+        popups[CurrentSelectIndex].SetActive(true);
 
         //Highlight currently selected text
         for (int i = 0; i < listCount; i++)
@@ -194,5 +214,10 @@ public class Manual : MonoBehaviour
             position.x -= 40f;
             cursor.transform.rotation = Quaternion.Euler(0f, 0f, cursorRotation);
             cursor.GetComponent<RectTransform>().position = position;
+    }
+
+    void OnDestroy()
+    {
+        savedIndex = CurrentSelectIndex;
     }
 }
