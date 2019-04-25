@@ -8,6 +8,7 @@ public class Manual : MonoBehaviour
     public Text[] textObjects;
     public GameObject[] popups;
     public Image black;
+    public GameObject cursor;
     Color nonSelectedColor = Color.yellow;
     Color selectedColor = Color.red;
     int axisDirectionPressed;
@@ -17,11 +18,15 @@ public class Manual : MonoBehaviour
     float minAxis = 0.5f;
     MenuButtons buttonsPressed = MenuButtons.None;
 
+    float cursorRotation;
+    float cursorRotationSpeed = -40f;
+
     void Start()
     {
         StartCoroutine(Transition(true));
         InitializeText();
         CurrentSelectIndex = 0;
+        cursorRotation = 0f;
         listCount = textObjects.Length;
     }
 
@@ -176,5 +181,18 @@ public class Manual : MonoBehaviour
         HandleMenuNavigation();
 
         ResetButtonCheck();
+        MoveCursor();
+    }
+
+    void MoveCursor()
+    {
+            cursorRotation -= Time.deltaTime * cursorRotationSpeed;
+            if (cursorRotation < 0)
+                cursorRotation += 360;
+            Vector3 position = textObjects[CurrentSelectIndex].rectTransform.position;
+            //position.x -= ((menuText[CurrentSelectIndex].preferredWidth / 2f) * menuText[CurrentSelectIndex].rectTransform.lossyScale.x) + 40f;
+            position.x -= 40f;
+            cursor.transform.rotation = Quaternion.Euler(0f, 0f, cursorRotation);
+            cursor.GetComponent<RectTransform>().position = position;
     }
 }

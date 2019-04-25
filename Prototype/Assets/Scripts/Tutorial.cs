@@ -180,7 +180,7 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 1:
-                ShowImages(2);
+                ShowImages(2, 6);
                 break;
 
             case 2:
@@ -211,7 +211,7 @@ public class Tutorial : MonoBehaviour {
                 ShowImages(7);
                 break;
             case 8:
-                ShowImages(1);
+                ShowImages(1, 8);
                 break;
             case 9:
                 ShowImages(2);
@@ -239,7 +239,8 @@ public class Tutorial : MonoBehaviour {
             imageIndex = index;
             images[index].SetActive(true);
             yield return 0;
-            while (!(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump")))
+            while (!(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4TRIANGLE")))
+            //while(!(Input.GetKeyDown(KeyCode.LeftControl)))
             {
                 yield return 0;
             }

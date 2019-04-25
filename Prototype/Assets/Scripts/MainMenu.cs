@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
     public Text[] menuText;
     public Text[] menuText2;
     public GameObject cursor;
-    public Transform[] cameraFocus;
+    public Transform[] cameraFocus; //0 start position, 1 options menu, 2 player
     Color nonSelectedColor = Color.yellow;// new Color(0.25f, 0.25f, 0.25f, 1f);
     Color selectedColor = Color.red;
     public Color[] menuTextColors;
@@ -103,18 +103,15 @@ public class MainMenu : MonoBehaviour
     {
         QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
-        bool found = false;
         resolutions = Screen.resolutions;
         for(int i = 0; i < resolutions.Length; i++)
         {
             if (SameResolution(resolutions[i], Screen.width, Screen.height, Application.targetFrameRate))
             {
                 resolutionIndex = i;
-                found = true;
                 break;
             }
         }
-        //Debug.Log(Screen.width + " " + Screen.height + " " + Application.targetFrameRate);
     }
 
     //Initialize arrays, and make all menu option text invisible
@@ -177,7 +174,9 @@ public class MainMenu : MonoBehaviour
             state == MainMenuState.FileSelect ||
             state == MainMenuState.Options)
         {
-            cursorRotation += Time.deltaTime * cursorRotationSpeed;
+            cursorRotation -= Time.deltaTime * cursorRotationSpeed;
+            if (cursorRotation < 0)
+                cursorRotation += 360;
             Vector3 position = menuText[CurrentSelectIndex].rectTransform.position;
             //position.x -= ((menuText[CurrentSelectIndex].preferredWidth / 2f) * menuText[CurrentSelectIndex].rectTransform.lossyScale.x) + 40f;
             position.x -= 40f;

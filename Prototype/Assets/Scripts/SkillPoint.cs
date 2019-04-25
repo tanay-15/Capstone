@@ -9,8 +9,8 @@ public class SkillPoint : MonoBehaviour
     public Light myLight;
     float count;
     float amplitude = 0.15f;
-    float haloBaseScale = 1.3f;
-    float haloAmplitude = 0.4f;
+    float haloBaseScale = 0.5f; //1.3f
+    float haloAmplitude = 0.3f; //0.4f
     float countScale = 3f;
     Color newColor;
     void Start()
