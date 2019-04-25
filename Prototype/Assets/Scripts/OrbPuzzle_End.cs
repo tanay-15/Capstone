@@ -45,6 +45,7 @@ public class OrbPuzzle_End : MonoBehaviour
             ScreenPointer.sharedInstance.RemoveTarget();
             triggered = true;
             playerPresent = true;
+            this.transform.GetComponent<SpriteRenderer>().color = new Color(0x00,0xFF,0xC7);
         }
     }
 }
