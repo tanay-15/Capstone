@@ -36,6 +36,7 @@ public class CombatZone : MonoBehaviour
     {
         foreach (GameObject enm in Enemies)
         {
+            if(enm.GetComponent<Enemy>()) enm.GetComponent<Enemy>().enabled = true;
             enm.SendMessageUpwards("EnableLifebar", active);
         }
     }
@@ -116,7 +117,7 @@ public class CombatZone : MonoBehaviour
 
     IEnumerator SpawnMinions()
     {
-        //SetEnemiesActive(true);
+        SetEnemiesActive(true);
         for (int i = 0; i < Enemies.Length; i++)
         {
             Enemies[i].SendMessageUpwards("Spawn");

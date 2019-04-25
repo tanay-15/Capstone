@@ -114,7 +114,7 @@ public class PlayerLifeController : MonoBehaviour {
     //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //}
 
-    public void GetHit(int addLife, bool canKill = true)
+    public void GetHit(int addLife)
     {
         if (invincible || transform.GetComponent<PlayerStates>().invulnerable) return;
         
@@ -127,6 +127,30 @@ public class PlayerLifeController : MonoBehaviour {
             FindObjectOfType<CameraFollow>().ShakeCamera();
             BlinkRed(true);
             Invoke("Unblink", 0.1f);            
+        }
+        else
+        {
+            if (PlayerLife.sharedInstance.currentLife < PlayerLife.sharedInstance.maxLife)
+            {
+                PlayerLife.sharedInstance.AddLife(addLife);
+            }
+        }
+
+    }
+
+    public void GetHit(int addLife, bool canKill = true)
+    {
+        if (invincible || transform.GetComponent<PlayerStates>().invulnerable) return;
+
+
+
+        if (addLife < 0)
+        {
+            PlayerLife.sharedInstance.AddLife(addLife);
+            StartInvincibleBlink(2);
+            FindObjectOfType<CameraFollow>().ShakeCamera();
+            BlinkRed(true);
+            Invoke("Unblink", 0.1f);
         }
         else
         {

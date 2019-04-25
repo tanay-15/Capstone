@@ -47,7 +47,12 @@ public class Lifebar : MonoBehaviour {
     void OnEnemyTakeDamage(float newHealth)
     {
         targetScale = newHealth;
-        redScalingSprite.transform.localScale = new Vector3(targetScale, 1f, 1f);
+        if (targetScale == Mathf.Infinity || targetScale.Equals(null))
+        {
+            targetScale = 0.0f;
+        }
+            redScalingSprite.transform.localScale = new Vector3(targetScale, 1f, 1f);
+        
     }
 
     void LateUpdate()

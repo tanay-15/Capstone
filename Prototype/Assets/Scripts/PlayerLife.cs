@@ -125,6 +125,14 @@ public class PlayerLife : MonoBehaviour {
         UpdateWidth();
     }
 
+    public void AddLife(float life/*, bool canKill = true*/)
+    {
+        currentLife += life;
+        currentLife = Mathf.Clamp(currentLife, 0f, 100f);
+        //if (!canKill) SetMinLife();
+        UpdateWidth();
+    }
+
     public void AddLife(float life, bool canKill = true)
     {
         currentLife += life;
