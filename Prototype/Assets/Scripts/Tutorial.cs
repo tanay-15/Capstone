@@ -211,7 +211,8 @@ public class Tutorial : MonoBehaviour {
                 ShowImages(7);
                 break;
             case 8:
-                ShowImages(1, 8);
+                // 8 is for rage pool damage
+                ShowImages(1);
                 break;
             case 9:
                 ShowImages(2);

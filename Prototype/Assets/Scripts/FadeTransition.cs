@@ -44,7 +44,7 @@ public class FadeTransition : MonoBehaviour
             Color newColor = Color.black;
             newColor.a = alpha;
             black.color = newColor;
-            if (op.progress == 0.9f && loading != null)
+            if (op.progress == 0.5f && loading != null)
                 loading.SetActive(false);
             yield return 0;
         }
