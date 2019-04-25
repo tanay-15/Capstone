@@ -5455,7 +5455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1388240427}
   speed: 0.075
-  offset: {x: 0, y: 2.5, z: -10}
+  offset: {x: 0, y: 0, z: -10}
   lowerLeftBound: {fileID: 1266021352}
   upperRightBound: {fileID: 2096956184}
 --- !u!114 &182687260
@@ -43516,7 +43516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266021351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.73, y: -3.0273688, z: -0.12718254}
+  m_LocalPosition: {x: -48.73, y: 1, z: -0.12718254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44452,21 +44452,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2700114358183790579, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
-        type: 3}
-      propertyPath: wallLayerMask.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 2700114358183790579, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
-        type: 3}
-      propertyPath: jumpSpeed
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2700114358183790579, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
-        type: 3}
-      propertyPath: forceX
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2700114358183790577, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
       propertyPath: OnRageBarFull.m_PersistentCalls.m_Calls.Array.size
@@ -44521,6 +44506,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.016
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700114358183790579, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
+        type: 3}
+      propertyPath: wallLayerMask.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700114358183790579, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
+        type: 3}
+      propertyPath: jumpSpeed
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700114358183790579, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
+        type: 3}
+      propertyPath: forceX
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2700114357776719842, guid: 8db91e6d2c8f5c24a8bfb33791c8c1ef,
         type: 3}
@@ -56375,7 +56375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096956183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.56, y: -3.0273688, z: -0.12718254}
+  m_LocalPosition: {x: 44.56, y: 1, z: -0.12718254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

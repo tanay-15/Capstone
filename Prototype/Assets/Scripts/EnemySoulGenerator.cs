@@ -16,6 +16,14 @@ public class EnemySoulGenerator : MonoBehaviour {
 
     public static EnemySoulGenerator sharedInstance;
 
+    float DropChance
+    {
+        get
+        {
+            return ((SkillTree.info.nodesActivated & SkillNodes.H_3) == SkillNodes.H_3) ? 0.6f : 0.3f;
+        }
+    }
+
 	void Start () {
 
         if (sharedInstance != null)
@@ -30,17 +38,18 @@ public class EnemySoulGenerator : MonoBehaviour {
 
         //Drop arrows
         //TODO: Chance of arrows generating should be handled by the individual enemies
-        if (Random.Range(0, 3) == 0)
-        { 
-            var arrow = Instantiate(arrowPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
-            arrow.GetComponent<Rigidbody2D>().AddForce(Vector2.up*5,ForceMode2D.Impulse);
+        if (Random.Range(0, 1) <= DropChance)
+        {
+            GameObject pickupPrefab = Random.Range(0, 2) == 0 ? arrowPickupPrefab : healthPickupPrefab;
+            var pickup = Instantiate(pickupPrefab, (Vector3)enemyPos, Quaternion.identity);
+            pickup.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 5, ForceMode2D.Impulse);
         }
 
-        if (Random.Range(0, 4) == 2)
-        {
-            var potion = Instantiate(healthPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
-            potion.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 5, ForceMode2D.Impulse);
-        }
+        //if (Random.Range(0, 4) == 2)
+        //{
+        //    var potion = Instantiate(healthPickupPrefab, (Vector3)enemyPos, Quaternion.identity);
+        //    potion.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        //}
 
     }
 

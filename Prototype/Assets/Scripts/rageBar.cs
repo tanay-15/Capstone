@@ -130,7 +130,8 @@ public class rageBar : MonoBehaviour {
         //Debug.Log(RBar.fillAmount);
         if (RBar.fillAmount >= 1f)
         {
-            cameraEffect.enabled = true;
+            if (cameraEffect != null)
+                cameraEffect.enabled = true;
             //filler.color = fillingColor;
             gradientScroll.EnableGradient(true);
             OnRageBarFull.Invoke();
@@ -138,7 +139,8 @@ public class rageBar : MonoBehaviour {
         }
         else if (RBar.fillAmount < 1f)
         {
-            cameraEffect.enabled = false;
+            if (cameraEffect != null)
+                cameraEffect.enabled = false;
             gradientScroll.EnableGradient(false);
             filler.color = Color.yellow;
         }

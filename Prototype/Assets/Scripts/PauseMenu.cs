@@ -184,6 +184,9 @@ public class PauseMenu : MonoBehaviour {
     //Function called from skill tree
     public void ReturnToPauseMenu(string currentScene)
     {
+        //Update the UI for any changes
+        ArrowCounter.sharedInstance.UpdateArrowCounter();
+
         StartCoroutine(TransitionScene(false, currentScene));
         menuState = PauseMenuState.None;
     }
