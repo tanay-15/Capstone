@@ -224,7 +224,7 @@ public class RangeEnemy : Enemy {
         if(collider.gameObject.tag == "Player")
         {
             target = null;
-            anim.SetBool("Attack", false);
+            GetComponent<Animator>().SetBool("Attack", false);
             AttackReady = false;
             currentstate = States.Idle;
         }

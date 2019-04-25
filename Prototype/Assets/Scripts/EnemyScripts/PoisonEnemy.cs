@@ -37,7 +37,8 @@ public class PoisonEnemy : Enemy
         {
             case States.Idle:
             {
-                    anim.Play("Idle");
+                    GetComponent<Animator>().Play("Idle");
+                    GetComponent<Animator>().speed = 1.0f;
 
                     if (target && withinRange)
                     {
@@ -67,6 +68,7 @@ public class PoisonEnemy : Enemy
             case States.Attack:
             {
                     attackResetTimer += Time.deltaTime;
+                    GetComponent<Animator>().Play("Attack");
 
                     if (attackResetTimer >= 2.0f && target)
                     {

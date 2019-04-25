@@ -351,7 +351,6 @@ MonoBehaviour:
   BonesBreak: []
   kill: 0
   dead: 0
-  spawn: 1
   color: {x: 0, y: 1, z: 0, w: 1}
   mhealth: 0
 --- !u!95 &5931302213322978687
@@ -2453,7 +2452,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -7250,7 +7249,7 @@ Transform:
   m_GameObject: {fileID: 5931302214564527039}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children:
   - {fileID: 5931302213341335034}
   m_Father: {fileID: 5931302213322978684}
@@ -8983,7 +8982,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2

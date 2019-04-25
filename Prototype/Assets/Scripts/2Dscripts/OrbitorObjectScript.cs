@@ -35,7 +35,10 @@ public class OrbitorObjectScript : MonoBehaviour {
 
         if (collision.gameObject.layer == 15 || collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.SendMessage("applyDamage", 15);
+            if ((SkillTree.info.nodesActivated & SkillNodes.D_3) == SkillNodes.D_3)
+                collision.gameObject.SendMessage("applyDamage", 20);
+            else
+                collision.gameObject.SendMessage("applyDamage", 10);
             Instantiate(impact, collision.GetContact(0).point, Quaternion.identity);
             //hit = true;
             Explode(8);
