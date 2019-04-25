@@ -23,6 +23,7 @@ public class PlayerStates : MonoBehaviour
         WallCrawl,
         PlayerSwitch,
         Sleeping,
+        WakingUp,
         FixedRun
     };
     public bool controlsEnabled = true;
@@ -123,7 +124,13 @@ public class PlayerStates : MonoBehaviour
         DustParticles = Smoke.GetComponent<ParticleSystem>();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
-        status = State.Default;
+        if (controlsEnabled)
+            status = State.Default;
+        else
+        {
+            status = State.Sleeping;
+            PlayerAnimator.Play("Sleep");
+        }
     }
 
 
@@ -142,7 +149,8 @@ public class PlayerStates : MonoBehaviour
 
     public void WakeUp()
     {
-
+        status = State.WakingUp;
+        PlayerAnimator.Play("GetUp");
     }
 
     public void SetFixedRun()
@@ -153,17 +161,17 @@ public class PlayerStates : MonoBehaviour
 
     void Update()
     {
-        if (!controlsEnabled)
-        {
-            PlayerAnimator.Play("Sleep");
-            return;
-        }
+        //if (!controlsEnabled)
+        //{
+        //    //PlayerAnimator.Play("Sleep");
+        //    return;
+        //}
         //// Movement ////
 
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
 
-        if (movable)
+        if (movable && controlsEnabled)
         {
             if (Mathf.Abs(hAxis) > 0.5f)
                 Rb2d.velocity = new Vector3(Mathf.Sign(hAxis) * speed, Rb2d.velocity.y, 0);
@@ -178,7 +186,7 @@ public class PlayerStates : MonoBehaviour
 
         //// Flip ////
 
-        if ((status != State.ChargingArrow || status!=State.InAir || status != State.WallJump)&& movable)
+        if ((status != State.ChargingArrow || status!=State.InAir || status != State.WallJump)&& movable && controlsEnabled)
         {
             if (hAxis > 0 && !facingRight && Time.timeScale > 0f)
                 flip();
@@ -647,8 +655,16 @@ public class PlayerStates : MonoBehaviour
                 StartCoroutine("PlayerSwitch");
                 break;
 
+                //Shouldn't play an animation constantly
             case State.Sleeping:
-                PlayerAnimator.Play("Sleep");
+                //PlayerAnimator.Play("Sleep");
+                break;
+
+            case State.WakingUp:
+                //PlayerAnimator.Play("GetUp");
+                if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) {
+                    SetFixedRun();
+                }
                 break;
 
             case State.FixedRun:
@@ -828,7 +844,7 @@ public class PlayerStates : MonoBehaviour
     //Demon Wall Crawl
     IEnumerator WallCrawl()
     {
-        Debug.Log("Inside Crawl coroutine");
+        //Debug.Log("Inside Crawl coroutine");
         PlayerAnimator.Play("Crawl");
         //transform.position = new Vector3(transform.position.x - 20 * Time.deltaTime * ((facingRight) ? 1 : -1), transform.position.y + 50 * Time.deltaTime, transform.position.z);
         Rb2d.velocity = Vector2.zero;

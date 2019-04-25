@@ -229,7 +229,12 @@ public class MainMenu : MonoBehaviour
         {
             //Highlighted over "New Game"
             if (CurrentSelectIndex == 0)
-                SceneManager.LoadScene(newGameLevel);
+            {
+                //SceneManager.LoadScene(newGameLevel);
+                FindObjectOfType<PlayerStates>().WakeUp();
+                //cameraFollow.target = cameraFocus[2];
+                Destroy(gameObject);
+            }
 
             //Continue
             else if (CurrentSelectIndex == 1)

@@ -34,7 +34,8 @@ public class FadeTransition : MonoBehaviour
     //Load the scene in the background, then load them after the scene fades out
     IEnumerator FadeOut()
     {
-        loading.SetActive(true);
+        if (loading != null)
+            loading.SetActive(true);
         AsyncOperation op = SceneManager.LoadSceneAsync(newScene);
         op.allowSceneActivation = false;
         for (float i = 0; i < 1f; i += fadeSpeed * Time.deltaTime)
