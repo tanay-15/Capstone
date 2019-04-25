@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 public class PlayerStates : MonoBehaviour
 {
 
-// State
+    // State
     public enum State
     {
         Default,
@@ -22,14 +22,15 @@ public class PlayerStates : MonoBehaviour
         Panning,
         WallCrawl,
         PlayerSwitch,
-        Sleeping
+        Sleeping,
+        FixedRun
     };
     public bool controlsEnabled = true;
     [Header("State")]
     public State status;
     public State prevState;
 
-// Values
+    // Values
     [Header("Values")]
     public float speed = 5.0f;
     public float jumpSpeed = 5.0f;
@@ -58,7 +59,6 @@ public class PlayerStates : MonoBehaviour
     bool wallSliding = false;
 
     // References
-
     [Header("References")]
     public Animator PlayerAnimator;
     AudioManager audioManager;
@@ -92,7 +92,7 @@ public class PlayerStates : MonoBehaviour
     public Transform frontBicep;
     public Transform backBicep;
     float initialFrontBicepRotation = 25.82f;
-    float initialBackBicepRotation;
+    //float initialBackBicepRotation = 109.113f;
 
 
 
@@ -122,6 +122,8 @@ public class PlayerStates : MonoBehaviour
         
         DustParticles = Smoke.GetComponent<ParticleSystem>();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
+        status = State.Default;
     }
 
 
@@ -130,10 +132,22 @@ public class PlayerStates : MonoBehaviour
         //Rotate the arm for aiming arrows
         if (status == State.ChargingArrow)
         {
+            //TODO: Aiming arrow should use an animation, not programmatically rotate the arms
             float right = facingRight ? 0f : 180f;
             float rotation = Mathf.Atan2(shootingArrowInfo.GetShootingDirectionToMouse(frontBicep.position, facingRight).y, shootingArrowInfo.GetShootingDirectionToMouse(frontBicep.position, facingRight).x) * 180 / Mathf.PI;
             frontBicep.rotation = Quaternion.Euler(0f, 0f, rotation + ((facingRight) ? -initialFrontBicepRotation : initialFrontBicepRotation) + right);
+            //backBicep.rotation = Quaternion.Euler(0f, 0f, rotation + ((facingRight) ? -initialBackBicepRotation : initialBackBicepRotation) + right);
         }
+    }
+
+    public void WakeUp()
+    {
+
+    }
+
+    public void SetFixedRun()
+    {
+        status = State.FixedRun;
     }
 
 
@@ -635,6 +649,13 @@ public class PlayerStates : MonoBehaviour
 
             case State.Sleeping:
                 PlayerAnimator.Play("Sleep");
+                break;
+
+            case State.FixedRun:
+                movable = false;
+                PlayerAnimator.Play("Run");
+                audioManager.Play("FootStep");
+                Rb2d.velocity = new Vector2(speed, Rb2d.velocity.y);
                 break;
         }
     }
