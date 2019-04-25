@@ -113,16 +113,23 @@ public class PlayerLife : MonoBehaviour {
         UpdateWidth();
     }
 
-    public void SetLife(int life)
+    public void SetLife(float life)
     {
         currentLife = Mathf.Clamp(life, 0f, 100f);
         UpdateWidth();
     }
 
-    public void AddLife(int life)
+    public void SetMinLife()
+    {
+        currentLife = Mathf.Max(0.01f, currentLife);
+        UpdateWidth();
+    }
+
+    public void AddLife(float life, bool canKill = true)
     {
         currentLife += life;
         currentLife = Mathf.Clamp(currentLife, 0f, 100f);
+        if (!canKill) SetMinLife();
         UpdateWidth();
     }
 }

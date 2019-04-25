@@ -77,6 +77,7 @@ public class DemonTransformScript : MonoBehaviour
 
     public IEnumerator DelayedTransform(bool toDemon)
     {
+        UIIcons.sharedInstance.SetQButton(false);
         audioManager.Play("Evil");
         GenerateBats();
         transitioning = true;

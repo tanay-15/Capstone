@@ -114,7 +114,7 @@ public class PlayerLifeController : MonoBehaviour {
     //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //}
 
-    public void GetHit(int addLife)
+    public void GetHit(int addLife, bool canKill = true)
     {
         if (invincible || transform.GetComponent<PlayerStates>().invulnerable) return;
         
@@ -136,21 +136,9 @@ public class PlayerLifeController : MonoBehaviour {
             }
         }
 
-    }
+        if (!canKill)
+            PlayerLife.sharedInstance.SetMinLife();
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-     //   if (col.gameObject.tag == "Enemy")
-       // {
-            //PlayerLife.sharedInstance.AddLife(-10);
-            //FindObjectOfType<CameraFollow>().ShakeCamera();
-            //BlinkRed(true);
-            //Invoke("Unblink", 0.1f);
-         //   GetHit(-10);
-            
-       // }
-
-        
     }
 
     //Eventually make these two into one function or coroutine
