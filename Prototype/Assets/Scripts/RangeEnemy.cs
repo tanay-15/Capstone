@@ -29,7 +29,9 @@ public class RangeEnemy : Enemy {
         anim = this.GetComponent<Animator>();
         rigi = this.GetComponent<Rigidbody>();
 
-        Physics2D.IgnoreLayerCollision(10,16);
+        Physics2D.IgnoreLayerCollision(16,10);
+        Physics2D.IgnoreLayerCollision(16,15);
+        Physics2D.IgnoreLayerCollision(16,16);
     }
 	
 	// Update is called once per frame
@@ -52,6 +54,7 @@ public class RangeEnemy : Enemy {
                 {
                     rateofattack = 2f;
                     Thrown = false;
+                    anim.Play("SkelAttack");
                 }
 
                 rateofattack = rateofattack - Time.deltaTime;
@@ -153,7 +156,7 @@ public class RangeEnemy : Enemy {
         {
             target = collision.gameObject;
             targetpos = collision.gameObject.transform.position;
-            anim.SetBool("Attack", true);
+            GetComponent<Animator>().SetBool("Attack", true);
             currentstate = States.Attack;
             AttackReady = true;
         }
@@ -207,10 +210,10 @@ public class RangeEnemy : Enemy {
 
             target = collision.gameObject;
             targetpos = collision.gameObject.transform.position;
-            anim.SetBool("Attack", true);
+            GetComponent<Animator>().SetBool("Attack", true);
             currentstate = States.Attack;
             AttackReady = true;
-            anim.speed = 1.0f;
+            GetComponent<Animator>().speed = 1.0f;
             rateofattack = 2.0f;
         }
     }

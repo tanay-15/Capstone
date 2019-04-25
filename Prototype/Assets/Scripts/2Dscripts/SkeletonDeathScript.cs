@@ -48,6 +48,7 @@ public class SkeletonDeathScript : MonoBehaviour {
 
         GetComponent<Animator>().Play("Assemble");
         GetComponent<Animator>().speed = 0;
+
     }
 
     // Update is called once per frame
@@ -113,7 +114,7 @@ public class SkeletonDeathScript : MonoBehaviour {
         if (!dead)
         {
             dead = true;
-            Physics2D.IgnoreLayerCollision(15, 15,false);
+            
             GetComponent<Animator>().enabled = false;
             SetChildrenKinematic(false);
             //IKSystem.SetActive(false);
@@ -125,7 +126,7 @@ public class SkeletonDeathScript : MonoBehaviour {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponents<BoxCollider2D>()[0].enabled = false;
-            if(GetComponents<CircleCollider2D>()[0])
+            if(GetComponent<CircleCollider2D>())
                 GetComponents<CircleCollider2D>()[0].enabled = false;
 
 
@@ -179,9 +180,9 @@ public class SkeletonDeathScript : MonoBehaviour {
 
     IEnumerator Initialize()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1.0f);
         GetComponent<Enemy>().enabled = true;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         //spawn = false;
         gameObject.SendMessageUpwards("EnableLifebar", true);
         //GetComponent<Animator>().Play("SkelWalk");

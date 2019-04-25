@@ -10,6 +10,8 @@ public class PoisonProjectile : MonoBehaviour
     void Start()
     {
         StartCoroutine(DelayedDestroy());
+        var emission = GetComponent<ParticleSystem>().emission;
+        emission.enabled = true; 
     }
 
     // Update is called once per frame
