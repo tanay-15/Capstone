@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
         }  
     }
 
-    private void Start()
+    private void OnEnable()
     {
         foreach (Sound s in sounds)
         {
