@@ -9,7 +9,7 @@ public class BloodWellScript : MonoBehaviour {
     rageBar rb;
     float damageTimer = 0.0f;
     public int scale = 0;
-    const float lifeDrainRate = 0.04f;
+    const float lifeDrainRate = 1.2f;//0.04f;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +24,7 @@ public class BloodWellScript : MonoBehaviour {
             if (rb.RBar.fillAmount <= 1)
             {
                 rb.RBar.fillAmount += 0.2f * Time.deltaTime;
-                PlayerLife.sharedInstance.AddLife(-lifeDrainRate, false);
+                PlayerLife.sharedInstance.AddLife(-lifeDrainRate * Time.deltaTime, false);
             }
         }
     }

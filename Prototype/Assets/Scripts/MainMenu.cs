@@ -12,7 +12,6 @@ enum MainMenuState
     Transitioning,
 
     Main,
-    FileSelect,
     Options
 }
 
@@ -121,10 +120,11 @@ public class MainMenu : MonoBehaviour
         //Initialize menu strings
         menuStrings = new string[][] {
             //Main
-            new string[] { "New Game", "Continue", "Options", "Quit" },
+            new string[] {"Play", "Options", "Quit"},
+            //new string[] { "New Game", "Continue", "Options", "Quit" },
 
             //FileSelect
-            new string[] { "File 1", "File 2", "File 3", "Back" },
+            //new string[] { "File 1", "File 2", "File 3", "Back" },
 
             //Options
             new string[] {"Resolution:", "Full Screen:", "VSync:", "Joystick sensitivity for Levitation:", "Back" }
@@ -155,9 +155,9 @@ public class MainMenu : MonoBehaviour
                 OnMainMenu();
                 break;
 
-            case MainMenuState.FileSelect:
-                OnFileSelect();
-                break;
+            //case MainMenuState.FileSelect:
+            //    OnFileSelect();
+            //    break;
 
             case MainMenuState.Options:
                 OnOptionsMenu();
@@ -171,7 +171,7 @@ public class MainMenu : MonoBehaviour
     void MoveCursor()
     {
         if (state == MainMenuState.Main ||
-            state == MainMenuState.FileSelect ||
+            //state == MainMenuState.FileSelect ||
             state == MainMenuState.Options)
         {
             cursorRotation -= Time.deltaTime * cursorRotationSpeed;
@@ -237,15 +237,15 @@ public class MainMenu : MonoBehaviour
             }
 
             //Continue
-            else if (CurrentSelectIndex == 1)
-                ChangeState(MainMenuState.FileSelect);
+            //else if (CurrentSelectIndex == 1)
+            //    ChangeState(MainMenuState.FileSelect);
 
             //Options
-            else if (CurrentSelectIndex == 2)
+            else if (CurrentSelectIndex == 1)
                 ChangeState(MainMenuState.Options);
 
             //Quit
-            else if (CurrentSelectIndex == 3)
+            else if (CurrentSelectIndex == 2)
                 Application.Quit();
         }
     }
@@ -384,19 +384,19 @@ public class MainMenu : MonoBehaviour
             menuText[i].text = menuStrings[index][i];
             //Adjust if on file select menu
             //(May be more practical to calculate text in the ChangeState option, then pass it as parameters in the Transition coroutines rather than set here)
-            if ((MainMenuState)index == MainMenuState.FileSelect)
-            {
-                //TODO: Handle multiple files
-                if (i < 3)
-                {
-                    menuText[i].text += " -Empty-";
-                    //menuText[i].color = Color.gray;
-                    menuTextColors[i] = Color.gray;
-                }
-                else
-                    menuTextColors[i] = nonSelectedColor;
-            }
-            else if ((MainMenuState)index == MainMenuState.Options)
+            //if ((MainMenuState)index == MainMenuState.FileSelect)
+            //{
+            //    //TODO: Handle multiple files
+            //    if (i < 3)
+            //    {
+            //        menuText[i].text += " -Empty-";
+            //        //menuText[i].color = Color.gray;
+            //        menuTextColors[i] = Color.gray;
+            //    }
+            //    else
+            //        menuTextColors[i] = nonSelectedColor;
+            //}
+            if ((MainMenuState)index == MainMenuState.Options)
             {
                 //pos.x = -150;
                 //pos2.x = 150;

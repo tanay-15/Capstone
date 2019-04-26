@@ -35,6 +35,7 @@ public class Tutorial : MonoBehaviour {
     //public GameObject jumpText;
     public string[] messages;
     public GameObject[] images;
+    public GameObject okButton;
     public int startPhase = 0;
     int phase = -1;
     int textPhase = -1;
@@ -101,6 +102,7 @@ public class Tutorial : MonoBehaviour {
         {
             img.SetActive(false);
         }
+        okButton.SetActive(false);
     }
 
     IEnumerator MoveArrow()
@@ -242,13 +244,19 @@ public class Tutorial : MonoBehaviour {
         {
             imageIndex = index;
             images[index].SetActive(true);
-            yield return 0;
-            while (!(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4TRIANGLE")))
+
+            //Wait 1/2 second before the player can close the popup
+            for (int i = 0; i < 30; i++) { yield return 0; }
+            okButton.SetActive(true);
+            //yield return 0;
+            while (!(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump")))
+            //while (!(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4TRIANGLE")))
             //while(!(Input.GetKeyDown(KeyCode.LeftControl)))
             {
                 yield return 0;
             }
             images[imageIndex].SetActive(false);
+            okButton.SetActive(false);
         }
         Time.timeScale = 1f;
         grayscale.enabled = false;
