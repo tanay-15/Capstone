@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
         }  
     }
 
-    private void OnEnable()
+    private void GetSounds()
     {
         foreach (Sound s in sounds)
         {
@@ -66,6 +66,17 @@ public class AudioManager : MonoBehaviour
         {
 
         }
+    }
+
+    //If it doesn't happen on OnEnable(), it will happen on Start()
+    private void Start()
+    {
+        GetSounds();
+    }
+
+    private void OnEnable()
+    {
+        GetSounds();
     }
     private void Update()
     {
