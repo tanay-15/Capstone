@@ -75,7 +75,7 @@ public class PauseMenu : MonoBehaviour {
     }
 	
 	void Update () {
-		if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options")) && (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options) && !PauseMenuDisabled)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options") || Input.GetButtonDown("PS4CIRCLE")) && (menuState == PauseMenuState.Main || menuState == PauseMenuState.Options) && !PauseMenuDisabled)
         {
             PauseUnpause();
         }

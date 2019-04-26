@@ -7,6 +7,7 @@ public class InfoPopups : MonoBehaviour
 {
     public GameObject[] popups;
     public GameObject okButton;
+    public int tutorialsViewed;
     Grayscale grayscale;
     int imageIndex;
     
@@ -15,6 +16,7 @@ public class InfoPopups : MonoBehaviour
         grayscale = FindObjectOfType<Grayscale>();
         okButton.SetActive(false);
         imageIndex = -1;
+        Manual.tutorialsViewed = tutorialsViewed;
     }
 
     IEnumerator ShowImages_(params int[] indexes)
@@ -25,6 +27,7 @@ public class InfoPopups : MonoBehaviour
         //showingImage = true;
         foreach (int index in indexes)
         {
+        Manual.tutorialsViewed = tutorialsViewed + 1 + index;
             imageIndex = index;
             popups[index].SetActive(true);
             for (int i = 0; i < 30; i++) { yield return 0; }

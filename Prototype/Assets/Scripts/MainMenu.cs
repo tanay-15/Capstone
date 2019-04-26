@@ -90,6 +90,7 @@ public class MainMenu : MonoBehaviour
         //QualitySettings.vSyncCount = 0;
         //Application.targetFrameRate = 60;
 
+        ResetStaticFields();
         GetResolutions();
         baseTextScale = menuText[0].gameObject.transform.localScale.x;
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
@@ -111,6 +112,12 @@ public class MainMenu : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void ResetStaticFields()
+    {
+        SkillTree.info.skillPoints = 0;
+        SkillTree.info.nodesActivated = SkillNodes.None;
     }
 
     //Initialize arrays, and make all menu option text invisible

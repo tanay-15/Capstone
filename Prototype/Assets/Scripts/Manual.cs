@@ -7,6 +7,7 @@ public class Manual : MonoBehaviour
 {
     public Text[] textObjects;
     public GameObject[] popups;
+    public Image unviewed;
     public Image black;
     public GameObject cursor;
     Color nonSelectedColor = Color.yellow;
@@ -19,12 +20,14 @@ public class Manual : MonoBehaviour
     MenuButtons buttonsPressed = MenuButtons.None;
 
     float cursorRotation;
-    float cursorRotationSpeed = -40f;
-
+    float cursorRotationSpeed = -1f;//-40f;
+    
+    public static int tutorialsViewed;
     static int savedIndex;
 
     static Manual()
     {
+        tutorialsViewed = -1;
         savedIndex = 0;
     }
 
@@ -67,6 +70,8 @@ public class Manual : MonoBehaviour
         for (int i = 0; i < textObjects.Length; i++)
         {
             textObjects[i].rectTransform.anchoredPosition = new Vector2(0f, startPos - 20 * i);
+            if (tutorialsViewed < i)
+                textObjects[i].text = (i + 1).ToString() + ". ???";
         }
     }
 
@@ -74,8 +79,11 @@ public class Manual : MonoBehaviour
     {
         for (int i = 0; i < popups.Length; i++)
         {
+            if (tutorialsViewed < i)
+                popups[i].GetComponent<Image>().sprite = unviewed.sprite;
             popups[i].SetActive(i == CurrentSelectIndex);
         }
+        unviewed.gameObject.SetActive(false);
     }
 
     #region Input checkers
@@ -206,7 +214,7 @@ public class Manual : MonoBehaviour
 
     void MoveCursor()
     {
-            cursorRotation -= Time.deltaTime * cursorRotationSpeed;
+            cursorRotation -= /*Time.deltaTime **/ cursorRotationSpeed;
             if (cursorRotation < 0)
                 cursorRotation += 360;
             Vector3 position = textObjects[CurrentSelectIndex].rectTransform.position;

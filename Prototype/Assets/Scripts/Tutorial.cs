@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
@@ -183,20 +184,24 @@ public class Tutorial : MonoBehaviour {
 
             case 1:
                 ShowImages(2, 6);
+                Manual.tutorialsViewed = 0;
                 break;
 
             case 2:
                 ShowImages(1);
+                Manual.tutorialsViewed = 1;
                 break;
 
             case 3:
                 ShowImages(3);
                 levitationSystem.SetLevitationActive(true);
                 StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
+                Manual.tutorialsViewed = 2;
                 break;
 
             case 4:
                 ShowImages(4);
+                Manual.tutorialsViewed = (SceneManager.GetActiveScene().name == "Tutorial1") ? 3 : 6;
                 //StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
                 break;
 
@@ -205,31 +210,40 @@ public class Tutorial : MonoBehaviour {
                 //    jumpText.SetActive(false);
                 StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 ShowImages(0);
+                Manual.tutorialsViewed = 4;
                 break;
             case 6:
                 ShowImages(5);
+                Manual.tutorialsViewed = 5;
                 break;
             case 7:
                 ShowImages(7);
+                Manual.tutorialsViewed = 6;
                 break;
             case 8:
                 // 8 is for rage pool damage
-                ShowImages(1);
+                ShowImages(1, 8);
+                Manual.tutorialsViewed = 8;
                 break;
             case 9:
                 ShowImages(2);
+                Manual.tutorialsViewed = 9;
                 break;
             case 10:
                 ShowImages(3,0);
+                Manual.tutorialsViewed = 11;
                 break;
             case 11:
                 ShowImages(5);
+                Manual.tutorialsViewed = 12;
                 break;
             case 12:
                 ShowImages(6);
+                Manual.tutorialsViewed = 13;
                 break;
             case 13:
                 ShowImages(9, 10);
+                Manual.tutorialsViewed = 15;
                 break;
         }
     }
