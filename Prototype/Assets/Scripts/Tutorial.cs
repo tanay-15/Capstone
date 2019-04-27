@@ -222,7 +222,7 @@ public class Tutorial : MonoBehaviour {
                 break;
             case 8:
                 // 8 is for rage pool damage
-                ShowImages(1, 8);
+                ShowImages(1);
                 Manual.tutorialsViewed = 8;
                 break;
             case 9:
