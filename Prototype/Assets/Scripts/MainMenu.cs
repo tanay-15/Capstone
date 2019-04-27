@@ -12,7 +12,8 @@ enum MainMenuState
     Transitioning,
 
     Main,
-    Options
+    Options,
+    Credits
 }
 
 [System.Flags]
@@ -33,6 +34,7 @@ public class MainMenu : MonoBehaviour
     public Text pressAnyButtonText;
     public Text[] menuText;
     public Text[] menuText2;
+    public RectTransform credits;
     public GameObject cursor;
     public Transform[] cameraFocus; //0 start position, 1 options menu, 2 player
     Color nonSelectedColor = Color.yellow;// new Color(0.25f, 0.25f, 0.25f, 1f);
@@ -92,6 +94,7 @@ public class MainMenu : MonoBehaviour
 
         ResetStaticFields();
         GetResolutions();
+        credits.localScale = Vector3.zero;
         baseTextScale = menuText[0].gameObject.transform.localScale.x;
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
         cursorRotation = 0f;
@@ -127,14 +130,17 @@ public class MainMenu : MonoBehaviour
         //Initialize menu strings
         menuStrings = new string[][] {
             //Main
-            new string[] {"Play", "Options", "Quit"},
+            new string[] {"Play", "Options", "Credits", "Quit"},
             //new string[] { "New Game", "Continue", "Options", "Quit" },
 
             //FileSelect
             //new string[] { "File 1", "File 2", "File 3", "Back" },
 
             //Options
-            new string[] {"Resolution:", "Full Screen:", "VSync:", "Joystick sensitivity for Levitation:", "Back" }
+            new string[] {"Resolution:", "Full Screen:", "VSync:", "Joystick sensitivity for Levitation:", "Back" },
+
+            //Credits
+            new string[] {"Back"}
         };
         alignLeft = new bool[] { false, false, true };
         menuTextColors = new Color[] { nonSelectedColor, nonSelectedColor, nonSelectedColor, nonSelectedColor, nonSelectedColor };
@@ -169,6 +175,10 @@ public class MainMenu : MonoBehaviour
             case MainMenuState.Options:
                 OnOptionsMenu();
                 break;
+
+            case MainMenuState.Credits:
+                OnCreditsMenu();
+                break;
         }
 
         ResetButtonCheck();
@@ -177,9 +187,7 @@ public class MainMenu : MonoBehaviour
 
     void MoveCursor()
     {
-        if (state == MainMenuState.Main ||
-            //state == MainMenuState.FileSelect ||
-            state == MainMenuState.Options)
+        if (state != MainMenuState.PressAnyButton && state != MainMenuState.Transitioning)
         {
             cursorRotation -= Time.deltaTime * cursorRotationSpeed;
             if (cursorRotation < 0)
@@ -251,9 +259,18 @@ public class MainMenu : MonoBehaviour
             else if (CurrentSelectIndex == 1)
                 ChangeState(MainMenuState.Options);
 
-            //Quit
+            //Credits
             else if (CurrentSelectIndex == 2)
+                ChangeState(MainMenuState.Credits);
+
+            //Quit
+            else if (CurrentSelectIndex == 3)
                 Application.Quit();
+        }
+
+        //Go to Quit when pressing Escape
+        if ((buttonsPressed & MenuButtons.Back) == MenuButtons.Back){
+            CurrentSelectIndex = 3;
         }
     }
 
@@ -367,8 +384,43 @@ public class MainMenu : MonoBehaviour
             ChangeState(MainMenuState.Main);
         }
     }
+
+    void OnCreditsMenu()
+    {
+        HandleMenuNavigation();
+
+        if ((buttonsPressed & MenuButtons.Confirm) == MenuButtons.Confirm)
+        {
+            //Back
+            ChangeState(MainMenuState.Main);
+        }
+
+        if ((buttonsPressed & MenuButtons.Back) == MenuButtons.Back)
+        {
+            ChangeState(MainMenuState.Main);
+        }
+    }
     #endregion
 
+    IEnumerator ScaleCredits(bool show)
+    {
+        if (!show && credits.localScale == Vector3.zero)
+        {
+            yield return 0;
+        }
+        else
+        {
+            float scale = 0f;
+            for (float i = 0; i < 1f; i += Time.deltaTime * 6f)
+            {
+                scale = (show) ? i : 1f - i;
+                credits.localScale = new Vector3(1f, scale, 1f);
+                yield return 0;
+            }
+            credits.localScale = (show) ? Vector3.one : Vector3.zero;
+        }
+    }
+    
     //Called in the middle of transitioning from menus
     void SetText(int index, int listSize)
     {
@@ -383,6 +435,13 @@ public class MainMenu : MonoBehaviour
             levitationTesting.SetActive(false);
             cameraFollow.target = cameraFocus[0];
         }
+
+        //if ((MainMenuState)index == MainMenuState.Credits)
+        //{
+        //    StartCoroutine(ScaleCredits(true));
+        //}
+        StartCoroutine(ScaleCredits((MainMenuState)index == MainMenuState.Credits));
+
         for (int i = 0; i < listSize; i++)
         {
             //Vector3 pos = menuText[i].rectTransform.anchoredPosition;
