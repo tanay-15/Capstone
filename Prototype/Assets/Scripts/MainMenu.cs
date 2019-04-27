@@ -245,10 +245,23 @@ public class MainMenu : MonoBehaviour
             //Highlighted over "New Game"
             if (CurrentSelectIndex == 0)
             {
-                //SceneManager.LoadScene(newGameLevel);
-                FindObjectOfType<PlayerStates>().WakeUp();
-                //cameraFollow.target = cameraFocus[2];
-                Destroy(gameObject);
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    SkillTree.info.nodesActivated = SkillNodes.HUMAN;
+                    SceneManager.LoadScene("Ending");
+                }
+                else if (Input.GetKey(KeyCode.RightShift))
+                {
+                    SkillTree.info.nodesActivated = SkillNodes.DEMON;
+                    SceneManager.LoadScene("Ending");
+                }
+                else
+                {
+                    //SceneManager.LoadScene(newGameLevel);
+                    FindObjectOfType<PlayerStates>().WakeUp();
+                    //cameraFollow.target = cameraFocus[2];
+                    Destroy(gameObject);
+                }
             }
 
             //Continue

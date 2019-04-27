@@ -223,27 +223,27 @@ public class Tutorial : MonoBehaviour {
             case 8:
                 // 8 is for rage pool damage
                 ShowImages(1);
-                Manual.tutorialsViewed = 8;
+                Manual.tutorialsViewed = 7;
                 break;
             case 9:
                 ShowImages(2);
-                Manual.tutorialsViewed = 9;
+                Manual.tutorialsViewed = 8;
                 break;
             case 10:
                 ShowImages(3,0);
-                Manual.tutorialsViewed = 11;
+                Manual.tutorialsViewed = 10;
                 break;
             case 11:
                 ShowImages(5);
-                Manual.tutorialsViewed = 12;
+                Manual.tutorialsViewed = 11;
                 break;
             case 12:
                 ShowImages(6);
-                Manual.tutorialsViewed = 13;
+                Manual.tutorialsViewed = 12;
                 break;
             case 13:
                 ShowImages(9, 10);
-                Manual.tutorialsViewed = 15;
+                Manual.tutorialsViewed = 14;
                 break;
         }
     }
