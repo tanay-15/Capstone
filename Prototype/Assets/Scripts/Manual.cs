@@ -16,7 +16,6 @@ public class Manual : MonoBehaviour
     int axisDirection;
     int listCount;
     int CurrentSelectIndex;
-    float spacing = 16f;
     float minAxis = 0.5f;
     MenuButtons buttonsPressed = MenuButtons.None;
 
@@ -67,10 +66,10 @@ public class Manual : MonoBehaviour
 
     void InitializeText()
     {
-        float startPos = spacing * (textObjects.Length - 1) / 2;
+        float startPos = 20 * (textObjects.Length - 1) / 2;
         for (int i = 0; i < textObjects.Length; i++)
         {
-            textObjects[i].rectTransform.anchoredPosition = new Vector2(0f, startPos - spacing * i);
+            textObjects[i].rectTransform.anchoredPosition = new Vector2(0f, startPos - 20 * i);
             if (tutorialsViewed < i)
                 textObjects[i].text = (i + 1).ToString() + ". ???";
         }
@@ -203,7 +202,6 @@ public class Manual : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(tutorialsViewed);
         CheckAxis();
         CheckForDirectionsPressed();
         CheckForConfirmAndBackButtons();

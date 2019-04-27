@@ -24,7 +24,7 @@ public class BloodWellScript : MonoBehaviour {
             if (rb.RBar.fillAmount <= 1)
             {
                 rb.RBar.fillAmount += 0.2f * Time.deltaTime;
-                //PlayerLife.sharedInstance.AddLife(-lifeDrainRate * Time.deltaTime, false);
+                PlayerLife.sharedInstance.AddLife(-lifeDrainRate * Time.deltaTime, false);
             }
         }
     }

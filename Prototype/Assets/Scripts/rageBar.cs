@@ -50,7 +50,7 @@ public class rageBar : MonoBehaviour {
         rageBarFilled = false;
         gradientScroll = FindObjectOfType<GradientScroll>();
         demonTransformScript = GetComponent<DemonTransformScript>();
-        //cameraEffect = GameObject.Find("Camera").GetComponent<PostProcess>();
+        cameraEffect = GameObject.Find("Camera").GetComponent<PostProcess>();
 
         if (rageBarVisible)
         {

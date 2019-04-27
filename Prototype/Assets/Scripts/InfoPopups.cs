@@ -27,11 +27,11 @@ public class InfoPopups : MonoBehaviour
         //showingImage = true;
         foreach (int index in indexes)
         {
-            //Manual.tutorialsViewed = tutorialsViewed + 1 + index;
+        Manual.tutorialsViewed = tutorialsViewed + 1 + index;
             imageIndex = index;
             popups[index].SetActive(true);
             for (int i = 0; i < 30; i++) { yield return 0; }
-            okButton.SetActive(true);
+            okButton.SetActive(false);
             while (!(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4Jump")))
             //while (!(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("PS4TRIANGLE")))
             {
@@ -54,9 +54,5 @@ public class InfoPopups : MonoBehaviour
     public void ShowImage(int index)
     {
         StartCoroutine(ShowImages_(index));
-    }
-    public void SetTutorialViewed(int index)
-    {
-        Manual.tutorialsViewed = Mathf.Max(Manual.tutorialsViewed, index);
     }
 }
