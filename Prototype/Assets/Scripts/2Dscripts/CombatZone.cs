@@ -15,6 +15,7 @@ public class CombatZone : MonoBehaviour
     Vector2 Door2InitPosition;
     AudioManager audioManager;
     public float CameraPanSize = 7;
+    int counter = 0;
 
     public GameObject[] Enemies;
     Transform originalTarget;
@@ -70,6 +71,11 @@ public class CombatZone : MonoBehaviour
         }
         else
         {
+            if (counter == 0)
+            {
+                audioManager.Play("Door");
+                counter++;
+            }
             Door1Open = true;
             Door2Open = true;
         }
