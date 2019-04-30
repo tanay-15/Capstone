@@ -3263,6 +3263,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: disableReturnToHubWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
+        type: 3}
+      propertyPath: disableSkillTree
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2696690107096695562, guid: 7232852753f32ae4cb816b893e18f1e0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3283,23 +3293,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2.3999023
       objectReference: {fileID: 0}
-    - target: {fileID: 773970968, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
+    - target: {fileID: 2046332637, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
       propertyPath: m_RootOrder
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 2046332637, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
+    - target: {fileID: 773970968, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
       propertyPath: m_RootOrder
       value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
-        type: 3}
-      propertyPath: disableReturnToHubWorld
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114412680065072806, guid: 7232852753f32ae4cb816b893e18f1e0,
-        type: 3}
-      propertyPath: disableSkillTree
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7232852753f32ae4cb816b893e18f1e0, type: 3}
