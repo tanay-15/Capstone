@@ -79,7 +79,7 @@ public class PauseMenu : MonoBehaviour {
         {
             PauseUnpause();
         }
-        if (GamePaused)
+        if (GamePaused && menuState == PauseMenuState.Main)
         {
             if (Input.GetButtonDown("PS4CIRCLE"))
             {

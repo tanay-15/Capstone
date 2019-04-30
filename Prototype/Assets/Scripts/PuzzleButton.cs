@@ -50,6 +50,7 @@ public class PuzzleButton : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             playerPresent = true;
+            collision.gameObject.SendMessage("Show", true);
         }
     }
 
@@ -58,6 +59,7 @@ public class PuzzleButton : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerPresent = false;
+            collision.gameObject.SendMessage("Show", false);
         }
     }
 }
