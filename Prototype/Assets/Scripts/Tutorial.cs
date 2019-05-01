@@ -209,6 +209,7 @@ public class Tutorial : MonoBehaviour {
                 //if (jumpText != null)
                 //    jumpText.SetActive(false);
                 StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
+                FindObjectOfType<PlayerStates>().EnableShooting(true);
                 ShowImages(0);
                 Manual.tutorialsViewed = 4;
                 break;

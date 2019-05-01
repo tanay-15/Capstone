@@ -7,13 +7,14 @@ using UnityEngine.UI;
 //Start at -3 so that Main = 0
 enum MainMenuState
 {
-    None = -3,
+    None = -4,
     PressAnyButton,
     Transitioning,
+    IntroSequence,
 
     Main,
     Options,
-    Credits
+    Credits,
 }
 
 [System.Flags]
@@ -63,6 +64,7 @@ public class MainMenu : MonoBehaviour
 
     CameraFollow cameraFollow;
     Resolution[] resolutions;
+    bool confirmEnabled = true;
 
     bool SameResolution(Resolution a, Resolution b)
     {
@@ -160,6 +162,10 @@ public class MainMenu : MonoBehaviour
 
         switch (state)
         {
+            case MainMenuState.IntroSequence:
+                OnIntroSequence();
+                break;
+
             case MainMenuState.PressAnyButton:
                 OnPressAnyButton();
                 break;
@@ -182,20 +188,26 @@ public class MainMenu : MonoBehaviour
         }
 
         ResetButtonCheck();
-        MoveCursor();
+        //MoveCursor();
+        //RotateCursor();
+    }
+
+    void RotateCursor()
+    {
+        cursorRotation -= Time.deltaTime * cursorRotationSpeed;
+        if (cursorRotation < 0)
+            cursorRotation += 360;
+        cursor.transform.rotation = Quaternion.Euler(0f, 0f, cursorRotation);
     }
 
     void MoveCursor()
     {
         if (state != MainMenuState.PressAnyButton && state != MainMenuState.Transitioning)
         {
-            cursorRotation -= Time.deltaTime * cursorRotationSpeed;
-            if (cursorRotation < 0)
-                cursorRotation += 360;
+
             Vector3 position = menuText[CurrentSelectIndex].rectTransform.position;
             //position.x -= ((menuText[CurrentSelectIndex].preferredWidth / 2f) * menuText[CurrentSelectIndex].rectTransform.lossyScale.x) + 40f;
             position.x -= 40f;
-            cursor.transform.rotation = Quaternion.Euler(0f, 0f, cursorRotation);
             cursor.GetComponent<RectTransform>().position = position;
         }
     }
@@ -214,6 +226,10 @@ public class MainMenu : MonoBehaviour
         else if (state == MainMenuState.PressAnyButton && newState == MainMenuState.Main)
         {
             StartCoroutine(FadeOutText(pressAnyButtonText, Transition(newState, curves[1], transitionSpeeds[1], delayBetweenLinesTransitioning[1], true)));
+        }
+        else if (newState == MainMenuState.IntroSequence)
+        {
+            state = MainMenuState.IntroSequence;
         }
         else
         {
@@ -258,10 +274,13 @@ public class MainMenu : MonoBehaviour
                 else
                 {
                     //SceneManager.LoadScene(newGameLevel);
+                    confirmEnabled = false;
                     FindObjectOfType<PlayerStates>().WakeUp();
+                    ChangeState(MainMenuState.IntroSequence);
                     //cameraFollow.target = cameraFocus[2];
-                    Destroy(gameObject);
+                    //Destroy(gameObject);
                 }
+                return;
             }
 
             //Continue
@@ -285,6 +304,8 @@ public class MainMenu : MonoBehaviour
         if ((buttonsPressed & MenuButtons.Back) == MenuButtons.Back){
             CurrentSelectIndex = 3;
         }
+        RotateCursor();
+        MoveCursor();
     }
 
     //Called every frame of the File Select Menu
@@ -396,6 +417,8 @@ public class MainMenu : MonoBehaviour
         {
             ChangeState(MainMenuState.Main);
         }
+        RotateCursor();
+        MoveCursor();
     }
 
     void OnCreditsMenu()
@@ -412,6 +435,19 @@ public class MainMenu : MonoBehaviour
         {
             ChangeState(MainMenuState.Main);
         }
+        RotateCursor();
+        MoveCursor();
+    }
+
+    void OnIntroSequence()
+    {
+        //The confirmEnabled check may not be necessary if the IntroSequence case is before OnMainMenu in Update
+        RotateCursor();
+        if ((buttonsPressed & MenuButtons.Confirm) == MenuButtons.Confirm && confirmEnabled)
+        {
+            FindObjectOfType<FadeTransition>().StartSequence();
+        }
+        confirmEnabled = true;
     }
     #endregion
 
@@ -629,6 +665,7 @@ public class MainMenu : MonoBehaviour
         state = newState;
         cursor.SetActive(true);
         MoveCursor();
+        RotateCursor();
     }
     #endregion
 

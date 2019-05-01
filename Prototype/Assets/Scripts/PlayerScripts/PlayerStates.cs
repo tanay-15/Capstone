@@ -56,6 +56,7 @@ public class PlayerStates : MonoBehaviour
     public bool movable = true;
     public bool onStateStart = true;
     public bool wallJump = false;
+    public bool shootingEnabled = true;
     bool resetState = false;
     bool wallSliding = false;
 
@@ -66,6 +67,7 @@ public class PlayerStates : MonoBehaviour
     public Transform cameraFocus;
     public GameObject Human;
     public GameObject Demon;
+    public GameObject bowAndArrow;
     public GameObject StoneBlock;
     public GameObject ImpactAnim;
     public GameObject RockPiece;
@@ -131,6 +133,8 @@ public class PlayerStates : MonoBehaviour
             status = State.Sleeping;
             PlayerAnimator.Play("Sleep");
         }
+        if (!shootingEnabled)
+            bowAndArrow.SetActive(false);
     }
 
 
@@ -156,6 +160,12 @@ public class PlayerStates : MonoBehaviour
     public void SetFixedRun()
     {
         status = State.FixedRun;
+    }
+
+    public void EnableShooting(bool enabled)
+    {
+        shootingEnabled = enabled;
+        bowAndArrow.SetActive(enabled);
     }
 
 
@@ -263,7 +273,7 @@ public class PlayerStates : MonoBehaviour
                     if (Time.timeScale > 0f && Input.GetButtonDown("Fire1"))
                         status = State.Melee;
 
-                    if (Time.timeScale > 0f && Input.GetButtonDown("Fire2"))
+                    if (Time.timeScale > 0f && Input.GetButtonDown("Fire2") && shootingEnabled)
                     {
                         if (ArrowCounter.sharedInstance.ArrowCount > 0)
                         {
@@ -321,7 +331,7 @@ public class PlayerStates : MonoBehaviour
                     if (grounded == true)
                         status = State.Default;
 
-                    if (Time.timeScale > 0 && Input.GetButtonDown("Fire2"))
+                    if (Time.timeScale > 0 && Input.GetButtonDown("Fire2") && shootingEnabled)
                     {
                         if (ArrowCounter.sharedInstance.ArrowCount > 0)
                         {

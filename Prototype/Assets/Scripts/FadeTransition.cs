@@ -25,9 +25,12 @@ public class FadeTransition : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && routine == null)
         {
-            col.gameObject.SendMessage("SetFixedRun");
-            routine = FadeOut();
-            StartCoroutine(routine);
+            if (routine == null)
+            {
+                col.gameObject.SendMessage("SetFixedRun");
+                routine = FadeOut();
+                StartCoroutine(routine);
+            }
         }
     }
 
@@ -50,6 +53,15 @@ public class FadeTransition : MonoBehaviour
         }
         black.color = Color.black;
         op.allowSceneActivation = true;
+    }
+
+    public void StartSequence()
+    {
+        if (routine == null)
+        {
+            routine = FadeOut();
+            StartCoroutine(routine);
+        }
     }
 
     void Update()
