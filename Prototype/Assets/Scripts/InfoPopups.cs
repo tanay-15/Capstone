@@ -5,6 +5,7 @@ using UnityStandardAssets.ImageEffects;
 
 public class InfoPopups : MonoBehaviour
 {
+    public bool popupsEnabled = true;
     public GameObject[] popups;
     public GameObject okButton;
     public int tutorialsViewed;
@@ -48,12 +49,14 @@ public class InfoPopups : MonoBehaviour
 
     public void ShowImages(params int[] indexes)
     {
-        StartCoroutine(ShowImages_(indexes));
+        if (popupsEnabled)
+            StartCoroutine(ShowImages_(indexes));
     }
 
     public void ShowImage(int index)
     {
-        StartCoroutine(ShowImages_(index));
+        if (popupsEnabled)
+            StartCoroutine(ShowImages_(index));
     }
     public void SetTutorialViewed(int index)
     {

@@ -28,6 +28,7 @@ using UnityStandardAssets.ImageEffects;
 public class Tutorial : MonoBehaviour {
 
     public static Tutorial sharedInstance;
+    public bool popupsEnabled = true;
     public GameObject arrow;
     public AnimationCurve enterCurve1;
     public AnimationCurve enterCurve2;
@@ -281,17 +282,21 @@ public class Tutorial : MonoBehaviour {
 
     void ShowImages(params int[] indexes)
     {
-        StartCoroutine(ShowImages_(indexes));
+        if (popupsEnabled)
+            StartCoroutine(ShowImages_(indexes));
     }
     
     //Unused?
     void ShowImage(int index)
     {
-        images[index].SetActive(true);
-        Time.timeScale = 0f;
-        grayscale.enabled = true;
-        showingImage = true;
-        imageIndex = index;
+        if (popupsEnabled)
+        {
+            images[index].SetActive(true);
+            Time.timeScale = 0f;
+            grayscale.enabled = true;
+            showingImage = true;
+            imageIndex = index;
+        }
     }
 
 	void Update () {
