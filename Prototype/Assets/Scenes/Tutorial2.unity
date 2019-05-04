@@ -103514,7 +103514,7 @@ PrefabInstance:
     - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
         type: 3}
       propertyPath: sounds.Array.size
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
         type: 3}
@@ -103639,6 +103639,26 @@ PrefabInstance:
     - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
         type: 3}
       propertyPath: sounds.Array.data[14].pitch
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
+        type: 3}
+      propertyPath: sounds.Array.data[15].name
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
+        type: 3}
+      propertyPath: sounds.Array.data[15].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9658efeac42572d44a7b9ab87a2fbf51, type: 3}
+    - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
+        type: 3}
+      propertyPath: sounds.Array.data[15].volume
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758296133595967502, guid: f21b730aa3bd1104c85926c45b3ddfac,
+        type: 3}
+      propertyPath: sounds.Array.data[15].pitch
       value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
