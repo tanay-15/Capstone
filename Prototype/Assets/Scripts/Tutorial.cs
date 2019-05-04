@@ -30,6 +30,7 @@ public class Tutorial : MonoBehaviour {
     public static Tutorial sharedInstance;
     public bool popupsEnabled = true;
     public GameObject arrow;
+    public NotificationIcon notificationIcon;
     public AnimationCurve enterCurve1;
     public AnimationCurve enterCurve2;
     public AnimationCurve moveCurve;
@@ -56,6 +57,7 @@ public class Tutorial : MonoBehaviour {
     bool showingImage;
     Grayscale grayscale;
     int imageIndex;
+    List<int> popupQueue;
 
 
     GameObject pointedObject;
@@ -83,6 +85,7 @@ public class Tutorial : MonoBehaviour {
     }
 
 	void Start () {
+        popupQueue = new List<int>();
         grayscale = FindObjectOfType<Grayscale>();
         showingImage = false;
         imageIndex = -1;
@@ -169,6 +172,15 @@ public class Tutorial : MonoBehaviour {
         text.transform.localScale = Vector3.one;
     }
 
+    void AddToPopupQueue(params int[] indices)
+    {
+        foreach (int index in indices)
+        {
+            popupQueue.Add(index);
+        }
+        notificationIcon.AddCounter(indices.Length);
+    }
+
     public void SetPhase(int newPhase)
     {
         if (newPhase <= phaseShown) { return; }
@@ -184,67 +196,77 @@ public class Tutorial : MonoBehaviour {
                 break;
 
             case 1:
-                ShowImages(2, 6);
+                //ShowImages(2, 6);
+                AddToPopupQueue(2, 6);
                 Manual.tutorialsViewed = 0;
                 break;
 
             case 2:
-                ShowImages(1);
+                //ShowImages(1);
+                AddToPopupQueue(1);
                 Manual.tutorialsViewed = 1;
                 break;
 
             case 3:
-                ShowImages(3);
+                //ShowImages(3);
+                AddToPopupQueue(3);
                 levitationSystem.SetLevitationActive(true);
                 StartCoroutine(MoveInIcon(UILevitationIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 Manual.tutorialsViewed = 2;
                 break;
 
             case 4:
-                ShowImages(4);
+                //ShowImages(4);
+                AddToPopupQueue(4);
                 Manual.tutorialsViewed = (SceneManager.GetActiveScene().name == "Tutorial1") ? 3 : 6;
-                //StartCoroutine(MoveInIcon(rageBar, Vector3.one, enterCurve2, defaultIconEnterSpeed * 0.5f, true));
                 break;
 
             case 5:
-                //if (jumpText != null)
-                //    jumpText.SetActive(false);
                 StartCoroutine(MoveInIcon(UIArrowIcon, Vector3.one, enterCurve1, defaultIconEnterSpeed, true));
                 FindObjectOfType<PlayerStates>().EnableShooting(true);
-                ShowImages(0);
+                //ShowImages(0);
+                AddToPopupQueue(0);
                 Manual.tutorialsViewed = 4;
                 break;
             case 6:
-                ShowImages(5);
+                //ShowImages(5);
+                AddToPopupQueue(5);
                 Manual.tutorialsViewed = 5;
                 break;
             case 7:
-                ShowImages(7);
+                //ShowImages(7);
+                AddToPopupQueue(7);
                 Manual.tutorialsViewed = 6;
                 break;
             case 8:
                 // 8 is for rage pool damage
-                ShowImages(1);
+                //ShowImages(1);
+                AddToPopupQueue(1);
                 Manual.tutorialsViewed = 7;
                 break;
             case 9:
-                ShowImages(2);
+                //ShowImages(2);
+                AddToPopupQueue(2);
                 Manual.tutorialsViewed = 8;
                 break;
             case 10:
-                ShowImages(3,0);
+                //ShowImages(3,0);
+                AddToPopupQueue(3, 0);
                 Manual.tutorialsViewed = 10;
                 break;
             case 11:
-                ShowImages(5);
+                //ShowImages(5);
+                AddToPopupQueue(5);
                 Manual.tutorialsViewed = 11;
                 break;
             case 12:
-                ShowImages(6);
+                //ShowImages(6);
+                AddToPopupQueue(6);
                 Manual.tutorialsViewed = 12;
                 break;
             case 13:
-                ShowImages(9, 10);
+                //ShowImages(9, 10);
+                AddToPopupQueue(9, 10);
                 Manual.tutorialsViewed = 14;
                 break;
         }
@@ -300,6 +322,13 @@ public class Tutorial : MonoBehaviour {
     }
 
 	void Update () {
+
+        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("PS4TRIANGLE")) && popupQueue.Count > 0)
+        {
+            notificationIcon.SetCounter(0);
+            ShowImages(popupQueue.ToArray());
+            popupQueue.Clear();
+        }
 	}
 
     public void OnObjectBecameVisible(VisibleTrigger obj, bool visible, int priority)
