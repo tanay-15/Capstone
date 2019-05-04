@@ -39,6 +39,7 @@ public class NotificationIcon : MonoBehaviour
         counterObjects.SetActive(count > 0);
         text.text = count.ToString();
         timeCount = (count > 0) ? timeCount : 0;
+        Debug.Log(count > 0);
     }
 
     void OnEnable()
