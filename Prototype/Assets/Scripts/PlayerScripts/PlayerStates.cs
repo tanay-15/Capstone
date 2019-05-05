@@ -703,8 +703,7 @@ public class PlayerStates : MonoBehaviour
         Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
         if (Time.timeScale > 0f)
         {
-            if ((Input.mousePosition.x < pos.x && facingRight) ||
-                (Input.mousePosition.x > pos.x && !facingRight))
+            if (shootingArrowInfo.reticle.transform.localPosition.x < 0f)
             {
                 flip();
             }
@@ -908,9 +907,9 @@ public class ArrowInfo
 {
     public GameObject arrowPrefab;
     public GameObject fullyChargeSparkPrefab;
-    [SerializeField] GameObject reticle;
+    public GameObject reticle;
     public Vector3 shinePosition = new Vector3(0.4f, 0f, 0f);
-    private Vector3 reticlePosition;
+    public Vector3 reticlePosition;
     public bool chargeFlag;    //False, set to true when fully charged
     public float reticleDistance = 2f;
     public float minChargeTime = 0.6f;
