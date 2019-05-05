@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Audio;
 
 public class OrbitorObjectScript : MonoBehaviour {
 
@@ -11,13 +12,15 @@ public class OrbitorObjectScript : MonoBehaviour {
     public UnityEvent OnPickedUp;
     Collider2D[] myColliders;
     public Collider2D[] ignoredColliders;
+    AudioManager audioManager;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Physics2D.IgnoreLayerCollision(11, 12);
 
         Physics2D.IgnoreLayerCollision(17, 14);
         //Physics2D.IgnoreLayerCollision(17, 15);
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         myColliders = GetComponentsInChildren<Collider2D>();
     }
@@ -86,6 +89,7 @@ public class OrbitorObjectScript : MonoBehaviour {
 
     public void Explode(float magnitude = 8f)
     {
+        audioManager.Play("DStomp");
         Vector2 center = transform.position;
         foreach (Rigidbody2D rb2d in GetComponentsInChildren<Rigidbody2D>(true))
         {
