@@ -11,7 +11,7 @@ public class RotateOnCanvas : MonoBehaviour
 
     void Start()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         count = 0f;
     }
 

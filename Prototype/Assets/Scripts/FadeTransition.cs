@@ -38,7 +38,9 @@ public class FadeTransition : MonoBehaviour
     IEnumerator FadeOut()
     {
         if (loading != null)
+        {
             loading.SetActive(true);
+        }
         AsyncOperation op = SceneManager.LoadSceneAsync(newScene);
         op.allowSceneActivation = false;
         for (float i = 0; i < 1f; i += fadeSpeed * Time.deltaTime)
