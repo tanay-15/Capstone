@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class NotificationIcon : MonoBehaviour
 {
-    int count;
+    int count = 0;
     float timeCount;
     public float speed;
     public float amplitude;
@@ -15,10 +15,9 @@ public class NotificationIcon : MonoBehaviour
 
     void Start()
     {
-        count = 0;
         timeCount = 0f;
 
-        SetCounter(0);
+        SetCounter(count);
     }
 
     public void SetCounter(int amount)
@@ -39,7 +38,6 @@ public class NotificationIcon : MonoBehaviour
         counterObjects.SetActive(count > 0);
         text.text = count.ToString();
         timeCount = (count > 0) ? timeCount : 0;
-        Debug.Log(count > 0);
     }
 
     void OnEnable()
