@@ -700,9 +700,16 @@ public class PlayerStates : MonoBehaviour
     void ChargeArrow()
     {
         PlayerAnimator.Play("Bow");
-        //shootingArrowInfo.Move(Input.GetAxisRaw("Vertical"));
+        Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
         if (Time.timeScale > 0f)
+        {
+            if ((Input.mousePosition.x < pos.x && facingRight) ||
+                (Input.mousePosition.x > pos.x && !facingRight))
+            {
+                flip();
+            }
             shootingArrowInfo.MoveWithMouse();
+        }
 
         shootingArrowInfo.chargeTime += Time.deltaTime;
         if (shootingArrowInfo.IsFullyCharged && !shootingArrowInfo.chargeFlag)
