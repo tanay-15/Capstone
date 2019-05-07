@@ -724,7 +724,7 @@ public class PlayerStates : MonoBehaviour
 
             //Shoot an arrow
             Vector3 velocity;
-            float chargeAmount = (0.2f + shootingArrowInfo.ChargeAmount * 0.8f);
+            float chargeAmount = (0.5f + shootingArrowInfo.ChargeAmount * 0.5f);    //0.2, 0.8
             Vector3 position = Human.transform.position + (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootDistance;
             velocity = (Vector3)shootingArrowInfo.GetShootingDirectionToMouse(transform.position, facingRight) * shootingArrowInfo.shootSpeed * chargeAmount;
             GameObject arrow = Instantiate(shootingArrowInfo.arrowPrefab, position, Quaternion.identity);
