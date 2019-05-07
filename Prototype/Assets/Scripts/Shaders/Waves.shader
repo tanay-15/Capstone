@@ -50,7 +50,7 @@
 			float waveHeight = sin(t + v.vertex.x * _Freq) * (_Amp/2) + sin(t *2 + v.vertex.x * _Freq*2) * (_Amp/2);
 			v.vertex.y += waveHeight;
 			
-			v.normal = normalize(float3(v.normal.x + waveHeight, v.normal.y, v.normal.z));
+			v.normal = normalize(float3(v.normal.x , v.normal.y, v.normal.z));
 			
 		}
 		sampler2D _MainTex;
