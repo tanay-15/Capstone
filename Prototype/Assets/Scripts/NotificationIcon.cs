@@ -12,10 +12,12 @@ public class NotificationIcon : MonoBehaviour
     public RectTransform scalingSprites;
     public GameObject counterObjects;
     public Text text;
+    IEnumerator routine;
 
     void Start()
     {
         timeCount = 0f;
+        routine = null;
 
         SetCounter(count);
     }
@@ -30,6 +32,11 @@ public class NotificationIcon : MonoBehaviour
     {
         count += amount;
         UpdateCounter();
+
+        if (routine != null)
+            StopCoroutine(routine);
+        routine = Shake();
+        StartCoroutine(Shake());
     }
 
     void UpdateCounter()
@@ -45,13 +52,28 @@ public class NotificationIcon : MonoBehaviour
         timeCount = 0f;
     }
 
-    void Update()
+    IEnumerator Shake()
     {
         if (enabled && count > 0)
         {
-            timeCount += Time.deltaTime * speed;
-            if (timeCount > 360f) timeCount -= 360f;
-            scalingSprites.localScale = Vector3.one * (1f + amplitude * Mathf.Cos(timeCount));
+            for (float i = 1f; i > 0f; i-= Time.deltaTime * 0.5f)
+            {
+                timeCount += Time.deltaTime * speed;
+                if (timeCount > 360f) timeCount -= 360f;
+                scalingSprites.localScale = Vector3.one * (1f + amplitude * i * Mathf.Cos(timeCount));
+                yield return 0;
+            }
+            scalingSprites.localScale = Vector3.one;
         }
+    }
+
+    void Update()
+    {
+        //if (enabled && count > 0)
+        //{
+        //    timeCount += Time.deltaTime * speed;
+        //    if (timeCount > 360f) timeCount -= 360f;
+        //    scalingSprites.localScale = Vector3.one * (1f + amplitude * Mathf.Cos(timeCount));
+        //}
     }
 }
